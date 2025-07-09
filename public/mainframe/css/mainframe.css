@@ -1,0 +1,2238 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,400&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Karla:400,500,600,700|Montserrat:300,400,500,600,700,800|Roboto:400,500,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,400;0,600;1,400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@300;400;500;600;700&family=Roboto+Slab:wght@400;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap");
+
+/***********************************************************************
+* Define Bangla font-face
+************************************************************************/
+
+@font-face {
+    font-family: "solaiman-lipi";
+    src: url("fonts/solaiman-lipi.ttf");
+}
+
+.bangla {
+    font-family: "solaiman-lipi", "Inter", "Roboto", "Arial", sans-serif;
+!important;
+}
+
+/***********************************************************************
+* Material Icon adjustment css
+************************************************************************/
+.material-icons-outlined, .material-symbols-outlined {
+    font-size: inherit;
+    line-height: inherit;
+}
+
+.material-symbols-outlined {
+    font-variation-settings: "FILL" 0,
+    "wght" 400,
+    "GRAD" 0,
+    "opsz" 48
+}
+
+/* Vue js hide placeholders */
+[v-cloak] {
+    display: none;
+}
+
+/***********************************************************************
+* Global font settings
+************************************************************************/
+body, html, .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6,
+.content-header h4, .main-header, input, textarea, label {
+    font-family: "Lexend", "Inter", "Karla", "Roboto", "Arial", sans-serif;
+!important;
+    color: #3d3d3d;
+}
+
+body, .form-control, .btn, table, tr, th, td, thead, tbody, .dropdown-menu,
+.skin-blue-light .sidebar-menu > li > a,
+.skin-blue .sidebar-menu > li > a {
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.main-header .logo, .logo, .logo-mini, .logo-lg, .login-logo, .register-logo, .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    font-family: inherit;
+}
+
+.main-header .logo, .logo, .logo-mini, .logo-lg {
+    font-family: inherit;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    line-height: 1.2em;
+    font-family: inherit;
+    font-weight: 600;
+}
+
+.cta-block .btn {
+    font-family: inherit;
+}
+
+.login-logo, .register-logo {
+    font-family: inherit;
+}
+
+.page-title {
+    font-family: inherit;
+}
+
+b, strong, .bold, .strong, .b {
+    font-weight: 600;
+}
+
+/** >> Content background: start */
+.content-wrapper, .right-side, .wrapper {
+    background-color: #f4f4f4;
+}
+
+.content {
+    background-color: inherit;
+}
+
+.nav-tabs-custom {
+    background-color: transparent;
+}
+
+.nav-tabs-custom > .nav-tabs > li {
+    border: 0;
+}
+
+.cta-block {
+    background-color: #f4f4f4;
+}
+
+/** << Content background: end */
+
+.main-header .logo {
+    text-align: inherit;
+    margin-left: 15px;
+    width: 215px;
+}
+
+h2 {
+    /*font-family: "Barlow Semi Condensed", "Inter", "Karla", "Roboto", "Arial", sans-serif;*/
+    font-size: 22px;
+    text-transform: uppercase;
+    /*font-weight: 200;*/
+}
+
+a, a:hover, a:active, a:focus {
+    color: royalblue;
+    font-weight: inherit;
+}
+
+a:hover {
+    text-decoration: underline;
+
+}
+
+.text-white {
+    color: white;
+!important;
+}
+
+.btn {
+    transition: all ease-in-out .25s;
+}
+
+.btn-group.pull-right .dropdown-menu {
+    left: auto;
+    right: 0;
+}
+
+.dropdown-menu > li > a {
+    padding: 7px 15px;
+    color: inherit;
+}
+
+.skin-blue-light .main-header .logo:hover,
+.skin-blue .main-header .logo:hover {
+    text-decoration: none;
+}
+
+.login-logo, .register-logo {
+    font-size: 28px;
+    font-weight: 600;
+    padding: 15px;
+    margin-bottom: 5px;
+}
+
+.login-box, .register-box {
+    border-radius: 15px;
+    margin: 20px auto auto;
+    padding-top: 10px;
+
+}
+
+.login-box, .login-box-body, .register-box-body {
+    background-color: white;
+}
+
+.login-page {
+    background-image: url("../images/login-bg1.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: white;
+}
+
+.login-page input {
+    padding: 10px;
+}
+
+.login-box-body button.login {
+    /*font-size: 18px;*/
+}
+
+.login-box-body .callout {
+    text-align: center;
+}
+
+.login-page .btn.btn-success:hover, .btn.btn-primary:hover {
+    background-color: #000;
+    border-color: #000;
+}
+
+.login-page .btn.btn-default {
+    background-color: #777777;
+    border-color: #777777;
+    color: #fff
+}
+
+.login-page .btn.btn-default:hover {
+    background-color: #000;
+    border-color: #000;
+}
+
+.login-page .login-box-body a {
+
+}
+
+.login-box-body {
+    padding-top: 0;
+    border-radius: 15px;
+}
+
+.login-box-body h4 {
+    text-align: center;
+}
+
+code {
+    font-family: "JetBrains Mono", monospace;
+}
+
+.h1, h1 {
+    font-size: 24px;
+}
+
+.h2, h2 {
+    font-size: 22px;
+}
+
+.h3, h3 {
+    font-size: 18px;
+}
+
+.h4, h4 {
+    font-size: 16px;
+}
+
+.h5, h5 {
+    font-size: 14px;
+}
+
+h2.underlined {
+    border-bottom: 2px solid lightgray;
+    padding-bottom: 5px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    float: left;
+}
+
+.underlined-row, .ul-row {
+    border-bottom: 2px solid lightgray;
+    padding-bottom: 5px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+/*.form-control, .btn, table, tr, th, td, thead, tbody {*/
+/*    font-size: inherit;*/
+/*    font-weight: inherit;*/
+/*}*/
+
+.form-control {
+    /*height: auto;*/
+    min-height: 32px;
+}
+
+.table > tbody > tr > td, .table > tbody > tr > th,
+.table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td,
+.table > thead > tr > th {
+    vertical-align: top;
+}
+
+.table-vertical-middle > tbody > tr > td, .table-vertical-middle > tbody > tr > th,
+.table-vertical-middle > tfoot > tr > td, .table-vertical-middle > tfoot > tr > th, .table-vertical-middle > thead > tr > td,
+.table-vertical-middle > thead > tr > th {
+    vertical-align: middle;
+}
+
+.table-hover > tbody > tr:hover {
+    background-color: #EEEEEE;
+}
+
+.main-header {
+    background-size: 100%;
+    /*background: linear-gradient(90deg, rgba(63, 94, 251, 1) 0%, rgba(252, 70, 107, 1) 100%) no-repeat;*/
+    background: linear-gradient(90deg, rgba(63, 94, 251, 1) 0%, blueviolet 100%) no-repeat;
+}
+
+/* remove some borders from the top menu*/
+.skin-black-light .main-header .navbar > .sidebar-toggle {
+    border-right: 0;
+}
+
+.skin-black-light .main-header > .logo {
+    border-right: 0;
+}
+
+.skin-black-light .main-header .navbar .navbar-custom-menu .navbar-nav > li > a,
+.skin-black-light .main-header .navbar .navbar-right > li > a {
+    border-right: 0;
+    border-left: 0;
+}
+
+/* Fix CTA position for all module base form */
+.cta-block {
+    position: fixed;
+    bottom: 0;
+    padding: 15px 0;
+    z-index: 999;
+    border-top: dotted gainsboro 1px;
+    width: 100%;
+
+}
+
+.cta-block .btn {
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-right: 30px;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+button.submit {
+    border: 2px green solid;
+    background-color: white;
+    color: green;
+}
+
+.delete-cta {
+    margin-right: 260px;
+}
+
+.change-log-cta {
+    margin: 8px;
+    float: right;
+}
+
+.timestamps {
+    color: grey;
+}
+
+/* padding of form element*/
+.form-group {
+    padding: 0 30px 0 0;
+    /*margin: 10px 0;*/
+}
+
+.content-header h2 {
+    margin: 0;
+    font-weight: 600;
+    display: block;
+    padding-bottom: 20px;
+
+}
+
+.content-header a {
+    color: #fc466b;
+    font-weight: 400;
+}
+
+.grid-title {
+    padding-right: 20px;
+}
+
+/*div.dataTables_processing {position: absolute;top: 50%;left: 50%;width: 100%;height: 60px;margin-left: -50%;margin-top: -25px;padding-top: 20px;padding-bottom: 20px;text-align: center;}*/
+div.dataTables_processing {
+    position: fixed;
+    background-color: orangered;
+    background-image: none;
+    color: #ffffff;
+    bottom: 0;
+    right: 0;
+    top: auto;
+    left: auto;
+    width: auto;
+    height: auto;
+    margin-left: 0;
+    margin-top: 0;
+    padding: 5px 10px;
+    text-align: right;
+    font-size: inherit;
+}
+
+div.dataTables_info {
+    float: left;
+    margin-right: 10px;
+}
+
+/* datatable */
+table.dataTable {
+    margin-top: 5px !important;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table.dataTable thead > tr > th,
+.table > thead > tr > th {
+    background-color: #f5f5f6;
+    border-bottom: 1px solid #ddd;
+    font-weight: 500;
+}
+
+.dataTable td {
+    border-color: #fff;
+}
+
+table.dataTable thead .sorting::after,
+table.dataTable thead .sorting_asc::after,
+table.dataTable thead .sorting_desc::after {
+    opacity: 1;
+    font-weight: inherit;
+    font-size: 10px;
+    color: lightgrey;
+}
+
+.module-grid {
+    width: 100%;
+}
+
+/* make textarea same size of ckeditor */
+textarea {
+    height: 100px;
+}
+
+/* made label font weight bold*/
+label {
+    margin: 0 0 5px 0;
+    font-size: 1em;
+    font-weight: normal;
+}
+
+label.inline {
+    margin-top: 8px;
+    display: inline-block;
+}
+
+/* style for permissions tree in group details form*/
+.permissions-tree ul, .permissions-tree ul li {
+    list-style: none;
+    float: left;
+    margin-left: 15px;
+    padding: 0;
+}
+
+.permissions-tree label {
+    margin-left: 5px;
+    top: -3px;
+    position: relative;
+}
+
+/* add padding at the bottom of the app-frame so that CTA does not overlap with page content*/
+.content {
+    min-height: 600px;
+!important;
+    padding: 0 30px 150px 30px;
+}
+
+.content-header {
+    padding: 20px 30px 0 30px;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Margin and padding related css
+|--------------------------------------------------------------------------
+*/
+
+.no-padding, .np {
+    padding: 0 0 0 0 !important;
+}
+
+.no-padding-r, .np-r {
+    padding-right: 0;
+}
+
+.no-padding-l, .np-l {
+    padding-left: 0;
+}
+
+.no-padding-t, .np-t {
+    padding-top: 0;
+}
+
+.no-padding-b, .np-b {
+    padding-bottom: 0;
+}
+
+.no-margin, .nm {
+    margin: 0 0 0 0 !important;
+}
+
+.no-margin-r, .nm-r {
+    margin-right: 0;
+}
+
+.no-margin-l, .nm-l {
+    margin-left: 0;
+}
+
+.no-margin-t, .nm-t {
+    margin-top: 0;
+}
+
+.no-margin-b, .nm-b {
+    margin-bottom: 0;
+}
+
+/* Default 20 px margin */
+.margin, .m {
+    margin: 20px;
+}
+
+.margin-t, .m-t {
+    margin-top: 20px;
+}
+
+.margin-b, .m-b {
+    margin-bottom: 20px;
+}
+
+.margin-l, .m-l {
+    margin-left: 20px;
+}
+
+.margin-r, .m-r {
+    margin-right: 20px;
+}
+
+.margin-h, .m-h {
+    margin: 0 20px;
+}
+
+.margin-v, .m-v {
+    margin: 20px 0;
+}
+
+.padding {
+    padding: 20px;
+}
+
+.padding-t, .p-t {
+    padding-top: 20px;
+}
+
+.padding-b, .p-b {
+    padding-bottom: 20px;
+}
+
+.padding-l, .p-l {
+    padding-left: 20px;
+}
+
+.padding-r, .p-r {
+    padding-right: 20px;
+}
+
+.padding-h, .p-h {
+    padding: 0 20px;
+}
+
+.padding-v, .p-v {
+    padding: 20px 0;
+}
+
+/* 5px margin padding */
+.margin-5, .m-5 {
+    margin: 5px;
+}
+
+.margin-t-5, .m-t-5 {
+    margin-top: 5px;
+}
+
+.margin-b-5, .m-b-5 {
+    margin-bottom: 5px;
+}
+
+.margin-l-5, .m-l-5 {
+    margin-left: 5px;
+}
+
+.margin-r-5, .m-r-5 {
+    margin-right: 5px;
+}
+
+.margin-h-5, .m-h-5 {
+    margin: 0 5px;
+}
+
+.margin-v-5, .m-v-5 {
+    margin: 5px 0;
+}
+
+.padding-5, .p-5 {
+    padding: 5px;
+}
+
+.padding-t-5, .p-t-5 {
+    padding-top: 5px;
+}
+
+.padding-b-5, .p-b-5 {
+    padding-bottom: 5px;
+}
+
+.padding-l-5, .p-l-5 {
+    padding-left: 5px;
+}
+
+.padding-r-5, .p-r-5 {
+    padding-right: 5px;
+}
+
+.padding-h-5, .p-h-5 {
+    padding: 0 5px;
+}
+
+.padding-v-5, .p-v-5 {
+    padding: 5px 0;
+}
+
+/* 10px margin padding */
+
+.margin-10, .m-10 {
+    margin: 10px;
+}
+
+.margin-t-10, .m-t-10 {
+    margin-top: 10px;
+}
+
+.margin-b-10, .m-b-10 {
+    margin-bottom: 10px;
+}
+
+.margin-l-10, .m-l-10 {
+    margin-left: 10px;
+}
+
+.margin-r-10, .m-r-10 {
+    margin-right: 10px;
+}
+
+.margin-h-10, .m-h-10 {
+    margin: 0 10px;
+}
+
+.margin-v-10, .m-v-10 {
+    margin: 10px 0;
+}
+
+.padding-10, .p-10 {
+    padding: 10px;
+}
+
+.padding-t-10, .p-t-10 {
+    padding-top: 10px;
+}
+
+.padding-b-10, .p-b-10 {
+    padding-bottom: 10px;
+}
+
+.padding-l-10, .p-l-10 {
+    padding-left: 10px;
+}
+
+.padding-r-10, .p-r-10 {
+    padding-right: 10px;
+}
+
+.padding-h-10, .p-h-10 {
+    padding: 0 10px;
+}
+
+.padding-v-10, .p-v-10 {
+    padding: 10px 0;
+}
+
+/* 15px margin padding */
+
+.margin-15, .m-15 {
+    margin: 15px;
+}
+
+.margin-t-15, .m-t-15 {
+    margin-top: 15px;
+}
+
+.margin-b-15, .m-b-15 {
+    margin-bottom: 15px;
+}
+
+.margin-l-15, .m-l-15 {
+    margin-left: 15px;
+}
+
+.margin-r-15, .m-r-15 {
+    margin-right: 15px;
+}
+
+.margin-h-15, .m-h-15 {
+    margin: 0 15px;
+}
+
+.margin-v-15, .m-v-15 {
+    margin: 15px 0;
+}
+
+.padding-15, .p-15 {
+    padding: 15px;
+}
+
+.padding-t-15, .p-t-15 {
+    padding-top: 15px;
+}
+
+.padding-b-15, .p-b-15 {
+    padding-bottom: 15px;
+}
+
+.padding-l-15, .p-l-15 {
+    padding-left: 15px;
+}
+
+.padding-r-15, .p-r-15 {
+    padding-right: 15px;
+}
+
+.padding-h-15, .p-h-15 {
+    padding: 0 15px;
+}
+
+.padding-v-15, .p-v-15 {
+    padding: 15px 0;
+}
+
+/* 20px margin padding */
+.margin-20, .m-20 {
+    margin: 20px;
+}
+
+.margin-t-20, .m-t-20 {
+    margin-top: 20px;
+}
+
+.margin-b-20, .m-b-20 {
+    margin-bottom: 20px;
+}
+
+.margin-l-20, .m-l-20 {
+    margin-left: 20px;
+}
+
+.margin-r-20, .m-r-20 {
+    margin-right: 20px;
+}
+
+.margin-h-20, .m-h-20 {
+    margin: 0 20px;
+}
+
+.margin-v-20, .m-v-20 {
+    margin: 20px 0;
+}
+
+.padding-20, .p-20 {
+    padding: 20px;
+}
+
+.padding-t-20, .p-t-20 {
+    padding-top: 20px;
+}
+
+.padding-b-20, .p-b-20 {
+    padding-bottom: 20px;
+}
+
+.padding-l-20, .p-l-20 {
+    padding-left: 20px;
+}
+
+.padding-r-20, .p-r-20 {
+    padding-right: 20px;
+}
+
+.padding-h-20, .p-h-20 {
+    padding: 0 20px;
+}
+
+.padding-v-20, .p-v-20 {
+    padding: 20px 0;
+}
+
+/* Make button smaller beside the tile. usually these are create (plus button) or list button*/
+h2 .btn-sm, h2 .btn-xs, h2 .btn-clone {
+    font-size: 12px;
+}
+
+.tooltip-inner {
+    text-align: left;
+}
+
+.tooltip-icon {
+    color: blueviolet;
+}
+
+.shadow {
+    box-shadow: 0 0 11px 0 rgb(0 0 0 / 20%), 0 0 0 0 rgb(0 0 0 / 20%);
+}
+
+/* Upload list */
+div.filecard .info-box-icon img {
+    float: left;
+    height: 94%;
+    background-color: transparent;
+    font-size: 10px;
+    overflow: hidden;
+    margin: 3px;
+}
+
+.info-box-icon .download-overlay {
+    position: absolute;
+    left: 30px;
+    top: 33px;
+    font-size: 18px;
+    color: #d0d0d6;
+    opacity: .7;
+    text-shadow: 2px 2px 3px grey;
+}
+
+.info-box-content .file-info {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: .8em;
+}
+
+.info-box-content.uploads-tile-container {
+    padding: 0 5px 5px 5px;
+    margin-top: 5px;
+    margin-left: 0;
+}
+
+.ajax-file-upload-green {
+    background-color: transparent;
+}
+
+div.filecard .info-box-icon {
+    background-color: white;
+    width: auto;
+    height: 85px;
+    margin-right: 5px;
+}
+
+div.filecard .info-box-text,
+div.filecard .progress-description,
+div.filecard .info-box-number {
+    /*font-size: inherit;*/
+}
+
+.uploads-container {
+    margin-bottom: 10px;
+}
+
+/* readonly spans in view partials inside forms/ */
+div.form-group span.readonly {
+    padding-left: 10px;
+}
+
+div.form-group span.readonly {
+    height: auto;
+    min-height: 34px;
+}
+
+/*Sometimes for small number inputs the number buttons in the right takes up a lot of space*/
+input[type=number] {
+    /*padding: 0 0 0 5px;*/
+}
+
+.readonly, div.form-group span.readonly,
+.select2-container-disabled, .select2-container.select2-container-disabled .select2-choice,
+input:read-only, .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+    background-color: #eeeeee;
+    border: none;
+}
+
+.form-control:focus {
+    border-color: royalblue;
+}
+
+.navbar-nav > .user-menu > .dropdown-menu {
+    padding: 0;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+/* Make the background of the right side full white*/
+.skin-blue-light .wrapper {
+    background-color: #ffffff;
+}
+
+.navbar-nav > .user-menu > .dropdown-menu > .user-body {
+    border: 0;
+}
+
+.navbar-nav > .user-menu > .dropdown-menu > li.user-header > p {
+    color: inherit;
+}
+
+/* Select2 style customization */
+
+/* manage border*/
+.select2-drop, .select2-drop.select2-drop-above,
+.select2-container.select2-drop-above .select2-choice,
+.select2-container .select2-choice .select2-arrow,
+.select2-container-multi .select2-choices,
+.select2-container-multi .select2-choices .select2-search-choice,
+.select2-container .select2-choice,
+.form-control,
+.info-box,
+.callout,
+.ajax-file-upload-statusbar,
+.ajax-upload-dragdrop,
+.mark, mark {
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+}
+
+.select2-container-multi.select2-container-disabled .select2-choices {
+    border: 0;
+}
+
+.select2-container-multi .select2-choices .select2-search-choice {
+    border: 1px dashed lightblue;
+    padding: 4px 24px 4px 10px;
+    margin: 3px;
+    line-height: 16px;
+    background-image: none;
+    background-color: transparent;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.select2-container-multi .select2-choices .select2-search-choice:hover {
+    border: 1px solid lightblue;
+}
+
+.select2-container-multi .select2-search-choice-close {
+    right: 3px;
+    left: auto;
+}
+
+#tab_advanced .select2-container-multi .select2-choices .select2-search-choice {
+    width: 100%;
+}
+
+.select2-selections {
+    cursor: pointer;
+    list-style: none;
+    padding: 5px 0 5px 10px;
+}
+
+div.select2-result-label:hover {
+    background-color: lightgrey;
+}
+
+input, textarea {
+    border-radius: 0;
+}
+
+.select2-container .select2-choice {
+    -moz-user-select: none;
+    background-clip: padding-box;
+    background-color: #ffffff;
+    display: block;
+    overflow: hidden;
+    position: relative;
+    text-decoration: none;
+    white-space: nowrap;
+    background-image: none;
+    border: 0;
+    min-height: 32px;
+    height: auto;
+    padding: 3px 0 3px 10px;
+    font-weight: inherit;
+}
+
+.select2-container {
+    padding: 0
+}
+
+.select2-offscreen, .select2-offscreen:focus {
+    border: 0 !important;
+    clip: rect(0, 0, 0, 0) !important;
+    height: 1px !important;
+    left: 0 !important;
+    margin: 0 !important;
+    outline: 0 !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    position: absolute !important;
+    top: 0 !important;
+    width: 1px !important
+}
+
+.select2-drop, .select2-drop.select2-drop-above {
+    border: 1px solid #cccccc
+}
+
+.select2-drop.select2-drop-above.select2-drop-active {
+    border: 1px solid #cccccc
+}
+
+.select2-search input {
+    margin: 5px 0;
+    font-family: inherit;
+}
+
+.select2-container.select2-drop-above .select2-choice {
+    border: 0;
+    background: 0 0
+}
+
+.select2-container .select2-choice .select2-arrow {
+    border: 0;
+    background-image: none;
+    background: transparent;
+}
+
+.select2-container, .select2-container-multi {
+    height: auto;
+    padding-left: 0;
+}
+
+.select2-container-multi.form-control {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.select2-container-multi .select2-choices {
+    /*padding-top: 3px;*/
+    background-image: none;
+    border: 0;
+
+}
+
+.select2-search-choice-close {
+    width: 17px;
+    top: 20%;
+}
+
+.select2-container.form-control.ajax {
+    border-right: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.selectClearBtn {
+    border-left: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.main-header {
+    z-index: 1000;
+}
+
+.treeview-menu > li.active > a, .skin-blue-light .treeview-menu > li > a:hover {
+    color: inherit;
+}
+
+.treeview-menu > li > a {
+    font-size: inherit;
+    font-weight: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.logo, .skin-blue-light .main-header .navbar, .navbar > a, .navbar a:hover {
+    background-color: transparent !important;
+}
+
+/* remove border between left and right section*/
+.skin-blue-light .content-wrapper, .skin-blue-light .main-footer {
+    border-left: 0;
+}
+
+.skin-blue-light .sidebar-menu > li:hover > a,
+.skin-blue-light .sidebar-menu > li.active > a,
+.skin-blue-light .sidebar-menu > li > a {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: inherit;
+
+}
+
+.skin-blue-light .sidebar-menu > li > a:hover {
+    overflow: visible;
+    white-space: normal;
+    height: auto; /* just added this line */
+}
+
+/* form validation error with no border*/
+.formError .formErrorContent {
+    border: 0;
+    border-radius: 0;
+}
+
+select, .form-control {
+    border-color: #f0f0f0;
+    /*border-color: lightgrey;*/
+}
+
+input:focus {
+    -webkit-animation: animation 2s ease-in-out;
+    -moz-animation: animation 2s ease-in-out;
+}
+
+.select2-container.select2-container-disabled {
+    padding: 0;
+}
+
+
+.select2-container.select2-container-disabled .select2-choice .select2-arrow {
+    background-color: transparent;
+}
+
+.formError .formErrorArrow div {
+    border-left: 0;
+    border-right: 0;
+}
+
+.formError .formErrorArrow .line3,
+.formError .formErrorArrow .line2,
+.formError .formErrorArrow .line1 {
+    border-left: 0;
+    border-right: 0;
+    background-color: red;
+}
+
+.dashboard-tile {
+    padding: 15px;
+}
+
+/* Make module CTA block semi-transparent*/
+
+/* Small font size in dashboard box*/
+.small-box h3 {
+    font-size: 16px;
+}
+
+/* Make accordion header smaller */
+
+.panel-title {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.panel-title a {
+    display: block;
+}
+
+.panel-title a:hover {
+    display: block;
+    text-decoration: none;
+    color: grey;
+}
+
+.panel-title .material-icons-outlined,
+.panel-title .material-symbols-outlined,
+.panel-title .fa,
+.panel-title .fi,
+.panel-title i,
+.panel-title ion-icon {
+    margin-right: 15px;
+    font-size: 22px;
+    position: relative;
+    float: left;
+}
+
+.panel-title .fa,
+.panel-title .fi,
+.panel-title i {
+    margin-right: 24px;
+}
+
+/* Reduce space from accordion panel bottom*/
+.panel-group {
+    margin-bottom: 10px;
+    padding-right: 30px;
+}
+
+.panel {
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    border: 1px solid lightgrey;
+}
+
+.panel-default > .panel-heading {
+    color: inherit
+}
+
+.panel-collapse {
+    margin: 10px 0 15px;;
+}
+
+/* Show full border for text-area*/
+textarea.form-control {
+    padding: 5px;
+    height: 100px;
+}
+
+.datatable-container {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+/* Remove border bottom from datatable rows_per_page selector */
+.dataTables_length {
+    float: left;
+}
+
+.dt-buttons {
+    float: right;
+}
+
+.div.dataTables_length select {
+    border-bottom: 0;
+}
+
+div.dataTables_length label {
+    float: right;
+}
+
+.dt-refresh-btn {
+    /*margin-right: 5px;*/
+}
+
+ion-icon {
+    pointer-events: none;
+    visibility: hidden;
+    vertical-align: middle;
+    text-align: center;
+    margin-top: -2px;
+}
+
+.sidebar-menu {
+    margin-top: 10px;
+}
+
+.sidebar-menu .treeview-menu {
+    padding-left: 10px;
+    padding-bottom: 10px;
+    border-left: 2px solid blue;
+}
+
+.sidebar-mini.sidebar-collapse .sidebar-menu > li {
+    min-height: 40px;
+}
+
+.sidebar-menu > li > a > .fa,
+.sidebar-menu > li > a > .glyphicon,
+.sidebar-menu > li > a > .ion,
+.sidebar-menu > li > a > ion-icon,
+.sidebar-menu > li > a > .material-icons-outlined,
+.sidebar-menu > li > a > .material-symbols-outlined,
+.sidebar-menu > li > a > .fi {
+    width: 15px;
+    margin-right: 16px;
+    font-size: inherit;
+    line-height: inherit;
+    float: left;
+}
+
+.sidebar-menu .treeview-menu > li > a {
+    padding-top: 10px;
+    font-size: inherit;
+    font-weight: inherit;
+}
+
+.sidebar-menu .treeview-menu > li > a > .fa,
+.sidebar-menu .treeview-menu > li > a > .glyphicon,
+.sidebar-menu .treeview-menu > li > a > .ion,
+.sidebar-menu .treeview-menu > li > a > ion-icon,
+.sidebar-menu .treeview-menu > li > a > .material-icons-outlined,
+.sidebar-menu .treeview-menu > li > a > .material-symbols-outlined,
+.sidebar-menu .treeview-menu > li > a > .fi {
+    width: 15px;
+    margin-right: 10px;
+    font-size: inherit;
+    line-height: inherit;
+    float: left;
+}
+
+.sidebar-menu > li > a > ion-icon,
+.sidebar-menu .treeview-menu > li > a > ion-icon {
+    font-size: 20px;
+}
+
+pre.sf-dump, pre.sf-dump .sf-dump-default {
+    z-index: 100;
+!important;
+}
+
+/* Resize dashboard blocks */
+.small-box .icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 0;
+    font-size: 30px;
+    color: rgba(0, 0, 0, 0.15);
+}
+
+.modal {
+    overflow: auto !important;
+}
+
+.modal-open .modal {
+    z-index: 9999;
+}
+
+.modal-title {
+    float: left;
+}
+
+.modal-content {
+    border-radius: 5px;
+}
+
+.pagination {
+    margin: 0;
+}
+
+.pagination > li > a, .pagination > li > span {
+    padding: 5px 8px;
+}
+
+.callout h4 {
+    font-weight: inherit;
+    color: inherit;
+    font-size: 18px;
+}
+
+.callout a {
+    color: #3c8dbc;
+    text-decoration: underline;
+}
+
+.callout {
+    /*border-radius: 3px;*/
+    margin: 0 0 20px 0;
+    padding: 15px 30px 15px 15px;
+    /*border-left: 5px solid #eee; */
+    border-left: 0;
+}
+
+.callout a:hover {
+    color: inherit;
+}
+
+.ajax-msg {
+    padding-top: 0;
+}
+
+.modal-header {
+    border-bottom: 0;
+}
+
+.modal-footer {
+    border-top: 0;
+}
+
+.ajaxMsg {
+    padding-bottom: 0;
+}
+
+a i {
+    color: inherit;
+}
+
+.border-dashed {
+    border: 1px gainsboro dashed;
+}
+
+.border-dotted {
+    border: 2px gainsboro dotted;
+}
+
+.bordered {
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: white;
+}
+
+.bordered-smart-red {
+    border: 1px solid #fc466b;
+    border-radius: 5px;
+    padding: 10px;
+
+}
+
+.errorDiv a {
+    color: #3c8dbc;
+}
+
+/* Use this to align input field */
+.align-with-input {
+    /*margin-top: 18px;*/
+    margin-top: 25px;
+}
+
+/* Use this to align plain text with input field */
+.align-text-with-input {
+    margin-top: 31.5px;
+}
+
+.select2-container .select2-choice .select2-arrow {
+    background-image: none;
+    background: transparent;
+}
+
+.ajax-file-upload-statusbar {
+    border: 0 solid lightgray;
+    width: 420px;
+    margin: 0;
+    padding: 0;
+}
+
+.ajax-upload-dragdrop {
+    border: 1px dashed lightskyblue;
+    background-color: white;
+    width: 100%;
+    color: #dadce3;
+    text-align: left;
+    vertical-align: middle;
+    padding: 10px 10px 10px 10px;
+}
+
+/* Text and background colours*/
+.text-smart-blue {
+    color: #3f5efb;
+}
+
+.text-smart-red {
+    color: #fc466b;
+}
+
+.text-dark-gray {
+    color: #777777;
+}
+
+.text-blueviolet {
+    color: blueviolet;
+}
+
+.bg-smart-blue, .bg-smart-blue:hover {
+    background-color: #3f5efb;
+    color: white;
+}
+
+.bg-blueviolet, .bg-blueviolet:hover {
+    background-color: blueviolet;
+    color: white;
+}
+
+button.bg-white:hover {
+    background-color: #3f5efb;
+    border-color: #3f5efb;
+    color: white;
+}
+
+.bg-white {
+    background-color: white;
+}
+
+.bg-smart-red, .bg-smart-red:hover {
+    background-color: #fc466b;
+    color: white;
+}
+
+.left-bar-red {
+    border-left: 5px solid red;
+    padding-left: 10px;
+}
+
+.left-bar-smart-red {
+    border-left: #fc466b;
+    padding-left: 10px;
+}
+
+.login-page .btn.btn-success, .btn.btn-primary {
+    background-color: #3f5efb;
+}
+
+.mark, mark {
+    padding: 0;
+    background-color: yellow;
+}
+
+.transparent, .bg-transparent {
+    background-color: transparent;
+}
+
+.block {
+    display: block;
+}
+
+.dropdown-menu button:hover {
+    text-decoration: underline;
+}
+
+.column-sort {
+    font-size: 8px;
+}
+
+.sort-btn {
+    white-space: normal;
+}
+
+.partBuilderTable > tbody > tr > td, #partsBuilder > tbody > tr > th, #partsBuilder > tfoot > tr > td, #partsBuilder > tfoot > tr > th, #partsBuilder > thead > tr > td, #partsBuilder > thead > tr > th {
+    border: 0;
+}
+
+textarea.json {
+    font-family: Monospace, serif;
+}
+
+.truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 130px;
+}
+
+.truncate:hover {
+    overflow: visible;
+}
+
+.pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+    /*background-color: #3f5efb;*/
+    background-color: lightgrey;
+    border-color: lightgrey;
+}
+
+.print-btn {
+    margin: 10px 0;
+}
+
+/**************************
+ * Font sizes
+ *************************/
+.f-8 {
+    font-size: 8px;
+}
+
+.f-9 {
+    font-size: 9px;
+}
+
+.f-10 {
+    font-size: 10px;
+}
+
+.f-11 {
+    font-size: 11px;
+}
+
+.f-11 {
+    font-size: 11px;
+}
+
+.f-12 {
+    font-size: 12px;
+}
+
+.f-13 {
+    font-size: 13px;
+}
+
+.f-14 {
+    font-size: 14px;
+}
+
+.f-16 {
+    font-size: 16px;
+}
+
+.f-18 {
+    font-size: 18px;
+}
+
+.f-20 {
+    font-size: 20px;
+}
+
+.f-24 {
+    font-size: 24px;
+}
+
+.f-24 {
+    font-size: 24px;
+}
+
+.f-36 {
+    font-size: 36px;
+}
+
+.f-48 {
+    font-size: 48px;
+}
+
+/**************************
+ * Module quick finder
+ *************************/
+.quick-modules-menu > .dropdown-menu {
+    width: 300px;
+}
+
+.quick-modules-menu > .dropdown-menu > .dropdown-item {
+    padding: 10px;
+}
+
+ul.quick-module-list {
+    list-style: none;
+    padding-left: 10px;
+}
+
+.skin-blue-light .main-header .navbar .dropdown-menu li a {
+    color: inherit;
+}
+
+ul.quick-module-list li {
+    padding: 5px 5px 5px 0;
+    font-size: inherit;
+}
+
+.module-base-form {
+    margin-top: 10px;
+}
+
+.nav-tabs-custom > .nav-tabs > li > a {
+    color: royalblue;
+}
+
+.report-filter-tabs {
+    box-shadow: none;
+}
+
+/** Datatable buttons */
+.dt-button {
+
+}
+
+.text-overflow-hide {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.info-box {
+    display: block;
+    min-height: 90px;
+    /* background: #fff; */
+    width: 100%;
+    /*box-shadow: 0 4px 13px rgb(0 0 0 / 10%);*/
+    box-shadow: none;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+
+.info-box-icon {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    background: transparent;
+}
+
+label.required::after {
+    font-weight: bold;
+    color: red;
+    content: "* ";
+}
+
+.info-box-content {
+    padding: 15px 10px 5px 0;
+
+}
+
+/**** Is active: starts **************/
+.is-active-div {
+    border: 1px solid #f0f0f0;
+    border-radius: 3px;
+    padding: 5px 10px;
+    width: 134px;
+    float: left;
+}
+
+.bordered-checkbox {
+    border: 1px solid #f0f0f0;
+    border-radius: 3px;
+    padding: 8px 15px 8px 10px;
+    width: auto;
+    float: left;
+    margin: 0 10px 0 0;
+    background-color: white;
+}
+
+.bordered-checkbox input {
+    float: left;
+    margin-top: 1px;
+}
+
+.bordered-checkbox label {
+    top: 12px;
+    float: left;
+    margin: 0 0 0 15px;
+}
+
+.label_is_active {
+    margin: 0;
+}
+
+/**** Is active : ends **************/
+
+/**
+* Boxed input
+**********************************************************/
+/*
+.boxed-input label {
+    color: white;
+    font-weight: bold;
+    background-color: #fc466b;
+    display: block;
+    padding: 2px 5px;
+    border-radius: 3px 3px 0 0;
+    margin-bottom: 0;
+}
+
+.boxed-input {
+    !*float: left;*!
+}
+
+.boxed-input .form-control {
+    border: 2px #fc466b solid;
+    border-radius: 0 0 3px 3px;
+}
+*/
+
+.boxed label {
+    border: 2px lightgrey solid;
+    display: block;
+    padding: 10px 12px 0;
+    border-radius: 5px 5px 0 0;
+    border-bottom: 0;
+    margin-bottom: 0;
+}
+
+.boxed .selection-data {
+    border: 2px lightgrey solid;
+    border-top: 0;
+    border-radius: 0 0 5px 5px;
+    padding: 10px;
+}
+
+/* Blue boxed*/
+.blue-boxed label {
+    border-color: cornflowerblue;
+}
+
+.blue-boxed .selection-data {
+    border-color: cornflowerblue;
+}
+
+.blue-boxed label, .blue-boxed .selection-data {
+    background-color: aliceblue;
+}
+
+/*****************************************************
+* Bordered input field for ajax-preview-search select
+******************************************************/
+.gray-boxed label {
+    border-color: lightgrey;
+}
+
+.gray-boxed .selection-data {
+    border-color: lightgrey;
+}
+
+.btn-select-result {
+    background-color: white;
+    border: 2px green solid;
+    color: green;
+}
+
+.btn-select-result:hover {
+    color: white;
+    border: 2px green solid;
+    background-color: green;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Buttons of different colours
+|--------------------------------------------------------------------------
+*/
+
+.btn-transparent {
+    /*border: 1px grey solid;*/
+    background-color: transparent;
+}
+
+.btn-transparent:hover {
+    background-color: transparent;
+    /*color: blue;*/
+}
+
+.btn-bordered-green {
+    border: 1px green solid;
+    background-color: white;
+    color: green;
+}
+
+.btn-bordered-green:hover {
+    background-color: green;
+    border-color: green;
+    color: white;
+}
+
+.btn-bordered-blueviolet {
+    border: 1px blueviolet solid;
+    background-color: white;
+    color: blueviolet;
+}
+
+.btn-bordered-blueviolet:hover {
+    background-color: blueviolet;
+    border-color: blueviolet;
+    color: white;
+}
+
+.btn-bordered-blue {
+    border: 1px royalblue solid;
+    background-color: white;
+    color: royalblue;
+}
+
+.btn-bordered-blue:hover {
+    background-color: royalblue;
+    border-color: royalblue;
+    color: white;
+}
+
+.btn-bordered-smart-red {
+    border: 1px #fc466b solid;
+    background-color: white;
+    color: #fc466b;
+}
+
+.btn-bordered-smart-red:hover {
+    background-color: #fc466b;
+    border-color: #fc466b;
+    color: white;
+}
+
+.btn-bordered-red {
+    border: 1px red solid;
+    background-color: white;
+    color: red;
+}
+
+.btn-bordered-red:hover {
+    background-color: red;
+    border-color: red;
+    color: white;
+}
+
+.btn-transparent-red {
+    border: 1px white solid;
+    background-color: white;
+    color: red;
+}
+
+.btn-transparent-red:hover {
+    /*background-color: red;*/
+    border-color: red;
+    color: red;
+}
+
+.btn-secondary {
+    border: 1px royalblue solid;
+    background-color: white;
+    color: royalblue;
+}
+
+.btn-secondary:hover {
+    background-color: white;
+    border-color: black;
+    color: inherit;
+}
+
+/**
+* Text transforms
+******************************************************/
+
+.uppercase, .uc {
+    text-transform: uppercase;
+}
+
+.lowercase, .lc {
+    text-transform: lowercase;
+}
+
+/**
+* back-link
+******************************************************/
+.back-link {
+    border: 1px solid lightgrey;
+}
+
+.nav-tabs-custom > .nav-tabs > li.active {
+    border-top-color: white;
+}
+
+/**
+* alerts
+******************************************************/
+.alert.alert-danger-light {
+    background-color: rgba(255, 219, 225, 0.68);
+    color: darkred;
+    border: 1px darkred solid
+}
+
+/*
+|--------------------------------------------------------------------------
+| background colours
+|--------------------------------------------------------------------------
+|
+|
+*/
+.bg-No {
+    background-color: lightcoral;
+    color: white;
+}
+
+.bg-Yes {
+    background-color: lightgreen;
+    /*color: white;*/
+}
+
+/*
+|--------------------------------------------------------------------------
+| Animation
+|--------------------------------------------------------------------------
+*/
+
+.hvr-buzz-on {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    -webkit-animation-name: hvr-buzz;
+    animation-name: hvr-buzz;
+    -webkit-animation-duration: .5s;
+    animation-duration: .5s;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Quick filter
+|--------------------------------------------------------------------------
+*/
+
+.info-box.quick-filter {
+    min-height: 60px;
+    border: 1px solid lightgrey;
+    /*box-shadow: 0 4px 13px rgb(0 0 0 / 10%);*/
+}
+
+.info-box.quick-filter .info-box-icon, .info-box.quick-filter .info-box-content {
+    border: 0;
+}
+
+.info-box.quick-filter .info-box-icon {
+    height: 60px;
+
+    border-right: 0;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    overflow: hidden;
+}
+
+.info-box.quick-filter .info-box-content {
+    margin-left: 60px;
+    padding: 5px 10px;
+    height: 60px;
+    border-left: 0;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    cursor: pointer;
+
+}
+
+.info-box.quick-filter a,
+.info-box.quick-filter a:hover,
+.info-box.quick-filter a:visited,
+.info-box.quick-filter a:link {
+    color: #666;
+}
+
+.info-box.quick-filter .info-box-content .info-box-text {
+    text-transform: none;
+    margin-top: 4px;
+}
+
+/*.info-box-number {*/
+/*    font-family: "Lexend", "Poppins", "Inter", "Roboto", "Arial", sans-serif;*/
+/*}*/
+
+.info-box.quick-filter .info-box-content .info-box-number {
+    font-weight: bolder;
+    font-size: 22px;
+}
+
+.panel-heading {
+    cursor: pointer;
+    color: inherit
+}
+
+.tab-content > .tab-pane {
+    padding: 20px 10px;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Tab with blue border
+|--------------------------------------------------------------------------
+| Adds blue border around the tabs and contents with-in the tab
+|
+*/
+.nav-tabs-custom {
+    box-shadow: none;
+}
+
+.nav-tabs-custom > .nav-tabs,
+.nav-tabs-custom > .nav-tabs > li.active > a,
+.nav-tabs-custom > .nav-tabs > li:first-of-type.active > a,
+.nav-tabs-custom > .tab-content {
+    border-color: lightgrey;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px 5px 0 0;
+}
+
+.nav-tabs-custom > .tab-content {
+    border-radius: 5px;
+}
+
+.nav-tabs-custom > .nav-tabs {
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 0;
+
+}
+
+.nav-tabs-custom > .nav-tabs > li.active > a {
+    border-bottom: 0;
+    /*background-color: white;*/
+    /*bottom: -1px;*/
+}
+
+.nav-tabs-custom > .nav-tabs > li:first-of-type.active > a {
+    border-bottom: 0;
+}
+
+.slimscroll {
+    position: relative;
+    overflow: hidden;
+    width: auto;
+    height: 250px;
+}
+
+
+/***********************************************/
+
+div.filecard .info-box-icon {
+    height: 84px;
+    width: 84px;
+}
+
+.filecard .info-box {
+    border: 1px solid white;
+}
+
+.filecard .info-box:hover {
+    border: 1px solid lightskyblue;
+}
+
+.filecard .info-box .img-thumb-div {
+    overflow: hidden;
+    padding: 0;
+}
+
+.selected-yes, .selected-1 {
+    border-color: green;
+}
+
+.selected-no, .selected-0 {
+    border-color: orangered;
+}
+
+.conditionally-visible {
+    display: none;
+}
+
+.preview * {
+    font-size: 12px;
+}
+
+/** >> Status colour:start **/
+.status-new {
+    background-color: #ffcccc;
+}
+
+.status-closed {
+    background-color: #d3d3d3;
+}
+
+.status-in-progress {
+    background-color: #ffff99;
+}
+
+.status-solved {
+    background-color: #ccff99;
+}
+
+.status-re-assigned {
+    background-color: #ffcccc;
+}
+
+.status-answered {
+    background-color: #ccff99;
+}
+
+.status-approved {
+    background-color: #ccff99;
+}
+
+.status-draft {
+    background-color: #ffcccc;
+}
+
+.status-requested {
+    background-color: #ffcccc;
+}
+
+.status-font-color {
+    color: #333;
+}
+
+/** << Status colour:end **/
+
+
+/* Pulse button >>> */
+.pulse-button {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+    }
+
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+    }
+
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+    }
+}
+
+/* <<< Pulse button */
+
+
+/* Center align div >>> */
+/* Method 1: Using flexbox */
+.center-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Method 2: Using margin auto */
+.center-margin {
+    margin: 0 auto;
+    width: 50%; /* or any specific width */
+}
+
+/* Method 3: Using position absolute */
+.center-position {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Method 4: Using grid */
+.center-grid {
+    display: grid;
+    place-items: center;
+}
+
+/* <<< Center align div */

@@ -1,0 +1,70 @@
+#!/bin/bash
+
+## Linux
+FORGE_COMPOSER='/usr/bin/php8.2 /usr/local/bin/composer'
+FORGE_PHP='/usr/bin/php8.2'
+FORGE_PHP_FPM='php8.2-fpm'
+FORGE_SITE_BRANCH='development'
+FORGE_SITE_PATH='/path/to/site'
+
+## Windows
+FORGE_COMPOSER='/c/users/user/.config/herd/bin/php74/php /c/ProgramData/ComposerSetup/bin/composer.phar'
+FORGE_PHP='/c/users/user/.config/herd/bin/php74/php'
+FORGE_PHP_FPM='php7.4-fpm'
+FORGE_SITE_BRANCH='6.1'
+FORGE_SITE_PATH='/d/MAMP/htdocs/mainframe'
+
+## Change to the project directory
+cd $FORGE_SITE_PATH
+
+## Turn on maintenance mode
+$FORGE_PHP artisan down || true
+
+## Pull the latest changes from the git repository.
+git reset --hard
+git clean -df
+git pull origin $FORGE_SITE_BRANCH
+
+## Install/update composer dependencies
+# $FORGE_COMPOSER install --no-interaction --prefer-dist --optimize-autoloader --no-dev
+$FORGE_COMPOSER install --no-interaction --prefer-dist --optimize-autoloader
+
+## Restart FPM
+# ( flock -w 10 9 || exit 1
+#    echo 'Restarting FPM...'; sudo -S service $FORGE_PHP_FPM reload ) 9>/tmp/fpmlock
+
+## Run database migrations
+$FORGE_PHP artisan migrate --force
+
+## Clear caches
+$FORGE_PHP artisan cache:clear
+
+## Clear expired password reset tokens
+$FORGE_PHP artisan auth:clear-resets
+
+## Clear and cache routes (or only use clear if caching issue occurs)
+# php artisan route:cache
+$FORGE_PHP artisan route:clear
+
+## Clear and cache config (or only use clear if caching issue occurs)
+# php artisan config:cache
+$FORGE_PHP artisan config:clear
+
+## Clear and cache views (or only use clear if caching issue occurs)
+# $FORGE_PHP artisan view:cache
+$FORGE_PHP artisan view:clear
+
+## Optimize laravel. Cache config and route files. Disable if it causes build issue
+# $FORGE_PHP artisan optimize
+
+## Install node modules
+# npm ci
+
+## Build assets using Laravel Mix
+# npm run production
+
+## Restart queue
+$FORGE_PHP artisan queue:restart
+
+## Turn off maintenance mode
+$FORGE_PHP artisan up

@@ -1,0 +1,118 @@
+/***********************************************************************
+* Global font settings
+************************************************************************/
+body, html, .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6,
+.content-header h4, .main-header, input, textarea, label {
+    font-family: "Lexend", "Inter", "Karla", "Roboto", "Arial", sans-serif;
+!important;
+    color: #3d3d3d;
+}
+
+body, .form-control, .btn, table, tr, th, td, thead, tbody, .dropdown-menu,
+.skin-blue-light .sidebar-menu > li > a,
+.skin-blue .sidebar-menu > li > a {
+    font-size: 13px;
+    font-weight: inherit;
+}
+
+.main-header .logo, .logo, .logo-mini, .logo-lg, .login-logo, .register-logo, .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    font-family: inherit;
+}
+
+.main-header .logo, .logo, .logo-mini, .logo-lg {
+    font-family: inherit;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+}
+
+label {
+    color: gray;
+}
+
+b, strong, .bold, .strong, .b {
+    font-weight: bold;
+}
+
+.main-header, .skin-blue .main-header .navbar {
+    /*background-image: none;*/
+    /*background: royalblue;*/
+}
+
+.login-page {
+    /*background-image: url('../images/header2.jpg');*/
+}
+
+.main-header {
+    /*background-image: none;*/
+}
+
+/*
+|--------------------------------------------------------------------------
+| Right side content background light grey
+|--------------------------------------------------------------------------
+*/
+
+/** >> Content background: start */
+.content-wrapper, .right-side, .wrapper, .cta-block {
+    background-color: #f4f4f4;
+}
+
+.content {
+    background-color: inherit;
+}
+
+.nav-tabs-custom {
+    background-color: transparent;
+}
+
+.nav-tabs-custom > .nav-tabs > li {
+    border: 0;
+}
+
+/** << Content background: end */
+
+/** >> Left menu: start */
+.skin-blue-light .main-sidebar,
+.skin-blue-light .left-side,
+.skin-blue-light .sidebar-menu > li > .treeview-menu,
+.skin-blue-light .treeview-menu > li > a {
+    background-color: #1b1e21;
+    color: lightgrey;
+}
+
+.skin-blue-light .sidebar-menu > li:hover > a, .skin-blue-light .sidebar-menu > li.active > a {
+    background-color: #333333;
+}
+
+.skin-blue-light .treeview-menu > li > a:hover {
+    text-decoration: underline;
+}
+
+.skin-blue-light .treeview-menu > li.active > a {
+    color: grey;
+}
+
+/** << Left menu:end */
+
+/*
+|--------------------------------------------------------------------------
+| Input with left and bottom borders : start
+|--------------------------------------------------------------------------
+| Removes left and bottom borders from input so that it is less messy.
+|
+*/
+/*
+label { margin-bottom: 0; text-transform: capitalize; }
+
+.form-control { padding: 0 12px; border-top: 0; border-right: 0; }
+
+div.form-group span.readonly { padding: 5px; }
+
+.select2-container .select2-choice { padding: 3px 0 5px 0; }
+
+.align-with-input {margin-top: 18.5px}
+*/

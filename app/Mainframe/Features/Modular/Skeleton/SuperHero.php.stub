@@ -1,0 +1,108 @@
+<?php
+
+namespace App\Mainframe\Modules\SuperHeroes;
+
+use App\Mainframe\Features\Modular\BaseModule\BaseModule;
+
+class SuperHero extends BaseModule
+{
+    use SuperHeroHelper, SuperHeroScope;
+
+    protected $moduleName = 'super-heroes';
+    protected $table = 'super_heroes';
+    /*
+    |--------------------------------------------------------------------------
+    | Properties
+    |--------------------------------------------------------------------------
+    */
+    protected $fillable = [
+        'project_id',
+        'tenant_id',
+        'uuid',
+        'name',
+        'is_active',
+    ];
+
+    // protected $guarded = [];
+    // protected $dates = ['created_at', 'updated_at', 'deleted_at']; // Deprecated in Laravel 10, use $casts
+    // protected $casts = [];
+    // protected $with = []; // Should be left empty!!
+    // protected $appends = []; // Should be left empty!!
+    protected $spreadFields = [];
+    protected $tagFields = [];
+
+    /*
+    |--------------------------------------------------------------------------
+    | Option values
+    |--------------------------------------------------------------------------
+    */
+    // public static $types = [];
+
+    /*
+    |--------------------------------------------------------------------------
+    | Boot method and model events.
+    |--------------------------------------------------------------------------
+    */
+    protected static function boot()
+    {
+        parent::boot();
+        self::observe(SuperHeroObserver::class);
+
+        // static::saving(function (SuperHero $element) { });
+        // static::creating(function (SuperHero $element) { });
+        // static::updating(function (SuperHero $element) { });
+        // static::created(function (SuperHero $element) { });
+        // static::updated(function (SuperHero $element) { });
+        // static::saved(function (SuperHero $element) { });
+        // static::deleting(function (SuperHero $element) { });
+        // static::deleted(function (SuperHero $element) { });
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Section: Query scopes + Dynamic scopes
+    |--------------------------------------------------------------------------
+    */
+
+    /*
+    |--------------------------------------------------------------------------
+    | Section: Accessors
+    |--------------------------------------------------------------------------
+    */
+
+    /*
+    |--------------------------------------------------------------------------
+    | Section: Mutators
+    |--------------------------------------------------------------------------
+    */
+
+    /*
+    |--------------------------------------------------------------------------
+    | Section: Attributes
+    |--------------------------------------------------------------------------
+    */
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Section: Helpers
+    |--------------------------------------------------------------------------
+    */
+    /**
+     * Alias method to get the processor
+     *
+     * @return SuperHeroProcessor
+     * @noinspection SenselessProxyMethodInspection
+     */
+    public function processor()
+    {
+        return parent::processor();
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Section: Relations
+    |--------------------------------------------------------------------------
+    */
+
+}

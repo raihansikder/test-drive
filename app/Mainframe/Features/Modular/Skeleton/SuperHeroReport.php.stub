@@ -1,0 +1,20 @@
+<?php
+
+namespace App\Mainframe\Modules\SuperHeroes;
+
+use App\Mainframe\Features\Report\ModuleReportBuilder;
+
+class SuperHeroReport extends ModuleReportBuilder
+{
+    public $moduleName = 'super-heroes';
+
+    /** @var  string Directory location of the report blade templates */
+
+    public $path = 'project.layouts.report';
+
+    /**
+     * @var string[]
+     */
+    public $fullTextFields = ['name', 'name_ext'];
+
+}
