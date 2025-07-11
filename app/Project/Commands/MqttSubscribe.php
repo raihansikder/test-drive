@@ -2,6 +2,7 @@
 
 namespace App\Project\Commands;
 
+use App\SystemEvent;
 use Illuminate\Console\Command;
 use PhpMqtt\Client\Facades\MQTT;
 
@@ -28,10 +29,18 @@ class MqttSubscribe extends Command
      */
     public function handle()
     {
+        //      mosquitto_sub -h 19019f5980de4a1fa4dc4ae31bb68da7.s1.eu.hivemq.cloud -p 8883 -t "#" -u apollo -P 76_eLV+gmG\MyRK}
+
+        $str= '--';
         $mqtt = MQTT::connection();
         $mqtt->subscribe('test-nodes/+/status', function (string $topic, string $message) {
-            echo sprintf('Received message on topic [%s]: %s', $topic, $message);
+            $str = sprintf('Received message on topic [%s]: %s', $topic, $message);
+            // MQTT::publish('test-xx-nodes/1/status', $str);
+            SystemEvent::log('MqttSubscribe', ['details' => $str]);
+            echo $str.PHP_EOL;
         });
+
+
 
         $mqtt->loop(true);
         return Command::SUCCESS;
