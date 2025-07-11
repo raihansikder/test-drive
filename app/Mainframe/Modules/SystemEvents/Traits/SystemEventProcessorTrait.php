@@ -18,7 +18,7 @@ trait SystemEventProcessorTrait
     */
 
     /**
-     * Pre-fill model before running rule based validations
+     * Pre-fill the model before running rule-based validations
      *
      * @param  SystemEvent  $element
      * @return $this
@@ -32,7 +32,13 @@ trait SystemEventProcessorTrait
         $element->type = $element->type ?? 'Event';
         $element->user_id = $element->user_id ?? user()->id;
         $element->occurred_at = $element->occurred_at ?? Carbon::now();
-        $element->details = $element->details ?? [];
+
+        if (is_array($element->details)) {
+            $element->details = json_encode($element->details);
+        } elseif (is_object($element->details)) {
+            $element->details = serialize($element->details);
+        }
+
         $element->url = $element->url ?? request()->url();
         $element->ip_address = $element->ip_address ?? request()->ip();
         $element->user_agent = $element->user_agent ?? request()->userAgent();

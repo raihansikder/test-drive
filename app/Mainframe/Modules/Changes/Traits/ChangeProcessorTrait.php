@@ -14,7 +14,7 @@ trait ChangeProcessorTrait
     */
 
     /**
-     * Pre-fill model before running rule based validations for save(create/update)
+     * Pre-fill the model before running rule-based validations for save(create/update)
      *
      * @param  Change  $element
      * @return $this

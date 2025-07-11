@@ -34,7 +34,7 @@ trait UploadControllerTrait
     |--------------------------------------------------------------------------
     */
     /**
-     * Laravel rule based validator that is called during store.
+     * Laravel rule-based validator that is called during store.
      * This only validates the request. For upload, the file
      * type validation has to be done in the request level
      * before moving on to processor level.

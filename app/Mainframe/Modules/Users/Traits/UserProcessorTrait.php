@@ -12,7 +12,7 @@ use App\Mainframe\Modules\Users\UserProcessor;
 trait UserProcessorTrait
 {
     /**
-     * Pre-fill model before running rule based validations
+     * Pre-fill the model before running rule-based validations
      *
      * @param  \App\User  $element
      * @return $this

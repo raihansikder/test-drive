@@ -83,7 +83,7 @@ trait RequestValidator
     }
 
     /**
-     * Laravel rule based validator that is called during store.
+     * Laravel rule-based validator that is called during store.
      * This only validates the request.
      *
      * @return \Illuminate\Validation\Validator
@@ -106,7 +106,7 @@ trait RequestValidator
     }
 
     /**
-     * Laravel rule based validator that is called during update.
+     * Laravel rule-based validator that is called during update.
      * This only validates the request.
      *
      * @return \Illuminate\Validation\Validator
@@ -129,7 +129,7 @@ trait RequestValidator
     }
 
     /**
-     * Laravel rule based validator that is called during save or update.
+     * Laravel rule-based validator that is called during save or update.
      * This is a common place to write validation rules that apply
      * for both create and update.
      * This only validates the request.
@@ -154,7 +154,7 @@ trait RequestValidator
     }
 
     /**
-     * Laravel rule based validator that is called during delete.
+     * Laravel rule-based validator that is called during delete.
      * This only validates the request.
      *
      * @return \Illuminate\Contracts\Validation\Validator

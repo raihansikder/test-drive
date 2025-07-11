@@ -14,7 +14,7 @@ trait PushNotificationProcessorTrait
     */
 
     /**
-     * Pre-fill model before running rule based validations
+     * Pre-fill the model before running rule-based validations
      *
      * @param  PushNotification  $element
      * @return $this

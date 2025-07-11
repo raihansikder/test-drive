@@ -18,7 +18,7 @@ trait ContentProcessorTrait
     */
 
     /**
-     * Pre-fill model before running rule based validations
+     * Pre-fill the model before running rule-based validations
      *
      * @param  Content  $element
      * @return $this

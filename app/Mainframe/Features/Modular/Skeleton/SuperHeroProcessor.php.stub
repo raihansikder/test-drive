@@ -29,7 +29,7 @@ class SuperHeroProcessor extends ModelProcessor
     */
 
     // /**
-    //  * Pre-fill model before running rule based validations
+    //  * Pre-fill the model before running rule-based validations
     //  *
     //  * @param  SuperHero  $element
     //  * @return $this

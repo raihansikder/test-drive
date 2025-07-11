@@ -73,20 +73,45 @@ trait SystemEventTrait
     */
 
     /**
-     * Store system event
+     * Store system event in DB. Events are saved asynchronously using a job.
+     *
+     * [params]
+     *  - provider      : The event provider. The entity that generates the event. Default:SystemEventProvider
+     *  - source        : Source of the event. BE, FE, App etc. Default:BE
+     *  - environment   : local, development, production. Default: BE .env
+     *  - type          : Issue, Event, Log. Default: Event
+     *  - user_id       : Default: current user id
+     *  - details       : An array or string
+     *  - tags          : Array or csv
+     *
      * @param  string  $name
-     * @param  array  $params
-     * @param $model
+     * @param  mixed  $params  This can be given as an array with keys
+     * @param  null  $model
+     * @param  null  $details
      * @return void
+     * @noinspection DuplicatedCode
      */
-    public static function log(string $name, array $params = [], $model = null)
+    public static function log(string $name, $params = null, $model = null, $details = null)
     {
         $systemEvent = new SystemEvent();
 
         $systemEvent->name = $name;
-        $systemEvent->fill($params);
-        $systemEvent->occurred_at = now();
 
+        // If param is given as an array, use it to fill the model.
+        if (is_array($params)) {
+            $systemEvent->fill($params);
+        } elseif (is_string($params)) { // If the param is given as a string, then use it to fill the details
+            $systemEvent->details = $params;
+        }
+
+        // If $details is explicitly given, use it to fill.
+        if ($details) {
+            $systemEvent->details = $details;
+        }
+
+        $systemEvent->occurred_at = now(); // Set time
+
+        // If $model is given, fill model related fields
         if ($model) {
             $systemEvent->module_id = $model->module()->id;
             $systemEvent->element_id = $model->id;
@@ -94,7 +119,6 @@ trait SystemEventTrait
         }
 
         $systemEvent->processor()->saveAsync();
-        // JobStoreSystemEvent::dispatch($systemEvent); // Causes memory leak
     }
 
     /*

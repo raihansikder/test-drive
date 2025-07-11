@@ -16,7 +16,7 @@ trait SupportTicketCategoryProcessorTrait
     */
 
     /**
-     * Pre-fill model before running rule based validations
+     * Pre-fill the model before running rule-based validations
      *
      * @param  SupportTicketCategory  $element
      * @return $this

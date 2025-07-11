@@ -30,7 +30,7 @@ trait EmailProcessorTrait
     }
 
     /**
-     * Pre-fill model before running rule based validations
+     * Pre-fill the model before running rule-based validations
      *
      * @param  Email  $element
      * @return $this

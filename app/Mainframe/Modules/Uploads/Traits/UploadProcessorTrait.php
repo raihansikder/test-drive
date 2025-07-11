@@ -13,7 +13,7 @@ trait UploadProcessorTrait
     */
 
     /**
-     * Pre-fill model before running rule based validations
+     * Pre-fill the model before running rule-based validations
      *
      * @param  Upload  $element
      * @return $this

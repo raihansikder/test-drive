@@ -14,7 +14,7 @@ trait CountryProcessorTrait
     |--------------------------------------------------------------------------
     */
     // /**
-    //  * Pre-fill model before running rule based validations
+    //  * Pre-fill the model before running rule-based validations
     //  *
     //  * @param  Country  $element
     //  * @return \App\Project\Modules\Countries\CountryProcessor

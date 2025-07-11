@@ -58,10 +58,9 @@ class JobAsyncSave implements ShouldQueue
         }
 
         # Log Success
-        $this->log(self::SUCCESS.' '.$this->msg(), [
-            'type' => 'Success',
-            'details' => [],
-        ], $this->element);
+        $this->log(self::SUCCESS.' '.$this->msg(),
+            ['type' => 'Success',],
+            $this->element);
     }
 
     /**
@@ -81,14 +80,16 @@ class JobAsyncSave implements ShouldQueue
     }
 
     /**
-     * Store a system event
+     * Store a system event.
+     * Note: We cannot use the SystemEvent::log() as it creates an infinite loop.
      *
      * @param  string  $name
-     * @param  array  $params
+     * @param  mixed  $params
      * @param $model
      * @return void
+     * @noinspection DuplicatedCode
      */
-    public function log(string $name, array $params = [], $model = null)
+    public function log(string $name, array $params = null, $model = null)
     {
         $systemEvent = new SystemEvent();
 
