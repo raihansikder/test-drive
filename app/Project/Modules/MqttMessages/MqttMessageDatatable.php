@@ -1,0 +1,124 @@
+<?php
+
+namespace App\Project\Modules\MqttMessages;
+
+use App\Project\Features\Datatable\ModuleDatatable;
+
+class MqttMessageDatatable extends ModuleDatatable
+{
+
+    public $moduleName = 'mqtt-messages';
+
+    public $booleans = ['is_active', 'is_processed', 'is_processable'];
+
+    // public $dates = []; // Add date column field names for auto formatting
+
+    /**
+     * Define the data source (table/model) for the base query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
+     * @noinspection PhpReturnDocTypeMismatchInspection
+     */
+    public function source()
+    {
+        // return \DB::table($this->table)->leftJoin('users as updater', 'updater.id', $this->table.'.updated_by'); // Table based implementation
+        return MqttMessage::with(['updater:id,name']); // Model-based query.
+    }
+
+    /*---------------------------------
+    | Section : Define columns and query
+    |---------------------------------*/
+
+    /**
+     * Columns to finally show in the datatable output
+     *
+     * @return array
+     */
+    public function columns()
+    {
+        return [
+            [$this->table.'.id', 'id', 'ID'],
+            [$this->table.'.topic', 'topic', 'Topic'],
+            // [$this->table.'.updated_by', 'updated_by', 'Updater'],
+            [$this->table.'.created_at', 'created_at', "<span style='width:150px;float:left'>Time</span>"],
+            [$this->table.'.is_processed', 'is_processed', 'Processed'],
+            [$this->table.'.is_processable', 'is_processable', 'Processable'],
+            [$this->table.'.processing_note', 'processing_note', 'Processing Note'],
+            // [$this->table.'.is_active', 'is_active', 'Active'],
+            [$this->table.'.body', 'body', "<span style='width:350px;float:left'>Body</span>"],
+        ];
+    }
+
+    /**
+     * SQL select statement to define which fields should be included in the SELECT
+     * Construct Sql select statement (field1 AS f1, field2 as f2...)
+     *
+     * @return array
+     */
+    public function selects()
+    {
+        $columns = array_merge($this->columns(), [
+            [$this->table.'.id', 'id'], // This will ensure that 'id' is selected in the select statement
+        ]);
+
+        return $this->selectQueryString($columns);
+    }
+
+    /*---------------------------------
+    | Section: Filters
+    |---------------------------------*/
+
+    /**
+     * Apply query filters
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
+     * @noinspection PhpUnnecessaryLocalVariableInspection
+     */
+    public function filter($query)
+    {
+        $query = parent::filter($query); // Make sure to invoke parent to apply default filter logic
+
+        // if ($val = request('param')) {
+        //     $query->whereIn('param', \Arr::wrap($val));
+        // }
+
+        return $query;
+    }
+
+    /*---------------------------------
+    | Section : Modify row-columns
+    |---------------------------------*/
+
+    /**
+     * Modify the content of the row/column
+     *
+     * @param  \Yajra\DataTables\DataTableAbstract  $dt
+     * @return \Yajra\DataTables\DataTableAbstract
+     * @noinspection PhpUnnecessaryLocalVariableInspection
+     */
+    public function modify($dt)
+    {
+        $dt = parent::modify($dt); // Make sure to invoke parent
+
+        // Example -
+        // if ($this->hasColumn('column')) {
+        //     $dt->editColumn('column', function ($row) {
+        //         return optional($row->lorem)->ipsum;
+        //     });
+        // }
+
+        return $dt;
+    }
+
+    /*---------------------------------
+    | Additional methods
+    |---------------------------------*/
+    // public function query()
+    // public function json()
+    // public function hasColumn()
+    // public function titles()
+    // public function columnsJson()
+    // public function ajaxUrl()
+    // public function identifier()
+}

@@ -2,7 +2,8 @@
 
 namespace App\Project\Commands;
 
-use App\SystemEvent;
+use App\MqttMessage;
+use PhpMqtt\Client\MqttClient;
 use Illuminate\Console\Command;
 use PhpMqtt\Client\Facades\MQTT;
 
@@ -13,7 +14,8 @@ class MqttSubscribe extends Command
      *
      * @var string
      */
-    protected $signature = 'mqtt:subscribe';
+    protected $signature = 'mqtt:subscribe {--topic=#}';
+
 
     /**
      * The console command description.
@@ -22,6 +24,7 @@ class MqttSubscribe extends Command
      */
     protected $description = 'Subscribe To MQTT topic';
 
+
     /**
      * Execute the console command.
      *
@@ -29,20 +32,35 @@ class MqttSubscribe extends Command
      */
     public function handle()
     {
-        //      mosquitto_sub -h 19019f5980de4a1fa4dc4ae31bb68da7.s1.eu.hivemq.cloud -p 8883 -t "#" -u apollo -P 76_eLV+gmG\MyRK}
+        $topic = $this->option('topic');
 
-        $str= '--';
-        $mqtt = MQTT::connection();
-        $mqtt->subscribe('test-nodes/+/status', function (string $topic, string $message) {
+        $mqtt = MQTT::connection(); // Connect to mqtt broker
+        $mqtt->subscribe($topic, function (string $topic, string $message) {
+            # Show the message in the console
             $str = sprintf('Received message on topic [%s]: %s', $topic, $message);
-            // MQTT::publish('test-xx-nodes/1/status', $str);
-            SystemEvent::log('MqttSubscribe', ['details' => $str]);
-            echo $str.PHP_EOL;
-        });
+            echo $str.PHP_EOL; // Echo in the console. You can use Laravel logger here.
 
+            # Processor handles the data extraction and saving to database
+            $proc = new MqttMessage([
+                'topic' => $topic,
+                'body' => $message,
+            ])->processor()->saveAsync();
 
+            if ($proc->isInvalid()) {
+                echo $proc->getErrorsAsSting().PHP_EOL; // Echo in the console. You can use Laravel logger here.
+            }
 
-        $mqtt->loop(true);
+            # Testing
+            # --------------------------------------------------------------------------------------------
+            // Todo: Remove after testing
+            // SystemEvent::log(name: 'Job:MqttSubscribe', details: ['topic' => $topic, 'message' => $message]);
+            // Publish the receipt on a separate topic and check using MQTT Explorer
+            // MQTT::publish('test/received', $message);
+            # --------------------------------------------------------------------------------------------
+        }, MqttClient::QOS_AT_LEAST_ONCE);
+
+        $mqtt->loop(true); // Loop forever
         return Command::SUCCESS;
     }
+
 }
