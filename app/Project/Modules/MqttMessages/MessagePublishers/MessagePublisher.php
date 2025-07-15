@@ -37,11 +37,11 @@ class MessagePublisher
     /**
      * Publish the mqtt message
      *
-     * @return void
+     * @return true
      */
     public function publish()
     {
-        MqttMessage::publish(
+        return MqttMessage::publish(
             topic: $this->topic(),
             message: $this->message(),
         );
@@ -73,6 +73,4 @@ class MessagePublisher
 
         return $this;
     }
-
-
 }

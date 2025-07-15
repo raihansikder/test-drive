@@ -175,7 +175,7 @@ trait MqttMessageHelper
      * @param  string  $message
      * @param  bool  $retain
      * @param  null  $connection
-     * @return void
+     * @return true
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      * @throws \PhpMqtt\Client\Exceptions\ConfigurationInvalidException
      * @throws \PhpMqtt\Client\Exceptions\ConnectingToBrokerFailedException
@@ -192,6 +192,8 @@ trait MqttMessageHelper
             retain: $retain,
             connection: $connection
         );
+
+        return true;
     }
 
     /*
