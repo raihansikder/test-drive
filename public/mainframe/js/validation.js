@@ -92,7 +92,7 @@ function enableValidation(formName, callbackSuccess = false, callbackFail = fals
  * @alias enableValidation
  */
 function enableAjaxFormSubmission(form, onSuccess = false, onFail = false) {
-    enableValidation(form, onSuccess = false, onFail = false)
+    enableValidation(form, onSuccess, onFail)
 }
 
 

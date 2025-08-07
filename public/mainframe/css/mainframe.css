@@ -275,10 +275,6 @@ h2.underlined {
     min-height: 32px;
 }
 
-.form-control.height-auto {
-    height: auto;
-}
-
 .table > tbody > tr > td, .table > tbody > tr > th,
 .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td,
 .table > thead > tr > th {
@@ -995,7 +991,7 @@ input, textarea {
     white-space: nowrap;
     background-image: none;
     border: 0;
-    min-height: 34px;
+    min-height: 32px;
     height: auto;
     padding: 3px 0 3px 10px;
     font-weight: inherit;

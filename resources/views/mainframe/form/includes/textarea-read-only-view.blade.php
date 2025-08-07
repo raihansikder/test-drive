@@ -1,5 +1,5 @@
 @if(!$input->isHidden)
-    <div class="form-control readonly {{$input->name}} height-auto" id="{{$input->id}}">
+    <div class="form-control readonly {{$input->name}}" id="{{$input->id}}">
         {!!  $input->print()  !!}
     </div>
 @endif

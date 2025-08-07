@@ -47,7 +47,7 @@ trait ModuleDatatableTrait
     {
         if ($this->hasColumn('id')) {
             $dt->editColumn('id', function ($row) {
-                return '<a href="'.route($this->module->name.'.edit', $row->id).'">'.pad($row->id, 6).'</a>';
+                return '<a href="'.route($this->module->name.'.edit', $row->id).'">'.$row->id.'</a>';
             });
         }
 
