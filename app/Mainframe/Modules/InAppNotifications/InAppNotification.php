@@ -9,6 +9,13 @@ class InAppNotification extends BaseModule
 {
     use InAppNotificationTrait;
 
+    /**
+     * Disable auditing
+     *
+     * @var bool
+     */
+    public static $auditingDisabled = true;
+
     /*
     |--------------------------------------------------------------------------
     | Properties

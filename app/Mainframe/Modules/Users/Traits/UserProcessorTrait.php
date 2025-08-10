@@ -12,10 +12,10 @@ use App\Mainframe\Modules\Users\UserProcessor;
 trait UserProcessorTrait
 {
     /**
-     * Pre-fill the model before running rule-based validations
+     * Pre-fill model attributes with default values and populate related data before validation
      *
-     * @param  \App\User  $element
-     * @return $this
+     * @param  \App\User  $element  The user model instance to be filled
+     * @return $this Returns processor instance
      */
     public function fill($element)
     {
@@ -135,7 +135,9 @@ trait UserProcessorTrait
     }
 
     /**
-     * Fill api_token_generated_at
+     * Update api_token_generated_at timestamp when api_token changes
+     *
+     * @return $this Returns processor instance
      */
     public function fillApiTokenGeneratedAt()
     {
@@ -154,7 +156,9 @@ trait UserProcessorTrait
     */
 
     /**
-     * @return $this
+     * Validate that user can not be assigned to multiple groups
+     *
+     * @return $this Returns processor instance
      */
     public function checkUserCanNotHaveMultipleGroup()
     {
@@ -167,7 +171,9 @@ trait UserProcessorTrait
     }
 
     /**
-     * @return $this
+     * Validate that user must have exactly one group assigned
+     *
+     * @return $this Returns processor instance
      */
     public function checkUserMustHaveOneGroup()
     {
@@ -180,7 +186,9 @@ trait UserProcessorTrait
     }
 
     /**
-     * @return $this
+     * Validate that user has permissions to update specific fields
+     *
+     * @return $this Returns processor instance
      */
     public function checkUserCanUpdateFields()
     {
@@ -193,7 +201,9 @@ trait UserProcessorTrait
     }
 
     /**
-     * @return $this
+     * Validate that user is not assigned to unauthorized or invalid groups
+     *
+     * @return $this Returns processor instance
      */
     public function checkUserCanNotBeAssignedToInvalidGroups()
     {

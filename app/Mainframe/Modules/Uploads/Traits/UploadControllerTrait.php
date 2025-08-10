@@ -221,7 +221,7 @@ trait UploadControllerTrait
 
         $this->element = Upload::findOrFail($id); // Create an empty model to be stored.
         $upload = $this->element;
-        $oldFilePath = $upload->path;
+        $oldFilePath = $upload->path; // Store old file path before it gets overwritten
 
         if (!$path = $this->attemptUpload()) {
             return $this->fail('Can not move file to destination from tmp')->send();

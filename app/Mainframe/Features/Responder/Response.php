@@ -10,7 +10,9 @@ class Response
 {
     use Validable;
 
-    /* All HTTP codes */
+    /**
+     * All HTTP response codes
+     */
     public const HTTP_CONTINUE = 100;
     public const HTTP_SWITCHING_PROTOCOLS = 101;
     public const HTTP_PROCESSING = 102; // RFC2518
@@ -145,11 +147,11 @@ class Response
 
     // /** @var \Illuminate\Validation\Validator */
     // public $validator;
-    //
+
     // /** @var MessageBag */
     // public $messageBag;
 
-    /** @var int Success/Error codes 200.400 etc */
+    /** @var int */
     public $code = Response::HTTP_OK;
 
     /** @var string success|fail */
@@ -177,10 +179,13 @@ class Response
      */
     public $convertJsonKeys = 'SNAKE_CASE';
 
+
+    /**
+     * Response constructor.
+     */
     public function __construct()
     {
-        // Load messageBag errors in to validator.
-        if ($this->hasErrors()) {
+        if ($this->hasErrors()) { // Load messageBag errors in to validator.
             $this->validator()->messages()->merge($this->getErrors());
         }
     }
@@ -238,7 +243,7 @@ class Response
     }
 
     /**
-     * Set status : success, fail
+     * Set status: 'success', 'fail'
      *
      * @param  string  $status
      * @return $this
@@ -318,7 +323,7 @@ class Response
     }
 
     /**
-     * Resolve response singleton class
+     * Resolve a Response singleton class
      *
      * @return Response|\Illuminate\Contracts\Foundation\Application|mixed
      */
@@ -328,7 +333,7 @@ class Response
     }
 
     /**
-     * Directly outputs the view blade
+     * Outputs a view (blade).
      *
      * @param  string|null  $viewPath
      * @param  array  $viewVars
@@ -354,9 +359,9 @@ class Response
     }
 
     /**
-     * Directly Redirects to the given URL
+     * Redirects to a URL
      *
-     * @param  string  $to
+     * @param  string  $to  URL to redirect
      * @return \Illuminate\Http\RedirectResponse
      */
     public function redirect($to = null)
@@ -379,8 +384,21 @@ class Response
             $data['payload'] = json_encode($data['payload']); // Causes issue if validation error exists
         }
 
-        return $redirect->with($data)
-            ->withErrors($this->validator);
+        return $redirect->with($data)->withErrors($this->validator);
+    }
+
+    /**
+     * Outputs JSON
+     *
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
+    public function json()
+    {
+        $data = $this->prepareResponse();
+        $data = $this->convert($data); // Change array keys to snake case.
+
+        return \Response::json($data); // Note : Should send 200 OK always.  422 Can not be handled by browser.
     }
 
     /**
@@ -421,7 +439,6 @@ class Response
             $data['errors'] = $data['errors'] ?? [];
             $data['errors'] = array_unique(array_merge($data['errors'], Arr::flatten($data['validation_errors'])));
         }
-        /*-------------------------------*/
 
         // Add redirect to
         if ($this->redirectTo) {
@@ -457,19 +474,6 @@ class Response
         return $data;
     }
 
-    /**
-     * Directly outputs JSON
-     *
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Exception
-     */
-    public function json()
-    {
-        $data = $this->prepareResponse();
-        $data = $this->convert($data); // Change array keys to snake case.
-
-        return \Response::json($data); // Note : Should send 200 OK always.  422 Can not be handled by browser.
-    }
 
     /**
      * Executes a failure to the request. This function will output JSON,
@@ -478,6 +482,7 @@ class Response
      * @param  string  $message
      * @param  int  $code
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\View\View|void
+     * @throws \Exception
      */
     public function failed($message = null, $code = self::HTTP_UNPROCESSABLE_ENTITY)
     {
@@ -507,6 +512,7 @@ class Response
      * @param  string  $message
      * @param  int  $code
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     * @throws \Exception
      */
     public function succeeded($message = null, $code = null)
     {
@@ -522,16 +528,14 @@ class Response
         }
 
         return $this->redirect();
-
     }
 
     /**
-     * Generate a final output to a request.
-     * The output can be JSON, redirect,
-     * blade render or abort.
+     * Generate a final output to a request. The output can be JSON, redirect, blade render or abort.
      *
      * @alias send
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     * @throws \Exception
      */
     public function dispatch()
     {
@@ -544,7 +548,6 @@ class Response
         }
 
         return $this->succeeded($this->message);
-
     }
 
     /**
@@ -553,6 +556,7 @@ class Response
      *
      * @alias dispatch
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     * @throws \Exception
      */
     public function send()
     {
@@ -565,6 +569,7 @@ class Response
      * @param  string  $message
      * @param  int  $code
      * @return \Illuminate\Http\JsonResponse|void
+     * @throws \Exception
      */
     public function permissionDenied($message = null, $code = null)
     {
@@ -585,6 +590,7 @@ class Response
      * @param  string  $message
      * @param  int  $code
      * @return \Illuminate\Http\JsonResponse|void
+     * @throws \Exception
      */
     public function notFound($message = null, $code = null)
     {
@@ -736,9 +742,9 @@ class Response
      */
     public function defaultViewVars()
     {
+        // Load from session so that when redirected the values are retained
         $array = [
             'response' => [
-                // Load from session so that when redirected the values are retained
                 'status' => session('response.status') ?? $this->status,
                 'message' => session('response.message') ?? $this->message,
                 'messageBag' => session('response.messageBag') ?? $this->messageBag,

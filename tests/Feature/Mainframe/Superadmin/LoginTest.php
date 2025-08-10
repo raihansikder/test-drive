@@ -8,6 +8,9 @@ class LoginTest extends SuperadminTestCase
 {
     
     /**
+     * Test if authenticated user is redirected to dashboard when accessing login URL
+     *
+     * @test
      * @return void
      */
     public function test_redirect_to_dashboard_from_login_url()
@@ -18,6 +21,9 @@ class LoginTest extends SuperadminTestCase
     }
 
     /**
+     * Test if authenticated user can access and view the dashboard
+     *
+     * @test
      * @return void
      */
     public function test_show_dashboard()
@@ -28,6 +34,9 @@ class LoginTest extends SuperadminTestCase
     }
 
     /**
+     * Test if user can successfully logout and be redirected to login page
+     *
+     * @test
      * @return void
      */
     public function test_logout()

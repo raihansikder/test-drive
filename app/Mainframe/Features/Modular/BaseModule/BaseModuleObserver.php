@@ -28,7 +28,15 @@ class BaseModuleObserver
         $element->runCommonExecutablesOnSaved();
     }
     // public function deleting($element) { }
-    // public function deleted($element) { }
+
+    /**
+     * @param  BaseModule|mixed  $element
+     * @return void
+     */
+    public function deleted($element)
+    {
+        $element->runCommonExecutablesOnDeleted();
+    }
     // public function restored($element) { }
     // public function forceDeleted($element) { }
 }

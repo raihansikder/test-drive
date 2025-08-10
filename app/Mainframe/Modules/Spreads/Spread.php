@@ -9,6 +9,13 @@ class Spread extends BaseModule
 {
     use SpreadTrait;
 
+    /**
+     * Disable auditing
+     *
+     * @var bool
+     */
+    public static $auditingDisabled = true;
+
     protected $moduleName = 'spreads';
     protected $table = 'spreads';
     /*

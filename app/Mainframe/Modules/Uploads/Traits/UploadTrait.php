@@ -50,7 +50,6 @@ trait UploadTrait
             $upload->fillModuleAndElement('uploadable');
             $upload->saveQuietly();
         }
-
     }
 
     /**
@@ -83,7 +82,6 @@ trait UploadTrait
             return $this->url;
         }
         return $this->extIconPath();
-
     }
 
     /**
@@ -327,7 +325,6 @@ trait UploadTrait
      */
     public function fillFileInfo()
     {
-
         if (!$this->absPath()) {
             return $this;
         }
@@ -337,7 +334,6 @@ trait UploadTrait
             $this->name = $this->name ?: $file->getFilename();
             $this->ext = $file->getExtension();
             $this->bytes = $file->getSize();
-
         } catch (Exception $e) {
             $this->error($e->getMessage());
         }
@@ -390,7 +386,6 @@ trait UploadTrait
         }
 
         return false;
-
     }
 
     /**
@@ -429,6 +424,7 @@ trait UploadTrait
 
     /**
      * Move an existing upload under element
+     *
      * @param  BaseModule|mixed  $element
      * @return \App\Upload|mixed
      */
@@ -442,7 +438,6 @@ trait UploadTrait
         $this->saveQuietly();
 
         return $this;
-
     }
 
 
@@ -484,7 +479,6 @@ trait UploadTrait
         }
         // First check if file exists in storage/app/files
         if (Storage::exists($this->path)) {
-
             // 1- Check if storage is public. If public share the public URL
             if ($this->isPublic()) {
                 return url(Storage::url($this->path));
@@ -555,12 +549,11 @@ trait UploadTrait
                 ->where('type', $this->type)
                 ->where('id', '!=', $this->id)
                 ->delete();
-
         }
     }
 
     /**
-     * Delete a file in given path
+     * Delete the physical file at given file path
      *
      * @param $path
      * @return bool

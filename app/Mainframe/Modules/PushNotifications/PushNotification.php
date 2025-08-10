@@ -9,6 +9,13 @@ class PushNotification extends BaseModule
 {
     use PushNotificationTrait;
 
+    /**
+     * Disable auditing
+     *
+     * @var bool
+     */
+    public static $auditingDisabled = true;
+
     /*
     |--------------------------------------------------------------------------
     | Properties

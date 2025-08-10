@@ -9,6 +9,13 @@ class SystemEvent extends BaseModule
 {
     use SystemEventTrait;
 
+    /**
+     * Disable auditing
+     *
+     * @var bool
+     */
+    public static $auditingDisabled = true;
+
     /*
     |--------------------------------------------------------------------------
     | Properties

@@ -77,8 +77,18 @@ trait UploadProcessorTrait
         // $element->refresh(); // Re-hydrate. Get the updated model(and relations) before using.
         return $this;
     }
+
     // public function deleting($element) { return $this; }
-    // public function deleted($element) { return $this; }
+
+    /**
+     * @param  Upload  $element
+     * @return $this
+     */
+    public function deleted($element)
+    {
+        Upload::deleteFilePath($element->path); // Delete file from disk
+        return $this;
+    }
 
     /*
     |--------------------------------------------------------------------------

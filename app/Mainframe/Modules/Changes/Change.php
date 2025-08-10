@@ -9,6 +9,13 @@ class Change extends BaseModule
 {
     use ChangeTrait;
 
+    /**
+     * Disable auditing
+     *
+     * @var bool
+     */
+    public static $auditingDisabled = true;
+
     /*
     |--------------------------------------------------------------------------
     | Properties

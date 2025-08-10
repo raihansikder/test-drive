@@ -6,11 +6,14 @@ use Str;
 use App\Module;
 use App\ModuleGroup;
 
-/** @mixin Module $this */
+/** @mixin Module */
 trait ModuleTrait
 {
     /**
-     * @return \Illuminate\Support\Collection
+     * Get list of active modules ordered by specified column
+     *
+     * @param  string  $orderBy  Column to order results by
+     * @return \Illuminate\Support\Collection Collection of active modules
      */
     public static function getActiveList($orderBy = 'title')
     {
@@ -39,6 +42,12 @@ trait ModuleTrait
         return Module::byName(Module::nameFromClass($class));
     }
 
+    /**
+     * Extract module name from controller class path by removing 'Controller' suffix
+     *
+     * @param  string  $classPath  Full class path of the controller
+     * @return string Module name in lowercase
+     */
     public static function fromController($classPath) // Todo: where is this used?
     {
         return lcfirst(str_replace('Controller', '', class_basename($classPath)));
@@ -112,6 +121,12 @@ trait ModuleTrait
         return $stack;
     }
 
+    /**
+     * Get all active modules belonging to a specific module group
+     *
+     * @param  int  $id  Module group ID
+     * @return \Illuminate\Support\Collection Collection of modules
+     */
     public static function ofGroupId($id = 0)
     {
         return Module::where('module_group_id', $id)
@@ -122,11 +137,23 @@ trait ModuleTrait
             ->get();
     }
 
+    /**
+     * Convert database table name to model class name
+     *
+     * @param  string  $table  Database table name
+     * @return string Model class name in PascalCase singular form
+     */
     public static function modelNameFromTable($table)
     {
         return ucfirst(Str::singular(Str::camel($table)));
     }
 
+    /**
+     * Get fully qualified model class name from table name
+     *
+     * @param  string  $table  Database table name
+     * @return string Full model class name with namespace
+     */
     public static function rootModelNameFromTable($table)
     {
         return "\\App\\".Module::modelNameFromTable($table);
@@ -146,6 +173,12 @@ trait ModuleTrait
         return Str::snake(Str::camel($this->name));  // lorem-ipsums > loremIpsums > lorem_ipsums
     }
 
+    /**
+     * Convert table name to module name by replacing underscores with hyphens
+     *
+     * @param  string  $table  Database table name
+     * @return string Module name with hyphens
+     */
     public static function nameFromTable($table) // Todo: Need to check
     {
         return str_replace('_', '-', $table);
@@ -196,11 +229,22 @@ trait ModuleTrait
      *
      * @return string
      */
+    /**
+     * Get singular camelCase version of the module name
+     * Example: super-heroes -> superHero
+     *
+     * @return string Singular camelCase name
+     */
     public function elementName()
     {
         return Str::singular(Str::camel($this->name)); // lorem-ipsums > LoremIpsum
     }
 
+    /**
+     * Get singular form of the module title
+     *
+     * @return string Singular title
+     */
     public function singularTitle()
     {
         return Str::singular($this->title); // lorem-ipsums > LoremIpsum
@@ -278,6 +322,12 @@ trait ModuleTrait
         return '\App\\'.class_basename($this->model);
     }
 
+    /**
+     * Get root class path for a given class
+     *
+     * @param  string  $class  Original class name/path
+     * @return string Root class path in App namespace
+     */
     public static function rootClass($class)
     {
         $module = new Module(['model' => $class]);
@@ -389,6 +439,12 @@ trait ModuleTrait
      * Generate appropriate icon code based on config
      *
      * @return string|null
+     */
+    /**
+     * Generate HTML code for module icon based on icon_css configuration
+     * Supports Font Awesome, Ionicons and raw HTML
+     *
+     * @return string|null HTML representation of the icon
      */
     public function iconHtml()
     {

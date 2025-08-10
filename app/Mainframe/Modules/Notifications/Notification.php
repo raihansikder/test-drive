@@ -9,6 +9,13 @@ class Notification extends BaseModule
 {
     use NotificationTrait;
 
+    /**
+     * Disable auditing
+     *
+     * @var bool
+     */
+    public static $auditingDisabled = true;
+
     /*
     |--------------------------------------------------------------------------
     | Properties

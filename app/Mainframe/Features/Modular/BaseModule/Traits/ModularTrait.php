@@ -1472,4 +1472,29 @@ trait ModularTrait
         $this->syncSpreadTags();
     }
 
+    /**
+     * Todo: have to revisit
+     * Execute a set of common cleanup operations when an element is deleted.
+     * This function is likely to be used in Observer::deleted().
+     * It removes related uploads, changes, and spread entries associated with the deleted model.
+     *
+     * @return void
+     */
+    public function runCommonExecutablesOnDeleted()
+    {
+        $class = $this->module()->rootModelClassPath();
+
+        // Mark upload as deleted
+        $valuesToMarkDeleted = ['deleted_at' => now(), 'deleted_by' => user()->id];
+
+        // DB::table('uploads')->where('uploadable_type', $class)
+        //     ->where('uploadable_id', $this->id)->update($valuesToMarkDeleted);
+
+        DB::table('changes')->where('changeable_type', $class)
+            ->where('changeable_id', $this->id)->delete();
+
+        DB::table('spreads')->where('spreadable_type', $class)
+            ->where('spreadable_id', $this->id)->delete();
+    }
+
 }
