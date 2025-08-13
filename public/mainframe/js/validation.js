@@ -52,13 +52,16 @@ function enableValidation(formName, callbackSuccess = false, callbackFail = fals
                     callbackSuccess(response);
                 } else {
                     $('.modal').modal('hide'); // 1. Hide all open modals only on success.
-                    showResponseModal(response); // 2. Show response/status in the message modal
-                    if (v.count(response.redirect)) { // 3. Redirect if a redirect_success URL exits
+
+                    if (v.count(response.redirect) && response.redirect !== '#') { // 3. Redirect if a redirect_success URL exits
+                        showResponseModal(response); // 2. Show response/status in the message modal
                         msgModalDisableClose();
                         msgModalAddMsg('Redirecting. Please wait ...');
                         setTimeout(function () { // Redirect after 2-seconds delay
                             window.location.replace(response.redirect);
                         }, default_response_modal_timeout); // Delay
+                    } else {
+                        showResponseModal(response, 5000); // 2. Show response/status in the message modal
                     }
                 }
             }
@@ -195,6 +198,18 @@ function showResponseModal(response, timeout) {
     $('#msgModal').modal('show');
 
     // Auto close modal after some time
+    if (timeout) {
+        setTimeout(function () {
+            $('#msgModal').modal('hide');
+        }, timeout);
+    }
+}
+
+/**
+ * Hide the modal
+ * @param timeout
+ */
+function hideResponseModal(timeout = 0) {
     if (timeout) {
         setTimeout(function () {
             $('#msgModal').modal('hide');

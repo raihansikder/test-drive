@@ -89,13 +89,11 @@ return [
             'driver' => 'errorlog',
             'level' => 'debug',
         ],
-        'channels' => [
-            'larabug' => [
-                'driver' => 'larabug',
-            ],
-            'bugsnag' => [
-                'driver' => 'bugsnag',
-            ],
+        'larabug' => [
+            'driver' => 'larabug',
+        ],
+        'bugsnag' => [
+            'driver' => 'bugsnag',
         ],
     ],
 

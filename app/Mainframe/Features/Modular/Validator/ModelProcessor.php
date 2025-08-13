@@ -1,7 +1,8 @@
-<?php /** @noinspection PhpUnusedParameterInspection */
+<?php
+/** @noinspection PhpPossiblePolymorphicInvocationInspection */
 
+/** @noinspection PhpUnusedParameterInspection */
 /** @noinspection PhpUnused */
-
 /** @noinspection PhpExpressionResultUnusedInspection */
 
 namespace App\Mainframe\Features\Modular\Validator;
@@ -509,12 +510,13 @@ class ModelProcessor
      * Check if a number of existing relations exists in database.
      *
      * @param  array  $relations
+     * @param  int  $limit
      * @return $this
      */
-    public function checkExistingRelations($relations = [])
+    public function checkExistingRelations($relations = [], $limit = 10)
     {
         foreach ($relations as $relation) {
-            $this->checkExistingRelation($relation);
+            $this->checkExistingRelation($relation, $limit);
         }
 
         return $this;
@@ -1112,5 +1114,35 @@ class ModelProcessor
         return $this;
     }
 
+    /**
+     * Check if uploadable must have one upload
+     *
+     * @param  string  $class  A class name i.e. \App\User
+     * @param  null  $type
+     * @param  null  $min
+     * @return $this
+     */
+    public function checkMinimumUploadRequirement($class, $type = null, $min = null)
+    {
+        $upload = $this->element;
+        $min = $min ?: 1;
+
+        if ($upload->uploadable_type != $class) {
+            return $this;
+        }
+
+        if ($type == null) {
+            if ($upload->uploadable->uploads()->count() == $min) {
+                $this->error("At least {$min} file(s) is required. Upload a new file to replace current one");
+            }
+            return $this;
+        }
+
+        if ($upload->uploadable->uploads()->where('type', $type)->count() == $min) {
+            $this->error("At least {$min} file(s) of type:{$type} is required. Upload a new file to replace current one");
+        }
+
+        return $this;
+    }
 
 }
