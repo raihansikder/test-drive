@@ -1186,21 +1186,25 @@ input:focus {
 .panel-title .fi,
 .panel-title i,
 .panel-title ion-icon {
-    margin-right: 15px;
+    margin-right: 10px;
     font-size: 22px;
     position: relative;
     float: left;
 }
 
+.panel-title .glyphicon,
+.panel-title .material-icons-outlined,
+.panel-title .material-symbols-outlined,
 .panel-title .fa,
 .panel-title .fi,
-.panel-title i {
-    margin-right: 24px;
+.panel-title i,
+.panel-title ion-icon {
+    margin-right: 10px;
 }
 
 /* Reduce space from accordion panel bottom*/
 .panel-group {
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     padding-right: 30px;
 }
 
@@ -1216,6 +1220,7 @@ input:focus {
 
 .panel-collapse {
     margin: 10px 0 15px;;
+    padding-left: 20px;
 }
 
 /* Show full border for text-area*/
@@ -1336,6 +1341,7 @@ pre.sf-dump, pre.sf-dump .sf-dump-default {
 
 .modal-title {
     float: left;
+    text-transform: capitalize;
 }
 
 .modal-content {
@@ -1819,6 +1825,10 @@ label.required::after {
 |--------------------------------------------------------------------------
 */
 
+.no-border, .borderless {
+    border: 0;
+}
+
 .btn-transparent {
     /*border: 1px grey solid;*/
     background-color: transparent;
@@ -1889,16 +1899,28 @@ label.required::after {
     color: white;
 }
 
-.btn-transparent-red {
+.btn-transparent-red, .btn-borderless-red {
     border: 1px white solid;
     background-color: white;
     color: red;
 }
 
-.btn-transparent-red:hover {
+.btn-transparent-red:hover, .btn-borderless-red:hover {
     /*background-color: red;*/
     border-color: red;
     color: red;
+}
+
+.btn-transparent-blue, .btn-borderless-blue {
+    border: 1px white solid;
+    background-color: white;
+    color: royalblue;
+}
+
+.btn-transparent-blue:hover, .btn-borderless-blue:hover {
+    /*background-color: blue;*/
+    border-color: royalblue;
+    color: royalblue;
 }
 
 .btn-secondary {
@@ -1912,6 +1934,7 @@ label.required::after {
     border-color: black;
     color: inherit;
 }
+
 
 /**
 * Text transforms
@@ -2236,3 +2259,26 @@ div.filecard .info-box-icon {
 }
 
 /* <<< Center align div */
+
+.table-header, .relation-table-header {
+    float: left;
+    margin: 5px 0 0 0;
+}
+
+.table-header-add-btn, .relation-table-header-add-btn {
+    float: right;
+}
+
+.form-header {
+    float: left;
+    margin: 5px 0 15px 0 ;
+}
+
+.btn-modal-save {
+    float: left;
+}
+
+.btn-modal-close {
+    /*border: 1px grey solid;*/
+    background-color: transparent;
+}

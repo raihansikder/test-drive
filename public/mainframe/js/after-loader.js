@@ -25,6 +25,7 @@ function initAfterLoader() {
     initDatatableErrorHandler();
     initImagelightbox();
     initPanelToggle();
+    initDynamicModalTrigger();
 }
 
 /*
@@ -225,5 +226,39 @@ function initPanelToggle() {
 
     $('.click-hide-panels').on('click', function () {
         $('.panel-collapse').collapse('hide');
+    });
+}
+
+/*
+|--------------------------------------------------------------------------
+| Init dynamic modal trigger
+|--------------------------------------------------------------------------
+*/
+function initDynamicModalTrigger() {
+
+    // Correct way - using event delegation
+    $(document).on('click', '.dynamic-modal-trigger', function () {
+        let url = $(this).data('url');
+        let width = $(this).data('width');
+        if (url === '#') {
+            console.log('No URL provided for dynamic modal');
+            return false;
+        }
+
+        $('#dynamicModal .modal-dialog').css('width', width); // Set modal width
+
+        axios.get(url).then(function (response) { // Axios' response is wrapped in response.data
+            $('#dynamicModal .modal-content').html(response.data); // Load content from partial
+        }).catch(function (error) {
+            console.log(error);
+        });
+    });
+
+
+    // Dynamic modal close event
+    $('#dynamicModal').on('hidden.bs.modal', function (e) {
+        // console.log('Dynamic modal has been closed');
+        // Clear modal content when closed
+        $('#dynamicModal .modal-content').empty();
     });
 }

@@ -818,11 +818,25 @@ function buildReportUrlFromFilterParams(formId = 'FilterForm', reportBaseUrl = '
     $('a.' + reportBtnClass).attr('href', reportUrl);
 }
 
+
+/**
+ * Reset datatable filter form
+ * @param formId
+ */
 function resetDatatableFilter(formId) {
+    resetForm(formId)
+}
+
+
+/**
+ * Reset datatable filter form
+ * @param formId
+ */
+function resetForm(formId) {
+    $('#' + formId).trigger('reset');
     $('#' + formId + ' select').select2('val', '');
     $('#' + formId + ' text').val('');
     $('#' + formId + ' input').val('');
-    // $('#' + formId + 'FilterForm #some_id').prop('selectedIndex', -1); // For Ajax loaded select2 fields
 }
 
 

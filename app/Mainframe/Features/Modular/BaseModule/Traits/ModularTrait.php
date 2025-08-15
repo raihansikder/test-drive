@@ -540,10 +540,44 @@ trait ModularTrait
 
     /*
     |--------------------------------------------------------------------------
+    | Form states and attributes based on element state
+    |--------------------------------------------------------------------------
+    |
+    */
+    public function formState()
+    {
+        if ($this->isCreating()) {
+            return 'create';
+        }
+
+        return 'edit';
+    }
+
+    public function formMethod()
+    {
+        if ($this->isCreating()) {
+            return 'POST';
+        }
+
+        return 'PATCH';
+    }
+
+    public function formAction()
+    {
+        if ($this->isCreating()) {
+            return $this->storeUrl();
+        }
+
+        return $this->updateUrl();
+    }
+
+    /*
+    |--------------------------------------------------------------------------
     | Events
     |--------------------------------------------------------------------------
     |
     */
+
     /**
      * Check if the model is being created at the moment.
      * If true, then the model has not been stored yet.
