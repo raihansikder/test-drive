@@ -12,37 +12,36 @@ function enableValidation(formName, callbackSuccess = false, callbackFail = fals
     addRequiredIconsToLabels(); // Add required mark in fields
 
     // Resolve the form element based on name/id
-    var form = resolveForm(formName);
-    var btn = form.find('button[type=submit]');
-    btn.attr('type', 'button'); // Change the button type from submitting to button to stop submission
-    setRetToJson(form); // inject 'ret=json' input to enforce JSON return.
+    var $form = resolveForm(formName);
+    var $btn = $form.find('button[type=submit]');
+    $btn.attr('type', 'button'); // Change the button type from submitting to button to stop submission
+    setRetToJson($form); // inject 'ret=json' input to enforce JSON return.
 
     // Instantiate validationEngine
-    form.validationEngine({prettySelect: true, promptPosition: "topLeft", scroll: true});
+    $form.validationEngine({prettySelect: true, promptPosition: "topLeft", scroll: true});
 
     // Run validation on submit button click.
-    btn.click(function () {
-        // $('.collapse').collapse('show'); // Un-collapse all accordion .
-        form.find('.collapse').collapse('show'); // Un-collapse accordions under that form.
+    $btn.on('click', function () {
 
+        $form.find('.collapse').collapse('show'); // Un-collapse accordions under that form.
         var btnText = $(this).html(); // Preserve initial button
         $(this).addClass('disabled').attr('disabled', true);
         /********************************************************************************/
 
         // Check front-end validations first
-        if (form.validationEngine('validate') === false) {
+        if ($form.validationEngine('validate') === false) {
             $(this).html(btnText).removeClass('disabled').attr('disabled', false);
             return; // Note: exit validation logic here.
         }
 
         // If all frontend validations are passed, then only execute AJAX save which automatically triggers BE validation
-        form.validationEngine('hideAll'); // Hide all front-end validation errors
+        $form.validationEngine('hideAll'); // Hide all front-end validation errors
 
         $.ajax({
             datatype: 'json',
-            method: form.attr('method'),
-            url: form.attr('action'),
-            data: form.serialize() // Serialize the complete form and post
+            method: $form.attr('method'),
+            url: $form.attr('action'),
+            data: $form.serialize() // Serialize the complete form and post
         }).done(function (response) {
             response = parseJson(response); // Just in case of exception
 
@@ -55,7 +54,7 @@ function enableValidation(formName, callbackSuccess = false, callbackFail = fals
 
                     if (v.count(response.redirect) && response.redirect !== '#') { // 3. Redirect if a redirect_success URL exits
                         showResponseModal(response); // 2. Show response/status in the message modal
-                        msgModalDisableClose();
+                        msgModalDisableClose(); // Disable close button
                         msgModalAddMsg('Redirecting. Please wait ...');
                         setTimeout(function () { // Redirect after 2-seconds delay
                             window.location.replace(response.redirect);
@@ -79,7 +78,7 @@ function enableValidation(formName, callbackSuccess = false, callbackFail = fals
         }).error(function (response, textStatus, errorThrown) { // Gracefully handle 422, 400 error responses
             showAlert(response.responseJSON.message); //
         }).always(function (ret, textStatus, errorThrown) {
-            btn.removeClass('disabled').attr('disabled', false); // Re-enable the save button
+            $btn.removeClass('disabled').attr('disabled', false); // Re-enable the save button
         });
 
     });

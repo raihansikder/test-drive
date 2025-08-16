@@ -234,6 +234,8 @@ function setupDeleteFormForBtn(btn) {
     form.attr('action', btn.attr('data-route')); // set action route
     form.find('input[name=redirect_success]').val(btn.attr('data-redirect_success')); // set redirect on success
     form.find('input[name=redirect_fail]').val(btn.attr('data-redirect_fail')); // set redirect on fail
+    form.find('input[name=refresh_datatable_id]').val(btn.attr('data-refresh_datatable_id')); // set redirect on fail
+    form.find('input[name=hide_class]').val(btn.attr('data-hide_class')); // set redirect on fail
 }
 
 /**
@@ -829,14 +831,18 @@ function resetDatatableFilter(formId) {
 
 
 /**
- * Reset datatable filter form
+ * Reset a form
  * @param formId
  */
 function resetForm(formId) {
-    $('#' + formId).trigger('reset');
-    $('#' + formId + ' select').select2('val', '');
-    $('#' + formId + ' text').val('');
-    $('#' + formId + ' input').val('');
+
+    const $form = resolveForm(formId)
+    $form.trigger('reset');
+    $form.find('.select2').select2('val', '');
+    $form.find('.select2').trigger('change');
+    $form.find('text').val('');
+    $form.find('input').val('');
+
 }
 
 

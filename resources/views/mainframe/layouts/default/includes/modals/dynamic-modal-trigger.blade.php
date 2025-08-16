@@ -4,7 +4,7 @@ $default = [
     // 'name' => Str::random(8).'Modal', // Modal name
     'btn_title' => "",
     'btn_text' => "<i class='fi fi-rr-plus'></i> Add",
-    'btn_class' => 'btn-bordered-blue table-header-add-btn', // Button class
+    'btn_class' => 'btn-secondary table-header-add-btn', // Button class
     'width' => '700px',
     'url' => '#', // GET partial from this URL
 ];

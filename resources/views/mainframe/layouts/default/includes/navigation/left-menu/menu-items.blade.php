@@ -9,7 +9,7 @@ $breadcrumbs = isset($module) ? View::breadcrumb($module) : [];
 <ul class="sidebar-menu">
     @auth()
         <li><a href="{{route("home")}}">
-                <ion-icon name="laptop-outline"></ion-icon>
+                <i class="fi fi-rr-devices"></i>
                 <span>Dashboard</span></a></li>
         <?php
         View::renderMenuTree(ModuleGroup::tree(), $currentModuleName, $breadcrumbs); ?>

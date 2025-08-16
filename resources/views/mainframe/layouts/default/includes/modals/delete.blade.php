@@ -8,6 +8,8 @@
                 <input name="redirect_fail" type="hidden"/>
                 {{-- <input name="refresh_datatable_id" type="hidden"/>--}}
                 <input name="ret" type="hidden">
+                <input name="refresh_datatable_id" type="hidden">
+                <input name="hide_class" type="hidden">
 
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span

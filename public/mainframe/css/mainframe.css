@@ -8,6 +8,24 @@
 @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap");
 
 /***********************************************************************
+* Define variables
+************************************************************************/
+:root {
+    --primary-color: #3498db;
+    --font-size-base: 13px;
+}
+
+/*h1 {*/
+/*    color: var(--primary-color);*/
+/*    font-size: calc(var(--font-size-base) * 1.5);*/
+/*}*/
+
+/*.my-component {*/
+/*    background-color: var(--component-bg);*/
+/*}*/
+
+
+/***********************************************************************
 * Define Bangla font-face
 ************************************************************************/
 
@@ -51,7 +69,7 @@ body, html, .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6,
     color: #3d3d3d;
 }
 
-body, .form-control, .btn, table, tr, th, td, thead, tbody, .dropdown-menu,
+body, .form-control, table, tr, th, td, thead, tbody, .dropdown-menu,
 .skin-blue-light .sidebar-menu > li > a,
 .skin-blue .sidebar-menu > li > a {
     font-size: 14px;
@@ -117,6 +135,7 @@ b, strong, .bold, .strong, .b {
     text-align: inherit;
     margin-left: 15px;
     width: 215px;
+    float: left;
 }
 
 h2 {
@@ -297,6 +316,10 @@ h2.underlined {
     background: linear-gradient(90deg, rgba(63, 94, 251, 1) 0%, blueviolet 100%) no-repeat;
 }
 
+.main-header .navbar-custom-menu, .main-header .navbar-right {
+    margin-right: 15px;
+}
+
 /* remove some borders from the top menu*/
 .skin-black-light .main-header .navbar > .sidebar-toggle {
     border-right: 0;
@@ -320,6 +343,7 @@ h2.underlined {
     z-index: 999;
     border-top: dotted gainsboro 1px;
     width: 100%;
+    box-shadow: 20px -5px 20px #ccc;
 
 }
 
@@ -338,6 +362,7 @@ button.submit {
 }
 
 .delete-cta {
+    /*margin-right: 260px; */
     margin-right: 260px;
 }
 
@@ -392,6 +417,10 @@ div.dataTables_processing {
     font-size: inherit;
 }
 
+div.dataTables_filter label {
+    float: right;
+}
+
 div.dataTables_info {
     float: left;
     margin-right: 10px;
@@ -436,7 +465,7 @@ textarea {
 /* made label font weight bold*/
 label {
     margin: 0 0 5px 0;
-    font-size: 1em;
+    font-size: inherit;
     font-weight: normal;
 }
 
@@ -1187,7 +1216,6 @@ input:focus {
 .panel-title i,
 .panel-title ion-icon {
     margin-right: 10px;
-    font-size: 22px;
     position: relative;
     float: left;
 }
@@ -1199,6 +1227,7 @@ input:focus {
 .panel-title .fi,
 .panel-title i,
 .panel-title ion-icon {
+    float: right;
     margin-right: 10px;
 }
 
@@ -1212,6 +1241,7 @@ input:focus {
     box-shadow: none;
     -webkit-box-shadow: none;
     border: 1px solid lightgrey;
+    margin-bottom: 15px;
 }
 
 .panel-default > .panel-heading {
@@ -1295,6 +1325,16 @@ ion-icon {
     padding-top: 10px;
     font-size: inherit;
     font-weight: inherit;
+}
+
+.btn .fi {
+    /*margin-right: 5px;*/
+    position: relative;
+    top: 1px;
+}
+
+.btn-inline .fi {
+    margin-right: 0;
 }
 
 .sidebar-menu .treeview-menu > li > a > .fa,
@@ -1527,6 +1567,10 @@ button.bg-white:hover {
     display: block;
 }
 
+.dropdown-menu {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
 .dropdown-menu button:hover {
     text-decoration: underline;
 }
@@ -1722,7 +1766,7 @@ label.required::after {
     padding: 8px 15px 8px 10px;
     width: auto;
     float: left;
-    margin: 0 10px 0 0;
+    margin: 0 10px 10px 0;
     background-color: white;
 }
 
@@ -1899,25 +1943,29 @@ label.required::after {
     color: white;
 }
 
-.btn-transparent-red, .btn-borderless-red {
+.btn-transparent-red,
+.btn-borderless-red {
     border: 1px white solid;
     background-color: white;
     color: red;
 }
 
-.btn-transparent-red:hover, .btn-borderless-red:hover {
+.btn-transparent-red:hover,
+.btn-borderless-red:hover {
     /*background-color: red;*/
     border-color: red;
     color: red;
 }
 
-.btn-transparent-blue, .btn-borderless-blue {
+.btn-transparent-blue,
+.btn-borderless-blue {
     border: 1px white solid;
     background-color: white;
     color: royalblue;
 }
 
-.btn-transparent-blue:hover, .btn-borderless-blue:hover {
+.btn-transparent-blue:hover,
+.btn-borderless-blue:hover {
     /*background-color: blue;*/
     border-color: royalblue;
     color: royalblue;
@@ -1933,6 +1981,30 @@ label.required::after {
     background-color: white;
     border-color: black;
     color: inherit;
+}
+
+.btn-inline {
+    border: 1px white solid;
+    background-color: white;
+    color: grey;
+}
+
+.btn-inline:hover {
+    /*background-color: blue;*/
+    border-color: grey;
+    color: grey;
+}
+
+.btn-delete {
+    border: 1px white solid;
+    background-color: white;
+    color: red;
+}
+
+.btn-delete:hover {
+    /*background-color: red;*/
+    border-color: red;
+    color: red;
 }
 
 
@@ -1952,8 +2024,28 @@ label.required::after {
 * back-link
 ******************************************************/
 .back-link {
-    border: 1px solid lightgrey;
+    border: 1px solid transparent;
+    background-color: transparent;
 }
+
+.back-link i {
+    font-size: 17px;
+}
+
+.back-link-label {
+    color: grey;
+    border-right: 1px dotted grey;
+    padding: 0 3px 0 0;
+    margin: 0 3px 0 0;
+}
+
+.back-link-label {
+    color: grey;
+    border-right: 1px dotted grey;
+    padding: 0 3px 0 0;
+    margin: 0 3px 0 0;
+}
+
 
 .nav-tabs-custom > .nav-tabs > li.active {
     border-top-color: white;
@@ -2025,7 +2117,6 @@ label.required::after {
 
 .info-box.quick-filter .info-box-icon {
     height: 60px;
-
     border-right: 0;
     border-top-left-radius: 6px;
     border-bottom-left-radius: 6px;
@@ -2066,7 +2157,8 @@ label.required::after {
 
 .panel-heading {
     cursor: pointer;
-    color: inherit
+    color: inherit;
+    border-bottom: none;
 }
 
 .tab-content > .tab-pane {
@@ -2271,7 +2363,7 @@ div.filecard .info-box-icon {
 
 .form-header {
     float: left;
-    margin: 5px 0 15px 0 ;
+    margin: 5px 0 15px 0;
 }
 
 .btn-modal-save {
@@ -2281,4 +2373,33 @@ div.filecard .info-box-icon {
 .btn-modal-close {
     /*border: 1px grey solid;*/
     background-color: transparent;
+}
+
+
+@media screen and (max-width: 768px) {
+    .timestamps {
+        display: none; /* Hides the div on screens 768px or smaller */
+    }
+
+    .delete-cta {
+        margin-right: 60px;
+
+    }
+
+    .content-header {
+        padding-right: 30px;
+    }
+
+    .main-header .navbar {
+
+    }
+
+    .fixed .content-wrapper, .fixed .right-side,
+    .main-sidebar, .left-side {
+        padding-top: 50px;
+    }
+
+    .table-responsive {
+        border: 0;
+    }
 }

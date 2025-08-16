@@ -35,8 +35,8 @@ $datatableName = $datatable->name();
                     {{-- @include('form.text',['var'=>['name'=>'name','label'=>'Name', 'class'=>'filter-input']])--}}
                     
                     <div class="btn-group align-with-input">
-                        <button class="btn btn-default btn-bordered-blue submit-btn" type="button">Filter</button>
-                        <button class="btn btn-default btn-bordered-blue reset-btn" type="reset">Reset</button>
+                        <button class="btn btn-secondary submit-btn" type="button">Filter</button>
+                        <button class="btn btn-secondary reset-btn" type="reset">Reset</button>
                     </div>
                 </form>
             </div>

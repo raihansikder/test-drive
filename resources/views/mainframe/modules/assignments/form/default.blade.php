@@ -41,7 +41,7 @@ $assignment = $element;
                             <div class="panel-heading">
                                 <h5 class="panel-title">
                                     <a data-toggle="collapse" href="#{{$section}}_panel">
-                                        <ion-icon name="unlink-outline"></ion-icon>
+                                        <i class="fi fi-rr-link-horizontal"></i>
                                         Linked Module
                                     </a>
                                 </h5>
