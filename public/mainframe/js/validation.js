@@ -11,9 +11,8 @@ function enableValidation(formName, callbackSuccess = false, callbackFail = fals
 
     addRequiredIconsToLabels(); // Add required mark in fields
 
-    // Resolve the form element based on name/id
-    var $form = resolveForm(formName);
-    var $btn = $form.find('button[type=submit]');
+    let $form = resolveForm(formName); // Resolve the form element based on name/id
+    let $btn = $form.find('button[type=submit]');
     $btn.attr('type', 'button'); // Change the button type from submitting to button to stop submission
     setRetToJson($form); // inject 'ret=json' input to enforce JSON return.
 
@@ -24,9 +23,8 @@ function enableValidation(formName, callbackSuccess = false, callbackFail = fals
     $btn.on('click', function () {
 
         $form.find('.collapse').collapse('show'); // Un-collapse accordions under that form.
-        var btnText = $(this).html(); // Preserve initial button
+        let btnText = $(this).html(); // Preserve initial button
         $(this).addClass('disabled').attr('disabled', true);
-        /********************************************************************************/
 
         // Check front-end validations first
         if ($form.validationEngine('validate') === false) {
@@ -37,51 +35,83 @@ function enableValidation(formName, callbackSuccess = false, callbackFail = fals
         // If all frontend validations are passed, then only execute AJAX save which automatically triggers BE validation
         $form.validationEngine('hideAll'); // Hide all front-end validation errors
 
-        $.ajax({
-            datatype: 'json',
-            method: $form.attr('method'),
-            url: $form.attr('action'),
-            data: $form.serialize() // Serialize the complete form and post
-        }).done(function (response) {
-            response = parseJson(response); // Just in case of exception
-
-            // Section: Handle success. Redirect or pass to successHandlerFunction.
-            if (response.status === 'success') {
-                if (callbackSuccess) {
-                    callbackSuccess(response);
-                } else {
-                    $('.modal').modal('hide'); // 1. Hide all open modals only on success.
-
-                    if (v.count(response.redirect) && response.redirect !== '#') { // 3. Redirect if a redirect_success URL exits
-                        showResponseModal(response); // 2. Show response/status in the message modal
-                        msgModalDisableClose(); // Disable close button
-                        msgModalAddMsg('Redirecting. Please wait ...');
-                        setTimeout(function () { // Redirect after 2-seconds delay
-                            window.location.replace(response.redirect);
-                        }, default_response_modal_timeout); // Delay
-                    } else {
-                        showResponseModal(response, 5000); // 2. Show response/status in the message modal
-                    }
-                }
-            }
-
-            // Section: Handle failure. Redirect or pass to successHandlerFunction.
-            if (response.status === 'fail') {
-                showFieldValidationPrompts(response, false);
-                if (callbackFail) {
-                    callbackFail(response);
-                } else {
-                    showResponseModal(response);        // 1. Show response/status in the message modal
-                }
-            }
-
-        }).error(function (response, textStatus, errorThrown) { // Gracefully handle 422, 400 error responses
-            showAlert(response.responseJSON.message); //
-        }).always(function (ret, textStatus, errorThrown) {
-            $btn.removeClass('disabled').attr('disabled', false); // Re-enable the save button
-        });
-
+        handleAjaxFormSubmission($form, $btn, callbackSuccess, callbackFail);
     });
+}
+
+/**
+ * Handle ajax form submission
+ * @param $form
+ * @param $btn
+ * @param callbackSuccess
+ * @param callbackFail
+ */
+function handleAjaxFormSubmission($form, $btn, callbackSuccess, callbackFail) {
+
+    $.ajax({
+        datatype: 'json',
+        method: $form.attr('method'),
+        url: $form.attr('action'),
+        data: $form.serialize()
+    }).done(function (response) {
+        response = parseJson(response);
+
+        if (response.status === 'success') {
+            if (callbackSuccess) {
+                callbackSuccess(response);
+            } else {
+                $('.modal').modal('hide');
+                if (responseHasRedirect(response)) {
+                    handleRedirectWithModal(response, default_modal_timeout);
+                } else {
+                    showMsgModal(response, default_modal_timeout);
+                }
+            }
+        }
+
+        if (response.status === 'fail') {
+            showFieldValidationPrompts(response, false);
+            if (callbackFail) {
+                callbackFail(response);
+            } else {
+                showMsgModal(response);
+            }
+        }
+
+    }).error(function (response, textStatus, errorThrown) {
+        showAlert(response.responseJSON.message);
+    }).always(function (ret, textStatus, errorThrown) {
+        $btn.removeClass('disabled').attr('disabled', false);
+    });
+}
+
+/**
+ * Check if response has redirect
+ * @param response
+ * @returns {*|boolean}
+ */
+function responseHasRedirect(response) {
+    return v.count(response.redirect) && response.redirect !== '#';
+}
+
+
+/**
+ * Handle redirect with modal notification
+ * @param {Object} response - The response object containing redirect information
+ * @param timeout
+ */
+function handleRedirectWithModal(response, timeout = null) {
+
+    if (!timeout) {
+        timeout = default_modal_timeout;
+    }
+
+    showMsgModal(response);
+    msgModalDisableClosing();
+    msgModalAddMsg('Redirecting. Please wait ...');
+    setTimeout(function () {
+        window.location.replace(response.redirect);
+    }, timeout);
 }
 
 
@@ -134,9 +164,9 @@ function msgModalAddMsg(msg) {
 }
 
 /**
- * Disable the close button and hide the modal.
+ * Disable the close button and other close actions.
  */
-function msgModalDisableClose() {
+function msgModalDisableClosing() {
     $('#msgModal').modal({
         backdrop: 'static',   // Prevents closing on clicking outside the modal
         keyboard: false      // Prevents closing on pressing ESC key
@@ -149,7 +179,7 @@ function msgModalDisableClose() {
 /**
  * Enable the close button and show the modal.
  */
-function msgModalEnableClose() {
+function msgModalEnableClosing() {
 
     $('#msgModal').modal({
         backdrop: true,     // Enables closing on clicking outside the modal
@@ -168,7 +198,7 @@ function msgModalEnableClose() {
  * @param showAlert
  */
 function showFieldValidationPrompts(response, showAlert = false) {
-    var str = '';
+    let str = '';
     if (response.hasOwnProperty('validation_errors')) {
         $.each(response.validation_errors, function (k, v) {
             str += "\n" + k + ": " + v;
@@ -184,13 +214,19 @@ function showFieldValidationPrompts(response, showAlert = false) {
 
 
 /**
- * Show the modal based on standard response
+ * Show the response in modal
  * @param response
  * @param timeout milliseconds
+ * @alias showMsgModal
  */
-function showResponseModal(response, timeout) {
+function showResponseModal(response, timeout = null) {
+
+    // if (!timeout) {
+    //     timeout = default_response_modal_timeout;
+    // }
+
     // $('.modal').modal('hide'); // Have to think if hiding is a good idea
-    msgModalEnableClose();
+    msgModalEnableClosing();
 
     // Load response and show modal
     loadResponseInModal(response);
@@ -205,15 +241,32 @@ function showResponseModal(response, timeout) {
 }
 
 /**
- * Hide the modal
+ * Show the response in modal
+ * Alias function
+ * @param response
  * @param timeout
  */
-function hideResponseModal(timeout = 0) {
-    if (timeout) {
-        setTimeout(function () {
-            $('#msgModal').modal('hide');
-        }, timeout);
-    }
+function showMsgModal(response, timeout) {
+    return showResponseModal(response, timeout);
+}
+
+/**
+ * Hide the msg modal
+ * @param timeout
+ */
+function hideMsgModal(timeout = 0) {
+    setTimeout(function () {
+        $('#msgModal').modal('hide');
+    }, timeout);
+}
+
+/**
+ * Hide the response modal
+ * @param timeout
+ * @alias hideMsgModal
+ */
+function hideResponseModal(timeout) {
+    hideMsgModal(timeout)
 }
 
 /**
@@ -315,7 +368,7 @@ function showAlert(msg, timeout = null) {
 function autoCloseMsgModal(timeout = null) {
 
     if (!timeout) {
-        timeout = default_response_modal_timeout; // Default timeout
+        timeout = default_modal_timeout; // Default timeout
     }
 
     setTimeout(() => {
@@ -328,18 +381,6 @@ function autoCloseMsgModal(timeout = null) {
  * @alias addRequiredIconsToLabels
  * @deprecated Use addRequiredIconsToLabels
  */
-// function showRequiredIcons() {
-//     var collection = document.getElementsByClassName("validate[required]");
-//     for (let i = 0; i < collection.length; i++) {
-//         var e = $(collection[i]);
-//         var id = e.attr('id');
-//         var label_for = id;
-//         e.siblings('label[for=' + label_for + ']').addClass('required');
-//
-//     }
-// }
-
-
 function showRequiredIcons() {
     addRequiredIconsToLabels();
 }

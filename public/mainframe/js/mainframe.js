@@ -1,6 +1,6 @@
 // noinspection JSUnusedGlobalSymbols
-var default_response_modal_timeout = 3000;
-var delete_form_name = 'deleteForm';
+const default_modal_timeout = 3000;
+const delete_form_name = 'deleteForm';
 
 /*
 |--------------------------------------------------------------------------
@@ -285,7 +285,7 @@ function refreshDatatableOnDeleteSuccess(refresh_datatable_id) {
         reloadDatatable(refresh_datatable_id);
 
         // Show success message to user
-        showResponseModal(response, default_response_modal_timeout);
+        showResponseModal(response, default_modal_timeout);
     });
 }
 
@@ -307,7 +307,7 @@ function hideClassOnDeleteSuccess(hide_class) {
         console.log('hiding..');
 
         // Show success message to user
-        showResponseModal(response, default_response_modal_timeout);
+        showResponseModal(response, default_modal_timeout);
     });
 }
 
@@ -352,7 +352,7 @@ function prepareDeleteFormForBtn(btn) {
         }
 
         // Show success message to user
-        showResponseModal(response, default_response_modal_timeout);
+        showResponseModal(response, default_modal_timeout);
     });
 
 }
@@ -495,7 +495,7 @@ function initUploader(id, url) {
             if (ret.status == 'fail') {
                 $('div.ajax-file-upload-green').hide();
                 $('div.ajax-file-upload-statusbar:first').hide();
-                showResponseModal(parseJson(ret), default_response_modal_timeout);
+                showResponseModal(parseJson(ret), default_modal_timeout);
             }
             // var path = ret.message.path;
         },
