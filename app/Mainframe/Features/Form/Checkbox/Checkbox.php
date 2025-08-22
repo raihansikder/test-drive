@@ -55,7 +55,7 @@ class Checkbox extends Input
     {
         $params = $this->params;
 
-        $params['class'] .= ' spyr-checkbox ';
+        $params['class'] .= ' mf-checkbox ';
 
         $params = array_merge($params, [
             'data-checkbox-name' => $this->name,

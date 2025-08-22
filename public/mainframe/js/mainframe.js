@@ -1,6 +1,6 @@
 // noinspection JSUnusedGlobalSymbols
-const default_modal_timeout = 3000;
-const delete_form_name = 'deleteForm';
+var default_modal_timeout = 3000;
+var delete_form_name = 'deleteForm';
 
 /*
 |--------------------------------------------------------------------------
@@ -14,11 +14,11 @@ const delete_form_name = 'deleteForm';
  * @type json
  */
 var editor_config_basic = {
-    toolbarGroups: [{"name": "basicstyles", "groups": ["basicstyles"]}],
-    removeButtons: 'CreateDiv,Styles,Format,Font',
-    enterMode: CKEDITOR.ENTER_BR,
-    shiftEnterMode: CKEDITOR.ENTER_P,
-    autoParagraph: false // stop from automatically adding <p></p> tag.
+	toolbarGroups: [{"name": "basicstyles", "groups": ["basicstyles"]}],
+	removeButtons: 'CreateDiv,Styles,Format,Font',
+	enterMode: CKEDITOR.ENTER_BR,
+	shiftEnterMode: CKEDITOR.ENTER_P,
+	autoParagraph: false // stop from automatically adding <p></p> tag.
 };
 
 
@@ -28,29 +28,29 @@ var editor_config_basic = {
  */
 var editor_config_extended = {
 
-    // Define the toolbar groups as it is a more accessible solution.
-    toolbarGroups: [
-        {"name": "basicstyles", "groups": ["basicstyles"]},
-        {"name": "links", "groups": ["links"]},
-        {"name": "paragraph", "groups": ["list", "blocks"]},
-        {"name": "document", "groups": ["mode"]},
-        {"name": "insert", "groups": ["insert"]},
-        {"name": "styles", "groups": ["styles"]}, //{"name": "about", "groups": ["about"]}
-    ],
-    // removeButtons: 'Underline,Strike,Subscript,Superscript,Anchor,Styles,Specialchar', // Remove the redundant buttons from toolbar groups defined above.
-    // readOnly: true, // make editor readonly
-    // width: 730,
-    allowedContent: true, // Allows div and other
-    enterMode: CKEDITOR.ENTER_BR,
-    shiftEnterMode: CKEDITOR.ENTER_P,
-    autoParagraph: false // stop from automatically adding <p></p> tag
-    /******************************
-     * extra plugins
-     ******************************/
-    //extraPlugins: 'autogrow',
-    //autoGrow_onStartup: true,
-    //autoGrow_minHeight: 250,
-    //autoGrow_maxHeight: 600
+	// Define the toolbar groups as it is a more accessible solution.
+	toolbarGroups: [
+		{"name": "basicstyles", "groups": ["basicstyles"]},
+		{"name": "links", "groups": ["links"]},
+		{"name": "paragraph", "groups": ["list", "blocks"]},
+		{"name": "document", "groups": ["mode"]},
+		{"name": "insert", "groups": ["insert"]},
+		{"name": "styles", "groups": ["styles"]}, //{"name": "about", "groups": ["about"]}
+	],
+	// removeButtons: 'Underline,Strike,Subscript,Superscript,Anchor,Styles,Specialchar', // Remove the redundant buttons from toolbar groups defined above.
+	// readOnly: true, // make editor readonly
+	// width: 730,
+	allowedContent: true, // Allows div and other
+	enterMode: CKEDITOR.ENTER_BR,
+	shiftEnterMode: CKEDITOR.ENTER_P,
+	autoParagraph: false // stop from automatically adding <p></p> tag
+	/******************************
+	 * extra plugins
+	 ******************************/
+	//extraPlugins: 'autogrow',
+	//autoGrow_onStartup: true,
+	//autoGrow_minHeight: 250,
+	//autoGrow_maxHeight: 600
 
 };
 
@@ -59,29 +59,29 @@ var editor_config_extended = {
  * @type json
  */
 var editor_config_minimal = {
-    // readOnly: true, // make editor readonly
-    toolbarGroups: [
-        {"name": "basicstyles", "groups": ["basicstyles"]},
-        {"name": "links", "groups": ["links"]},
-        {"name": "paragraph", "groups": ["list", "blocks"]},
-        //{"name": "document", "groups": ["mode"]},
-        {"name": "insert", "groups": ["insert"]},
-        {"name": "styles", "groups": ["styles"]},
-        //{"name": "about", "groups": ["about"]}
-    ],
-    removeButtons: 'Underline,Strike,Subscript,Superscript,Anchor,Styles,Specialchar,Image,Flash,Smiley,HorizontalRule,SpecialChar,Format,Font,Iframe,PageBreak',
-    enterMode: CKEDITOR.ENTER_BR,
-    shiftEnterMode: CKEDITOR.ENTER_P,
-    autoParagraph: false // stop from automatically adding <p></p> tag
-    // readOnly: true, // make editor readonly
-    // width: 730,
-    /******************************
-     * extra plugins
-     ******************************/
-    //extraPlugins: 'autogrow',
-    //autoGrow_onStartup: true,
-    //autoGrow_minHeight: 250,
-    //autoGrow_maxHeight: 600
+	// readOnly: true, // make editor readonly
+	toolbarGroups: [
+		{"name": "basicstyles", "groups": ["basicstyles"]},
+		{"name": "links", "groups": ["links"]},
+		{"name": "paragraph", "groups": ["list", "blocks"]},
+		//{"name": "document", "groups": ["mode"]},
+		{"name": "insert", "groups": ["insert"]},
+		{"name": "styles", "groups": ["styles"]},
+		//{"name": "about", "groups": ["about"]}
+	],
+	removeButtons: 'Underline,Strike,Subscript,Superscript,Anchor,Styles,Specialchar,Image,Flash,Smiley,HorizontalRule,SpecialChar,Format,Font,Iframe,PageBreak',
+	enterMode: CKEDITOR.ENTER_BR,
+	shiftEnterMode: CKEDITOR.ENTER_P,
+	autoParagraph: false // stop from automatically adding <p></p> tag
+	// readOnly: true, // make editor readonly
+	// width: 730,
+	/******************************
+	 * extra plugins
+	 ******************************/
+	//extraPlugins: 'autogrow',
+	//autoGrow_onStartup: true,
+	//autoGrow_minHeight: 250,
+	//autoGrow_maxHeight: 600
 
 };
 
@@ -96,17 +96,17 @@ var editor_config_minimal = {
  */
 function initEditor(id, config = null) {
 
-    if (!config) {
-        config = editor_config_basic;
-    }
+	if (!config) {
+		config = editor_config_basic;
+	}
 
-    if ($('textarea#' + id).length) {
-        CKEDITOR.replace(id, config);
-        // update textarea as soon as something is updated in CKEditor
-        CKEDITOR.instances[id].on('change', function () {
-            CKEDITOR.instances[id].updateElement()
-        });
-    }
+	if ($('textarea#' + id).length) {
+		CKEDITOR.replace(id, config);
+		// update textarea as soon as something is updated in CKEditor
+		CKEDITOR.instances[id].on('change', function () {
+			CKEDITOR.instances[id].updateElement()
+		});
+	}
 }
 
 /**
@@ -115,8 +115,8 @@ function initEditor(id, config = null) {
  * @param config
  */
 function reInitEditor(id, config = null) {
-    CKEDITOR.instances[id].destroy();
-    initEditor(id, config)
+	CKEDITOR.instances[id].destroy();
+	initEditor(id, config)
 }
 
 
@@ -126,7 +126,7 @@ function reInitEditor(id, config = null) {
  * @returns {*}
  */
 jQuery.fn.outerHTML = function (s) {
-    return s ? this.before(s).remove() : jQuery("<p>").append(this.eq(0).clone()).html();
+	return s ? this.before(s).remove() : jQuery("<p>").append(this.eq(0).clone()).html();
 };
 
 
@@ -137,17 +137,17 @@ jQuery.fn.outerHTML = function (s) {
  * @returns {Array}
  */
 function getMultiSelectAsArray(selector, attr = null) {
-    var arr = [];
-    $(selector + ' :selected').each(function (i, selected) {
-        if (attr) {
-            val = $(selected).attr(attr);
-        } else {
-            val = $(selected).val();
-        }
+	var arr = [];
+	$(selector + ' :selected').each(function (i, selected) {
+		if (attr) {
+			val = $(selected).attr(attr);
+		} else {
+			val = $(selected).val();
+		}
 
-        arr[i] = val;
-    });
-    return arr;
+		arr[i] = val;
+	});
+	return arr;
 }
 
 /**
@@ -156,11 +156,19 @@ function getMultiSelectAsArray(selector, attr = null) {
  * @returns {Array}
  */
 function getInputAsArray(selector) {
-    var arr = [];
-    $(selector).each(function (i, input) {
-        arr[i] = $(input).val();
-    });
-    return arr;
+	var arr = [];
+	$(selector).each(function (i, input) {
+		arr[i] = $(input).val();
+	});
+	return arr;
+}
+
+/**
+ * Get selected CSV values as array
+ * @param str
+ */
+function csvToArray(str) {
+	return v(str).words(/[^\s,]+/g);
 }
 
 /**
@@ -170,9 +178,17 @@ function getInputAsArray(selector) {
  * @return {void} This method does not return a value.
  */
 function reloadDatatable(id) {
-    $('#' + id).DataTable().ajax.reload();
+	$('#' + id).DataTable().ajax.reload();
 }
 
+/**
+ * Reloads the data of a DataTable instance by re-fetching the data from the server.
+ * @param id
+ * @alias reloadDatatable
+ */
+function refreshDatatable(id) {
+	reloadDatatable(id);
+}
 
 /**
  * Disables the redirect on success functionality for a given form by setting the value of the
@@ -182,7 +198,7 @@ function reloadDatatable(id) {
  * @return {void} This function does not return a value.
  */
 function disableRedirectOnSuccess(form_name) {
-    $('form[name=' + form_name + ']').find('input[name=redirect_success]').val('#');
+	$('form[name=' + form_name + ']').find('input[name=redirect_success]').val('#');
 }
 
 /**
@@ -190,7 +206,7 @@ function disableRedirectOnSuccess(form_name) {
  * @param form_name
  */
 function disableRedirectOnFail(form_name) {
-    $('form[name=' + form_name + ']').find('input[name=redirect_fail]').val('#');
+	$('form[name=' + form_name + ']').find('input[name=redirect_fail]').val('#');
 }
 
 /**
@@ -198,8 +214,8 @@ function disableRedirectOnFail(form_name) {
  * @param form_name
  */
 function disableRedirectOnFormSubmit(form_name) {
-    disableRedirectOnSuccess(form_name);
-    disableRedirectOnFail(form_name);
+	disableRedirectOnSuccess(form_name);
+	disableRedirectOnFail(form_name);
 }
 
 /*
@@ -216,26 +232,30 @@ function disableRedirectOnFormSubmit(form_name) {
  * @returns {*|jQuery|HTMLElement}
  */
 function deleteForm(name = null) {
-    if (!name) {
-        name = delete_form_name;
-    }
-    return $('form[name=' + name + ']');
+	if (!name) {
+		name = delete_form_name;
+	}
+	return $('form[name=' + name + ']');
 }
 
 /**
  * Set the form values for the delete modal form based on the attributes of the delete button.
- * @param btn Jquery object
+ * @param $btn Jquery object
  */
-function setupDeleteFormForBtn(btn) {
+function setupDeleteFormForBtn($btn) {
 
-    let form = deleteForm(); // Get the universal delete form
+	let $form = deleteForm(); // Get the universal delete form
 
-    // Set form values from the button data attributes
-    form.attr('action', btn.attr('data-route')); // set action route
-    form.find('input[name=redirect_success]').val(btn.attr('data-redirect_success')); // set redirect on success
-    form.find('input[name=redirect_fail]').val(btn.attr('data-redirect_fail')); // set redirect on fail
-    form.find('input[name=refresh_datatable_id]').val(btn.attr('data-refresh_datatable_id')); // set redirect on fail
-    form.find('input[name=hide_class]').val(btn.attr('data-hide_class')); // set redirect on fail
+	// $form.trigger('reset'); // Should not reset as it clears out some essential fields i.e., _method, _token, etc.
+
+	// Set form values from the button data attributes
+	$form.attr('action', $btn.attr('data-route')); // set action route
+
+	// Custom fields
+	$form.find('input[name=redirect_success]').val($btn.attr('data-redirect_success')); // set redirect on success
+	$form.find('input[name=redirect_fail]').val($btn.attr('data-redirect_fail')); // set redirect on fail
+	$form.find('input[class=refresh_datatable_id]').val($btn.attr('data-refresh_datatable_id')); // set redirect on fail
+	$form.find('input[class=hide_class]').val($btn.attr('data-hide_class')); // set redirect on fail
 }
 
 /**
@@ -247,116 +267,26 @@ function setupDeleteFormForBtn(btn) {
  */
 function initGenericDeleteBtn() {
 
-    // When the delete button is clicked, show the modal and fill the form
-    $('button[name=genericDeleteBtn]').on('click', function () {
-        prepareDeleteFormForBtn($(this));
-    });
+	// When the delete button is clicked, show the modal and fill the form
+	$('button[name=genericDeleteBtn]').on('click', function () {
+		showDeleteModalForBtn($(this));
+	});
 
-    // When to delete submit is clicked, submit the form
-    $('#deleteSubmit').on('click', function () {
-        $('#deleteModal').modal('hide');
-    });
+	// When to delete submit is clicked, submit the form
+	$('#deleteSubmit').on('click', function () {
+		$('#deleteModal').modal('hide');
+	});
 }
 
 /**
  * Prepare the delete modal form. Add input values to the form.
- * @param btn Jquery object
+ * @param $btn Jquery object
  *
  */
-function showDeleteModalForBtn(btn) {
-    prepareDeleteFormForBtn(btn);
+function showDeleteModalForBtn($btn) {
+	setupDeleteFormForBtn($btn);
+	enableAjaxFormSubmission(delete_form_name);
 }
-
-/**
- * Refreshes the datatable upon successful deletion by disabling form redirection,
- * enabling validation, and reloading the specified datatable.
- *
- * @param {string} refresh_datatable_id - The ID of the datatable to be refreshed after deletion.
- * @return {void} This function does not return a value.
- */
-function refreshDatatableOnDeleteSuccess(refresh_datatable_id) {
-
-    // Disable form redirects to keep user on current page
-    disableRedirectOnFormSubmit(delete_form_name);
-
-    // Enable form validation and handle successful deletion
-    enableAjaxFormSubmission(delete_form_name, function (response) {
-        // Refresh the datatable to show updated data
-        reloadDatatable(refresh_datatable_id);
-
-        // Show success message to user
-        showResponseModal(response, default_modal_timeout);
-    });
-}
-
-/**
- * Hide elements with given class when delete is successful.
- *
- * @param {string} hide_class - The ID of the datatable to be refreshed after deletion.
- * @return {void} This function does not return a value.
- */
-function hideClassOnDeleteSuccess(hide_class) {
-
-    // Disable form redirects to keep user on current page
-    disableRedirectOnFormSubmit(delete_form_name);
-
-    // Enable form validation and handle successful deletion
-    enableAjaxFormSubmission(delete_form_name, function (response) {
-        // Hide class
-        $('.' + hide_class).hide();
-        console.log('hiding..');
-
-        // Show success message to user
-        showResponseModal(response, default_modal_timeout);
-    });
-}
-
-/**
- * Prepare the delete modal form. Add input values to the form.
- * @param btn Jquery object
- */
-function prepareDeleteFormForBtn(btn) {
-
-    setupDeleteFormForBtn(btn);
-
-    // If a refresh datatable id is specified, then refresh the datatable.
-    var refresh_datatable_id = btn.attr('data-refresh_datatable_id');
-
-    // If a hide class is specified, then hide the elements with that class after deletion
-    var hide_class = btn.attr('data-hide_class');
-
-    var redirect = true;
-
-
-    // If either a refresh_datatable_id or hide_class is specified, then disable the redirect on form submit
-    if (refresh_datatable_id || hide_class) {
-        redirect = false;
-        disableRedirectOnFormSubmit(delete_form_name);
-    }
-
-    // Else, handle the form submission as usual with redirection
-    if (redirect) {
-        return enableAjaxFormSubmission(delete_form_name);
-    }
-
-    // If no direction is specified, then handle the form submission with a callback function to
-    // refresh the datatable or hide the elements with the specified class.
-    enableAjaxFormSubmission(delete_form_name, function (response) {
-
-        if (refresh_datatable_id) { // Refresh the datatable if specified
-            reloadDatatable(refresh_datatable_id);
-        }
-
-        if (hide_class) { // Hide the elements with the specified class
-            $('.' + hide_class).fadeOut();
-        }
-
-        // Show success message to user
-        showResponseModal(response, default_modal_timeout);
-    });
-
-}
-
 
 /**
  * Checks if a value is a valid object
@@ -364,78 +294,72 @@ function prepareDeleteFormForBtn(btn) {
  * @returns {*}
  */
 function parseJson(val) {
-    if (typeof val === 'object') {
-        return val;
-    }
+	if (typeof val === 'object') {
+		return val;
+	}
 
-    // else convert to json object
-    return JSON.parse(val);
+	// else convert to json object
+	return JSON.parse(val);
 }
 
 
 /**
- * Disable all input
+ * Disable all inputs in a form except for the ones that are specified in the exclude array.
  */
 function makeAllInputReadonly() {
-    $('input, textarea, select').attr('readonly', 'readonly'); // make everything readonly
-    $('button[name=genericDeleteBtn]').hide(); // hide delete buttons
-    $('option:not(:selected)').attr('disabled', true).remove(); // remove all options that are not selected
-    $("select").prop("disabled", true);
+	$('input, textarea, select').attr('readonly', 'readonly'); // make everything readonly
+	$('button[name=genericDeleteBtn]').hide(); // hide delete buttons
+	$('option:not(:selected)').attr('disabled', true).remove(); // remove all options that are not selected
+	$("select").prop("disabled", true);
 }
 
 /**
  * Hide empty/non-value options from a select. Only keep the options that has a value.
  */
 function hideEmptySelectOptions() {
-    $('select option')
-        .filter(function () {
-            return !this.value || $.trim(this.value).length == 0 || $.trim(this.text).length == 0;
-        })
-        .remove();
+	$('select option')
+		.filter(function () {
+			return !this.value || $.trim(this.value).length == 0 || $.trim(this.text).length == 0;
+		})
+		.remove();
 }
 
+
 /**
- * Function is called in app/views/spyr/form/input-checkbox.blade.php
- * a checkbox and associative hidden input field is instantiated
- * based on existing value of the hidden input box.
+ * Init checkbox functionality
  */
 function initCheckbox() {
 
-    /**
-     * Go through each checkbox input field and if checkbox value is
-     * equal to checked_val mark as checked(ticked). Otherwise
-     * uncheck.the checkbox.
-     */
-    $('.spyr-checkbox').each(function () {
-        var checkbox = $(this);
-        var checked_val = checkbox.attr('data-checked-val');
+	$('.mf-checkbox').each(function () {
+		var checkbox = $(this);
+		var checked_val = checkbox.attr('data-checked-val');
 
-        if (checkbox.val() == checked_val) {
-            checkbox.prop('checked', true);
-        } else {
-            checkbox.prop('checked', false);
-        }
-        checkbox.trigger('change')
-    });
+		if (checkbox.val() == checked_val) {
+			checkbox.prop('checked', true);
+		} else {
+			checkbox.prop('checked', false);
+		}
+		checkbox.trigger('change')
+	});
 
-    $('.spyr-checkbox').change(function () {
-        var checkbox = $(this);
-        var checked_val = checkbox.attr('data-checked-val');
-        var unchecked_val = checkbox.attr('data-unchecked-val');
-        var id = $(this).attr('data-checkbox-id');
+	$('.mf-checkbox').change(function () {
+		var checkbox = $(this);
+		var checked_val = checkbox.attr('data-checked-val');
+		var unchecked_val = checkbox.attr('data-unchecked-val');
+		var id = $(this).attr('data-checkbox-id');
 
-        if (checkbox.is(':checked')) {
-            $('input[class=' + id + ']').val(checked_val);
-            checkbox.val(checked_val);
-        } else {
-            $('input[class=' + id + ']').val(unchecked_val);
-            checkbox.val(unchecked_val);
-        }
-    });
-    // Activate iCheck checkbox style
-    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
-        checkboxClass: 'icheckbox_minimal-blue', radioClass: 'iradio_minimal-blue'
-    });
+		if (checkbox.is(':checked')) {
+			$('input[class=' + id + ']').val(checked_val);
+			checkbox.val(checked_val);
+		} else {
+			$('input[class=' + id + ']').val(unchecked_val);
+			checkbox.val(unchecked_val);
+		}
+	});
+	// Activate iCheck checkbox style
+	$('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+		checkboxClass: 'icheckbox_minimal-blue', radioClass: 'iradio_minimal-blue'
+	});
 }
 
 /**
@@ -446,111 +370,111 @@ function initCheckbox() {
  * @param url : url where uploader will post the data
  */
 function initUploader(id, url) {
-    $("#" + id + " .file-uploader").uploadFile({
+	$("#" + id + " .file-uploader").uploadFile({
 
-        url: url,
-        method: "POST",
-        fileName: "file",
-        returnType: 'json',
+		url: url,
+		method: "POST",
+		fileName: "file",
+		returnType: 'json',
 
-        // allowedTypes: "", // Extensions i.e. "jpeg,png,jpg"
-        // acceptFiles: "audio/*", // Shows these files in Windows explorer. http://stackoverflow.com/questions/11832930/html-input-file-accept-attribute-file-type-csv
-        // maxFileSize: 8,
-        // maxFileCount: 1,
-        multiple: true,
+		// allowedTypes: "", // Extensions i.e. "jpeg,png,jpg"
+		// acceptFiles: "audio/*", // Shows these files in Windows explorer. http://stackoverflow.com/questions/11832930/html-input-file-accept-attribute-file-type-csv
+		// maxFileSize: 8,
+		// maxFileCount: 1,
+		multiple: true,
 
-        uploadStr: "Select",
-        uploadButtonClass: 'btn btn-default btn-transparent btn-upload',
-        autoSubmit: true,
+		uploadStr: "Select",
+		uploadButtonClass: 'btn btn-default btn-transparent btn-upload',
+		autoSubmit: true,
 
-        dragDrop: true,
-        dragDropStr: "<span style='margin-left: 5px'> -OR- Drop Here</span>",
-        dragdropWidth: '100%',
+		dragDrop: true,
+		dragDropStr: "<span style='margin-left: 5px'> -OR- Drop Here</span>",
+		dragdropWidth: '100%',
 
-        showStatusAfterSuccess: true,
-        statusBarWidth: '100%',
+		showStatusAfterSuccess: true,
+		statusBarWidth: '100%',
 
-        showPreview: true,
-        previewHeight: "100px",
-        previewWidth: "auto",
-        showDone: true,
-        doneStr: '✔️', //
-        // dynamicFormData: function () {
-        //     // Note - Older implementation that doesn't use serialize()
-        //     return {
-        //         "ret": "json",
-        //         "_token": $("#" + id + " input[name=_token]").val(),
-        //         "tenant_id": $("#" + id + " input[name=tenant_id]").val(),
-        //         "module_id": $("#" + id + " input[name=module_id]").val(),
-        //         "element_id": $("#" + id + " input[name=element_id]").val(),
-        //         "element_uuid": $("#" + id + " input[name=element_uuid]").val(),
-        //         "type": $("#" + id + " input[name=type]").val()
-        //     };
-        // },
-        dynamicFormData: function () { // New implementation using serialization
-            return $('div#' + id).find("select, textarea, input").serialize();
-            // return $('#' + id + ' form').serialize(); // Serialize everything in form. Nah! no wise.
-        },
-        onSuccess: function (files, ret, xhr) {
-            if (ret.status == 'fail') {
-                $('div.ajax-file-upload-green').hide();
-                $('div.ajax-file-upload-statusbar:first').hide();
-                showResponseModal(parseJson(ret), default_modal_timeout);
-            }
-            // var path = ret.message.path;
-        },
-        onError: function (files, status, errMsg) {
-            $("#status").html("<span style='color: green;'>Something Wrong</span>");
-        }
-    });
+		showPreview: true,
+		previewHeight: "100px",
+		previewWidth: "auto",
+		showDone: true,
+		doneStr: '✔️', //
+		// dynamicFormData: function () {
+		//     // Note - Older implementation that doesn't use serialize()
+		//     return {
+		//         "ret": "json",
+		//         "_token": $("#" + id + " input[name=_token]").val(),
+		//         "tenant_id": $("#" + id + " input[name=tenant_id]").val(),
+		//         "module_id": $("#" + id + " input[name=module_id]").val(),
+		//         "element_id": $("#" + id + " input[name=element_id]").val(),
+		//         "element_uuid": $("#" + id + " input[name=element_uuid]").val(),
+		//         "type": $("#" + id + " input[name=type]").val()
+		//     };
+		// },
+		dynamicFormData: function () { // New implementation using serialization
+			return $('div#' + id).find("select, textarea, input").serialize();
+			// return $('#' + id + ' form').serialize(); // Serialize everything in form. Nah! no wise.
+		},
+		onSuccess: function (files, ret, xhr) {
+			if (ret.status == 'fail') {
+				$('div.ajax-file-upload-green').hide();
+				$('div.ajax-file-upload-statusbar:first').hide();
+				showResponseModal(parseJson(ret), default_modal_timeout);
+			}
+			// var path = ret.message.path;
+		},
+		onError: function (files, status, errMsg) {
+			$("#status").html("<span style='color: green;'>Something Wrong</span>");
+		}
+	});
 }
 
 /**
  * Instantiate image file uploader
  */
 function initImageUploader(id, url) {
-    $("#" + id + " .file-uploader").uploadFile({
-        url: url,
-        method: "POST", //
-        fileName: "file",
-        returnType: 'json',
+	$("#" + id + " .file-uploader").uploadFile({
+		url: url,
+		method: "POST", //
+		fileName: "file",
+		returnType: 'json',
 
-        allowedTypes: "jpg,jpeg,png", // Extensions i.e. "jpeg,png,jpg"
-        acceptFiles: "image/*", // Shows these files in Windows explorer. http://stackoverflow.com/questions/11832930/html-input-file-accept-attribute-file-type-csv
-        // maxFileSize: 8,
-        // maxFileCount: 1,
-        multiple: false,
+		allowedTypes: "jpg,jpeg,png", // Extensions i.e. "jpeg,png,jpg"
+		acceptFiles: "image/*", // Shows these files in Windows explorer. http://stackoverflow.com/questions/11832930/html-input-file-accept-attribute-file-type-csv
+		// maxFileSize: 8,
+		// maxFileCount: 1,
+		multiple: false,
 
-        uploadStr: "Select",
-        uploadButtonClass: 'btn btn-default btn-transparent btn-upload',
-        autoSubmit: true,
+		uploadStr: "Select",
+		uploadButtonClass: 'btn btn-default btn-transparent btn-upload',
+		autoSubmit: true,
 
-        dragDrop: true,
-        dragDropStr: "<span style='margin-left: 5px'> -OR- Drop Here</span>",
-        dragdropWidth: '100%', //maxFileSize: 8,
+		dragDrop: true,
+		dragDropStr: "<span style='margin-left: 5px'> -OR- Drop Here</span>",
+		dragdropWidth: '100%', //maxFileSize: 8,
 
-        showStatusAfterSuccess: true,
-        statusBarWidth: '100%',
+		showStatusAfterSuccess: true,
+		statusBarWidth: '100%',
 
-        showPreview: true,
-        previewHeight: "100px",
-        previewWidth: "auto",
-        showDone: true,
-        doneStr: '✔️',
-        dynamicFormData: function () {
-            return $('div#' + id).find("select, textarea, input").serialize();
-        },
-        onSuccess: function (files, ret) {
-            if (ret.status == 'fail') {
-                $('div.ajax-file-upload-green').hide();
-                $('div.ajax-file-upload-statusbar:first').hide();
-                showResponseModal(parseJson(ret), 3000);
-            }
-        },
-        onError: function () {
-            $("#status").html("<span style='color: green;'>Something Wrong</span>");
-        }
-    });
+		showPreview: true,
+		previewHeight: "100px",
+		previewWidth: "auto",
+		showDone: true,
+		doneStr: '✔️',
+		dynamicFormData: function () {
+			return $('div#' + id).find("select, textarea, input").serialize();
+		},
+		onSuccess: function (files, ret) {
+			if (ret.status == 'fail') {
+				$('div.ajax-file-upload-green').hide();
+				$('div.ajax-file-upload-statusbar:first').hide();
+				showResponseModal(parseJson(ret), 3000);
+			}
+		},
+		onError: function () {
+			$("#status").html("<span style='color: green;'>Something Wrong</span>");
+		}
+	});
 }
 
 
@@ -558,47 +482,47 @@ function initImageUploader(id, url) {
  * Instantiate an uploader for single file
  */
 function initSingleFileUploader(id, url) {
-    $("#" + id + " .file-uploader").uploadFile({
-        url: url,
-        method: "POST",
-        fileName: "file",
-        returnType: 'json',
-        // allowedTypes: "", // Extensions i.e. "jpeg,png,jpg"
-        // acceptFiles: "audio/*", // Shows these files in Windows explorer. http://stackoverflow.com/questions/11832930/html-input-file-accept-attribute-file-type-csv
-        // maxFileSize: 8,
-        // maxFileCount: 1,
-        multiple: false,
-        showFileCounter: false,
-        uploadStr: "Select",
-        uploadButtonClass: 'btn btn-default btn-transparent btn-upload',
-        autoSubmit: true,
-        dragDrop: true,
-        dragDropStr: "<span style='margin-left: 5px'> -OR- Drop Here</span>",
-        dragdropWidth: '100%', //
-        showStatusAfterSuccess: true,
-        statusBarWidth: '100%',
-        showPreview: true, // showDelete: true,
-        previewHeight: "100px",
-        previewWidth: "auto",
-        showDone: true,
-        doneStr: '✔️',
-        dynamicFormData: function () { // New implementation using serialization
-            return $('div#' + id).find("select, textarea, input").serialize();
-        },
-        onSuccess: function (files, ret, xhr, pd) {
-            if (ret.status == 'fail') {
-                $('div.ajax-file-upload-green').hide();
-                $('div.ajax-file-upload-statusbar:first').hide();
-                showResponseModal(parseJson(ret), 3000);
-            } else {
-                // Hide all the upload previews except for the last one
-                $('#' + id).find('.ajax-file-upload-statusbar:not(:first)').hide();
-            }
-        },
-        onError: function () {
-            $("#status").html("<span style='color: green;'>Something Wrong</span>");
-        }
-    });
+	$("#" + id + " .file-uploader").uploadFile({
+		url: url,
+		method: "POST",
+		fileName: "file",
+		returnType: 'json',
+		// allowedTypes: "", // Extensions i.e. "jpeg,png,jpg"
+		// acceptFiles: "audio/*", // Shows these files in Windows explorer. http://stackoverflow.com/questions/11832930/html-input-file-accept-attribute-file-type-csv
+		// maxFileSize: 8,
+		// maxFileCount: 1,
+		multiple: false,
+		showFileCounter: false,
+		uploadStr: "Select",
+		uploadButtonClass: 'btn btn-default btn-transparent btn-upload',
+		autoSubmit: true,
+		dragDrop: true,
+		dragDropStr: "<span style='margin-left: 5px'> -OR- Drop Here</span>",
+		dragdropWidth: '100%', //
+		showStatusAfterSuccess: true,
+		statusBarWidth: '100%',
+		showPreview: true, // showDelete: true,
+		previewHeight: "100px",
+		previewWidth: "auto",
+		showDone: true,
+		doneStr: '✔️',
+		dynamicFormData: function () { // New implementation using serialization
+			return $('div#' + id).find("select, textarea, input").serialize();
+		},
+		onSuccess: function (files, ret, xhr, pd) {
+			if (ret.status == 'fail') {
+				$('div.ajax-file-upload-green').hide();
+				$('div.ajax-file-upload-statusbar:first').hide();
+				showResponseModal(parseJson(ret), 3000);
+			} else {
+				// Hide all the upload previews except for the last one
+				$('#' + id).find('.ajax-file-upload-statusbar:not(:first)').hide();
+			}
+		},
+		onError: function () {
+			$("#status").html("<span style='color: green;'>Something Wrong</span>");
+		}
+	});
 }
 
 
@@ -614,15 +538,15 @@ function initSingleFileUploader(id, url) {
  * @returns {boolean}
  */
 function hasNestedKey(obj /*, level1, level2, ... levelN*/) {
-    var args = Array.prototype.slice.call(arguments, 1);
+	var args = Array.prototype.slice.call(arguments, 1);
 
-    for (var i = 0; i < args.length; i++) {
-        if (!obj || !obj.hasOwnProperty(args[i])) {
-            return false;
-        }
-        obj = obj[args[i]];
-    }
-    return true;
+	for (var i = 0; i < args.length; i++) {
+		if (!obj || !obj.hasOwnProperty(args[i])) {
+			return false;
+		}
+		obj = obj[args[i]];
+	}
+	return true;
 }
 
 
@@ -630,8 +554,8 @@ function hasNestedKey(obj /*, level1, level2, ... levelN*/) {
  * Resolve datepicker conflict
  */
 if (!$.fn.bootstrapDatepicker && $.fn.datepicker && $.fn.datepicker.noConflict) {
-    var datepicker = $.fn.datepicker.noConflict();
-    $.fn.bootstrapDatepicker = datepicker;
+	var datepicker = $.fn.datepicker.noConflict();
+	$.fn.bootstrapDatepicker = datepicker;
 }
 
 /**
@@ -641,33 +565,33 @@ if (!$.fn.bootstrapDatepicker && $.fn.datepicker && $.fn.datepicker.noConflict) 
  * @returns {jQuery|undefined}
  */
 function initBootstrapDatepicker(selector, format = 'dd-mm-yyyy') {
-    return $(selector + '_formatted').bootstrapDatepicker({
-        todayBtn: true, todayHighlight: true, format: format, autoclose: true, clearBtn: true
-    }).on('clearDate', function (ev) {
-        $(selector).val(null);
-    }).on('changeDate', function (ev) {
-        var validDate = null;
-        var formattedDate = $(this).val();      // '01-04-2020'
+	return $(selector + '_formatted').bootstrapDatepicker({
+		todayBtn: true, todayHighlight: true, format: format, autoclose: true, clearBtn: true
+	}).on('clearDate', function (ev) {
+		$(selector).val(null);
+	}).on('changeDate', function (ev) {
+		var validDate = null;
+		var formattedDate = $(this).val();      // '01-04-2020'
 
-        if (formattedDate.length) {
-            var formatParts = format.split('-');   // ['01','04','2020']
-            var dateParts = formattedDate.split('-');   // ['01','04','2020']
+		if (formattedDate.length) {
+			var formatParts = format.split('-');   // ['01','04','2020']
+			var dateParts = formattedDate.split('-');   // ['01','04','2020']
 
-            var map = [];
-            for (var i = 0; i < formatParts.length; i++) {
-                map[formatParts[i]] = dateParts[i];
-            }
+			var map = [];
+			for (var i = 0; i < formatParts.length; i++) {
+				map[formatParts[i]] = dateParts[i];
+			}
 
-            var day = map['dd']; // '01'
-            var month = map['mm']; // '04'
-            var year = map['yyyy']; // '2020'
-            // console.log(year.length + " " + month.length + " " + day.length);
-            if (year.length === 4 && month.length === 2 && day.length === 2) {
-                validDate = year + '-' + month + '-' + day;
-            }
-        }
-        $(selector).val(validDate);
-    });
+			var day = map['dd']; // '01'
+			var month = map['mm']; // '04'
+			var year = map['yyyy']; // '2020'
+			// console.log(year.length + " " + month.length + " " + day.length);
+			if (year.length === 4 && month.length === 2 && day.length === 2) {
+				validDate = year + '-' + month + '-' + day;
+			}
+		}
+		$(selector).val(validDate);
+	});
 }
 
 /**
@@ -677,10 +601,10 @@ function initBootstrapDatepicker(selector, format = 'dd-mm-yyyy') {
  * @returns {jQuery|undefined}
  */
 function initJQueryDatePicker(selector, format = 'dd-mm-yy') {
-    return $(selector + '_formatted').datepicker({
-        dateFormat: format, altFormat: "yy-mm-dd", // Standard datetime format
-        altField: selector, changeMonth: true, changeYear: true
-    });
+	return $(selector + '_formatted').datepicker({
+		dateFormat: format, altFormat: "yy-mm-dd", // Standard datetime format
+		altField: selector, changeMonth: true, changeYear: true
+	});
 }
 
 /**
@@ -690,13 +614,13 @@ function initJQueryDatePicker(selector, format = 'dd-mm-yy') {
  * @returns {string}
  */
 function randomString(len, charSet) {
-    charSet = charSet || 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    var randomString = '';
-    for (var i = 0; i < len; i++) {
-        var randomPoz = Math.floor(Math.random() * charSet.length);
-        randomString += charSet.substring(randomPoz, randomPoz + 1);
-    }
-    return randomString;
+	charSet = charSet || 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+	var randomString = '';
+	for (var i = 0; i < len; i++) {
+		var randomPoz = Math.floor(Math.random() * charSet.length);
+		randomString += charSet.substring(randomPoz, randomPoz + 1);
+	}
+	return randomString;
 }
 
 /**
@@ -705,24 +629,24 @@ function randomString(len, charSet) {
  */
 function initJsonTextarea(css) {
 
-    if (!css) {
-        css = 'json';
-    }
+	if (!css) {
+		css = 'json';
+	}
 
-    // console.log(css);
-    $('textarea.' + css).each(function (i, el) {
-        var elem = $(el);
-        $(elem).bind('change', () => {
-            var ugly = elem.val();
-            if (ugly) {
-                // console.log(elem);
-                var obj = JSON.parse(ugly);
-                var pretty = JSON.stringify(obj, undefined, 4);
-                elem.val(pretty);
-            }
-        });
-        elem.trigger('change');
-    });
+	// console.log(css);
+	$('textarea.' + css).each(function (i, el) {
+		var elem = $(el);
+		$(elem).bind('change', () => {
+			var ugly = elem.val();
+			if (ugly) {
+				// console.log(elem);
+				var obj = JSON.parse(ugly);
+				var pretty = JSON.stringify(obj, undefined, 4);
+				elem.val(pretty);
+			}
+		});
+		elem.trigger('change');
+	});
 
 }
 
@@ -733,8 +657,8 @@ function initJsonTextarea(css) {
  */
 
 function ctaFloat() {
-    $(".delete-cta").css({"margin-right": 0});
-    $(".cta-block").css({"position": "relative", "border-top": "none"});
+	$(".delete-cta").css({"margin-right": 0});
+	$(".cta-block").css({"position": "relative", "border-top": "none"});
 }
 
 /**
@@ -745,17 +669,17 @@ function ctaFloat() {
  * @param target By default target the main module-form CTA (.module-save-btn)
  */
 function ctaText(text, target = ".module-save-btn") {
-    $(target).html(text);
+	$(target).html(text);
 }
 
 /**
  * Print page
  */
 function printPage(buttonId = "btnPrint") {
-    var printButton = document.getElementById(buttonId);
-    printButton.style.visibility = 'hidden';
-    window.print();
-    printButton.style.visibility = 'visible';
+	var printButton = document.getElementById(buttonId);
+	printButton.style.visibility = 'hidden';
+	window.print();
+	printButton.style.visibility = 'visible';
 }
 
 /**
@@ -763,12 +687,12 @@ function printPage(buttonId = "btnPrint") {
  * @returns {string}
  */
 function uuid() {
-    // noinspection SpellCheckingInspection
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
-        .replace(/[xy]/g, function (c) {
-            const r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-            return v.toString(16);
-        });
+	// noinspection SpellCheckingInspection
+	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
+		.replace(/[xy]/g, function (c) {
+			const r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+			return v.toString(16);
+		});
 }
 
 /**
@@ -780,26 +704,26 @@ function uuid() {
  * @param prefix
  */
 function setStyleBasedOnSelectedValue(cssClass = 'class', prefix = 'selected-') {
-    $('select.' + cssClass).on('change', function () {
+	$('select.' + cssClass).on('change', function () {
 
 
-        // Step 1 - Add the new class 'selected-{cssClass}-lorem-ipsum'
-        var select = $(this);
-        var select_val = select.val();
-        var add_class = prefix + cssClass + '-' + v.kebabCase(select_val);
-        select.addClass(add_class);
+		// Step 1 - Add the new class 'selected-{cssClass}-lorem-ipsum'
+		var select = $(this);
+		var select_val = select.val();
+		var add_class = prefix + cssClass + '-' + v.kebabCase(select_val);
+		select.addClass(add_class);
 
-        // Step 2 - Remove non-selected option classes
-        $(this).find('option').each(function () {
-            var option = $(this);
-            var option_val = option.val();
-            if (option_val != select_val) {
-                var remove_class = prefix + cssClass + '-' + v.kebabCase(option_val);
-                select.removeClass(v.kebabCase(remove_class));
-            }
-        });
+		// Step 2 - Remove non-selected option classes
+		$(this).find('option').each(function () {
+			var option = $(this);
+			var option_val = option.val();
+			if (option_val != select_val) {
+				var remove_class = prefix + cssClass + '-' + v.kebabCase(option_val);
+				select.removeClass(v.kebabCase(remove_class));
+			}
+		});
 
-    }).trigger('change');
+	}).trigger('change');
 }
 
 /*
@@ -815,9 +739,9 @@ function setStyleBasedOnSelectedValue(cssClass = 'class', prefix = 'selected-') 
  * @param reportBtnClass
  */
 function buildReportUrlFromFilterParams(formId = 'FilterForm', reportBaseUrl = '/', reportBtnClass = 'report-btn') {
-    let params = $('#' + formId).serialize();
-    let reportUrl = reportBaseUrl + '?' + params;
-    $('a.' + reportBtnClass).attr('href', reportUrl);
+	let params = $('#' + formId).serialize();
+	let reportUrl = reportBaseUrl + '?' + params;
+	$('a.' + reportBtnClass).attr('href', reportUrl);
 }
 
 
@@ -826,7 +750,7 @@ function buildReportUrlFromFilterParams(formId = 'FilterForm', reportBaseUrl = '
  * @param formId
  */
 function resetDatatableFilter(formId) {
-    resetForm(formId)
+	resetForm(formId)
 }
 
 
@@ -836,12 +760,12 @@ function resetDatatableFilter(formId) {
  */
 function resetForm(formId) {
 
-    const $form = resolveForm(formId)
-    $form.trigger('reset');
-    $form.find('.select2').select2('val', '');
-    $form.find('.select2').trigger('change');
-    $form.find('text').val('');
-    $form.find('input').val('');
+	let $form = resolveForm(formId)
+	$form.trigger('reset');
+	$form.find('.select2').select2('val', '');
+	$form.find('.select2').trigger('change');
+	$form.find('text').val('');
+	$form.find('input').val('');
 
 }
 
@@ -852,17 +776,54 @@ function resetForm(formId) {
  * @param optionAttr
  */
 function showDivsBasedOnSelect(selectId, optionAttr) {
-    $('#' + selectId).on('change', function () {
+	$('#' + selectId).on('change', function () {
 
-        // 1- Get the selected value(s)
-        var values = getMultiSelectAsArray('#' + selectId, optionAttr);
+		// 1- Get the selected value(s)
+		var values = getMultiSelectAsArray('#' + selectId, optionAttr);
 
-        // 2- Force hide conditional divs
-        $('.depends-on-' + selectId).hide();
+		// 2- Force hide conditional divs
+		$('.depends-on-' + selectId).hide();
 
-        // 3- Show the divs with matching class(kebab-case)
-        _(values).forEach(function (value) {
-            $('div.' + selectId + '-' + v.kebabCase(value)).show(); // _() is a low-dash function.See: https://lodash.com/docs/2.4.2#forEach
-        });
-    }).trigger('change');
+		// 3- Show the divs with matching class(kebab-case)
+		_(values).forEach(function (value) {
+			$('div.' + selectId + '-' + v.kebabCase(value)).show(); // _() is a low-dash function.See: https://lodash.com/docs/2.4.2#forEach
+		});
+	}).trigger('change');
+}
+
+/**
+ * Hide all modals
+ */
+function hideModals() {
+	$('.modal').modal('hide');
+}
+
+/**
+ * Enable a button
+ * @param $btn
+ * @param btnText
+ */
+function enableBtn($btn, btnText = null) {
+	if (btnText) {
+		$btn.html(btnText);
+	}
+
+	$btn.removeClass('disabled').attr('disabled', false);
+}
+
+/**
+ * Disable a button
+ * @param $btn
+ */
+function disableBtn($btn) {
+	$btn.addClass('disabled').attr('disabled', true);
+}
+
+/**
+ *
+ * Show a collapsed HTML (i.e. accordion) under an element
+ * @param $element
+ */
+function showCollapsedSections($element) {
+	$element.find('.collapse').collapse('show');
 }

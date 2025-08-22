@@ -379,7 +379,7 @@ class Mf
 
     /**
      * Encode the current request URL into a string that can be used as key for caching
-     * @param $except Exclu
+     * @param $except
      * @return string
      */
     public static function urlEncoded($except = [])

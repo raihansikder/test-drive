@@ -11,7 +11,6 @@
  * @var \App\Module $module
  * @var \App\Project\Modules\Users\UserViewProcessor $view
  */
-
 ?>
 
 @section('content')
@@ -22,19 +21,19 @@
             @elseif($formState == 'edit')
                 {{ Form::model($element, $formConfig)}}
             @endif
-
+            
             @include('form.text',['var'=>['name'=>'first_name','label'=>'First Name', 'tooltip'=>'First Name']])
             @include('form.text',['var'=>['name'=>'last_name','label'=>'Last Name']])
             @include('form.text',['var'=>['name'=>'email','label'=>'Email']])
             @include('form.datetime',['var'=>['name'=>'email_verified_at','label'=>'Email verified at']])
-
+            
             {{-- show password only for editable --}}
             @if($editable)
                 <div class="clearfix"></div>
                 @include('form.text',['var'=>['name'=>'password','type'=>'password','label'=>'New password','value'=>'']])
                 @include('form.text',['var'=>['name'=>'password_confirmation','type'=>'password','label'=>'Confirm new password']])
             @endif
-
+            
             <div class="clearfix"></div>
             <h3>Group Selection</h3>
             <?php
@@ -46,7 +45,7 @@
             ?>
             @include('form.select-model-multiple', compact('var'))
             <div class="clearfix"></div>
-
+            
             {{-- Section: Show input fields for specific user group--}}
             <div class="conditionally-visible depends-on-groups groups-{{\App\User::USER_GROUP}}">
                 Show fields for {{\App\User::USER_GROUP}}
@@ -54,7 +53,7 @@
             <div class="conditionally-visible depends-on-groups groups-{{\App\User::TENANT_ADMIN_GROUP}}">
                 Show fields for {{\App\User::TENANT_ADMIN_GROUP}}
             </div>
-
+            
             <div class='clearfix'></div>
             <div class="col-md-12 form-group">
                 @include('mainframe.modules.users.form.includes.token-fields')
@@ -62,7 +61,7 @@
             <div class="clearfix"></div>
             {{--@include('form.is-active')--}}
             @include('form.action-buttons')
-
+            
             {{ Form::close() }}
         </div>
     </div>
@@ -101,6 +100,6 @@
         //         }
         //     })
         // }).trigger('change');
-
+    
     </script>
 @endsection

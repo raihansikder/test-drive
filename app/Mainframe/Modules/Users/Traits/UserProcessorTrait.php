@@ -99,7 +99,19 @@ trait UserProcessorTrait
     // public function updating($element) { return $this; }
     // public function created($element) { return $this; }
     // public function updated($element) { return $this; }
-    // public function saved($element) { return $this; }
+
+    /**
+     * Run validations for saving. This should be common for both creating and updating.
+     *
+     * @param  \App\User  $element
+     * @return $this
+     */
+    public function saved($element)
+    {
+        $element->clearElementCache();
+
+        return $this;
+    }
     // public function deleting($element) { return $this; }
     // public function deleted($element) { return $this; }
 

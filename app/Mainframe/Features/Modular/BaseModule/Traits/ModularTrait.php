@@ -1531,4 +1531,63 @@ trait ModularTrait
             ->where('spreadable_id', $this->id)->delete();
     }
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | Cache related helpers
+    |--------------------------------------------------------------------------
+    |    
+    |
+    */
+    /**
+     * Get the element's cache prefix
+     *
+     * @param $field
+     * @return string
+     */
+    public function cachePrefix($field = 'id')
+    {
+        return $this->module()->name."[{$field}={$this->$field}]";
+    }
+
+
+    /**
+     * Get the element's cache key'
+     *
+     * @param $field
+     * @return array
+     */
+    public function elementSpecificCacheKeys($field = 'id')
+    {
+        $keys = [];
+
+        if (!$this->$field) {
+            return $keys;
+        }
+
+        $keys = config('cache.keys.'.$this->module()->name, []);
+        // return $keys;
+
+        return collect($keys)->filter(function ($key, $value) use ($field) {
+            return Str::contains($key, "["); // Keep only that has [id=
+        })->values()->map(function ($key) use ($field) {
+            return str_replace('%d', $this->$field, $key);
+        })->toArray();
+    }
+
+    /**
+     * Clear all element-specific cache
+     *
+     * @return void
+     * @throws \Exception
+     */
+    public function clearElementCache()
+    {
+        $keys = $this->elementSpecificCacheKeys();
+
+        foreach ($keys as $key) {
+            cache()->forget($key);
+        }
+    }
+
 }

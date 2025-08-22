@@ -221,6 +221,7 @@ function statelessUrlKey($append = '', $except = [])
 
 /**
  * Get cached data
+ *
  * @param  string  $key  kebab-case string input
  * @param  null  $seconds
  * @return mixed
@@ -500,4 +501,30 @@ function clean_output_buffer()
         ob_clean();
         ob_end_clean(); // Note- Use this to solve download open issue
     }
+}
+
+
+// /**
+//  * Add items to an existing array
+//  *
+//  * @param  array  $add
+//  * @return array
+//  */
+// if (!function_exists('array_add')) {
+//     function array_add($array, $add = [])
+//     {
+//         return array_unique(array_merge($array, $add));
+//     }
+// }
+
+/**
+ * Remove items from an existing array
+ *
+ * @param  array  $remove
+ * @return array
+ */
+function array_remove($array, $remove = [])
+{
+    $filtered = array_diff($array, $remove);
+    return array_values($filtered);
 }

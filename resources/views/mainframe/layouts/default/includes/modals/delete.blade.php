@@ -4,12 +4,13 @@
             <form name="deleteForm" method="POST" action="" accept-charset="UTF-8">
                 <input name="_method" type="hidden" value="DELETE">
                 <input name="_token" type="hidden" value="{{csrf_token()}}">
+                <input name="ret" type="hidden">
+
+                {{-- Custom fields --}}
                 <input name="redirect_success" type="hidden"/>
                 <input name="redirect_fail" type="hidden"/>
-                {{-- <input name="refresh_datatable_id" type="hidden"/>--}}
-                <input name="ret" type="hidden">
-                <input name="refresh_datatable_id" type="hidden">
-                <input name="hide_class" type="hidden">
+                <input name="_meta[refresh_datatable_id]" class="refresh_datatable_id" type="hidden">
+                <input name="_meta[hide_class]" class="hide_class" type="hidden">
 
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span

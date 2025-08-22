@@ -11,21 +11,21 @@
 initAfterLoader();
 
 function initAfterLoader() {
-    initPopup();
-    initTooltip();
-    initDatepicker();
-    initGenericDeleteBtn();
-    initSlimscroll(); // Todo: Fix required
-    initDatatable();
-    initSelect2();
-    initCheckbox();
-    initAutosizeTextarea();
-    initJsonTextarea(); // Format Json Text area
-    initSortable(); // Format Json Text area
-    initDatatableErrorHandler();
-    initImagelightbox();
-    initPanelToggle();
-    initDynamicModalTrigger();
+	initPopup();
+	initTooltip();
+	initDatepicker();
+	initGenericDeleteBtn();
+	initSlimscroll(); // Todo: Fix required
+	initDatatable();
+	initSelect2();
+	initCheckbox();
+	initAutosizeTextarea();
+	initJsonTextarea(); // Format Json Text area
+	initSortable(); // Format Json Text area
+	initDatatableErrorHandler();
+	initImagelightbox();
+	initPanelToggle();
+	initDynamicModalTrigger();
 }
 
 /*
@@ -39,16 +39,16 @@ function initAfterLoader() {
 |
 */
 function initPopup() {
-    $('.popup').on('click', function () {
+	$('.popup').on('click', function () {
 
-        var height = 600;
-        var width = 800;
-        var NWin = window.open($(this).prop('href'), '', 'scrollbars=1,height=' + height + ',width=' + width);
-        if (window.focus) {
-            NWin.focus();
-        }
-        return false;
-    });
+		var height = 600;
+		var width = 800;
+		var NWin = window.open($(this).prop('href'), '', 'scrollbars=1,height=' + height + ',width=' + width);
+		if (window.focus) {
+			NWin.focus();
+		}
+		return false;
+	});
 }
 
 
@@ -60,10 +60,10 @@ function initPopup() {
 |
 */
 function initTooltip() {
-    $('[data-toggle="popover"]').popover();
-    setTimeout(function () {
-        $('[data-toggle="tooltip-open"]').tooltip('show');
-    }, 2000)
+	$('[data-toggle="popover"]').popover();
+	setTimeout(function () {
+		$('[data-toggle="tooltip-open"]').tooltip('show');
+	}, 2000)
 }
 
 /*
@@ -74,9 +74,9 @@ function initTooltip() {
 |
 */
 function initDatepicker() {
-    $('.datepicker').datepicker({
-        format: 'yyyy-mm-dd', autoclose: true, clearBtn: true
-    });
+	$('.datepicker').datepicker({
+		format: 'yyyy-mm-dd', autoclose: true, clearBtn: true
+	});
 }
 
 /*
@@ -99,15 +99,15 @@ function initDatepicker() {
 |
 */
 function initSlimscroll() {
-    $('.slimscroll').each((i, el) => {
-        new slimScroll(el, {
-            // 'wrapperClass': 'scroll-wrapper unselectable mac',
-            // 'scrollBarContainerClass': 'scrollBarContainer',
-            // 'scrollBarContainerSpecialClass': 'animate',
-            // 'scrollBarClass': 'scroll',
-            // 'keepFocus': true
-        });
-    });
+	$('.slimscroll').each((i, el) => {
+		new slimScroll(el, {
+			// 'wrapperClass': 'scroll-wrapper unselectable mac',
+			// 'scrollBarContainerClass': 'scrollBarContainer',
+			// 'scrollBarContainerSpecialClass': 'animate',
+			// 'scrollBarClass': 'scroll',
+			// 'keepFocus': true
+		});
+	});
 }
 
 /*
@@ -132,30 +132,30 @@ function initSlimscroll() {
 // });
 
 var datatableMinConfig = {
-    "bPagination": false,
-    "bFilter": false,
-    //"bPaginate": false,
-    "bLengthChange": false,
-    "bInfo": false,
-    "bPageLength": 10,
-    "aaSorting": [[0, "asc"]],
-    'mark': true
+	"bPagination": false,
+	"bFilter": false,
+	//"bPaginate": false,
+	"bLengthChange": false,
+	"bInfo": false,
+	"bPageLength": 10,
+	"aaSorting": [[0, "asc"]],
+	'mark': true
 };
 
 var datatableMinNoPaginationConfig = {
-    "bPagination": false,
-    "bFilter": false,
-    "bPaginate": false,
-    "bLengthChange": false,
-    "bInfo": false,
-    "bPageLength": 10,
-    "aaSorting": [[0, "asc"]],
-    'mark': true
+	"bPagination": false,
+	"bFilter": false,
+	"bPaginate": false,
+	"bLengthChange": false,
+	"bInfo": false,
+	"bPageLength": 10,
+	"aaSorting": [[0, "asc"]],
+	'mark': true
 };
 
 function initDatatable() {
-    $('.datatable-min').dataTable(datatableMinConfig);
-    $('.datatable-min-no-pagination').dataTable(datatableMinNoPaginationConfig);
+	$('.datatable-min').dataTable(datatableMinConfig);
+	$('.datatable-min-no-pagination').dataTable(datatableMinNoPaginationConfig);
 }
 
 /*
@@ -168,7 +168,7 @@ function initDatatable() {
 */
 
 function initSelect2() {
-    $('select.select2').select2(); // Causes issue with vue
+	$('select.select2').select2(); // Causes issue with vue
 }
 
 
@@ -179,7 +179,7 @@ function initSelect2() {
 | Auto resize all text area
 |---------------------------------*/
 function initAutosizeTextarea() {
-    autosize(document.querySelectorAll('textarea'));
+	autosize(document.querySelectorAll('textarea'));
 }
 
 
@@ -189,15 +189,15 @@ function initAutosizeTextarea() {
 |--------------------------------------------------------------------------
 */
 function initSortable() {
-    $('.sortable').sortable();
+	$('.sortable').sortable();
 }
 
 
 function initDatatableErrorHandler() {
-    $.fn.dataTable.ext.errMode = function (settings, helpPage, message) {
-        console.log(message);
-        alert("Data could not be loaded. It can be because of your session has expired. Please refresh the page.");
-    };
+	$.fn.dataTable.ext.errMode = function (settings, helpPage, message) {
+		console.log(message);
+		alert("Data could not be loaded. It can be because of your session has expired. Please refresh the page.");
+	};
 }
 
 /*
@@ -206,11 +206,11 @@ function initDatatableErrorHandler() {
 |--------------------------------------------------------------------------
 */
 function initImagelightbox() {
-    $('a[data-load="imagelightbox"]')
-        .imageLightbox({
-            activity: true, arrows: true, button: true, caption: true, // navigation: true,
-            overlay: true, quitOnDocClick: true
-        });
+	$('a[data-load="imagelightbox"]')
+		.imageLightbox({
+			activity: true, arrows: true, button: true, caption: true, // navigation: true,
+			overlay: true, quitOnDocClick: true
+		});
 }
 
 
@@ -220,13 +220,13 @@ function initImagelightbox() {
 |--------------------------------------------------------------------------
 */
 function initPanelToggle() {
-    $('.click-show-panels').on('click', function () {
-        $('.panel-collapse').collapse('show');
-    });
+	$('.click-show-panels').on('click', function () {
+		$('.panel-collapse').collapse('show');
+	});
 
-    $('.click-hide-panels').on('click', function () {
-        $('.panel-collapse').collapse('hide');
-    });
+	$('.click-hide-panels').on('click', function () {
+		$('.panel-collapse').collapse('hide');
+	});
 }
 
 /*
@@ -236,29 +236,40 @@ function initPanelToggle() {
 */
 function initDynamicModalTrigger() {
 
-    // Correct way - using event delegation
-    $(document).on('click', '.dynamic-modal-trigger', function () {
-        let url = $(this).data('url');
-        let width = $(this).data('width');
-        if (url === '#') {
-            console.log('No URL provided for dynamic modal');
-            return false;
-        }
+	// Correct way - using event delegation
+	$(document).on('click', '.dynamic-modal-trigger', function () {
+		let url = $(this).data('url');
+		let width = $(this).data('width');
+		if (url === '#') {
+			console.log('No URL provided for dynamic modal');
+			return false;
+		}
 
-        $('#dynamicModal .modal-dialog').css('width', width); // Set modal width
+		$('#dynamicModal .modal-dialog').css('width', width); // Set modal width
 
-        axios.get(url).then(function (response) { // Axios' response is wrapped in response.data
-            $('#dynamicModal .modal-content').html(response.data); // Load content from partial
-        }).catch(function (error) {
-            console.log(error);
-        });
-    });
+		axios.get(url).then(function (response) { // Axios' response is wrapped in response.data
+			$('#dynamicModal .modal-content').html(response.data); // Load content from partial
+		}).catch(function (error) {
+			console.log(error);
+		});
+	});
 
 
-    // Dynamic modal close event
-    $('#dynamicModal').on('hidden.bs.modal', function (e) {
-        // console.log('Dynamic modal has been closed');
-        // Clear modal content when closed
-        $('#dynamicModal .modal-content').empty();
-    });
+	// Dynamic modal close event
+	$('#dynamicModal').on('hidden.bs.modal', function (e) {
+		// console.log('Dynamic modal has been closed');
+		// Clear modal content when closed
+		$('#dynamicModal .modal-content').empty();
+	});
 }
+
+/**
+ * Force clear padding on modal close.
+ * When modal is completely hidden, remove padding-right from body.
+ * Otherwise the 15 px padding that gets added automatically impacts
+ * datatable layout. A scroll gets added.
+ */
+$('.modal').on('hidden.bs.modal', function (e) {
+	$('body').css('padding-right', '0px');
+	console.log('Modal has been completely hidden!');
+});

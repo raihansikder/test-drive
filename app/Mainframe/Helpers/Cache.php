@@ -13,22 +13,45 @@ use DB;
 class Cache extends \Illuminate\Support\Facades\Cache
 {
     /**
-     * @param  int|string  $key
+     * Get cache time
+     *
+     * @param  int|string  $key  e.g., 10 minutes, 1 day, 1 week, 1 month, 1 year
      * @return \Illuminate\Config\Repository|int|mixed
      */
     public static function time($key = 0)
     {
-
-        if (config('mainframe.config.query_cache') == false || request('no_cache') == 'true') {
+        // Request cache refresh
+        if (request('no_cache') == 'true') {
             return 0;
         }
 
+        // Query cache disabled in .env
+        if (!config('mainframe.config.query_cache')) {
+            return 0;
+        }
+
+        // A value is forced
         if (is_int($key)) {
             return $key;
         }
 
-        return config('mainframe.cache-time.'.$key, 0);
+        // Check key in config/cache.php
+        if (config('cache.times')) {
+            return config('cache.times.'.$key, 0);
+        }
 
+        // Check key in config/mainframe/cache-time.php
+        if (config('mainframe.cache-time')) {
+            return config('mainframe.cache-time.'.$key, 0);
+        }
+
+        // Parse key to seconds
+        if (is_string($key)) {
+            return \Carbon\CarbonInterval::make($key)->totalSeconds;
+        }
+
+
+        return 0;
     }
 
     /**
@@ -62,7 +85,6 @@ class Cache extends \Illuminate\Support\Facades\Cache
      */
     public static function rawQuery($sql, $seconds = 0)
     {
-
         $key = md5($sql);
 
         if ($seconds <= 0) {
@@ -74,6 +96,5 @@ class Cache extends \Illuminate\Support\Facades\Cache
         return \Cache::remember($key, $seconds, function () use ($sql) {
             return DB::select(DB::raw($sql));
         });
-
     }
 }
