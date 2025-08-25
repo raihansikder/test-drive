@@ -60,11 +60,11 @@ trait UserDatatableTrait
         |--------------------------------------------------------------------------
         */
         if ($val = request('created_at_from')) { // From date range picker
-            $query->where('users.created_at', '>=', date_create($val)->format('Y-m-d 00:00:00'));
+            $query->where($this->table.'.created_at', '>=', date_create($val)->format('Y-m-d 00:00:00'));
         }
 
         if ($val = request('created_at_till')) { // From date range picker
-            $query->where('users.created_at', '<=', date_create($val)->format('Y-m-d 23:59:59'));
+            $query->where($this->table.'created_at', '<=', date_create($val)->format('Y-m-d 23:59:59'));
         }
         /*---------------------------------------------------------------___-----*/
 

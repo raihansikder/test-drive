@@ -5,7 +5,6 @@ namespace App\Mainframe\Features\Datatable;
 use URL;
 use Str;
 use App\Module;
-use App\Mainframe\Features\Modular\BaseModule\BaseModule;
 use App\Mainframe\Features\Datatable\Traits\DatatableTrait;
 
 /**
@@ -32,13 +31,20 @@ class Datatable
     use DatatableTrait;
 
     /**
-     * Default dom options
+     * Datatable DOM options
      * See: https://datatables.net/reference/option/dom
      *
      * @var string
      */
     public const DOM_WITH_BTN = 'Blftipr';
     public const DOM_WITHOUT_BTN = 'lftipr';
+
+    /*
+    |--------------------------------------------------------------------------
+    | Customizations
+    |--------------------------------------------------------------------------
+    |
+    */
 
     /**
      * Unique name of the data table. A JS variable will be created by
@@ -57,7 +63,7 @@ class Datatable
     public $containerClass;
 
     /**
-     * Datatable table class.
+     * Datatable main table class.
      *
      * @var string
      */
@@ -73,19 +79,20 @@ class Datatable
     /**
      * For datatable of a module (ModularDatatable), this has to be set
      *
-     * @var Module
+     * @var \App\Module
      */
     public $module;
 
     /**
      * For datatable of a module this has to be set.
      *
-     * @var BaseModule
+     * @var \App\Project\Features\Modular\BaseModule\BaseModule
      */
     public $model;
 
     /**
      * Instance of \Yajra\DataTables\DataTable
+     * @ref https://yajrabox.com/docs/laravel-datatables/12.0
      *
      * @var \Yajra\DataTables\DataTableAbstract
      */
@@ -93,15 +100,17 @@ class Datatable
 
     /**
      * List of columns that is allowed for search/sort.
+     * @ref https://yajrabox.com/docs/laravel-datatables/12.0/whitelist
      *
-     * @var array
+     * @var string[]
      */
     public $whiteList = [];
 
     /**
      * List of columns that is not allowed for search/sort.
+     * @ref https://yajrabox.com/docs/laravel-datatables/12.0/blacklist
      *
-     * @var array
+     * @var string[]
      */
     public $blackList = [];
 
@@ -110,7 +119,8 @@ class Datatable
      * Optionally merge the defaults from config.
      *
      * @var string[]
-     * Automatically, all columns are considered as raw(html) columns
+     * @depricated Automatically, all columns are considered as raw(html) columns. No longer
+     * required to explicitly set this.
      */
     public $rawColumns = ['tenant_sl', 'id', 'name', 'is_active', 'action'];
 
@@ -123,7 +133,7 @@ class Datatable
     public $ajaxUrl;
 
     /**
-     * If true, merge the current request URL params with the Ajax URL
+     * If true, merge the current request/URL params with the Ajax URL
      *
      * @var bool
      */
@@ -136,9 +146,153 @@ class Datatable
      */
     public $pageLength = 25;
 
+
     /**
+     * Show marked(highlighted) matched text in the search result
+     *
+     * @var string
+     */
+    public $mark = true;
+
+    /**
+     * Show processing text
+     *
+     * @var bool
+     */
+    public $processing = true;
+
+    /**
+     * Activate AJAX-based data fetch from the server side
+     *
+     * @var bool
+     */
+    public $serverSide = true;
+
+
+    /**
+     * Shows options for rows per page
+     *
+     * @var string "[5, 10, 25, 50, 100]"
+     */
+    public $lengthMenu;
+
+
+    /**
+     * Datatable order/sorting config
+     *
+     * @var string "[[0, 'desc']]"
+     */
+    public $order;
+
+    /**
+     * Hide some fields that are already included in the
+     * initial column list.
+     *
+     * @var array
+     */
+    public $hidden = [];
+
+    /**
+     * Define date fields that will be auto-formatted.
+     * For module datatable this can be set in the model $dates attribute
+     * data will be formatted user formatDate() function. The format
+     * can be defined in
+     * config/mainframe/config.php > date_format
+     *
+     * @var array
+     */
+    public $dates = [];
+
+    /**
+     * Define datetime fields that will be auto-formatted.
+     * Value will be autoformatted use formatDatetime() function.
+     * The format can be defined in:
+     * config/mainframe/config.php > datetime_format
+     *
+     * @var array
+     */
+    public $datetimes = [];
+
+    /**
+     * Fields that contain boolean values. The output will as Yes/No
+     * based on the value of this field
+     *
+     * @var array
+     */
+    public $booleans = [];
+
+    /**
+     * Array of fields to transform a value to some other value.
+     * i.e., ['is_active' => [ '0' => 'Zero', '1' => 'One', ]]
+     *
+     * @var array
+     */
+    public $transforms = [];
+
+    /**
+     * List of columns that should be excluded from automatic filtering.
+     * If these are included in request, they will be ignored.
+     *
+     * @var array
+     */
+    public $skipAutoFilterColumns = ['order'];
+
+
+    /**
+     * List of fields that should be searched in full text mode.
+     *
+     * @var string[]
+     */
+    public $fullTextFields = ['name'];
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Mainframe Datatable blade customizations
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+    /**
+     * Show custom filters in datatable.
+     * If set to true, custom filters will be shown. If set to false,
+     * default filters will be shown.
+     *
+     * @var bool
+     */
+    public $showCustomFilter = true;
+
+    /**
+     * Filter on submit-button click.
+     * If set to true filter will be applied on submit button click. If set to false, filter will be applied
+     * whenever there is a change in the filter input.
+     *
+     * @var bool
+     */
+    public $filterOnSubmit = true;
+
+    /**
+     * Show filter reset button
+     *
+     * @var bool
+     */
+    public $showFilterResetBtn = true;
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Datatable version 1.10 configs
+    |--------------------------------------------------------------------------
+    | @ref https://datatables.net/reference/option/
+    |
+    */
+
+    /**
+     *
+     * --------------------------------------------------------------------------
      * Allow changing rows per page. If this is set to true, then the page length
      * selector will show
+     * @ref https://datatables.net/reference/option/lengthChange
      *
      * @var bool
      */
@@ -197,109 +351,8 @@ class Datatable
      *
      * @var string
      */
-    public $dom = 'Blftipr';
+    public $dom = self::DOM_WITH_BTN;
 
-    /**
-     * Show marked(highlighted) matched text in the search result
-     *
-     * @var string
-     */
-    public $mark = true;
-
-    /**
-     * Show processing text
-     *
-     * @var bool
-     */
-    public $processing = true;
-
-    /**
-     * Activate AJAX-based data fetch from the server side
-     *
-     * @var bool
-     */
-    public $serverSide = true;
-
-
-    /**
-     * Shows rows per page
-     *
-     * @var string "[5, 10, 25, 50, 100]"
-     */
-    public $lengthMenu;
-
-
-    /**
-     * Datatable order/sorting config
-     *
-     * @var string "[[0, 'desc']]"
-     */
-    public $order;
-
-    /**
-     * Force hide some fields that are already included in the
-     * initial column list.
-     *
-     * @var array
-     */
-    public $hidden = [];
-
-    /**
-     * Define date fields that will be auto-formatted.
-     * For module datatable this can be set in the model $dates attribute
-     * data will be formatted user formatDate() function. The format
-     * can be defined in
-     * config/mainframe/config.php > date_format
-     *
-     * @var array
-     */
-    public $dates = [];
-
-    /**
-     * Define datetime fields that will be auto-formatted.
-     * Value will be autoformatted use formatDatetime() function.
-     * The format can be defined in:
-     * config/mainframe/config.php > datetime_format
-     *
-     * @var array
-     */
-    public $datetimes = [];
-
-    /**
-     * Fields that contain boolean values. The output will as Yes/No
-     * based on the value of this field
-     *
-     * @var array
-     */
-    public $booleans = [];
-
-    /**
-     * Array of fields to transform a value to some other value.
-     *  public $transforms = [
-     *      'is_active' => [
-     *          '0' => 'Zero',
-     *          '1' => 'One',
-     *    ]
-     * ];
-     *
-     * @var array
-     */
-    public $transforms = [];
-
-    /**
-     * List of columns that should be excluded from automatic filtering.
-     *
-     * @var array
-     */
-    public $skipAutoFilterColumns = ['order'];
-
-
-    /**
-     * Show custom filter
-     *
-     * @var bool
-     */
-    public $showCustomFilter = true;
 
     /**
      * Constructor to initialize the table name
@@ -621,6 +674,30 @@ class Datatable
     }
 
     /**
+     * Datatable filter form id
+     *
+     * @return string
+     */
+    public function filterFormId()
+    {
+        return $this->name().'FilterForm';
+    }
+
+    /**
+     * Filter on submit
+     *
+     * @return false
+     */
+    public function filterOnSubmit()
+    {
+        if (!$this->showCustomFilter()) {
+            return false;
+        }
+
+        return $this->filterOnSubmit;
+    }
+
+    /**
      * Datatable name is used in the table id attribute
      *
      * @return string
@@ -671,6 +748,16 @@ class Datatable
     public function showCustomFilter()
     {
         return $this->showCustomFilter;
+    }
+
+    /**
+     * Show filter reset button
+     *
+     * @return bool
+     */
+    public function showFilterResetBtn()
+    {
+        return $this->showFilterResetBtn;
     }
 
 }

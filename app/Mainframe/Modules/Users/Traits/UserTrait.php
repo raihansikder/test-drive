@@ -46,7 +46,6 @@ trait UserTrait
         }
 
         return asset('mainframe/images/user.png');
-
     }
 
     /**
@@ -279,7 +278,6 @@ trait UserTrait
      */
     public function hasLoggedIn()
     {
-
         if ($this->authTokenHasExpired() || !$this->auth_token) {
             $this->updateAuthToken();
         }
@@ -310,7 +308,6 @@ trait UserTrait
      */
     public function updateLoginTimestamps()
     {
-
         $this->last_login_at = now();
         $updates = ['last_login_at' => now()];
 
@@ -322,7 +319,6 @@ trait UserTrait
         User::where('id', $this->id)->update($updates);
 
         return $this;
-
     }
 
     /**
@@ -467,7 +463,6 @@ trait UserTrait
         }
 
         return true;
-
     }
 
     /**
@@ -736,7 +731,6 @@ trait UserTrait
     public static function byId($id = null)
     {
         return User::active()->remember(timer('short'))->find($id);
-
     }
 
     /**
@@ -748,12 +742,12 @@ trait UserTrait
         $token = $token ?: request()->bearerToken();
 
         if ($token) {
-            return User::active()
+            return User::withoutGlobalScopes()
+                ->active()
                 ->where('auth_token', $token)
                 ->remember(timer('short'))
                 ->first();
         }
-
         // return Auth::guard('bearer')->user();
     }
 
@@ -770,7 +764,8 @@ trait UserTrait
         $clientId = $clientId ?: request()->header('client-id');
 
         if ($token && $clientId) {
-            return User::active()
+            return User::withoutGlobalScopes()
+                ->active()
                 ->where('api_token', $token)
                 ->remember(timer('short'))
                 ->find($clientId);

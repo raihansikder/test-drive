@@ -734,14 +734,24 @@ function setStyleBasedOnSelectedValue(cssClass = 'class', prefix = 'selected-') 
 
 /**
  * Generate a report URl from a form based filter inputs
- * @param formId
+ * @param form
  * @param reportBaseUrl
- * @param reportBtnClass
+ * @param btnClass
  */
-function buildReportUrlFromFilterParams(formId = 'FilterForm', reportBaseUrl = '/', reportBtnClass = 'report-btn') {
-	let params = $('#' + formId).serialize();
-	let reportUrl = reportBaseUrl + '?' + params;
-	$('a.' + reportBtnClass).attr('href', reportUrl);
+function buildReportUrlFromFilterParams(form = 'FilterForm', reportBaseUrl = '/', btnClass = 'report-btn') {
+
+	// Resolve form
+	let $form = form;
+	if (typeof form === 'string') {
+		$form = resolveForm(form);
+	}
+
+	// Build URL from params
+	let params = $form.serialize();
+	let url = reportBaseUrl + '?' + params;
+
+	// Assign URL
+	$('a.' + btnClass).attr('href', url);
 }
 
 
@@ -753,19 +763,33 @@ function resetDatatableFilter(formId) {
 	resetForm(formId)
 }
 
+/**
+ * Set report button url
+ * @param url
+ */
+function setReportBtnUrl(url){
+	$('a.module-report-btn').attr('href', url);
+}
+
 
 /**
  * Reset a form
- * @param formId
+ * @param form
  */
-function resetForm(formId) {
+function resetForm(form) {
 
-	let $form = resolveForm(formId)
+	let $form = form;
+	if (typeof form === 'string') {
+		$form = resolveForm(form)
+	}
+
 	$form.trigger('reset');
-	$form.find('.select2').select2('val', '');
-	$form.find('.select2').trigger('change');
 	$form.find('text').val('');
 	$form.find('input').val('');
+	$form.find('select').select2('val', '');
+	$form.find('.select2').trigger('change');
+	$form.find('#ajax_select2_input_id').prop('selectedIndex', -1);
+	$form.find('.date-range-picker').html('-');
 
 }
 
