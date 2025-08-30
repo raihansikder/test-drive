@@ -1232,7 +1232,6 @@ input:focus {
 .panel-title .fi,
 .panel-title i,
 .panel-title ion-icon {
-    float: right;
     margin-right: 10px;
 }
 
@@ -1472,8 +1471,8 @@ a i {
 
 /* Use this to align input field */
 .align-with-input {
-    /*margin-top: 18px;*/
-    margin-top: 25px;
+    /*margin-top: 18.5px;*/
+    margin-top: 24px;
 }
 
 /* Use this to align plain text with input field */
