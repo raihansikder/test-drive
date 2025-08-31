@@ -26,6 +26,7 @@ function initAfterLoader() {
 	initImagelightbox();
 	initPanelToggle();
 	initDynamicModalTrigger();
+	initAjaxDataLoader();
 }
 
 /*
@@ -264,6 +265,31 @@ function initDynamicModalTrigger() {
 }
 
 /**
+ * Init ajax data loader. This function will load data from ajax url.
+ * Find all elements with data-ajax attribute and load the content.
+ */
+function initAjaxDataLoader() {
+	$('[data-ajax]').each(function () {
+		const $element = $(this);
+		const ajaxUrl = $element.data('ajax');
+
+		$element.html('Loading...'); // Set loading message
+
+		if (ajaxUrl) {
+			axios.get(ajaxUrl)
+				.then(function (response) {
+					$element.html(response.data);
+				})
+				.catch(function (error) {
+					console.error('Error loading content for:', ajaxUrl, error);
+					$element.html('<div class="alert alert-danger">Failed to load content</div>');
+				});
+		}
+	});
+
+}
+
+/**
  * Force clear padding on modal close.
  * When modal is completely hidden, remove padding-right from body.
  * Otherwise the 15 px padding that gets added automatically impacts
@@ -273,3 +299,4 @@ $('.modal').on('hidden.bs.modal', function (e) {
 	$('body').css('padding-right', '0px');
 	console.log('Modal has been completely hidden!');
 });
+
