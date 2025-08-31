@@ -32,7 +32,6 @@ class View extends \Illuminate\View\View
             }
 
             if ($item->is_visible && $allow) {
-
                 // 1. checks if an item has any children
                 $hasChildren = isset($leaf['children']) && count($leaf['children']);
                 // set tree view if there is children
@@ -65,7 +64,6 @@ class View extends \Illuminate\View\View
                 echo "</li>";
             }
         }
-
     }
 
     /**
@@ -84,7 +82,7 @@ class View extends \Illuminate\View\View
                     'name' => $item->name,
                     'title' => $item->title,
                     'route' => "$item->name.index",
-                    'url' => route("$item->name.index"),
+                    'url' => route($item->default_route),
                 ];
             }
         }

@@ -841,14 +841,4 @@ trait UserTrait
         $notification->process()->save();
     }
 
-    /**
-     * Retrieve the timezone.
-     *
-     * @return string
-     */
-    public function timezone()
-    {
-        return $this->timezone ?? config('app.timezone');
-    }
-
 }

@@ -72,7 +72,7 @@ trait HasTimezoneConversion
 
         // Option 1: Timezone from current authenticated user
         if (auth()->check()) {
-            return auth()->user()->timezone();
+            return auth()->user()->timezone;
         }
 
         // Option 2: Timezone from session
