@@ -16,8 +16,8 @@ if (!$view->showDownloadAllAsZipButton()) {
     return;
 }
 
-$label = $var['label'] ?? " <ion-icon name='download-outline'></ion-icon> Download Zip";
-$class = $var['class'] ?? "btn btn-default bg-white";
+$label = $var['label'] ?? "<i class='fi fi-rr-file-download'></i> Download Zip";
+$class = $var['class'] ?? "btn btn-default";
 $tooltip = $var['tooltip'] ?? "Download all the uploads under this form as a single zip file";
 
 $params = [

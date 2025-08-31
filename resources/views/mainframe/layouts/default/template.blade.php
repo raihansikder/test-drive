@@ -4,6 +4,7 @@
  * @var \App\Mainframe\Features\Core\ViewProcessor $view
  * @var \App\Module $module
  */
+
 ?>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -70,6 +71,7 @@
             @show
         </section>
     </div>
+    @include('mainframe.layouts.default.includes.modals.dynamic-modal')
     @include('mainframe.layouts.default.includes.modals.messages')
     @include('mainframe.layouts.default.includes.modals.delete')
     @include('mainframe.layouts.default.includes.modals.confirm')

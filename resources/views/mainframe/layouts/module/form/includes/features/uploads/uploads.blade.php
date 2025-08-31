@@ -34,7 +34,7 @@ $uploads = $input->uploads();
 <!-- Download Zip  -->
 @if($input->allowZipDownload() && count($uploads))
     <a href="{{$input->zipDownloadUrl()}}" class="btn btn-default bg-white">
-        <ion-icon name="download-outline"></ion-icon>
+        <i class='fi fi-rr-file-download'></i>
         Zip
     </a>
 @endif

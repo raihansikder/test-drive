@@ -2,9 +2,9 @@
 
 namespace App\Mainframe\Modules\ModuleGroups\Traits;
 
+use Str;
 use App\ModuleGroup;
 use Illuminate\Validation\Rule;
-use Str;
 
 /** @mixin \App\Mainframe\Modules\Modules\ModuleProcessor $this */
 trait ModuleGroupProcessorTrait
@@ -46,7 +46,7 @@ trait ModuleGroupProcessorTrait
                 'required',
                 'between:1,255',
                 'unique:module_groups,name,'.(isset($element->id) ? (string) $element->id : 'null').',id,deleted_at,NULL',
-                Rule::unique('module_groups ', 'name')
+                Rule::unique('module_groups', 'name')
                     ->ignore($element->id)->whereNull('deleted_at'),
                 'Regex:/^[a-z\-]+$/',
             ],

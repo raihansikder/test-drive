@@ -34,7 +34,7 @@ $email = $element;
                     data-redirect_success="{{URL::full()}}"
                     data-redirect_fail="#">
                 Queue
-                <ion-icon name="timer-outline"></ion-icon>
+                <i class="fi fi-rr-time-add"></i>
             </button>
 
             @if(user()->isSuperUser())

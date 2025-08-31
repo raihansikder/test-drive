@@ -8,6 +8,24 @@
 @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap");
 
 /***********************************************************************
+* Define variables
+************************************************************************/
+:root {
+    --primary-color: #3498db;
+    --font-size-base: 13px;
+}
+
+/*h1 {*/
+/*    color: var(--primary-color);*/
+/*    font-size: calc(var(--font-size-base) * 1.5);*/
+/*}*/
+
+/*.my-component {*/
+/*    background-color: var(--component-bg);*/
+/*}*/
+
+
+/***********************************************************************
 * Define Bangla font-face
 ************************************************************************/
 
@@ -51,7 +69,7 @@ body, html, .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6,
     color: #3d3d3d;
 }
 
-body, .form-control, .btn, table, tr, th, td, thead, tbody, .dropdown-menu,
+body, .form-control, table, tr, th, td, thead, tbody, .dropdown-menu,
 .skin-blue-light .sidebar-menu > li > a,
 .skin-blue .sidebar-menu > li > a {
     font-size: 14px;
@@ -117,6 +135,7 @@ b, strong, .bold, .strong, .b {
     text-align: inherit;
     margin-left: 15px;
     width: 215px;
+    float: left;
 }
 
 h2 {
@@ -153,6 +172,11 @@ a:hover {
 .dropdown-menu > li > a {
     padding: 7px 15px;
     color: inherit;
+}
+
+.fa-angle-down .fa-angle-down,
+.fa-angle-down .fa {
+    margin-left: 5px;
 }
 
 .skin-blue-light .main-header .logo:hover,
@@ -297,6 +321,10 @@ h2.underlined {
     background: linear-gradient(90deg, rgba(63, 94, 251, 1) 0%, blueviolet 100%) no-repeat;
 }
 
+.main-header .navbar-custom-menu, .main-header .navbar-right {
+    margin-right: 15px;
+}
+
 /* remove some borders from the top menu*/
 .skin-black-light .main-header .navbar > .sidebar-toggle {
     border-right: 0;
@@ -320,6 +348,7 @@ h2.underlined {
     z-index: 999;
     border-top: dotted gainsboro 1px;
     width: 100%;
+    box-shadow: 20px -5px 20px #ccc;
 
 }
 
@@ -338,6 +367,7 @@ button.submit {
 }
 
 .delete-cta {
+    /*margin-right: 260px; */
     margin-right: 260px;
 }
 
@@ -392,6 +422,10 @@ div.dataTables_processing {
     font-size: inherit;
 }
 
+div.dataTables_filter label {
+    float: right;
+}
+
 div.dataTables_info {
     float: left;
     margin-right: 10px;
@@ -436,7 +470,7 @@ textarea {
 /* made label font weight bold*/
 label {
     margin: 0 0 5px 0;
-    font-size: 1em;
+    font-size: inherit;
     font-weight: normal;
 }
 
@@ -1186,21 +1220,24 @@ input:focus {
 .panel-title .fi,
 .panel-title i,
 .panel-title ion-icon {
-    margin-right: 15px;
-    font-size: 22px;
+    margin-right: 10px;
     position: relative;
     float: left;
 }
 
+.panel-title .glyphicon,
+.panel-title .material-icons-outlined,
+.panel-title .material-symbols-outlined,
 .panel-title .fa,
 .panel-title .fi,
-.panel-title i {
-    margin-right: 24px;
+.panel-title i,
+.panel-title ion-icon {
+    margin-right: 10px;
 }
 
 /* Reduce space from accordion panel bottom*/
 .panel-group {
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     padding-right: 30px;
 }
 
@@ -1208,6 +1245,7 @@ input:focus {
     box-shadow: none;
     -webkit-box-shadow: none;
     border: 1px solid lightgrey;
+    margin-bottom: 15px;
 }
 
 .panel-default > .panel-heading {
@@ -1216,6 +1254,7 @@ input:focus {
 
 .panel-collapse {
     margin: 10px 0 15px;;
+    padding-left: 20px;
 }
 
 /* Show full border for text-area*/
@@ -1292,6 +1331,16 @@ ion-icon {
     font-weight: inherit;
 }
 
+.btn .fi {
+    /*margin-right: 5px;*/
+    position: relative;
+    top: 1px;
+}
+
+.btn-inline .fi {
+    margin-right: 0;
+}
+
 .sidebar-menu .treeview-menu > li > a > .fa,
 .sidebar-menu .treeview-menu > li > a > .glyphicon,
 .sidebar-menu .treeview-menu > li > a > .ion,
@@ -1336,6 +1385,7 @@ pre.sf-dump, pre.sf-dump .sf-dump-default {
 
 .modal-title {
     float: left;
+    text-transform: capitalize;
 }
 
 .modal-content {
@@ -1421,8 +1471,8 @@ a i {
 
 /* Use this to align input field */
 .align-with-input {
-    /*margin-top: 18px;*/
-    margin-top: 25px;
+    /*margin-top: 18.5px;*/
+    margin-top: 24px;
 }
 
 /* Use this to align plain text with input field */
@@ -1519,6 +1569,10 @@ button.bg-white:hover {
 
 .block {
     display: block;
+}
+
+.dropdown-menu {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .dropdown-menu button:hover {
@@ -1716,7 +1770,7 @@ label.required::after {
     padding: 8px 15px 8px 10px;
     width: auto;
     float: left;
-    margin: 0 10px 0 0;
+    margin: 0 10px 10px 0;
     background-color: white;
 }
 
@@ -1819,6 +1873,10 @@ label.required::after {
 |--------------------------------------------------------------------------
 */
 
+.no-border, .borderless {
+    border: 0;
+}
+
 .btn-transparent {
     /*border: 1px grey solid;*/
     background-color: transparent;
@@ -1889,16 +1947,32 @@ label.required::after {
     color: white;
 }
 
-.btn-transparent-red {
+.btn-transparent-red,
+.btn-borderless-red {
     border: 1px white solid;
     background-color: white;
     color: red;
 }
 
-.btn-transparent-red:hover {
+.btn-transparent-red:hover,
+.btn-borderless-red:hover {
     /*background-color: red;*/
     border-color: red;
     color: red;
+}
+
+.btn-transparent-blue,
+.btn-borderless-blue {
+    border: 1px white solid;
+    background-color: white;
+    color: royalblue;
+}
+
+.btn-transparent-blue:hover,
+.btn-borderless-blue:hover {
+    /*background-color: blue;*/
+    border-color: royalblue;
+    color: royalblue;
 }
 
 .btn-secondary {
@@ -1912,6 +1986,31 @@ label.required::after {
     border-color: black;
     color: inherit;
 }
+
+.btn-inline {
+    border: 1px white solid;
+    background-color: white;
+    color: grey;
+}
+
+.btn-inline:hover {
+    /*background-color: blue;*/
+    border-color: grey;
+    color: grey;
+}
+
+.btn-delete {
+    border: 1px white solid;
+    background-color: white;
+    color: red;
+}
+
+.btn-delete:hover {
+    /*background-color: red;*/
+    border-color: red;
+    color: red;
+}
+
 
 /**
 * Text transforms
@@ -1929,8 +2028,28 @@ label.required::after {
 * back-link
 ******************************************************/
 .back-link {
-    border: 1px solid lightgrey;
+    border: 1px solid transparent;
+    background-color: transparent;
 }
+
+.back-link i {
+    font-size: 17px;
+}
+
+.back-link-label {
+    color: grey;
+    border-right: 1px dotted grey;
+    padding: 0 3px 0 0;
+    margin: 0 3px 0 0;
+}
+
+.back-link-label {
+    color: grey;
+    border-right: 1px dotted grey;
+    padding: 0 3px 0 0;
+    margin: 0 3px 0 0;
+}
+
 
 .nav-tabs-custom > .nav-tabs > li.active {
     border-top-color: white;
@@ -2002,7 +2121,6 @@ label.required::after {
 
 .info-box.quick-filter .info-box-icon {
     height: 60px;
-
     border-right: 0;
     border-top-left-radius: 6px;
     border-bottom-left-radius: 6px;
@@ -2043,7 +2161,8 @@ label.required::after {
 
 .panel-heading {
     cursor: pointer;
-    color: inherit
+    color: inherit;
+    border-bottom: none;
 }
 
 .tab-content > .tab-pane {
@@ -2236,3 +2355,55 @@ div.filecard .info-box-icon {
 }
 
 /* <<< Center align div */
+
+.table-header, .relation-table-header {
+    float: left;
+    margin: 5px 0 0 0;
+}
+
+.table-header-add-btn, .relation-table-header-add-btn {
+    float: right;
+}
+
+.form-header {
+    float: left;
+    margin: 5px 0 15px 0;
+}
+
+.btn-modal-save {
+    float: left;
+}
+
+.btn-modal-close {
+    /*border: 1px grey solid;*/
+    background-color: transparent;
+}
+
+
+@media screen and (max-width: 768px) {
+    .timestamps {
+        display: none; /* Hides the div on screens 768px or smaller */
+    }
+
+    .delete-cta {
+        margin-right: 60px;
+
+    }
+
+    .content-header {
+        padding-right: 30px;
+    }
+
+    .main-header .navbar {
+
+    }
+
+    .fixed .content-wrapper, .fixed .right-side,
+    .main-sidebar, .left-side {
+        padding-top: 50px;
+    }
+
+    .table-responsive {
+        border: 0;
+    }
+}

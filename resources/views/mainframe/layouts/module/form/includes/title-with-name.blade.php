@@ -12,7 +12,7 @@
 @if($view->showFormCreateBtn() && $element->isUpdating())
     <a href="{!! $view->createBtnUrl() !!}" class="btn btn-xs module-create-btn {{$module->name.'-module-create-btn'}}"
        data-toggle="tooltip" title="{!! $view->createBtnTooltip() !!}">
-        <i class="fa fa-plus"></i></a>
+        <i class="fi fi-rr-plus"></i>
 @endif
 
 {{-- Show list(index) button --}}

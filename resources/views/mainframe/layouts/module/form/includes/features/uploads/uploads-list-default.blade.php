@@ -26,7 +26,7 @@ if (!isset($input)) {
 
 <div class="row sortable {{optional($module)->name}}-file-list file-list">
     @foreach($uploads as $upload)
-        <div class="{{$input->cardCss}} col-xs-12 filecard ">
+        <div class="{{$input->cardCss}} col-xs-12 filecard upload-{{$upload->id}}">
 
             @if($input->sort)
                 <input type="hidden" class="upload-id" name="upload-id[]" value="{{$upload->id}}"/>
@@ -83,30 +83,30 @@ if (!isset($input)) {
                             {{-- Show non-image--}}
                             <a href="{{route('show.image',$upload->id)}}" target="_blank"
                                title="View"
-                               class="btn btn-xs btn-default btn-transparent">
-                                <ion-icon name="search-outline"></ion-icon>
+                               class="btn btn-xs btn-inline">
+                                <i class="fi fi-rr-eye"></i>
                             </a>
                         @else
                             <!-- Show Image button-->
                             <a href="{{$upload->thumbnail()}}" data-load=""
                                title="View"
-                               class="btn btn-xs btn-default btn-transparent">
-                                <ion-icon name="search-outline"></ion-icon>
+                               class="btn btn-xs btn-inline">
+                                <i class="fi fi-rr-eye"></i>
                             </a>
                         @endif
 
                         <!-- Edit button -->
                         @if(user()->can('view',$upload) && $input->detailLink)
                             <a href="{{ route('uploads.edit', $upload->id) }}" title="Edit"
-                               class="btn btn-xs btn-default btn-transparent">
-                                <ion-icon name="create-outline"></ion-icon>
+                               class="btn btn-xs btn-inline">
+                                <i class="fi fi-rr-file-edit"></i>
                             </a>
                         @endif
 
                         <!-- Download button -->
                         <a href="{{$upload->downloadUrl()}}" title="Download"
-                           class="btn btn-xs btn-default btn-transparent">
-                            <ion-icon name="arrow-down-circle-outline"></ion-icon>
+                           class="btn btn-xs btn-inline">
+                            <i class="fi fi-rr-download"></i>
                         </a>
 
                         <!-- Delete button -->
@@ -116,8 +116,9 @@ if (!isset($input)) {
                                     'route' => route("uploads.destroy", $upload->id),
                                     'redirect_success' => URL::full(),
                                     'params' => [
-                                        'class' => 'btn btn-xs btn-transparent-red pull-right',
+                                        'class' => 'btn btn-xs btn-inline pull-right',
                                         'title' => 'Delete',
+                                        'data-hide_class' => 'upload-'.$upload->id,
                                     ],
                                     'value' => '<i class="fa fa-trash"></i>',
                                 ];
@@ -131,7 +132,7 @@ if (!isset($input)) {
     @endforeach
     @if($input->sort)
         <div class="col-md-12">
-            <button id="{{$input->uid}}-SaveSortBtn" class="btn-save-upload-order btn btn-bordered-blue" type="button"
+            <button id="{{$input->uid}}-SaveSortBtn" class="btn-save-upload-order btn btn-secondary" type="button"
                     style="display: none">Save new order
             </button>
         </div>

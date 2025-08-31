@@ -9,7 +9,7 @@
     <a class="btn btn-xs module-create-btn {{$module->name.'-module-create-btn'}}"
        href="{!! $view->createBtnUrl() !!}" data-toggle="tooltip"
        title="Create a new {{lcfirst(Str::singular($module->title))}}">
-        <i class="fa fa-plus"></i>
+        <i class="fi fi-rr-plus"></i>
     </a>
 @endif
 

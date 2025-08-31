@@ -1,4 +1,5 @@
 <?php
+
 /** @var array $var
  * @var \App\Mainframe\Features\Modular\BaseModule\BaseModule $backToElement
  */
@@ -12,19 +13,15 @@ $label = $var['label'] ?? $label;
 ?>
 
 @if($backToElement)
-    <a class="btn btn-transparent btn-bordered-blue back-link pull-left" href="{{$backToElement->editUrl()}}">
-        <i class="fa fa-angle-left pull-left text-smart-red" style="font-size: 17px"></i>
+    <a class="btn btn-xs btn-secondary back-link pull-left" href="{{$backToElement->editUrl()}}">
+        <i class="fa fa-angle-left pull-left"></i>
 
         @if($label)
-            <span style='border-right: 1px dotted grey; margin-right: 5px'>
-                {{$label}}
-            </span>
+            <span class="back-link-label">{{$label}}</span>
         @endif
 
         {{$backToElement->$showField}}
-        <span class="pull-right-container" style="padding-left: 5px">
-           <small class="label bg-green">{{$backToElement->id}}</small>
-        </span>
+        <span><small class="label bg-gray">{{$backToElement->id}}</small></span>
     </a>
 @endif
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var \App\Module $module
  * @var \App\Mainframe\Modules\SuperHeroes\SuperHero $element
@@ -11,9 +12,15 @@ $float = $float ?? true;
     @parent
     @if(!$float)
         <style>
-            .delete-cta {margin-right: 0;}
+            .delete-cta {
+                margin-right: 0;
+            }
 
-            .cta-block {position: relative;border-top: none;}
+            .cta-block {
+                position: relative;
+                border-top: none;
+                box-shadow: none;
+            }
         </style>
     @endif
 @endsection

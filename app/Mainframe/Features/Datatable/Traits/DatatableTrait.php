@@ -155,7 +155,11 @@ trait DatatableTrait
             } elseif (isCsv($val)) { // Handle CSV: param=1,2,3
                 $query->whereIn($table.'.'.$column, csvToArray($val));
             } elseif ($val !== 'null') {
-                $query->where($table.'.'.$column, $val);
+                if (in_array($column, $this->fullTextFields)) { // Full text search
+                    $query->where($table.'.'.$column, 'LIKE', "%$val%");
+                } else {
+                    $query->where($table.'.'.$column, '=', $val);
+                }
             } else {
                 $query->whereNull($table.'.'.$column);
             }

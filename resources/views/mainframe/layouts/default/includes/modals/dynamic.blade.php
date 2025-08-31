@@ -13,7 +13,7 @@ $default = [
 $var = array_merge($default, $var);
 ?>
 @if($var['btn_text'])
-    <button type="button" class="dynamic-modal-open-btn btn btn-default {{$var['btn_class']}}"
+    <button type="button" class="dynamic-modal-open-btn btn {{$var['btn_class']}}"
             title="{{$var['btn_title']}}"
             data-toggle="modal" id="{{$var['name']}}Btn"
             data-target="#{{$var['name']}}">

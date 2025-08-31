@@ -31,7 +31,7 @@
             <tr class="no-padding no-margin">
                 <td style="width: 20%; font-size: .8em">
                     {{pad($audit->id)}} @ {{$audit->updated_at}}
-                    <span class="label btn-bordered-blue">
+                    <span class="label btn-secondary">
                         {{strtoupper($audit->event)}}
                     </span> &nbsp;
                     {{optional($audit->user)->email}}

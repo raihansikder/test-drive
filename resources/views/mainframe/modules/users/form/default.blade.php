@@ -55,7 +55,9 @@
             </div>
             
             <div class='clearfix'></div>
-            @include('mainframe.modules.users.form.includes.token-fields')
+            <div class="col-md-12 form-group">
+                @include('mainframe.modules.users.form.includes.token-fields')
+            </div>
             <div class="clearfix"></div>
             {{--@include('form.is-active')--}}
             @include('form.action-buttons')
@@ -70,7 +72,7 @@
     <div class="row">
         <div class="col-md-10 col-lg-9 col-xl-8">
             <div class="col-md-6 form-group">
-                <h3>Upload profile pic</h3>
+                <h4>Upload profile pic</h4>
                 <small>Upload one or more files</small>
                 @include('form.uploads',['var'=>['type'=>\App\Upload::TYPE_PROFILE_PIC,'bucket'=>'public/'.$module->name,'limit'=>1]])
             </div>
@@ -98,6 +100,6 @@
         //         }
         //     })
         // }).trigger('change');
-        
+    
     </script>
 @endsection

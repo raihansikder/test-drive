@@ -540,10 +540,44 @@ trait ModularTrait
 
     /*
     |--------------------------------------------------------------------------
+    | Form states and attributes based on element state
+    |--------------------------------------------------------------------------
+    |
+    */
+    public function formState()
+    {
+        if ($this->isCreating()) {
+            return 'create';
+        }
+
+        return 'edit';
+    }
+
+    public function formMethod()
+    {
+        if ($this->isCreating()) {
+            return 'POST';
+        }
+
+        return 'PATCH';
+    }
+
+    public function formAction()
+    {
+        if ($this->isCreating()) {
+            return $this->storeUrl();
+        }
+
+        return $this->updateUrl();
+    }
+
+    /*
+    |--------------------------------------------------------------------------
     | Events
     |--------------------------------------------------------------------------
     |
     */
+
     /**
      * Check if the model is being created at the moment.
      * If true, then the model has not been stored yet.
@@ -1495,6 +1529,65 @@ trait ModularTrait
 
         DB::table('spreads')->where('spreadable_type', $class)
             ->where('spreadable_id', $this->id)->delete();
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Cache related helpers
+    |--------------------------------------------------------------------------
+    |    
+    |
+    */
+    /**
+     * Get the element's cache prefix
+     *
+     * @param $field
+     * @return string
+     */
+    public function cachePrefix($field = 'id')
+    {
+        return $this->module()->name."[{$field}={$this->$field}]";
+    }
+
+
+    /**
+     * Get the element's cache key'
+     *
+     * @param $field
+     * @return array
+     */
+    public function elementSpecificCacheKeys($field = 'id')
+    {
+        $keys = [];
+
+        if (!$this->$field) {
+            return $keys;
+        }
+
+        $keys = config('cache.keys.'.$this->module()->name, []);
+        // return $keys;
+
+        return collect($keys)->filter(function ($key, $value) use ($field) {
+            return Str::contains($key, "["); // Keep only that has [id=
+        })->values()->map(function ($key) use ($field) {
+            return str_replace('%d', $this->$field, $key);
+        })->toArray();
+    }
+
+    /**
+     * Clear all element-specific cache
+     *
+     * @return void
+     * @throws \Exception
+     */
+    public function clearElementCache()
+    {
+        $keys = $this->elementSpecificCacheKeys();
+
+        foreach ($keys as $key) {
+            cache()->forget($key);
+        }
     }
 
 }
