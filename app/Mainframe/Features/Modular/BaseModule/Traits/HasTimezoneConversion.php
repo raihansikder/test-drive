@@ -38,7 +38,7 @@ trait HasTimezoneConversion
 
         return Carbon::parse($value, config('app.timezone'))
             ->setTimezone($userTimezone)
-            ->format(DateTimeInterface::ISO8601_EXPANDED);
+            ->format(DateTimeInterface::ATOM);
     }
 
     /**

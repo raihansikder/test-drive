@@ -1,3 +1,14 @@
+<?php
+
+/**
+ * @var \App\Project\Features\Datatable\Datatable $datatable
+ * @var \App\Project\Features\Core\ViewProcessor $view
+ */
+$dtName = $datatable->name(); // Datatable name
+$formId = $datatable->filterFormId(); // Define filter form Id
+?>
+
+
 <script type="text/javascript">
 	var {{$dtName}} = $('#{{$dtName}}').DataTable({
 		ajax: ajax, // Define the ajax URL and form data
@@ -67,3 +78,4 @@
     */
 
 </script>
+@unset($datatable, $dtName, $formId)

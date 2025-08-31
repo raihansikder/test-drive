@@ -39,7 +39,7 @@ $datatable->showCustomFilter = false;
 			}
 		};
     </script>
-    @include('mainframe.form.datatable.js')
+    @include('mainframe.form.datatable.js',compact('datatable'))
 @endsection
 
 @unset($datatable, $dtName, $formId)
