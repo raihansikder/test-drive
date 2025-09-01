@@ -88,6 +88,13 @@ trait ModuleDatatableTrait
             });
         }
 
+        if ($this->hasColumn('title')) {
+            // $dt = $dt->editColumn('name', '<a href="{{ route(\''.$this->module->name.'.edit\', $id) }}">{{$name}}</a>');
+            $dt->editColumn('title', function ($row) {
+                return '<a href="'.route($this->module->name.'.edit', $row->id).'">'.$row->title.'</a>';
+            });
+        }
+
         if ($this->hasColumn('updated_by')) {
             $dt->editColumn('updated_by', function ($row) {
                 return $row->updater->name ?? $row->updated_by;

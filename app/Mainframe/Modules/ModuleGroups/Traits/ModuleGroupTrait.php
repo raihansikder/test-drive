@@ -6,6 +6,7 @@ use Str;
 use App\Module;
 use App\ModuleGroup;
 
+/** @mixin \App\Mainframe\Modules\ModuleGroups\ModuleGroup $this */
 trait ModuleGroupTrait
 {
     /**
@@ -119,7 +120,9 @@ trait ModuleGroupTrait
             /** @var \App\ModuleGroup $moduleGroups */
             foreach ($moduleGroups as $moduleGroup) {
                 if (count($moduleGroup->children())) {
-                    $list[] = ['type' => 'module_group', 'item' => $moduleGroup, 'children' => $moduleGroup->children()];
+                    $list[] = [
+                        'type' => 'module_group', 'item' => $moduleGroup, 'children' => $moduleGroup->children(),
+                    ];
                 } else {
                     $list[] = ['type' => 'module_group', 'item' => $moduleGroup, 'children' => []];
                 }
@@ -136,7 +139,7 @@ trait ModuleGroupTrait
     }
 
     /**
-     * Get module_group names as one-dimentional array
+     * Get module_group names as one-dimensional array
      *
      * @param  bool|true  $only_active
      * @return array

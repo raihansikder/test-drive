@@ -71,7 +71,7 @@ trait HasTimezoneConversion
         // return 'Asia/Dhaka';
 
         // Option 1: Timezone from current authenticated user
-        if (auth()->check()) {
+        if (auth()->check() && isset(auth()->user()->timezone)) {
             return auth()->user()->timezone;
         }
 

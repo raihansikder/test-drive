@@ -25,20 +25,19 @@ $moduleGroup = $element;
             @elseif($formState == 'edit')
                 {{ Form::model($element, $formConfig)}}
             @endif
-            <div class="row">
                 {{--    Form inputs: starts    --}}
                 {{--   --------------------    --}}
-                @include('form.text',['var'=>['name'=>'title','label'=>'Title']])
-                @include('form.text',['var'=>['name'=>'name','label'=>'Name (singular-camel-case)']])
-                @include('form.select-model',['var'=>['name'=>'parent_id','label'=>'Parent module', 'table'=>'modules']])
-                @include('form.text',['var'=>['name'=>'order','label'=>'Order']])
-                @include('form.text',['var'=>['name'=>'level','label'=>'Level']])
-                @include('form.text',['var'=>['name'=>'color_css','label'=>'Color CSS']])
-                @include('form.text',['var'=>['name'=>'icon_css','label'=>'Icon CSS/HTML']])
-                @include('form.text',['var'=>['name'=>'default_route','label'=>'Default Route']])
+                @include('form.text',['var'=>['name'=>'title','label'=>'Title','div'=>'col-md-6']])
+                {{-- @include('form.text',['var'=>['name'=>'name','label'=>'Name (singular-camel-case)']])--}}
+                @include('form.select-model',['var'=>['name'=>'parent_id','label'=>'Parent module', 'table'=>'modules','div'=>'col-md-6']])
+                @include('form.text',['var'=>['name'=>'order','label'=>'Order','div'=>'col-md-3']])
+                @include('form.text',['var'=>['name'=>'level','label'=>'Level','div'=>'col-md-3']])
+                @include('form.text',['var'=>['name'=>'color_css','label'=>'Color CSS','div'=>'col-md-6']])
+                @include('form.text',['var'=>['name'=>'icon_css','label'=>'Icon CSS/HTML','div'=>'col-md-12']])
+                {{-- @include('form.text',['var'=>['name'=>'default_route','label'=>'Default Route','div'=>'col-md-12']])--}}
 
                 <div class="clearfix"></div>
-                @include('form.textarea',['var'=>['name'=>'description','params'=>['class'=>''],'label'=>'Description', 'div'=>'col-sm-6']])
+                @include('form.textarea',['var'=>['name'=>'description','params'=>['class'=>'ckeditor'],'label'=>'Description', 'div'=>'col-sm-12']])
 
 
                 <div class="clearfix"></div>
@@ -47,7 +46,6 @@ $moduleGroup = $element;
                 {{--    Form inputs: ends    --}}
 
                 @include('form.action-buttons')
-            </div>
             {{ Form::close() }}
 
         </div>

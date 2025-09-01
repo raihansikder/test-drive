@@ -17,6 +17,7 @@ class View extends \Illuminate\View\View
         if (!is_array($tree)) {
             return null;
         }
+
         foreach ($tree as $leaf) {
             $item = $leaf['item'];
             $type = $leaf['type'];
@@ -51,13 +52,13 @@ class View extends \Illuminate\View\View
 
                 echo "<a href='$url' title='$menuItemName'>".$item->iconHtml().$menuItemName."</span> ";
                 if ($hasChildren) {
-                    echo "<span class=\"pull-right-container\"> <i class=\"fa fa-angle-left pull-right\"></i> </span> ";
+                    echo "<span class='pull-right-container'> <i class='fa fa-angle-left pull-right'></i> </span> ";
                 }
                 echo "</a>";
 
                 // for children recursively draw the tree
                 if ($hasChildren) {
-                    echo "<ul class=\"treeview-menu\">";
+                    echo "<ul class='treeview-menu'>";
                     View::renderMenuTree($leaf['children'], $currentModuleName, $breadcrumbs);
                     echo "</ul>";
                 }
@@ -81,8 +82,9 @@ class View extends \Illuminate\View\View
                 $breadcrumbs[$item->name] = [
                     'name' => $item->name,
                     'title' => $item->title,
-                    'route' => "$item->name.index",
-                    'url' => route($item->default_route),
+                    // 'route' => $item->default_route, // index is essential to cover both modules and module groups
+                    // 'url' => route($item->default_route),
+                    'url' => '#',
                 ];
             }
         }

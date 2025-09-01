@@ -4,6 +4,17 @@ namespace App\Mainframe\Modules\ModuleGroups\Traits;
 
 trait ModuleGroupControllerTrait
 {
+
+    /**
+     * Module group home page
+     *
+     * @return string
+     */
+    public function home()
+    {
+        return '';
+    }
+
     /*
     |--------------------------------------------------------------------------
     | Section: Existing Controller functions
