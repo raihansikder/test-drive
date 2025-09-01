@@ -698,6 +698,16 @@ class Datatable
     }
 
     /**
+     * Instantly filter the table when a filter value is changed
+     *
+     * @return bool
+     */
+    public function instantFilter()
+    {
+        return !$this->filterOnSubmit();
+    }
+
+    /**
      * Datatable name is used in the table id attribute
      *
      * @return string

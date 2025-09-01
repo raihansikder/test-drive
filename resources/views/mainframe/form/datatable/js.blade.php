@@ -8,7 +8,6 @@ $dtName = $datatable->name(); // Datatable name
 $formId = $datatable->filterFormId(); // Define filter form Id
 ?>
 
-
 <script type="text/javascript">
 	var {{$dtName}} = $('#{{$dtName}}').DataTable({
 		ajax: ajax, // Define the ajax URL and form data
@@ -38,8 +37,8 @@ $formId = $datatable->filterFormId(); // Define filter form Id
 		mark: {!! $datatable->mark() !!} // Mark/highlight the search results (in yellow)
 	});
 
-	// Step.3.1 Catch filter input change event and refresh datatable
-    @if(!$datatable->filterOnSubmit())
+	// Step: Instant filter on input change
+    @if($datatable->instantFilter())
 	$('#{{$formId}} .filter-input').on('change blur', function () {
         {{$dtName}}Refresh();
 	});
@@ -48,13 +47,14 @@ $formId = $datatable->filterFormId(); // Define filter form Id
         {{$dtName}}Refresh();
 	});
     @endif
+	// ---------------------------------------------------------------//
 
-	// Step.3.2 Catch filter input change event and refresh datatable
+	// Step: Filter Submit button click
 	$('#{{$formId}} .submit-btn').on('click', function () {
         {{$dtName}}Refresh();
 	});
 
-	// Step.4 Reset the filters and reset datatable
+	// Step: Reset button click
 	$('#{{$formId}} .reset-btn').on('click', function () {
 		resetForm('{{$formId}}');
         {{$dtName}}Refresh();
@@ -70,12 +70,6 @@ $formId = $datatable->filterFormId(); // Define filter form Id
 		setReportBtnUrl('{!! route($module->name.'.report') !!}' + '?' + $('#{{$formId}}').serialize());
         @endif
 	}
-
-	/*
-    |--------------------------------------------------------------------------
-    | Step.4.1 Handle date-range picker events (apply, cancel button click)
-    |--------------------------------------------------------------------------
-    */
 
 </script>
 @unset($datatable, $dtName, $formId)

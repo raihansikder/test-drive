@@ -6,6 +6,11 @@ trait ModuleGroupDatatableTrait
 {
 
 
+    /**
+     * List of columns to show in datatable
+     *
+     * @return array[]
+     */
     public function columns()
     {
         return [
