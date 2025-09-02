@@ -71,8 +71,9 @@ trait HasTimezoneConversion
         // return 'Asia/Dhaka';
 
         // Option 1: Timezone from current authenticated user
-        if (auth()->check() && isset(auth()->user()->timezone)) {
-            return auth()->user()->timezone;
+        $user = user();
+        if ($user && isset($user->timezone) && strlen($user->timezone)) {
+            return $user->timezone;
         }
 
         // Option 2: Timezone from session

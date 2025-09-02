@@ -3,9 +3,12 @@
 /**
  * @var \App\Project\Features\Datatable\Datatable $datatable
  * @var \App\Project\Features\Core\ViewProcessor $view
+ * @var string $dtName
+ * @var string $formId
  */
-$dtName = $datatable->name(); // Datatable name
-$formId = $datatable->filterFormId(); // Define filter form Id
+
+// $dtName = $datatable->name(); // Datatable name
+// $formId = $datatable->filterFormId(); // Define filter form Id
 ?>
 
 <script type="text/javascript">
