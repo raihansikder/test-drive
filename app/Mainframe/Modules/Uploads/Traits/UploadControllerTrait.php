@@ -284,7 +284,7 @@ trait UploadControllerTrait
     /**
      * Get Uploads under an element using element_uuid.
      *
-     * @return \App\Project\Features\Modular\BaseModule\BaseModule[]|\App\Upload[]|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Query\Builder[]|\Illuminate\Support\Collection|null
+     * @return \App\Project\Features\Modular\BaseModule\BaseModule[]|\App\Upload[]|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection|null
      */
     public function getUploadsOfElement()
     {
@@ -304,7 +304,7 @@ trait UploadControllerTrait
     /**
      * Get Uploads under an element using module_id, element_id
      *
-     * @return \App\Project\Features\Modular\BaseModule\BaseModule[]|\App\Upload[]|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Query\Builder[]|\Illuminate\Support\Collection|null
+     * @return \App\Project\Features\Modular\BaseModule\BaseModule[]|\App\Upload[]|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection|null
      */
     public function getUploadsOfElementByModuleId()
     {

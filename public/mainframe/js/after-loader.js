@@ -297,6 +297,6 @@ function initAjaxDataLoader() {
  */
 $('.modal').on('hidden.bs.modal', function (e) {
 	$('body').css('padding-right', '0px');
-	console.log('Modal has been completely hidden!');
+	// console.log('Modal has been completely hidden!');
 });
 

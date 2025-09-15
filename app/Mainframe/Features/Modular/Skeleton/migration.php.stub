@@ -49,8 +49,8 @@ class CreateSuperHeroesTable extends Migration
                 $table->tinyInteger('is_active')->nullable()->default(1);
                 $table->unsignedInteger('created_by')->nullable()->default(null)->index();
                 $table->unsignedInteger('updated_by')->nullable()->default(null)->index();
-                $table->timestamps();
-                $table->softDeletes();
+                $table->timestamps(); // ->timestampsTz() For timezone
+                $table->softDeletes(); // ->softDeletesTz() For timezone
                 $table->unsignedInteger('deleted_by')->nullable()->default(null)->index();
             });
         }

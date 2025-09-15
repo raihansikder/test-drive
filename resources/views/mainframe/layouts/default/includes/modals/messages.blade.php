@@ -1,5 +1,5 @@
 <div id="msgModal" class="modal fade message-modal" role="dialog" aria-labelledby="msgModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document" style="width: 600px">
+    <div class="modal-dialog" role="document" style="width: 750px">
         <div class="modal-content">
             <div class="modal-header">
                 @include('mainframe.layouts.default.includes.modals.modal-close-btn')
