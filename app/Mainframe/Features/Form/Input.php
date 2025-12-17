@@ -2,24 +2,36 @@
 
 namespace App\Mainframe\Features\Form;
 
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use App\Mainframe\Features\Modular\BaseModule\BaseModule;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class Input extends Form
 {
     public $var;
+
     public $containerClass;
+
     public $label;
+
     public $labelClass;
+
     public $type;
+
     public $name;
+
     public $id;
+
     public $value;
+
     public $oldInput;
+
     public $params;
+
     public $isEditable;
+
     public $isHidden;
+
     public $tooltip;
 
     /**
@@ -179,5 +191,4 @@ class Input extends Form
     {
         return $this->label;
     }
-
 }

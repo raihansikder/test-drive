@@ -11,7 +11,6 @@ trait ReportTrait
     /**
      * Get module default report url.
      *
-     * @param $module_id
      * @return string
      */
     public static function defaultForModule($module_id)
@@ -25,11 +24,11 @@ trait ReportTrait
             $report_url = $defaultReport->url();
         } else {
             $module = Module::remember(timer('very-long'))->find($module_id);
-            $report_url = route($module->name.'.report')."?submit=Run&"
-                ."select_columns_csv=id%2Cname%2Ccreated_by%2Ccreated_at%2Cupdated_by%2Cupdated_at%2Cis_active"
-                ."&columns_csv=id%2Cname%2Ccreated_by%2Ccreated_at%2Cupdated_by%2Cupdated_at%2Cis_active"
-                ."&alias_columns_csv=Id%2CName%2CCreated+by%2CCreated+at%2CUpdated+by%2CUpdated+at%2CActive%3F"
-                ."&rows_per_page=25";
+            $report_url = route($module->name.'.report').'?submit=Run&'
+                .'select_columns_csv=id%2Cname%2Ccreated_by%2Ccreated_at%2Cupdated_by%2Cupdated_at%2Cis_active'
+                .'&columns_csv=id%2Cname%2Ccreated_by%2Ccreated_at%2Cupdated_by%2Cupdated_at%2Cis_active'
+                .'&alias_columns_csv=Id%2CName%2CCreated+by%2CCreated+at%2CUpdated+by%2CUpdated+at%2CActive%3F'
+                .'&rows_per_page=25';
         }
 
         return $report_url;
@@ -49,7 +48,7 @@ trait ReportTrait
             $url = route('home').urldecode($this->parameters);
         }
 
-        if (!Str::contains($url, '?')) {
+        if (! Str::contains($url, '?')) {
             $url .= '?';
         }
 
@@ -59,7 +58,6 @@ trait ReportTrait
     /**
      * Generates report url from id
      *
-     * @param $id
      * @return string
      */
     public static function getReportUrlFromId($id)
@@ -70,5 +68,4 @@ trait ReportTrait
 
         return false;
     }
-
 }

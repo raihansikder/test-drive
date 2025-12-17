@@ -1,11 +1,12 @@
 <?php
+
 /** @noinspection UnknownTableOrViewInspection */
 
 namespace App\Mainframe\Features\Modular\BaseModule;
 
 use App\Module;
-use Illuminate\Support\Str;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Str;
 
 class BaseModulePolicy
 {
@@ -29,7 +30,6 @@ class BaseModulePolicy
     }
 
     /**
-     * @param  string  $moduleName
      * @return BaseModulePolicy
      */
     public function setModuleName(string $moduleName)
@@ -70,7 +70,7 @@ class BaseModulePolicy
     public function viewAny($user)
     {
 
-        if (!$user->hasPermission($this->moduleName.'-view-any')) {
+        if (! $user->hasPermission($this->moduleName.'-view-any')) {
             return false;
         }
 
@@ -87,15 +87,15 @@ class BaseModulePolicy
      */
     public function view($user, $element)
     {
-        if (!$user->hasPermission($this->moduleName.'-view')) {
+        if (! $user->hasPermission($this->moduleName.'-view')) {
             return false;
         }
 
-        if (!$element->isViewable()) {
+        if (! $element->isViewable()) {
             return false;
         }
 
-        if (!$element->isTenantCompatible($user)) {
+        if (! $element->isTenantCompatible($user)) {
             return false;
         }
 
@@ -112,15 +112,15 @@ class BaseModulePolicy
      */
     public function create($user, $element = null)
     {
-        if (!$user->hasPermission($this->moduleName.'-create')) {
+        if (! $user->hasPermission($this->moduleName.'-create')) {
             return false;
         }
 
-        if ($element && !$element->isCreatable()) {
+        if ($element && ! $element->isCreatable()) {
             return false;
         }
 
-        if ($element && isset($element->tenant_id) && !$element->isTenantCompatible($user)) {
+        if ($element && isset($element->tenant_id) && ! $element->isTenantCompatible($user)) {
             return false;
         }
 
@@ -137,15 +137,15 @@ class BaseModulePolicy
      */
     public function update($user, $element)
     {
-        if (!$user->hasPermission($this->moduleName.'-update')) {
+        if (! $user->hasPermission($this->moduleName.'-update')) {
             return false;
         }
 
-        if (!$element->isEditable()) {
+        if (! $element->isEditable()) {
             return false;
         }
 
-        if (!$element->isTenantCompatible($user)) {
+        if (! $element->isTenantCompatible($user)) {
             return false;
         }
 
@@ -155,7 +155,7 @@ class BaseModulePolicy
         | Sometimes and element may be set up as default for a tenant to use it as it is. ie. some
         | settings, report etc. These elements should be viewable but not editable.
         |--------------------------------------------------------------------------*/
-        if ($user->tenant_id && $element->hasColumn('is_tenant_editable') && !$element->is_tenant_editable) {
+        if ($user->tenant_id && $element->hasColumn('is_tenant_editable') && ! $element->is_tenant_editable) {
             return false;
         }
 
@@ -172,19 +172,19 @@ class BaseModulePolicy
      */
     public function delete($user, $element)
     {
-        if (!$user->can('update', $element)) {
+        if (! $user->can('update', $element)) {
             return false;
         }
 
-        if (!$user->hasPermission($this->moduleName.'-delete')) {
+        if (! $user->hasPermission($this->moduleName.'-delete')) {
             return false;
         }
 
-        if (!$element->isDeletable()) {
+        if (! $element->isDeletable()) {
             return false;
         }
 
-        if (!$element->isTenantCompatible($user)) {
+        if (! $element->isTenantCompatible($user)) {
             return false;
         }
 
@@ -201,15 +201,15 @@ class BaseModulePolicy
      */
     public function restore($user, $element)
     {
-        if (!$user->hasPermission($this->moduleName.'-restore')) {
+        if (! $user->hasPermission($this->moduleName.'-restore')) {
             return false;
         }
 
-        if (!$element->isRestorable()) {
+        if (! $element->isRestorable()) {
             return false;
         }
 
-        if (!$element->isTenantCompatible($user)) {
+        if (! $element->isTenantCompatible($user)) {
             return false;
         }
 
@@ -226,11 +226,11 @@ class BaseModulePolicy
      */
     public function clone($user, $element)
     {
-        if (!$user->can('create', $element)) {
+        if (! $user->can('create', $element)) {
             return false;
         }
 
-        if (!$element->isCloneable()) {
+        if (! $element->isCloneable()) {
             return false;
         }
 
@@ -247,11 +247,11 @@ class BaseModulePolicy
      */
     public function forceDelete($user, $element)
     {
-        if (!$user->hasPermission($this->moduleName.'-force-delete')) {
+        if (! $user->hasPermission($this->moduleName.'-force-delete')) {
             return false;
         }
 
-        if (!$element->isTenantCompatible($user)) {
+        if (! $element->isTenantCompatible($user)) {
             return false;
         }
 
@@ -269,11 +269,11 @@ class BaseModulePolicy
      */
     public function viewChangeLog($user, $element)
     {
-        if (!$user->hasPermission($this->moduleName.'-view-change-log')) {
+        if (! $user->hasPermission($this->moduleName.'-view-change-log')) {
             return false;
         }
 
-        if (!$element->isTenantCompatible($user)) {
+        if (! $element->isTenantCompatible($user)) {
             return false;
         }
 
@@ -291,7 +291,7 @@ class BaseModulePolicy
      */
     public function viewReport($user, $element)
     {
-        if (!$user->hasPermission($this->moduleName.'-view-report')) {
+        if (! $user->hasPermission($this->moduleName.'-view-report')) {
             return false;
         }
 
@@ -311,11 +311,10 @@ class BaseModulePolicy
      */
     public function api($user)
     {
-        if (!$user->hasPermission($this->moduleName.'-api')) {
+        if (! $user->hasPermission($this->moduleName.'-api')) {
             return false;
         }
 
         return true;
     }
-
 }

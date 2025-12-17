@@ -5,7 +5,6 @@ namespace App\Mainframe\Modules\SystemEvents\Traits;
 /** @mixin \App\Mainframe\Modules\SystemEvents\SystemEventObserver */
 trait SystemEventObserverTrait
 {
-
     // /**
     //  * @param  App\SystemEvent  $element
     //  * @return void|bool

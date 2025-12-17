@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Modules\PushNotifications;
 
-use App\Project\Features\Modular\BaseModule\BaseModule;
 use App\Mainframe\Modules\PushNotifications\Traits\PushNotificationTrait;
+use App\Project\Features\Modular\BaseModule\BaseModule;
 
 class PushNotification extends BaseModule
 {

@@ -4,16 +4,17 @@ namespace App\Mainframe\Jobs;
 
 use App\SystemEvent;
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 
 class JobAsyncSave implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     private const FAIL = 'Fail';
+
     private const SUCCESS = 'Success';
 
     /** @var \App\Mainframe\Features\Modular\Validator\ModelProcessor|mixed|\App\Mainframe\Features\Modular\BaseModule\BaseModule */
@@ -21,6 +22,7 @@ class JobAsyncSave implements ShouldQueue
 
     /** @var string */
     public $function;
+
     public $element;
 
     /**
@@ -47,7 +49,7 @@ class JobAsyncSave implements ShouldQueue
             $this->element = $validable->element;
         }
 
-        # Log failure
+        // Log failure
         if ($validable->isInvalid()) {
             $this->log(self::FAIL.' '.$this->msg(), [
                 'type' => 'Error',
@@ -57,9 +59,9 @@ class JobAsyncSave implements ShouldQueue
             return;
         }
 
-        # Log Success
+        // Log Success
         $this->log(self::SUCCESS.' '.$this->msg(),
-            ['type' => 'Success',],
+            ['type' => 'Success'],
             $this->element);
     }
 
@@ -70,7 +72,7 @@ class JobAsyncSave implements ShouldQueue
      */
     public function msg()
     {
-        $str = class_basename($this)." | ";
+        $str = class_basename($this).' | ';
         $str .= get_class($this->class).'::'.$this->function.'(). ';
         if ($this->element) {
             $str .= ' Element '.$this->element->moduleName()."({$this->element->id})";
@@ -83,15 +85,14 @@ class JobAsyncSave implements ShouldQueue
      * Store a system event.
      * Note: We cannot use the SystemEvent::log() as it creates an infinite loop.
      *
-     * @param  string  $name
      * @param  mixed  $params
-     * @param $model
      * @return void
+     *
      * @noinspection DuplicatedCode
      */
-    public function log(string $name, array $params = null, $model = null)
+    public function log(string $name, ?array $params = null, $model = null)
     {
-        $systemEvent = new SystemEvent();
+        $systemEvent = new SystemEvent;
 
         $systemEvent->name = $name;
         $systemEvent->fill($params);

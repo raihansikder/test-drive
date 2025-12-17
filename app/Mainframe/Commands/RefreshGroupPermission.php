@@ -23,7 +23,7 @@ class RefreshGroupPermission extends MakeModule
     /**
      * Execute the console command.
      *
-     * @return mixed|null
+     * @return void
      */
     public function handle()
     {
@@ -31,7 +31,7 @@ class RefreshGroupPermission extends MakeModule
         $this->info('Loading group permissions from config to database...');
 
         Group::latest()->chunk(100, function ($groups) {
-            /** @var Group[] $groups */
+            /** @var Group $group */
             foreach ($groups as $group) {
                 if ($group->refreshPermissionFromConfig()) {
                     $this->info($group->name.' ... Done');
@@ -42,5 +42,4 @@ class RefreshGroupPermission extends MakeModule
         });
 
     }
-
 }

@@ -1,5 +1,6 @@
 <?php
-//============================================================+
+
+// ============================================================+
 // File name   : tcpdf_config.php
 // Begin       : 2004-06-11
 // Last Update : 2014-12-11
@@ -26,14 +27,15 @@
 // along with TCPDF.  If not, see <http://www.gnu.org/licenses/>.
 //
 // See LICENSE.TXT file for more information.
-//============================================================+
+// ============================================================+
 
 /**
  * Configuration file for TCPDF.
  *
  * @author Nicola Asuni
- * @package com.tecnick.tcpdf
+ *
  * @version 4.9.005
+ *
  * @since 2004-10-27
  */
 
@@ -45,41 +47,41 @@
  * Installation path (/var/www/tcpdf/).
  * By default it is automatically calculated but you can also set it as a fixed string to improve performances.
  */
-//define ('K_PATH_MAIN', '');
+// define ('K_PATH_MAIN', '');
 
 /**
  * URL path to tcpdf installation folder (http://localhost/tcpdf/).
  * By default it is automatically set but you can also set it as a fixed string to improve performances.
  */
-//define ('K_PATH_URL', '');
+// define ('K_PATH_URL', '');
 
 /**
  * Path for PDF fonts.
  * By default it is automatically set but you can also set it as a fixed string to improve performances.
  */
-//define ('K_PATH_FONTS', K_PATH_MAIN.'fonts/');
+// define ('K_PATH_FONTS', K_PATH_MAIN.'fonts/');
 
 /**
  * Default images directory.
  * By default it is automatically set but you can also set it as a fixed string to improve performances.
  */
-//define ('K_PATH_IMAGES', '');
+// define ('K_PATH_IMAGES', '');
 
 /**
  * Deafult image logo used be the default Header() method.
  * Please set here your own logo or an empty string to disable it.
  */
-//define ('PDF_HEADER_LOGO', '');
+// define ('PDF_HEADER_LOGO', '');
 
 /**
  * Header logo image width in user units.
  */
-//define ('PDF_HEADER_LOGO_WIDTH', 0);
+// define ('PDF_HEADER_LOGO_WIDTH', 0);
 
 /**
  * Cache directory for temporary files (full path).
  */
-//define ('K_PATH_CACHE', '/tmp/');
+// define ('K_PATH_CACHE', '/tmp/');
 
 /**
  * Generic name for a blank image.
@@ -222,6 +224,6 @@ define('K_TCPDF_THROW_EXCEPTION_ERROR', false);
  */
 define('K_TIMEZONE', 'UTC');
 
-//============================================================+
+// ============================================================+
 // END OF FILE
-//============================================================+
+// ============================================================+

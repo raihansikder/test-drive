@@ -1,12 +1,12 @@
 <?php
 
+use App\Mainframe\Http\Controllers\Auth\ConfirmPasswordController;
+use App\Mainframe\Http\Controllers\Auth\ForgotPasswordController;
 use App\Mainframe\Http\Controllers\Auth\LoginController;
 use App\Mainframe\Http\Controllers\Auth\RegisterController;
-use App\Mainframe\Http\Controllers\Auth\VerificationController;
-use App\Mainframe\Http\Controllers\Auth\ResetPasswordController;
-use App\Mainframe\Http\Controllers\Auth\ForgotPasswordController;
 use App\Mainframe\Http\Controllers\Auth\RegisterTenantController;
-use App\Mainframe\Http\Controllers\Auth\ConfirmPasswordController;
+use App\Mainframe\Http\Controllers\Auth\ResetPasswordController;
+use App\Mainframe\Http\Controllers\Auth\VerificationController;
 
 /*
 |--------------------------------------------------------------------------

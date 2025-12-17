@@ -4,7 +4,6 @@ namespace App\Mainframe\Modules\SupportTicketCategories\Traits;
 
 trait SupportTicketCategoryObserverTrait
 {
-
     // /**
     //  * @param  App\SupportTicketCategory  $element
     //  * @return void|bool

@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Modules\Notifications;
 
-use App\Project\Features\Modular\BaseModule\BaseModule;
 use App\Mainframe\Modules\Notifications\Traits\NotificationTrait;
+use App\Project\Features\Modular\BaseModule\BaseModule;
 
 class Notification extends BaseModule
 {

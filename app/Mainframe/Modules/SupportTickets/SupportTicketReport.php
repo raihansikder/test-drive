@@ -2,13 +2,13 @@
 
 namespace App\Mainframe\Modules\SupportTickets;
 
-use Arr;
-use Str;
-use App\Module;
-use App\SupportTicket;
-use Illuminate\Database\Eloquent\Builder;
-use App\Project\Features\Report\ReportBuilder;
 use App\Mainframe\Features\Report\Traits\ModuleReportBuilderTrait;
+use App\Module;
+use App\Project\Features\Report\ReportBuilder;
+use App\SupportTicket;
+use Arr;
+use Illuminate\Database\Eloquent\Builder;
+use Str;
 
 class SupportTicketReport extends ReportBuilder
 {
@@ -28,7 +28,7 @@ class SupportTicketReport extends ReportBuilder
      */
     public function filterPath()
     {
-        return projectKey().".modules.support-tickets.report.filter";
+        return projectKey().'.modules.support-tickets.report.filter';
     }
 
     /**
@@ -36,9 +36,9 @@ class SupportTicketReport extends ReportBuilder
      */
     public function selectedColumns()
     {
-        $columns = ['id', 'name', 'primary_category_name', 'secondary_category_name', 'contact_no', 'status_name',];
+        $columns = ['id', 'name', 'primary_category_name', 'secondary_category_name', 'contact_no', 'status_name'];
 
-        if (!in_array(request('ret'), ['excel', 'print'])) {
+        if (! in_array(request('ret'), ['excel', 'print'])) {
             $columns = array_merge($columns, ['support_ticket_tag_names']);
         } else {
             $columns = array_merge($columns, ['support_ticket_tag_names_formatted']);
@@ -51,7 +51,6 @@ class SupportTicketReport extends ReportBuilder
     /**
      * @return string[]
      */
-
     public function defaultColumns()
     {
         return
@@ -74,7 +73,6 @@ class SupportTicketReport extends ReportBuilder
     /**
      * @return string[]
      */
-
     public function aliasColumns()
     {
         $columns =
@@ -108,7 +106,7 @@ class SupportTicketReport extends ReportBuilder
             }
             if (in_array('status_name', $this->selectedColumns())) {
                 $cssClass = 'status-'.Str::kebab(strtolower($row->status_name));
-                $row->status_name = "<span class='badge block status-font-color $cssClass'>".$row->status_name."</span>";
+                $row->status_name = "<span class='badge block status-font-color $cssClass'>".$row->status_name.'</span>';
             }
             if (in_array('support_ticket_tag_names', $this->selectedColumns())) {
                 $html = '';
@@ -128,7 +126,6 @@ class SupportTicketReport extends ReportBuilder
     }
 
     /**
-     * @param $query
      * @return Builder|\Illuminate\Database\Eloquent\Model|\Illuminate\Database\Query\Builder|mixed
      */
     public function filter($query)

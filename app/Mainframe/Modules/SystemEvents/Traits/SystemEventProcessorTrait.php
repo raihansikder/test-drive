@@ -3,10 +3,10 @@
 namespace App\Mainframe\Modules\SystemEvents\Traits;
 
 use App;
-use Carbon\Carbon;
-use App\SystemEvent;
 use App\Mainframe\Helpers\Convert;
 use App\Project\Modules\SystemEvents\SystemEventProcessor;
+use App\SystemEvent;
+use Carbon\Carbon;
 
 /** @mixin SystemEventProcessor */
 trait SystemEventProcessorTrait
@@ -80,7 +80,7 @@ trait SystemEventProcessorTrait
      */
     public function saving($element)
     {
-        // Validate. 
+        // Validate.
         // If valid, proceed
         if ($this->isValid()) {
             $element->setNameExt();

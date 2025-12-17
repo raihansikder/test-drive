@@ -4,7 +4,6 @@ namespace App\Mainframe\Helpers;
 
 class Value
 {
-
     public static function isFilledArray($val)
     {
         if (is_array($val) && count($val)) {
@@ -16,7 +15,6 @@ class Value
 
     public static function isEmptyArray($val)
     {
-        return !Value::isFilledArray($val);
+        return ! Value::isFilledArray($val);
     }
-
 }

@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Modules\Settings;
 
-use App\Project\Features\Modular\BaseModule\BaseModulePolicy;
 use App\Mainframe\Modules\Settings\Traits\SettingPolicyTrait;
+use App\Project\Features\Modular\BaseModule\BaseModulePolicy;
 
 class SettingPolicy extends BaseModulePolicy
 {

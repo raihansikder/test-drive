@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Modules\SystemEvents;
 
-use App\Project\Features\Modular\ModularController\ModularController;
 use App\Mainframe\Modules\SystemEvents\Traits\SystemEventControllerTrait;
+use App\Project\Features\Modular\ModularController\ModularController;
 
 class SystemEventController extends ModularController
 {

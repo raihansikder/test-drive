@@ -3,13 +3,12 @@
 namespace App\Mainframe\Features\Multitenant\GlobalScope;
 
 use App\Tenant;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
-use Illuminate\Database\Eloquent\Builder;
 
 class CheckTenantScope implements Scope
 {
-
     /**
      * @var int|null
      */
@@ -23,9 +22,8 @@ class CheckTenantScope implements Scope
     /**
      * Apply the scope to a given Eloquent query builder.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $builder
-     * @param  \Illuminate\Database\Eloquent\Model  $model
      * @return void
+     *
      * @noinspection UnknownColumnInspection
      */
     public function apply(Builder $builder, Model $model)

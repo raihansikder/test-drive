@@ -2,7 +2,4 @@
 
 namespace App\Mainframe\Modules\Packages\Traits;
 
-trait PackagePolicyTrait
-{
-
-}
+trait PackagePolicyTrait {}

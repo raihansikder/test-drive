@@ -2,13 +2,13 @@
 
 namespace App\Mainframe\Helpers\Test;
 
-use DB;
-use App\User;
 use App\Module;
+use App\User;
+use DB;
 
 class UserModularTestCase extends UserTestCase
 {
-    use ModularJsonTestTrait, ModularHttpTestTrait;
+    use ModularHttpTestTrait, ModularJsonTestTrait;
 
     /**
      * The module name that is being tested
@@ -24,8 +24,6 @@ class UserModularTestCase extends UserTestCase
 
     /**
      * Executes at the beginning of the class
-     *
-     * @return void
      */
     public static function setUpBeforeClass(): void
     {
@@ -34,12 +32,10 @@ class UserModularTestCase extends UserTestCase
 
     /**
      * Executes at the end of the class
-     *
-     * @return void
      */
     public static function tearDownAfterClass(): void
     {
-        (new self())->setUp(); // Note: Need to instantiate the laravel app to access the classes
+        (new self)->setUp(); // Note: Need to instantiate the laravel app to access the classes
 
         fwrite(STDOUT, __METHOD__."\n");
         // // Delete test entries
@@ -56,7 +52,7 @@ class UserModularTestCase extends UserTestCase
     {
         parent::setUp();
         $this->module = Module::byName($this->moduleName);
-        $this->user = User::remember(timer('long'))->find(env('API_USER_ID'));
+        $this->user = User::remember(timer('long'))->find(env('TEST_API_USER_ID'));
         $this->be($this->user); // Impersonate as the currently created admin user
     }
 
@@ -91,9 +87,9 @@ class UserModularTestCase extends UserTestCase
     public function defaultErrors()
     {
         return [
-            //"Failed to create new " . \Str::singular($this->module->title),
-            "The name field is required.",
-            "The is_active field is required.",
+            // "Failed to create new " . \Str::singular($this->module->title),
+            'The name field is required.',
+            'The is_active field is required.',
         ];
     }
 
@@ -155,5 +151,4 @@ class UserModularTestCase extends UserTestCase
 
         return $this;
     }
-
 }

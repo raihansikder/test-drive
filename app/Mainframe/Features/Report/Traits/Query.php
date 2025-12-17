@@ -2,14 +2,14 @@
 
 namespace App\Mainframe\Features\Report\Traits;
 
-use DB;
-use Str;
-use Cache;
-use Exception;
-use App\Mainframe\Helpers\Mf;
-use App\Mainframe\Helpers\Convert;
-use Illuminate\Database\Query\Builder;
 use App\Mainframe\Features\Report\ReportBuilder;
+use App\Mainframe\Helpers\Convert;
+use App\Mainframe\Helpers\Mf;
+use Cache;
+use DB;
+use Exception;
+use Illuminate\Database\Query\Builder;
+use Str;
 
 /** @mixin ReportBuilder $this */
 trait Query
@@ -39,17 +39,17 @@ trait Query
      */
     public function resultQuery()
     {
-        $query = clone $this->queryDataSource(); # Get Datasource query instance
+        $query = clone $this->queryDataSource(); // Get Datasource query instance
 
-        $query = $this->querySelect($query); # Select columns
+        $query = $this->querySelect($query); // Select columns
 
-        $query = $this->filter($query); # Apply filters
+        $query = $this->filter($query); // Apply filters
 
-        $query = $this->injectTenantQuery($query); # Inject tenant
+        $query = $this->injectTenantQuery($query); // Inject tenant
 
-        $query = $this->groupBy($query); # Apply group-by
+        $query = $this->groupBy($query); // Apply group-by
 
-        $query = $this->orderBy($query); # Apply Order-by
+        $query = $this->orderBy($query); // Apply Order-by
 
         return $query;
     }
@@ -65,7 +65,7 @@ trait Query
 
     public function injectTenantQuery($query)
     {
-        # Inject tenant context
+        // Inject tenant context
         if ($this->user->ofTenant() && $this->hasTenantContext()) {
             $query->where('tenant_id', $this->user->tenant_id);
         }
@@ -139,6 +139,7 @@ trait Query
         if (strtolower($rowsPerPage) == 'all') {
             return 9999999; // A very large number
         }
+
         return $rowsPerPage;
     }
 
@@ -163,6 +164,7 @@ trait Query
         } catch (Exception $e) {
             $this->fail($e->getMessage());
         }
+
         return $this->total;
 
     }
@@ -261,7 +263,7 @@ trait Query
     public function queryAddFieldsForRelations($keys = [])
     {
         foreach ($this->relationFieldMap() as $relationship => $col) {
-            if (!in_array($col, $keys) && in_array($col, $this->queryRelations())) {
+            if (! in_array($col, $keys) && in_array($col, $this->queryRelations())) {
                 $keys[] = $col;
             }
         }
@@ -282,7 +284,7 @@ trait Query
 
         foreach ($defaultColumns as $col) {
             // if (!in_array($col, $keys) && in_array($col, $this->dataSourceColumns())) {
-            if (!in_array($col, $keys)) {
+            if (! in_array($col, $keys)) {
                 $keys[] = $col;
             }
         }
@@ -309,6 +311,7 @@ trait Query
      * to the linked element.
      *
      * @return array
+     *
      * @deprecated Use defaultColumns() instead
      */
     public function defaultSelectedColumns()
@@ -326,7 +329,7 @@ trait Query
     {
         $temp = [];
         foreach ($keys as $key) {
-            if (!in_array($key, $this->ghostColumnOptions())) {
+            if (! in_array($key, $this->ghostColumnOptions())) {
                 $temp[] = $key;
             }
         }
@@ -335,7 +338,7 @@ trait Query
     }
 
     /**
-     * @param $query Builder|\Illuminate\Database\Eloquent\Builder
+     * @param  $query  Builder|\Illuminate\Database\Eloquent\Builder
      * @return Builder
      */
     public function orderBy($query)
@@ -372,7 +375,6 @@ trait Query
     /**
      * Apply order by on ghost column
      *
-     * @param $query
      * @return mixed
      */
     public function ghostColumnOrderBy($query)
@@ -400,9 +402,9 @@ trait Query
     {
         $orderByArray = [];
 
-        # Order by passed as param
+        // Order by passed as param
         $str = request('order_by');
-        if (!strlen(trim($str))) {
+        if (! strlen(trim($str))) {
             return $orderByArray;
         }
 
@@ -413,7 +415,7 @@ trait Query
             if (isset($pieces[0])) {
                 $key = trim($pieces[0]); // 'field1'
 
-                if (!$this->columnIsSortable($key)) {
+                if (! $this->columnIsSortable($key)) {
                     return $orderByArray;
                 }
 
@@ -438,7 +440,7 @@ trait Query
         $str = null;
         $orderByArray = $this->orderByArray();
 
-        if (!count($orderByArray)) {
+        if (! count($orderByArray)) {
             return $str;
         }
 
@@ -465,7 +467,6 @@ trait Query
      * If an alias for a field is used i.e. users.id as applicant_id
      * then get the actual column name(users.id) from alias (applicant_id)
      *
-     * @param $alias
      * @return string|null
      */
     public function selectedColumFromSqlAlias($alias)
@@ -480,6 +481,7 @@ trait Query
         if ($column) {
             return Str::before($column, ' as');
         }
+
         return null;
     }
 
@@ -495,13 +497,13 @@ trait Query
         if ($column) {
             return Str::before($column, ' as');
         }
+
         return null;
     }
 
     /**
      * Check if a field is available in order column
      *
-     * @param $column
      * @return bool|mixed
      */
     public function orderHas($column)
@@ -514,7 +516,6 @@ trait Query
     /**
      * Get the order type ASC/DESC of the column
      *
-     * @param $column
      * @return bool|mixed
      */
     public function orderColumnDirection($column)
@@ -525,7 +526,7 @@ trait Query
     /**
      * Add groupBy clause to the query builder.
      *
-     * @param $query Builder
+     * @param  $query  Builder
      * @return Builder
      */
     public function groupBy($query)
@@ -583,7 +584,7 @@ trait Query
         // doesn't always have to be total. For example it can be sum if there
         // query has SUM(*) as sum
         return ['total'];
-        //$merge[] = 'sum';
+        // $merge[] = 'sum';
     }
 
     /**
@@ -597,7 +598,7 @@ trait Query
         // doesn't always have to be total. For example it can be sum if there
         // query has SUM(*) as sum
         return ['Total'];
-        //$merge[] = 'sum';
+        // $merge[] = 'sum';
     }
 
     /**

@@ -55,7 +55,7 @@ trait SupportTicketTagProcessorTrait
      */
     public function saving($element)
     {
-        // Validate. 
+        // Validate.
         // If valid, proceed
         if ($this->isValid()) {
             $element->setNameExt();

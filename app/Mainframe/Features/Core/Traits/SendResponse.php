@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Features\Core\Traits;
 
-use URL;
 use App\Mainframe\Features\Responder\Response;
+use URL;
 
 /** @mixin  \App\Mainframe\Http\Controllers\BaseController $this */
 trait SendResponse
@@ -44,7 +44,6 @@ trait SendResponse
     /**
      * Set redirection url
      *
-     * @param $message
      * @return Response|mixed
      */
     public function setMessage($message)
@@ -98,9 +97,8 @@ trait SendResponse
         }
 
         if ($successTo && resolve(Response::class)->isSuccess()) {
-
-            if (isset($this->element, $this->module, $this->element->id) && $successTo == '#new') {
-                return route($this->module->name.".edit", $this->element->id);
+            if (isset($this->element->id) && isset($this->module) && $successTo == '#new') {
+                return route($this->module->name.'.edit', $this->element->id);
             }
 
             return $successTo;
@@ -125,7 +123,6 @@ trait SendResponse
     /**
      * Render view
      *
-     * @param $viewPath
      * @param  array  $viewVars
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -149,6 +146,7 @@ trait SendResponse
      * Json
      *
      * @return \Illuminate\Http\JsonResponse
+     *
      * @throws \Exception
      */
     public function json()
@@ -157,11 +155,13 @@ trait SendResponse
     }
 
     /**
-     * Json or abort
+     * JSON or abort
      *
      * @param  string  $message
      * @param  int  $code
-     * @return \Illuminate\Http\JsonResponse|void
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\View\View|null
+     *
+     * @throws \Exception
      */
     public function failed($message = 'Failed', $code = Response::HTTP_BAD_REQUEST)
     {
@@ -169,11 +169,13 @@ trait SendResponse
     }
 
     /**
-     * Json or succeeded
+     * JSON or succeeded
      *
      * @param  string  $message
      * @param  int  $code
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\View\View|void
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     *
+     * @throws \Exception
      */
     public function succeeded($message = null, $code = Response::HTTP_OK)
     {
@@ -183,7 +185,9 @@ trait SendResponse
     /**
      * Determine what needs to be dispatched.
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\View\View|void
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     *
+     * @throws \Exception
      */
     public function send()
     {
@@ -195,7 +199,9 @@ trait SendResponse
      *
      * @param  string  $message
      * @param  int  $code
-     * @return \Illuminate\Http\JsonResponse|void
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @throws \Exception
      */
     public function permissionDenied($message = 'Permission denied', $code = Response::HTTP_FORBIDDEN)
     {
@@ -207,7 +213,9 @@ trait SendResponse
      *
      * @param  string  $message
      * @param  int  $code
-     * @return \Illuminate\Http\JsonResponse|void
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @throws \Exception
      */
     public function notFound($message = 'Not found', $code = Response::HTTP_NOT_FOUND)
     {
@@ -217,7 +225,7 @@ trait SendResponse
     /**
      * Build a success response.
      *
-     * @param  null  $message
+     * @param  string  $message
      * @param  int  $code
      * @return Response|mixed
      */
@@ -252,7 +260,7 @@ trait SendResponse
     /**
      * Load a payload to be sent with the response
      *
-     * @param  null  $payload
+     * @param  mixed  $payload
      * @return Response|mixed
      */
     public function load($payload = null)
@@ -280,7 +288,7 @@ trait SendResponse
     }
 
     /**
-     * Check if response is fail
+     * Check if the response is fail
      *
      * @return bool
      */
@@ -298,5 +306,4 @@ trait SendResponse
     {
         return $this->response()->expectsJson();
     }
-
 }

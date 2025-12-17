@@ -2,7 +2,4 @@
 
 namespace App\Mainframe\Modules\Reports\Traits;
 
-trait ReportPolicyTrait
-{
-
-}
+trait ReportPolicyTrait {}

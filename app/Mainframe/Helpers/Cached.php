@@ -14,6 +14,7 @@ class Cached extends Cacher
      *
      * @param  null  $seconds
      * @return mixed
+     *
      * @throws \Exception
      */
     public function loggedUserGroupName($seconds = null)
@@ -21,14 +22,14 @@ class Cached extends Cacher
         $seconds = $seconds ?? timer('long');
 
         // $key = $this->key(__FUNCTION__).user()->id; // Create unique key for user
-        $key = "cache.users.[".user()->id."].group.title";
+        $key = 'cache.users.['.user()->id.'].group.title';
 
         return \Cache::remember($key, $seconds, function () {
             if (user()->group) {
                 return ucfirst(user()->group->title);
             }
+
             return null;
         });
     }
-
 }

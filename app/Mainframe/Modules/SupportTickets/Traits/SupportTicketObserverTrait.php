@@ -5,7 +5,6 @@ namespace App\Mainframe\Modules\SupportTickets\Traits;
 /** @mixin \App\SupportTicket */
 trait SupportTicketObserverTrait
 {
-
     // /**
     //  * @param  App\SupportTicket  $element
     //  * @return void|bool

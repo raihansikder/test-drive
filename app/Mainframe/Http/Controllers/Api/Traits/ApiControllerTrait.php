@@ -25,8 +25,8 @@ trait ApiControllerTrait
     /**
      * Get setting by name(key)
      *
-     * @param $name
      * @return \Illuminate\Http\JsonResponse
+     *
      * @group Settings
      */
     public function getSetting($name)

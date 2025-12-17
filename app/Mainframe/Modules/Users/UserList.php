@@ -6,7 +6,6 @@ use App\Project\Features\Report\ModuleReportBuilder;
 
 class UserList extends ModuleReportBuilder
 {
-
     public $moduleName = 'users';
 
     /**

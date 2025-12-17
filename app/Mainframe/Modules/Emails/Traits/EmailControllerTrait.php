@@ -41,11 +41,16 @@ trait EmailControllerTrait
     /**
      * Immediately send email without queuing
      *
-     * @param  \App\Email  $email
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\View\View|void
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     *
+     * @throws \Exception
      */
     public function sendNow(Email $email)
     {
+        if (! $this->user->can('view', $email)) {
+            return $this->permissionDenied();
+        }
+
         $email->send();
 
         return $this->success('Email has been sent')->send();
@@ -54,11 +59,15 @@ trait EmailControllerTrait
     /**
      * Queue email for sending
      *
-     * @param  Email  $email
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\View\View|void
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     *
+     * @throws \Exception
      */
     public function queue(Email $email)
     {
+        if (! $this->user->can('view', $email)) {
+            return $this->permissionDenied();
+        }
         $email->queue();
 
         return $this->success('Email has been queued for sending')->send();
@@ -67,12 +76,11 @@ trait EmailControllerTrait
     /**
      * Show email HTML preview
      *
-     * @param  Email  $email
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View|void
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View
      */
     public function preview(Email $email)
     {
-        if (!$this->user->can('view', $email)) {
+        if (! $this->user->can('view', $email)) {
             return $this->permissionDenied();
         }
 

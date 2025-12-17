@@ -4,7 +4,6 @@ namespace App\Mainframe\Modules\ModuleGroups\Traits;
 
 trait ModuleGroupControllerTrait
 {
-
     /**
      * Module group home page
      *

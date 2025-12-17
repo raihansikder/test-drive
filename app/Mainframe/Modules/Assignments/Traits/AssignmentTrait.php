@@ -2,10 +2,10 @@
 
 namespace App\Mainframe\Modules\Assignments\Traits;
 
-use Str;
-use App\User;
 use App\Email;
 use App\Module;
+use App\User;
+use Str;
 
 /** @mixin \App\Mainframe\Modules\Assignments\Assignment */
 trait AssignmentTrait
@@ -40,15 +40,30 @@ trait AssignmentTrait
     |--------------------------------------------------------------------------
     */
 
-    public function assignable() { return $this->morphTo(); }
+    public function assignable()
+    {
+        return $this->morphTo();
+    }
 
-    public function assignee() { return $this->belongsTo(User::class, 'assignee_user_id'); }
+    public function assignee()
+    {
+        return $this->belongsTo(User::class, 'assignee_user_id');
+    }
 
-    public function assignedBy() { return $this->belongsTo(User::class, 'created_by'); }
+    public function assignedBy()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
 
-    public function relatedModule() { return $this->belongsTo(Module::class, 'module_id'); }
+    public function relatedModule()
+    {
+        return $this->belongsTo(Module::class, 'module_id');
+    }
 
-    public function user() { return $this->belongsTo(User::class, 'created_by'); }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -58,7 +73,7 @@ trait AssignmentTrait
 
     /*
     |--------------------------------------------------------------------------
-    | Section: Autofill functions 
+    | Section: Autofill functions
     |--------------------------------------------------------------------------
     */
 
@@ -80,7 +95,7 @@ trait AssignmentTrait
     public function setName()
     {
         $this->name = 'Assignment Created for '.Str::singular(optional($this->assignable)->module()->title)
-            ."(#".pad(optional($this->assignable)->id).") at ".$this->created_at;
+            .'(#'.pad(optional($this->assignable)->id).') at '.$this->created_at;
 
         return $this;
     }
@@ -100,7 +115,7 @@ trait AssignmentTrait
      */
     public function sendEmail()
     {
-        if (!count($this->emailRecipients())) {
+        if (! count($this->emailRecipients())) {
             return $this;
         }
         /*
@@ -108,11 +123,11 @@ trait AssignmentTrait
         | Step 1. Save the \App\Email entry
         |--------------------------------------------------------------------------
         */
-        $email = new Email();
+        $email = new Email;
         $email->subject = 'Assignment has been created for '.optional($this->assignee)->name;
         $email->to = $this->emailRecipients();
         $email->html = view($this->emailTemplate(), ['element' => $this]);
-        $email->name = now()." | ".$email->subject;
+        $email->name = now().' | '.$email->subject;
         $email->module_id = $this->assignable->module()->id;
         $email->element_id = $this->assignable->id;
         $processor = $email->processor()->save();
@@ -122,7 +137,7 @@ trait AssignmentTrait
         | Step 2. Send the saved email
         |--------------------------------------------------------------------------
         */
-        //dd($processor->isValid());
+        // dd($processor->isValid());
         if ($processor->isValid()) {
             // $email->send(); // Immediate send (synchronous)
             $email->queue();   // Queue up!! (Preferable)
@@ -147,19 +162,18 @@ trait AssignmentTrait
     {
         $emails = [];
 
-        # Include creator email
+        // Include creator email
         if ($this->creator) {
             $emails[] = $this->creator->email;
         }
 
-        # Include assignee email
+        // Include assignee email
         if ($this->assignee) {
             $emails[] = $this->assignee->email;
         }
 
         return array_unique(array_filter($emails));
     }
-
 
     /*
     |--------------------------------------------------------------------------

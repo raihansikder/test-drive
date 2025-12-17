@@ -2,13 +2,13 @@
 
 namespace App\Mainframe\Modules\Uploads\Traits;
 
-use Str;
-use File;
-use Storage;
-use Exception;
-use App\Upload;
 use App\Mainframe\Features\PDFMerger\PDFMerger;
 use App\Project\Features\Modular\BaseModule\BaseModule;
+use App\Upload;
+use Exception;
+use File;
+use Storage;
+use Str;
 
 /** @mixin Upload|\App\Upload */
 trait UploadTrait
@@ -31,11 +31,11 @@ trait UploadTrait
      * During creation of a module entry there is no id but
      * still files can be uploaded.
      *
-     * @param $element BaseModule
+     * @param  $element  BaseModule
      */
     public static function linkTemporaryUploads($element)
     {
-        if (!$element->uuid) {
+        if (! $element->uuid) {
             return;
         }
 
@@ -81,6 +81,7 @@ trait UploadTrait
         if ($this->isImage()) {
             return $this->url;
         }
+
         return $this->extIconPath();
     }
 
@@ -95,7 +96,7 @@ trait UploadTrait
             return true;
         }
 
-        # Alternatively
+        // Alternatively
 
         if ($this->file() && Str::contains($this->file()->getMimeType(), 'image/')) {
             return true;
@@ -133,7 +134,7 @@ trait UploadTrait
         $ext = strtolower($this->ext); // get full lower case extension
         $icon_path = 'mainframe/images/file_type_icons/'.$ext.'.png';
 
-        if (!File::exists($icon_path)) {
+        if (! File::exists($icon_path)) {
             $icon_path = 'mainframe/images/file_type_icons/noimage.png';
         }
 
@@ -238,19 +239,18 @@ trait UploadTrait
     /**
      * Copy file to a different location of storage
      *
-     * @param $to
      * @return bool
      */
     public function copy($to)
     {
-        if (!$this->fileExists()) {
+        if (! $this->fileExists()) {
             return false;
         }
 
         $to = trim($to, ' \/');
 
         // Path given a directory without full file name and extension
-        if (!Str::contains($to, '.'.$this->ext)) {
+        if (! Str::contains($to, '.'.$this->ext)) {
             $to .= '/'.$this->fileName();
         }
 
@@ -268,19 +268,18 @@ trait UploadTrait
     /**
      * Move file to a different location of storage
      *
-     * @param $to
      * @return bool
      */
     public function move($to)
     {
-        if (!$this->fileExists()) {
+        if (! $this->fileExists()) {
             return false;
         }
 
         $to = trim($to, ' \/');
 
         // Path given a directory without full file name and extension
-        if (!Str::contains($to, '.'.$this->ext)) {
+        if (! Str::contains($to, '.'.$this->ext)) {
             $to .= '/'.$this->fileName();
         }
 
@@ -312,9 +311,10 @@ trait UploadTrait
      */
     public function file()
     {
-        if (!$this->absPath()) {
+        if (! $this->absPath()) {
             return null;
         }
+
         return new \Symfony\Component\HttpFoundation\File\File($this->absPath());
     }
 
@@ -325,7 +325,7 @@ trait UploadTrait
      */
     public function fillFileInfo()
     {
-        if (!$this->absPath()) {
+        if (! $this->absPath()) {
             return $this;
         }
 
@@ -351,7 +351,7 @@ trait UploadTrait
      */
     public static function directoryTree($bucket = null, $tenantId = null)
     {
-        $bucket = $bucket ?: trim(config('mainframe.config.upload_root'), "\\/ ");
+        $bucket = $bucket ?: trim(config('mainframe.config.upload_root'), '\\/ ');
         $tenantId = $tenantId ?: '0'; // 0= Non-tenant
 
         $parts = [];
@@ -395,8 +395,8 @@ trait UploadTrait
      */
     public static function mergePdf($files, $destination)
     {
-        require_once(base_path('app/Mainframe/Features/PDFMerger/PDFMerger.php'));
-        $pdf = new PDFMerger();
+        require_once base_path('app/Mainframe/Features/PDFMerger/PDFMerger.php');
+        $pdf = new PDFMerger;
 
         $hasPdf = false;
         try {
@@ -410,11 +410,11 @@ trait UploadTrait
         } catch (\Exception $e) {
             message($e->getMessage().'Merging of some PDF failed. Try uploading jpg image instead');
         }
-        if (!$hasPdf) { // No files to merge
+        if (! $hasPdf) { // No files to merge
             return;
         }
 
-        if (!File::isDirectory(dirname($destination))) {
+        if (! File::isDirectory(dirname($destination))) {
             File::makeDirectory(dirname($destination));
         }
         $pdf->merge('file', $destination);
@@ -439,7 +439,6 @@ trait UploadTrait
 
         return $this;
     }
-
 
     /*
     |--------------------------------------------------------------------------
@@ -474,7 +473,7 @@ trait UploadTrait
     {
         $fallback = asset('mainframe/images/noimage.png');
 
-        if (!$this->path) {
+        if (! $this->path) {
             return $fallback;
         }
         // First check if file exists in storage/app/files
@@ -555,7 +554,6 @@ trait UploadTrait
     /**
      * Delete the physical file at given file path
      *
-     * @param $path
      * @return bool
      */
     public static function deleteFilePath($path)

@@ -8,7 +8,6 @@ use Illuminate\Database\Query\Builder;
 /** @mixin Builder $this */
 class QueryBuilderMacros
 {
-
     public function whereSubstring()
     {
         return function ($attribute, $needles) {
@@ -23,5 +22,4 @@ class QueryBuilderMacros
             });
         };
     }
-
 }

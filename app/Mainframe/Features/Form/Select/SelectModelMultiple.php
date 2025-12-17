@@ -51,5 +51,4 @@ class SelectModelMultiple extends SelectModel
 
         return $value ?? [];
     }
-
 }

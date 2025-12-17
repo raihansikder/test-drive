@@ -11,13 +11,9 @@ class ModuleDatatable extends Datatable
     /** @var \App\Module */
     public $module;
 
-    /**
-     * @param $module
-     */
     public function __construct($module = null)
     {
         parent::__construct();
         $this->setModule($module);
     }
-
 }

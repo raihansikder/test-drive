@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Modules\Notifications;
 
-use App\Project\Features\Modular\BaseModule\BaseModuleViewProcessor;
 use App\Mainframe\Modules\Notifications\Traits\NotificationViewProcessorTrait;
+use App\Project\Features\Modular\BaseModule\BaseModuleViewProcessor;
 
 class NotificationViewProcessor extends BaseModuleViewProcessor
 {

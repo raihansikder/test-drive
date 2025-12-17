@@ -4,8 +4,6 @@ namespace App\Mainframe\Modules\ModuleGroups\Traits;
 
 trait ModuleGroupDatatableTrait
 {
-
-
     /**
      * List of columns to show in datatable
      *

@@ -1,4 +1,6 @@
-<?php /** @noinspection ALL */
+<?php
+
+/** @noinspection ALL */
 
 namespace App\Mainframe\Features\Modular\BaseModule\Traits;
 
@@ -8,17 +10,14 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 
 trait HasTimezoneConversion
 {
-
     /**
      * Common datetime attribute handler with timezone conversion
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     protected function dateTimeAttribute(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => $value ? $this->convertToUserTz($value) : null,
-            set: fn($value) => $value ? $this->convertToSystemTz($value) : null,
+            get: fn ($value) => $value ? $this->convertToUserTz($value) : null,
+            set: fn ($value) => $value ? $this->convertToSystemTz($value) : null,
         );
     }
 
@@ -26,11 +25,10 @@ trait HasTimezoneConversion
      * Convert datetime from UTC to user's timezone
      *
      * @param  mixed  $value
-     * @return string|null
      */
     protected function convertToUserTz($value): ?string
     {
-        if (!$value) {
+        if (! $value) {
             return null;
         }
 
@@ -45,11 +43,10 @@ trait HasTimezoneConversion
      * Convert datetime from user's timezone to UTC for storage
      *
      * @param  mixed  $value
-     * @return string|null
      */
     protected function convertToSystemTz($value): ?string
     {
-        if (!$value) {
+        if (! $value) {
             return null;
         }
 
@@ -62,8 +59,6 @@ trait HasTimezoneConversion
 
     /**
      * Get user's timezone
-     *
-     * @return string
      */
     protected function getUserTimezone(): string
     {

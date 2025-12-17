@@ -11,7 +11,6 @@ trait ModuleProcessorTrait
     /**
      * Validation rules. For regular expression validation use array instead of pipe
      *
-     * @param       $element
      * @param  array  $merge
      * @return array
      */
@@ -43,11 +42,9 @@ trait ModuleProcessorTrait
         return array_merge($rules, $merge);
     }
 
-
     /**
      * Custom error messages
      *
-     * @param $merge
      * @return string[]
      */
     public static function customErrorMessages($merge = [])
@@ -70,14 +67,14 @@ trait ModuleProcessorTrait
 
         // Process if valid
         if ($this->isValid()) {
-            $element->parent_id = (!$element->parent_id) ? 0 : $element->parent_id;
-            $element->parent_id = (!$element->parent_id) ? 0 : $element->parent_id;
-            $element->module_group_id = (!$element->module_group_id) ? 0 : $element->module_group_id;
-            $element->level = (!$element->level) ? 0 : $element->level;
-            $element->order = (!$element->order) ? 0 : $element->order;
-            $element->default_route = (!$element->default_route) ? $element->name.'.index' : $element->default_route;
-            $element->color_css = (!$element->color_css) ? 'aqua' : $element->color_css;
-            $element->icon_css = (!$element->icon_css) ? 'fa fa-plus' : $element->icon_css;
+            $element->parent_id = (! $element->parent_id) ? 0 : $element->parent_id;
+            $element->parent_id = (! $element->parent_id) ? 0 : $element->parent_id;
+            $element->module_group_id = (! $element->module_group_id) ? 0 : $element->module_group_id;
+            $element->level = (! $element->level) ? 0 : $element->level;
+            $element->order = (! $element->order) ? 0 : $element->order;
+            $element->default_route = (! $element->default_route) ? $element->name.'.index' : $element->default_route;
+            $element->color_css = (! $element->color_css) ? 'aqua' : $element->color_css;
+            $element->icon_css = (! $element->icon_css) ? 'fa fa-plus' : $element->icon_css;
         }
 
         return $this;
@@ -96,5 +93,4 @@ trait ModuleProcessorTrait
 
         return $this;
     }
-
 }

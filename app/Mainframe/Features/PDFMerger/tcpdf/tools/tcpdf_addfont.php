@@ -1,6 +1,7 @@
 #!/usr/bin/php -q
 <?php
-//============================================================+
+
+// ============================================================+
 // File name   : tcpdf_addfont.php
 // Version     : 1.0.002
 // Begin       : 2013-05-13
@@ -32,15 +33,14 @@
 //
 // Description : This is a command line script to generate TCPDF fonts.
 //
-//============================================================+
+// ============================================================+
 
 /**
  * @file
  * This is a command line script to generate TCPDF fonts.<br>
- * @package com.tecnick.tcpdf
+ *
  * @version 1.0.000
  */
-
 if (php_sapi_name() != 'cli') {
     echo 'You need to run this command from console.';
     exit(1);
@@ -52,7 +52,7 @@ $tcpdf_include_dirs = [
 ];
 foreach ($tcpdf_include_dirs as $tcpdf_include_path) {
     if (@file_exists($tcpdf_include_path)) {
-        require_once($tcpdf_include_path);
+        require_once $tcpdf_include_path;
         break;
     }
 }
@@ -62,7 +62,7 @@ foreach ($tcpdf_include_dirs as $tcpdf_include_path) {
  */
 function showHelp()
 {
-    $help = <<<EOD
+    $help = <<<'EOD'
 tcpdf_addfont - command line tool to convert fonts for the TCPDF library.
 
 Usage: tcpdf_addfont.php [ options ] -i fontfile[,fontfile]...
@@ -133,7 +133,7 @@ EOD;
 array_shift($argv);
 
 // no options chosen
-if (!is_array($argv)) {
+if (! is_array($argv)) {
     showHelp();
 }
 
@@ -174,70 +174,70 @@ foreach ($inopt as $opt => $val) {
     switch ($opt) {
         case 't':
         case 'type':
-        {
+
             if (in_array($val, ['TrueTypeUnicode', 'TrueType', 'Type1', 'CID0JP', 'CID0KR', 'CID0CS', 'CID0CT'])) {
                 $options['type'] = $val;
             }
             break;
-        }
+
         case 'e':
         case 'enc':
-        {
+
             $options['enc'] = $val;
             break;
-        }
+
         case 'f':
         case 'flags':
-        {
+
             $options['flags'] = intval($val);
             break;
-        }
+
         case 'o':
         case 'outpath':
-        {
+
             $options['outpath'] = realpath($val);
             if (substr($options['outpath'], -1) != '/') {
                 $options['outpath'] .= '/';
             }
             break;
-        }
+
         case 'p':
         case 'platid':
-        {
+
             $options['platid'] = min(max(1, intval($val)), 3);
             break;
-        }
+
         case 'n':
         case 'encid':
-        {
+
             $options['encid'] = min(max(0, intval($val)), 10);
             break;
-        }
+
         case 'b':
         case 'addcbbox':
-        {
+
             $options['addcbbox'] = true;
             break;
-        }
+
         case 'l':
         case 'link':
-        {
+
             $options['link'] = true;
             break;
-        }
+
         case 'i':
         case 'fonts':
-        {
+
             $options['fonts'] = explode(',', $val);
             break;
-        }
+
         case 'h':
         case 'help':
         default:
-        {
+
             showHelp();
             break;
-        }
+
     } // end of switch
 } // end of while loop
 
@@ -247,7 +247,7 @@ if (empty($options['fonts'])) {
 }
 
 // check the output path
-if (!is_dir($options['outpath']) or !is_writable($options['outpath'])) {
+if (! is_dir($options['outpath']) or ! is_writable($options['outpath'])) {
     echo "ERROR: Can't write to ".$options['outpath']."\n\n";
     exit(3);
 }
@@ -267,7 +267,7 @@ foreach ($options['fonts'] as $font) {
         $errors = true;
         echo "--- ERROR: can't add ".$font."\n";
     } else {
-        echo "+++ OK   : ".$fontfile.' added as '.$fontname."\n";
+        echo '+++ OK   : '.$fontfile.' added as '.$fontname."\n";
     }
 }
 
@@ -279,6 +279,6 @@ if ($errors) {
 echo ">>> Process successfully completed!\n\n";
 exit(0);
 
-//============================================================+
+// ============================================================+
 // END OF FILE
-//============================================================+
+// ============================================================+

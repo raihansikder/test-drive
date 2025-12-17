@@ -26,6 +26,7 @@ trait ContentProcessorTrait
     public function fill($element)
     {
         $element->key = $element->key ?: $element->name;
+
         return $this;
     }
 
@@ -131,5 +132,4 @@ trait ContentProcessorTrait
 
         return $this;
     }
-
 }

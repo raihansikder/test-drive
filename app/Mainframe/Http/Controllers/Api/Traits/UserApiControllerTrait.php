@@ -3,11 +3,11 @@
 namespace App\Mainframe\Http\Controllers\Api\Traits;
 
 use App\Module;
-use App\Upload;
-use App\Project\Modules\Users\UserController;
-use App\Project\Modules\Uploads\UploadController;
 use App\Project\Http\Controllers\Api\UserApiController;
 use App\Project\Modules\InAppNotifications\InAppNotificationController;
+use App\Project\Modules\Uploads\UploadController;
+use App\Project\Modules\Users\UserController;
+use App\Upload;
 
 /** @mixin UserApiController $this */
 trait UserApiControllerTrait
@@ -28,12 +28,12 @@ trait UserApiControllerTrait
     /*---------------------------------
     | User profile, profile pic
     |---------------------------------*/
+
     /**
      * Get user profile
      *
      * @return mixed
      */
-
     public function showUser()
     {
         $payload = $this->user->load(['groups'])
@@ -72,6 +72,7 @@ trait UserApiControllerTrait
      * Delete user profile pic
      *
      * @return mixed
+     *
      * @throws \Exception
      */
     public function profilePicDestroy()
@@ -91,6 +92,7 @@ trait UserApiControllerTrait
      * List in-app-notifications
      *
      * @return \Illuminate\Http\JsonResponse
+     *
      * @throws \Exception
      */
     public function inAppNotifications()
@@ -109,7 +111,6 @@ trait UserApiControllerTrait
     /**
      * Update an in-app-notification
      *
-     * @param $id
      * @return mixed
      */
     public function inAppNotificationUpdate($id)
@@ -120,7 +121,6 @@ trait UserApiControllerTrait
     /**
      * Mark an in-app-notification as read
      *
-     * @param $id
      * @return InAppNotificationController|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function inAppNotificationRead($id)
@@ -134,6 +134,7 @@ trait UserApiControllerTrait
      * Mark all in-app-notifications as read
      *
      * @return \Illuminate\Http\JsonResponse
+     *
      * @throws \Exception
      */
     public function inAppNotificationsReadAll()
@@ -148,8 +149,8 @@ trait UserApiControllerTrait
     /**
      * Delete an in-app-notification
      *
-     * @param $id
      * @return InAppNotificationController|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     *
      * @throws \Exception
      */
     public function inAppNotificationDelete($id)
@@ -161,6 +162,7 @@ trait UserApiControllerTrait
      * Delete all in-app-notifications
      *
      * @return \Illuminate\Http\JsonResponse
+     *
      * @throws \Exception
      */
     public function inAppNotificationsDeleteAll()
@@ -169,5 +171,4 @@ trait UserApiControllerTrait
 
         return $this->success('All notifications successfully deleted')->json();
     }
-
 }

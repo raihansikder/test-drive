@@ -2,10 +2,10 @@
 
 namespace App\Mainframe\Modules\PushNotifications\Traits;
 
-use App\User;
-use App\PushNotification;
 use App\InAppNotification;
 use App\Mainframe\Jobs\JobSendPushNotifications;
+use App\PushNotification;
+use App\User;
 
 /** @mixin PushNotification $this */
 trait PushNotificationTrait
@@ -35,23 +35,38 @@ trait PushNotificationTrait
     | Section: Attributes
     |--------------------------------------------------------------------------
     */
-    public function getDataJsonAttribute() { return json_decode($this->data); }
+    public function getDataJsonAttribute()
+    {
+        return json_decode($this->data);
+    }
 
-    public function getApiResponseJsonAttribute() { return json_decode($this->api_response); }
+    public function getApiResponseJsonAttribute()
+    {
+        return json_decode($this->api_response);
+    }
 
     /*
     |--------------------------------------------------------------------------
     | Section: Relations
     |--------------------------------------------------------------------------
     */
-    public function user() { return $this->belongsTo(User::class); }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
-    public function inAppNotification() { return $this->belongsTo(InAppNotification::class); }
+    public function inAppNotification()
+    {
+        return $this->belongsTo(InAppNotification::class);
+    }
 
-    public function notifiable() { return $this->morphTo(); }
+    public function notifiable()
+    {
+        return $this->morphTo();
+    }
     /*
     |--------------------------------------------------------------------------
-    | Section: Autofill functions 
+    | Section: Autofill functions
     |--------------------------------------------------------------------------
     */
     /**

@@ -61,7 +61,7 @@ trait SupportTicketProcessorTrait
      */
     public function saving($element)
     {
-        // Validate. 
+        // Validate.
         // If valid, proceed
         if ($this->isValid()) {
             $element->denormalize()->setNameExt()->fillSupportTicketTagNames();
@@ -71,7 +71,6 @@ trait SupportTicketProcessorTrait
     }
 
     /**
-     * @param $element
      * @return $this
      */
     public function creating($element)

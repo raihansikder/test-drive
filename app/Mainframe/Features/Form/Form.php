@@ -33,7 +33,7 @@ class Form
         $this->var = $var;
 
         $this->element = $element ?? ($this->var['element'] ?? null);
-        $this->errors = $this->var['errors'] ?? new ViewErrorBag();
+        $this->errors = $this->var['errors'] ?? new ViewErrorBag;
         $this->immutables = $this->var['immutables'] ?? [];
         $this->hiddenFields = $this->var['hidden_fields'] ?? [];
         $this->uid = Str::random(8);
@@ -43,7 +43,6 @@ class Form
     /**
      * Set up the values of the var array that is used to generate the form input
      *
-     * @param $var
      * @param  null  $errors
      * @param  null  $element
      * @param  null  $editable
@@ -60,7 +59,7 @@ class Form
         $hiddenFields = null
     ) {
         // Get the module element
-        if (!array_key_exists('element', $var)) {
+        if (! array_key_exists('element', $var)) {
             $var['element'] = $element ?? null;
         }
 
@@ -73,17 +72,16 @@ class Form
         // Set errors from ErrorBag
         $var['errors'] = $errors ?? [];
 
-        if (!isset($var['editable']) && isset($editable)) {
+        if (! isset($var['editable']) && isset($editable)) {
             $var['editable'] = $editable;
 
             // Check immutability
             if ($editable && isset($immutables, $var['name'])) {
-                $var['editable'] = !in_array($var['name'], $immutables);
+                $var['editable'] = ! in_array($var['name'], $immutables);
             }
         }
 
         return $var;
 
     }
-
 }

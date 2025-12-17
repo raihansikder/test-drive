@@ -2,12 +2,11 @@
 
 namespace App\Mainframe\Commands;
 
-use File;
-use Illuminate\Support\Str;
 use App\Mainframe\Helpers\Mf;
+use File;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
-
+use Illuminate\Support\Str;
 
 /**
  * Command to create a new Mainframe module with all necessary files and structure.
@@ -51,11 +50,14 @@ class MakeModule extends Command
      * Execute the console command.
      *
      * @return void
+     *
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function handle()
     {
-        $this->namespace = $this->setNamespace($this->argument('namespace'));
-        $this->model = $this->model();
+        // @phpstan-ignore-next-line
+        $this->setNamespace($this->argument('namespace'));
+        $this->setModel();
         $this->info($this->model.' Creating ..');
         $this->createClasses();  // Create the classes for the module, e.g., Model, Controller Observer, etc.
         $this->createViewFiles(); // Create view blades for the new module
@@ -67,8 +69,7 @@ class MakeModule extends Command
      * Set namespace
      * Example: \App\Project\Modules\SuperHeroes
      *
-     * @param $str
-     * @return string
+     * @return \App\Mainframe\Commands\MakeModule
      */
     public function setNamespace($str)
     {
@@ -76,7 +77,9 @@ class MakeModule extends Command
             return $str;
         }
 
-        return '\\'.projectNamespace().'\Modules'.Str::start(Str::studly($str), '\\');
+        $this->namespace = '\\'.projectNamespace().'\Modules'.Str::start(Str::studly($str), '\\');
+
+        return $this;
     }
 
     /**
@@ -90,9 +93,9 @@ class MakeModule extends Command
     }
 
     /**
-     * Return project name. If project is not set, then extract from namespace.
+     * Return the project name. If a project is not set, then extract from namespace.
      *
-     * @return mixed|string
+     * @return string
      */
     public function project()
     {
@@ -100,7 +103,6 @@ class MakeModule extends Command
     }
 
     /**
-     *
      * @return string
      */
     public function projectViewDirName()
@@ -112,7 +114,7 @@ class MakeModule extends Command
      * Extract Project name from the namespace
      * Example: For namespace "App\Projects\MyProject\..." returns "MyProject"
      *
-     * @return mixed|string The project name
+     * @return string The project name
      */
     public function extractProjectNameFromNamespace()
     {
@@ -133,7 +135,6 @@ class MakeModule extends Command
         // Find the newly created migration file and put the updated code.
         $migration = Collection::make(File::files('database/migrations'))->last();
         File::put($migration, $code);
-
 
         $this->info('... Migration created'); // Console output
     }
@@ -211,7 +212,6 @@ class MakeModule extends Command
     /**
      * Function to replace boilerplate code with new module name references
      *
-     * @param $code
      * @return mixed
      */
     public function replace($code)
@@ -239,7 +239,7 @@ class MakeModule extends Command
             '{view_directory}' => $this->viewDirectory(),
         ];
 
-        if (!$this->isMainframeModule()) {
+        if (! $this->isMainframeModule()) {
             $replaces = array_merge($replaces, [
                 'App\Mainframe\Features' => trim(Mf::projectNamespace().'\Features', '\\'),
                 '{project-name}' => $this->projectViewDirName(),
@@ -262,13 +262,15 @@ class MakeModule extends Command
      * Get the model class name with namespace
      * Example: \App\Project\Modules\SuperHeroes\SuperHeroes
      *
-     * @return string
+     * @return \App\Mainframe\Commands\MakeModule
      */
-    public function model()
+    public function setModel()
     {
         $modelClass = Str::singular(class_basename($this->namespace));
 
-        return $this->namespace.'\\'.$modelClass;
+        $this->model = $modelClass;
+
+        return $this;
     }
 
     /**
@@ -278,7 +280,7 @@ class MakeModule extends Command
      * Get the database table name for the module
      * Example: For model SuperHero returns "super_heroes"
      *
-     * @return string The snake_case plural form of model name
+     * @return string The snake_case plural form of the model name
      */
     private function moduleTable()
     {
@@ -292,7 +294,7 @@ class MakeModule extends Command
      * Get the module name in kebab case
      * Example: For model SuperHero returns "super-heroes"
      *
-     * @return string The kebab-case plural form of model name
+     * @return string The kebab-case plural form of the model name
      */
     private function moduleName()
     {
@@ -306,7 +308,7 @@ class MakeModule extends Command
      * Get the route path for the module
      * Example: For model SuperHero returns "super-heroes"
      *
-     * @return string The kebab-case plural form of model name
+     * @return string The kebab-case plural form of the model name
      */
     private function routePath()
     {
@@ -320,7 +322,7 @@ class MakeModule extends Command
      * Get the route name for the module
      * Example: For model SuperHero returns "super-heroes"
      *
-     * @return string The kebab-case plural form of model name
+     * @return string The kebab-case plural form of the model name
      */
     private function routeName()
     {
@@ -346,7 +348,6 @@ class MakeModule extends Command
 
         return trim($str, '\\/');
     }
-
 
     /**
      * Get the fully qualified class name for the module's policy
@@ -398,9 +399,9 @@ class MakeModule extends Command
         }
 
         $path = implode('.', $arr); // project.modules.super-heroes
-        $path = trim($path, '.');  // project.modules.super-heroes
+        // project.modules.super-heroes
 
-        return $path; // project
+        return trim($path, '.'); // project
     }
 
     /**
@@ -415,5 +416,4 @@ class MakeModule extends Command
     {
         return class_basename($this->model);
     }
-
 }

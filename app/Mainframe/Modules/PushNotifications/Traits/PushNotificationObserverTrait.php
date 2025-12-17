@@ -4,7 +4,6 @@ namespace App\Mainframe\Modules\PushNotifications\Traits;
 
 trait PushNotificationObserverTrait
 {
-
     // /**
     //  * @param  PushNotification  $element
     //  * @return void|bool

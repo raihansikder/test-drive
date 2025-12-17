@@ -1,4 +1,6 @@
-<?php /** @noinspection PhpVariableVariableInspection */
+<?php
+
+/** @noinspection PhpVariableVariableInspection */
 
 namespace App\Mainframe\Features\Form\Select;
 
@@ -7,8 +9,11 @@ use App\Module;
 class SelectAjax extends SelectModel
 {
     public $url;
+
     public $preload;
+
     public $minimumInputLength = 2;
+
     public $urlParams = [];
 
     public function __construct($var = [], $element = null)
@@ -22,7 +27,7 @@ class SelectAjax extends SelectModel
         $this->link = $this->var['link'] ?? true; // Show the link to model selected
 
         // Make the field readonly instead of disable
-        if (!$this->isEditable) {
+        if (! $this->isEditable) {
             unset($this->params['disabled']);
             $this->params['readonly'] = 'readonly';
         }
@@ -38,13 +43,13 @@ class SelectAjax extends SelectModel
      */
     public function preload()
     {
-        # Use a predefined preload
+        // Use a predefined preload
 
         if ($this->preload) {
             return $this->preload;
         }
 
-        # Create local query if all the params are available
+        // Create local query if all the params are available
         if ($this->value() && $this->getQuery() && $this->valueField && $this->nameField) {
             $item = $this->getQuery()
                 ->select([$this->valueField, $this->nameField])
@@ -71,12 +76,12 @@ class SelectAjax extends SelectModel
 
         $urlParams = $this->urlParams;
         // 1. Add column selections
-        if (!array_key_exists('columns_csv', $urlParams)) {
+        if (! array_key_exists('columns_csv', $urlParams)) {
             $urlParams['columns_csv'] = implode(',', [$this->valueField, $this->nameField]);
         }
 
         // 2. Show inactive items?
-        if (!$this->showInactive) {
+        if (! $this->showInactive) {
             $urlParams['is_active'] = 1;
         }
 
@@ -102,5 +107,4 @@ class SelectAjax extends SelectModel
     {
         return []; // No option should be loaded initially
     }
-
 }

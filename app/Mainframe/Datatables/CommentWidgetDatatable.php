@@ -2,14 +2,13 @@
 
 namespace App\Mainframe\Datatables;
 
-use App\Comment;
-use App\Project\Modules\Comments\CommentDatatable;
 use App\Mainframe\Features\Datatable\Traits\CustomDatatableTrait;
 use App\Mainframe\Modules\Comments\Traits\CommentWidgetDatatableTrait;
+use App\Project\Modules\Comments\CommentDatatable;
 
 class CommentWidgetDatatable extends CommentDatatable
 {
-    use CustomDatatableTrait, CommentWidgetDatatableTrait;
+    use CommentWidgetDatatableTrait, CustomDatatableTrait;
 
     // /**
     //  * @param $module

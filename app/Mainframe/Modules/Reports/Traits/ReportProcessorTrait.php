@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Modules\Reports\Traits;
 
-use App\Report;
 use App\Mainframe\Modules\Reports\ReportProcessor;
+use App\Report;
 
 /** @mixin ReportProcessor $this */
 trait ReportProcessorTrait
@@ -18,7 +18,6 @@ trait ReportProcessorTrait
     /**
      * Validation rules. For regular expression validation use array instead of pipe
      *
-     * @param       $element
      * @param  array  $merge
      * @return array
      */
@@ -45,7 +44,7 @@ trait ReportProcessorTrait
      */
     public function saving($element)
     {
-        // Validate. 
+        // Validate.
         // If valid, proceed
         if ($this->isValid()) {
             $element->title = $element->name;

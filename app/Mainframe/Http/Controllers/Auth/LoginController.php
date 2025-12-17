@@ -2,12 +2,12 @@
 
 namespace App\Mainframe\Http\Controllers\Auth;
 
-use App\User;
-use Illuminate\View\View;
-use Illuminate\Http\Request;
-use Illuminate\Contracts\View\Factory;
 use App\Project\Http\Controllers\BaseController;
+use App\User;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class LoginController extends BaseController
 {
@@ -60,23 +60,20 @@ class LoginController extends BaseController
     /**
      * Attempt to log the user into the application.
      *
-     * @param  Request  $request
      * @return bool
      */
     protected function attemptLogin(Request $request)
     {
-        # Only authenticate a user with is_active=1
+        // Only authenticate a user with is_active=1
         return $this->guard()->attempt(
             array_merge($this->credentials($request), ['is_active' => 1]) // Check is_active
             , $request->filled('remember')
         );
     }
 
-
     /**
      * The user has been authenticated.
      *
-     * @param  Request  $request
      * @param  User|mixed  $user
      * @return \Illuminate\Http\JsonResponse|void
      */
@@ -94,7 +91,6 @@ class LoginController extends BaseController
     /**
      * The user has logged out of the application.
      *
-     * @param  Request  $request
      * @return \Illuminate\Http\JsonResponse|void
      */
     protected function loggedOut(Request $request)

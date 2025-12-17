@@ -17,7 +17,9 @@ class Spread extends BaseModule
     public static $auditingDisabled = true;
 
     protected $moduleName = 'spreads';
+
     protected $table = 'spreads';
+
     /*
     |--------------------------------------------------------------------------
     | Properties

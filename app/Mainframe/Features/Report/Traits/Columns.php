@@ -2,9 +2,9 @@
 
 namespace App\Mainframe\Features\Report\Traits;
 
-use Str;
-use App\Mainframe\Helpers\Mf;
 use App\Mainframe\Helpers\Convert;
+use App\Mainframe\Helpers\Mf;
+use Str;
 
 /** @mixin \App\Mainframe\Features\Report\ReportBuilder */
 trait Columns
@@ -50,6 +50,7 @@ trait Columns
      * post processed in mutation function.
      *
      * @return array
+     *
      * @deprecated  use ghostColumns() instead
      */
     public function ghostColumnOptions()
@@ -78,14 +79,12 @@ trait Columns
     /**
      * Check if a column is available in data-source
      *
-     * @param $column
      * @return bool
      */
     public function hasColumn($column)
     {
         return in_array($column, $this->dataSourceColumns());
     }
-
 
     /*
     |--------------------------------------------------------------------------
@@ -103,15 +102,15 @@ trait Columns
      */
     public function selectedColumns()
     {
-        # Check if the column names are available in request().
+        // Check if the column names are available in request().
         if ($columns = $this->getColumnsFromRequest()) {
             return $columns;
         }
 
-        # Default selection
+        // Default selection
         // return ['id','name','updated_by','updated_at'];
 
-        # Include all the data-source columns
+        // Include all the data-source columns
         return $this->dataSourceColumns();
     }
 
@@ -136,6 +135,7 @@ trait Columns
                 if (is_string($val) && strlen($val)) {
                     return Convert::csvToArray(urldecode($val));
                 }
+
                 return $val;
             }
         }
@@ -146,7 +146,6 @@ trait Columns
     /**
      * Check if selected columns have a key
      *
-     * @param $column
      * @return bool
      */
     public function selectedColumnsHas($column)
@@ -192,7 +191,6 @@ trait Columns
      * Remove dot(.) from column name and if an SQL alias was used i.e. users.id as applicant_id
      * then only take the alias
      *
-     * @param $columns
      * @return array
      */
     public function removeDotFromColumns($columns)
@@ -253,8 +251,6 @@ trait Columns
     /**
      * Change alias for specific columns
      *
-     * @param $map
-     * @param $array
      * @return mixed
      */
     public function setAliasForColumns($map, $array)
@@ -288,7 +284,6 @@ trait Columns
      * Fill the missing alias based on selected columns. Try to make the alias as
      * much human-readable as possible.
      *
-     * @param $keys
      * @return array
      */
     public function fillAliasColumns($keys)
@@ -308,7 +303,6 @@ trait Columns
     /**
      * Get column title for a given key.
      *
-     * @param $key
      * @return string
      */
     public function aliasFor($key)

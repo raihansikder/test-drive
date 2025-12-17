@@ -11,7 +11,6 @@ class AllowSuperuser
      * This mainframe middleware only allows super user.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
      * @return mixed
      */
     public function handle($request, Closure $next)

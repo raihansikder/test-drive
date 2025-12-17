@@ -6,7 +6,6 @@ use App\Mainframe\Features\Form\Input;
 
 class InputHidden extends Input
 {
-
     public function __construct($var = [], $element = null)
     {
         parent::__construct($var, $element);

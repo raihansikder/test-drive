@@ -2,10 +2,10 @@
 
 namespace App\Mainframe\Features\Datatable;
 
-use URL;
-use Str;
-use App\Module;
 use App\Mainframe\Features\Datatable\Traits\DatatableTrait;
+use App\Module;
+use Str;
+use URL;
 
 /**
  * Class Datatable
@@ -24,7 +24,7 @@ use App\Mainframe\Features\Datatable\Traits\DatatableTrait;
  * - Customizable DOM structure
  * - Support for modular implementation
  *
- * @property  \Yajra\DataTables\DataTableAbstract $dt  DataTable instance for server-side processing
+ * @property \Yajra\DataTables\DataTableAbstract $dt DataTable instance for server-side processing
  */
 class Datatable
 {
@@ -37,6 +37,7 @@ class Datatable
      * @var string
      */
     public const DOM_WITH_BTN = 'Blftipr';
+
     public const DOM_WITHOUT_BTN = 'lftipr';
 
     /*
@@ -92,6 +93,7 @@ class Datatable
 
     /**
      * Instance of \Yajra\DataTables\DataTable
+     *
      * @ref https://yajrabox.com/docs/laravel-datatables/12.0
      *
      * @var \Yajra\DataTables\DataTableAbstract
@@ -100,6 +102,7 @@ class Datatable
 
     /**
      * List of columns that is allowed for search/sort.
+     *
      * @ref https://yajrabox.com/docs/laravel-datatables/12.0/whitelist
      *
      * @var string[]
@@ -108,6 +111,7 @@ class Datatable
 
     /**
      * List of columns that is not allowed for search/sort.
+     *
      * @ref https://yajrabox.com/docs/laravel-datatables/12.0/blacklist
      *
      * @var string[]
@@ -119,8 +123,9 @@ class Datatable
      * Optionally merge the defaults from config.
      *
      * @var string[]
-     * @depricated Automatically, all columns are considered as raw(html) columns. No longer
-     * required to explicitly set this.
+     *
+     * @depricated Automatically, all columns are considered as raw(html) columns. No longer required to explicitly set
+     *     this.
      */
     public $rawColumns = ['tenant_sl', 'id', 'name', 'is_active', 'action'];
 
@@ -146,7 +151,6 @@ class Datatable
      */
     public $pageLength = 25;
 
-
     /**
      * Show marked(highlighted) matched text in the search result
      *
@@ -168,14 +172,12 @@ class Datatable
      */
     public $serverSide = true;
 
-
     /**
      * Shows options for rows per page
      *
      * @var string "[5, 10, 25, 50, 100]"
      */
     public $lengthMenu;
-
 
     /**
      * Datatable order/sorting config
@@ -231,20 +233,18 @@ class Datatable
 
     /**
      * List of columns that should be excluded from automatic filtering.
-     * If these are included in request, they will be ignored.
+     * If these are included in the request, they will be ignored.
      *
      * @var array
      */
     public $skipAutoFilterColumns = ['order'];
 
-
     /**
-     * List of fields that should be searched in full text mode.
+     * List of fields that should be searched in full-text mode.
      *
      * @var string[]
      */
     public $fullTextFields = ['name'];
-
 
     /*
     |--------------------------------------------------------------------------
@@ -263,8 +263,8 @@ class Datatable
     public $showCustomFilter = true;
 
     /**
-     * Filter on submit-button click.
-     * If set to true filter will be applied on submit button click. If set to false, filter will be applied
+     * Filter on the submit-button click.
+     * If set to 'true' filter will be applied on the 'submit' button click. If set to false, a filter will be applied
      * whenever there is a change in the filter input.
      *
      * @var bool
@@ -272,12 +272,11 @@ class Datatable
     public $filterOnSubmit = true;
 
     /**
-     * Show filter reset button
+     * Show the filter reset button
      *
      * @var bool
      */
     public $showFilterResetBtn = true;
-
 
     /*
     |--------------------------------------------------------------------------
@@ -288,10 +287,10 @@ class Datatable
     */
 
     /**
-     *
      * --------------------------------------------------------------------------
      * Allow changing rows per page. If this is set to true, then the page length
      * selector will show
+     *
      * @ref https://datatables.net/reference/option/lengthChange
      *
      * @var bool
@@ -353,12 +352,12 @@ class Datatable
      */
     public $dom = self::DOM_WITH_BTN;
 
-
     /**
      * Constructor to initialize the table name
      *
      * @param  string|null  $table  Optional table name. Defaults to the predefined table property if null.
      * @return void
+     *
      * @throws \Exception If neither table parameter nor class table property is defined
      */
     public function __construct($table = null)
@@ -376,7 +375,7 @@ class Datatable
             $module = Module::byName($module);
         }
 
-        if (!$module) {
+        if (! $module) {
             return false;
         }
 
@@ -392,7 +391,7 @@ class Datatable
      * This method allows dynamic configuration of the table property after instantiation.
      *
      * @param  string  $table  The name of the database table
-     * @return $this  Returns an instance of the current class for method chaining
+     * @return $this Returns an instance of the current class for method chaining
      */
     public function setTable(string $table)
     {
@@ -417,7 +416,6 @@ class Datatable
     /**
      * Set ajaxUrl
      *
-     * @param  string  $ajaxUrl
      * @return $this
      */
     public function setAjaxUrl(string $ajaxUrl)
@@ -434,8 +432,8 @@ class Datatable
      */
     public function ajaxUrl()
     {
-        # Important! Check if a URL is already assigned
-        if (!$this->ajaxUrl) {
+        // Important! Check if a URL is already assigned
+        if (! $this->ajaxUrl) {
             $this->ajaxUrl = route('datatable.json', classKey($this)); // Default common route for dynamic datatables
         }
 
@@ -477,7 +475,7 @@ class Datatable
      */
     public function lengthMenu()
     {
-        return $this->lengthMenu ?? "[5, 10, 25, 50, 100]";
+        return $this->lengthMenu ?? '[5, 10, 25, 50, 100]';
         // return "[[10, 25, 50, -1], [10, 25, 50, 'All']]"; // -1 means no pagination. This is risky for large data.
     }
 
@@ -498,7 +496,7 @@ class Datatable
      */
     public function bLengthChange()
     {
-        return !$this->bLengthChange ? 'false' : 'true';
+        return ! $this->bLengthChange ? 'false' : 'true';
     }
 
     /**
@@ -506,7 +504,7 @@ class Datatable
      */
     public function bPaginate()
     {
-        return !$this->bPaginate ? 'false' : 'true';
+        return ! $this->bPaginate ? 'false' : 'true';
     }
 
     /**
@@ -514,7 +512,7 @@ class Datatable
      */
     public function bFilter()
     {
-        return !$this->bFilter ? 'false' : 'true';
+        return ! $this->bFilter ? 'false' : 'true';
     }
 
     /**
@@ -522,7 +520,7 @@ class Datatable
      */
     public function bInfo()
     {
-        return !$this->bInfo ? 'false' : 'true';
+        return ! $this->bInfo ? 'false' : 'true';
     }
 
     /**
@@ -530,7 +528,7 @@ class Datatable
      */
     public function bDeferRender()
     {
-        return !$this->bDeferRender ? 'false' : 'true';
+        return ! $this->bDeferRender ? 'false' : 'true';
     }
 
     /**
@@ -543,7 +541,7 @@ class Datatable
 
     public function mark()
     {
-        if (!$this->mark) {
+        if (! $this->mark) {
             return 'false';
         }
 
@@ -552,12 +550,12 @@ class Datatable
 
     public function processing()
     {
-        return !$this->processing ? 'false' : 'true';
+        return ! $this->processing ? 'false' : 'true';
     }
 
     public function serverSide()
     {
-        return !$this->serverSide ? 'false' : 'true';
+        return ! $this->serverSide ? 'false' : 'true';
     }
 
     /**
@@ -690,7 +688,7 @@ class Datatable
      */
     public function filterOnSubmit()
     {
-        if (!$this->showCustomFilter()) {
+        if (! $this->showCustomFilter()) {
             return false;
         }
 
@@ -704,7 +702,7 @@ class Datatable
      */
     public function instantFilter()
     {
-        return !$this->filterOnSubmit();
+        return ! $this->filterOnSubmit();
     }
 
     /**
@@ -731,7 +729,7 @@ class Datatable
         }
 
         // This code is not the most optimal. But I want to show the full final classes in a single line
-        return " {$this->name()}-container datatable-container table-responsive {$class} ";
+        return " {$this->name()}-container datatable-container table-responsive $class ";
     }
 
     /**
@@ -747,7 +745,7 @@ class Datatable
             $class = $this->tableClass;
         }
 
-        return " {$this->name()} table module-grid datatable {$class} ";
+        return " {$this->name()} table module-grid datatable $class ";
     }
 
     /**
@@ -761,7 +759,7 @@ class Datatable
     }
 
     /**
-     * Show filter reset button
+     * Show the filter reset button
      *
      * @return bool
      */
@@ -769,5 +767,4 @@ class Datatable
     {
         return $this->showFilterResetBtn;
     }
-
 }

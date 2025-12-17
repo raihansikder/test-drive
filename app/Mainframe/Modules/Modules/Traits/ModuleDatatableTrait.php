@@ -19,5 +19,4 @@ trait ModuleDatatableTrait
             ["{$this->table}.is_active", 'is_active', 'Active'],
         ];
     }
-
 }

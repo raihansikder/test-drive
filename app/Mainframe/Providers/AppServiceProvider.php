@@ -2,11 +2,11 @@
 
 namespace App\Mainframe\Providers;
 
-use Illuminate\Support\MessageBag;
-use Illuminate\Database\Query\Builder;
-use Illuminate\Support\ServiceProvider;
-use App\Mainframe\Macros\QueryBuilderMacros;
 use App\Mainframe\Features\Responder\Response;
+use App\Mainframe\Macros\QueryBuilderMacros;
+use Illuminate\Database\Query\Builder;
+use Illuminate\Support\MessageBag;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -14,13 +14,14 @@ class AppServiceProvider extends ServiceProvider
      * Register commands.
      * \App\Console\Kernel::commands() already registers commands that are stored in
      * app/Commands, app/Mainframe/Commands, app/Project/Commands
+     *
      * @var array
      */
     protected $commands = [ // Note: keeping this for some older projects where the directory is not registered in kernel.php
-        \App\Mainframe\Commands\MakeModule::Class,
-        \App\Mainframe\Commands\PortModule::Class,
-        \App\Mainframe\Commands\CreateRootModels::Class,
-        \App\Mainframe\Commands\CleanDeletedUploads::Class,
+        \App\Mainframe\Commands\MakeModule::class,
+        \App\Mainframe\Commands\PortModule::class,
+        \App\Mainframe\Commands\CreateRootModels::class,
+        \App\Mainframe\Commands\CleanDeletedUploads::class,
         \App\Mainframe\Commands\FixPolymorphicType::class,
         \App\Mainframe\Commands\FixContentKey::class,
         \App\Mainframe\Commands\RefreshGroupPermission::class,
@@ -58,6 +59,7 @@ class AppServiceProvider extends ServiceProvider
      * Bootstrap services.
      *
      * @return void
+     *
      * @throws \ReflectionException
      */
     public function boot()
@@ -70,7 +72,7 @@ class AppServiceProvider extends ServiceProvider
         //     });
         // });
 
-        Builder::mixin(new QueryBuilderMacros());
+        Builder::mixin(new QueryBuilderMacros);
     }
 
     /**
@@ -116,11 +118,10 @@ class AppServiceProvider extends ServiceProvider
     {
 
         $this->app->singleton(MessageBag::class, function () {
-            return new MessageBag();
+            return new MessageBag;
         });
         $this->app->singleton(Response::class, function () {
-            return new Response();
+            return new Response;
         });
     }
-
 }

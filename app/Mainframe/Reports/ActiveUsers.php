@@ -2,9 +2,9 @@
 
 namespace App\Mainframe\Reports;
 
-use App\Module;
 use App\Mainframe\Features\Report\ReportBuilder;
 use App\Mainframe\Features\Report\Traits\ModuleReportBuilderTrait;
+use App\Module;
 
 class ActiveUsers extends ReportBuilder
 {
@@ -18,5 +18,4 @@ class ActiveUsers extends ReportBuilder
 
         parent::__construct();
     }
-
 }

@@ -1,5 +1,6 @@
 <?php
-//============================================================+
+
+// ============================================================+
 // File name   : datamatrix.php
 // Version     : 1.0.008
 // Begin       : 2010-06-07
@@ -31,19 +32,20 @@
 //
 // Class to create DataMatrix ECC 200 barcode arrays for TCPDF class.
 // DataMatrix (ISO/IEC 16022:2006) is a 2-dimensional bar code.
-//============================================================+
+// ============================================================+
 
 /**
  * @file
  * Class to create DataMatrix ECC 200 barcode arrays for TCPDF class.
  * DataMatrix (ISO/IEC 16022:2006) is a 2-dimensional bar code.
- * @package com.tecnick.tcpdf
+ *
  * @author Nicola Asuni
+ *
  * @version 1.0.008
  */
 
 // custom definitions
-if (!defined('DATAMATRIXDEFS')) {
+if (! defined('DATAMATRIXDEFS')) {
 
     /**
      * Indicate that definitions for this class are set
@@ -100,13 +102,13 @@ define('ENC_ASCII_NUM', 7);
  * @class Datamatrix
  * Class to create DataMatrix ECC 200 barcode arrays for TCPDF class.
  * DataMatrix (ISO/IEC 16022:2006) is a 2-dimensional bar code.
- * @package com.tecnick.tcpdf
+ *
  * @author Nicola Asuni
+ *
  * @version 1.0.004
  */
 class Datamatrix
 {
-
     /**
      * Barcode array to be returned which is readable by TCPDF.
      *
@@ -145,37 +147,37 @@ class Datamatrix
      */
     protected $symbattr = [
         // square form ---------------------------------------------------------------------------------------
-        [0x00a, 0x00a, 0x008, 0x008, 0x00a, 0x00a, 0x008, 0x008, 0x001, 0x001, 0x001, 0x003, 0x005, 0x001, 0x003, 0x005], // 10x10
-        [0x00c, 0x00c, 0x00a, 0x00a, 0x00c, 0x00c, 0x00a, 0x00a, 0x001, 0x001, 0x001, 0x005, 0x007, 0x001, 0x005, 0x007], // 12x12
-        [0x00e, 0x00e, 0x00c, 0x00c, 0x00e, 0x00e, 0x00c, 0x00c, 0x001, 0x001, 0x001, 0x008, 0x00a, 0x001, 0x008, 0x00a], // 14x14
-        [0x010, 0x010, 0x00e, 0x00e, 0x010, 0x010, 0x00e, 0x00e, 0x001, 0x001, 0x001, 0x00c, 0x00c, 0x001, 0x00c, 0x00c], // 16x16
-        [0x012, 0x012, 0x010, 0x010, 0x012, 0x012, 0x010, 0x010, 0x001, 0x001, 0x001, 0x012, 0x00e, 0x001, 0x012, 0x00e], // 18x18
+        [0x00A, 0x00A, 0x008, 0x008, 0x00A, 0x00A, 0x008, 0x008, 0x001, 0x001, 0x001, 0x003, 0x005, 0x001, 0x003, 0x005], // 10x10
+        [0x00C, 0x00C, 0x00A, 0x00A, 0x00C, 0x00C, 0x00A, 0x00A, 0x001, 0x001, 0x001, 0x005, 0x007, 0x001, 0x005, 0x007], // 12x12
+        [0x00E, 0x00E, 0x00C, 0x00C, 0x00E, 0x00E, 0x00C, 0x00C, 0x001, 0x001, 0x001, 0x008, 0x00A, 0x001, 0x008, 0x00A], // 14x14
+        [0x010, 0x010, 0x00E, 0x00E, 0x010, 0x010, 0x00E, 0x00E, 0x001, 0x001, 0x001, 0x00C, 0x00C, 0x001, 0x00C, 0x00C], // 16x16
+        [0x012, 0x012, 0x010, 0x010, 0x012, 0x012, 0x010, 0x010, 0x001, 0x001, 0x001, 0x012, 0x00E, 0x001, 0x012, 0x00E], // 18x18
         [0x014, 0x014, 0x012, 0x012, 0x014, 0x014, 0x012, 0x012, 0x001, 0x001, 0x001, 0x016, 0x012, 0x001, 0x016, 0x012], // 20x20
-        [0x016, 0x016, 0x014, 0x014, 0x016, 0x016, 0x014, 0x014, 0x001, 0x001, 0x001, 0x01e, 0x014, 0x001, 0x01e, 0x014], // 22x22
+        [0x016, 0x016, 0x014, 0x014, 0x016, 0x016, 0x014, 0x014, 0x001, 0x001, 0x001, 0x01E, 0x014, 0x001, 0x01E, 0x014], // 22x22
         [0x018, 0x018, 0x016, 0x016, 0x018, 0x018, 0x016, 0x016, 0x001, 0x001, 0x001, 0x024, 0x018, 0x001, 0x024, 0x018], // 24x24
-        [0x01a, 0x01a, 0x018, 0x018, 0x01a, 0x01a, 0x018, 0x018, 0x001, 0x001, 0x001, 0x02c, 0x01c, 0x001, 0x02c, 0x01c], // 26x26
-        [0x020, 0x020, 0x01c, 0x01c, 0x010, 0x010, 0x00e, 0x00e, 0x002, 0x002, 0x004, 0x03e, 0x024, 0x001, 0x03e, 0x024], // 32x32
-        [0x024, 0x024, 0x020, 0x020, 0x012, 0x012, 0x010, 0x010, 0x002, 0x002, 0x004, 0x056, 0x02a, 0x001, 0x056, 0x02a], // 36x36
+        [0x01A, 0x01A, 0x018, 0x018, 0x01A, 0x01A, 0x018, 0x018, 0x001, 0x001, 0x001, 0x02C, 0x01C, 0x001, 0x02C, 0x01C], // 26x26
+        [0x020, 0x020, 0x01C, 0x01C, 0x010, 0x010, 0x00E, 0x00E, 0x002, 0x002, 0x004, 0x03E, 0x024, 0x001, 0x03E, 0x024], // 32x32
+        [0x024, 0x024, 0x020, 0x020, 0x012, 0x012, 0x010, 0x010, 0x002, 0x002, 0x004, 0x056, 0x02A, 0x001, 0x056, 0x02A], // 36x36
         [0x028, 0x028, 0x024, 0x024, 0x014, 0x014, 0x012, 0x012, 0x002, 0x002, 0x004, 0x072, 0x030, 0x001, 0x072, 0x030], // 40x40
-        [0x02c, 0x02c, 0x028, 0x028, 0x016, 0x016, 0x014, 0x014, 0x002, 0x002, 0x004, 0x090, 0x038, 0x001, 0x090, 0x038], // 44x44
-        [0x030, 0x030, 0x02c, 0x02c, 0x018, 0x018, 0x016, 0x016, 0x002, 0x002, 0x004, 0x0ae, 0x044, 0x001, 0x0ae, 0x044], // 48x48
-        [0x034, 0x034, 0x030, 0x030, 0x01a, 0x01a, 0x018, 0x018, 0x002, 0x002, 0x004, 0x0cc, 0x054, 0x002, 0x066, 0x02a], // 52x52
-        [0x040, 0x040, 0x038, 0x038, 0x010, 0x010, 0x00e, 0x00e, 0x004, 0x004, 0x010, 0x118, 0x070, 0x002, 0x08c, 0x038], // 64x64
-        [0x048, 0x048, 0x040, 0x040, 0x012, 0x012, 0x010, 0x010, 0x004, 0x004, 0x010, 0x170, 0x090, 0x004, 0x05c, 0x024], // 72x72
-        [0x050, 0x050, 0x048, 0x048, 0x014, 0x014, 0x012, 0x012, 0x004, 0x004, 0x010, 0x1c8, 0x0c0, 0x004, 0x072, 0x030], // 80x80
-        [0x058, 0x058, 0x050, 0x050, 0x016, 0x016, 0x014, 0x014, 0x004, 0x004, 0x010, 0x240, 0x0e0, 0x004, 0x090, 0x038], // 88x88
-        [0x060, 0x060, 0x058, 0x058, 0x018, 0x018, 0x016, 0x016, 0x004, 0x004, 0x010, 0x2b8, 0x110, 0x004, 0x0ae, 0x044], // 96x96
-        [0x068, 0x068, 0x060, 0x060, 0x01a, 0x01a, 0x018, 0x018, 0x004, 0x004, 0x010, 0x330, 0x150, 0x006, 0x088, 0x038], // 104x104
-        [0x078, 0x078, 0x06c, 0x06c, 0x014, 0x014, 0x012, 0x012, 0x006, 0x006, 0x024, 0x41a, 0x198, 0x006, 0x0af, 0x044], // 120x120
-        [0x084, 0x084, 0x078, 0x078, 0x016, 0x016, 0x014, 0x014, 0x006, 0x006, 0x024, 0x518, 0x1f0, 0x008, 0x0a3, 0x03e], // 132x132
-        [0x090, 0x090, 0x084, 0x084, 0x018, 0x018, 0x016, 0x016, 0x006, 0x006, 0x024, 0x616, 0x26c, 0x00a, 0x09c, 0x03e], // 144x144
+        [0x02C, 0x02C, 0x028, 0x028, 0x016, 0x016, 0x014, 0x014, 0x002, 0x002, 0x004, 0x090, 0x038, 0x001, 0x090, 0x038], // 44x44
+        [0x030, 0x030, 0x02C, 0x02C, 0x018, 0x018, 0x016, 0x016, 0x002, 0x002, 0x004, 0x0AE, 0x044, 0x001, 0x0AE, 0x044], // 48x48
+        [0x034, 0x034, 0x030, 0x030, 0x01A, 0x01A, 0x018, 0x018, 0x002, 0x002, 0x004, 0x0CC, 0x054, 0x002, 0x066, 0x02A], // 52x52
+        [0x040, 0x040, 0x038, 0x038, 0x010, 0x010, 0x00E, 0x00E, 0x004, 0x004, 0x010, 0x118, 0x070, 0x002, 0x08C, 0x038], // 64x64
+        [0x048, 0x048, 0x040, 0x040, 0x012, 0x012, 0x010, 0x010, 0x004, 0x004, 0x010, 0x170, 0x090, 0x004, 0x05C, 0x024], // 72x72
+        [0x050, 0x050, 0x048, 0x048, 0x014, 0x014, 0x012, 0x012, 0x004, 0x004, 0x010, 0x1C8, 0x0C0, 0x004, 0x072, 0x030], // 80x80
+        [0x058, 0x058, 0x050, 0x050, 0x016, 0x016, 0x014, 0x014, 0x004, 0x004, 0x010, 0x240, 0x0E0, 0x004, 0x090, 0x038], // 88x88
+        [0x060, 0x060, 0x058, 0x058, 0x018, 0x018, 0x016, 0x016, 0x004, 0x004, 0x010, 0x2B8, 0x110, 0x004, 0x0AE, 0x044], // 96x96
+        [0x068, 0x068, 0x060, 0x060, 0x01A, 0x01A, 0x018, 0x018, 0x004, 0x004, 0x010, 0x330, 0x150, 0x006, 0x088, 0x038], // 104x104
+        [0x078, 0x078, 0x06C, 0x06C, 0x014, 0x014, 0x012, 0x012, 0x006, 0x006, 0x024, 0x41A, 0x198, 0x006, 0x0AF, 0x044], // 120x120
+        [0x084, 0x084, 0x078, 0x078, 0x016, 0x016, 0x014, 0x014, 0x006, 0x006, 0x024, 0x518, 0x1F0, 0x008, 0x0A3, 0x03E], // 132x132
+        [0x090, 0x090, 0x084, 0x084, 0x018, 0x018, 0x016, 0x016, 0x006, 0x006, 0x024, 0x616, 0x26C, 0x00A, 0x09C, 0x03E], // 144x144
         // rectangular form (currently unused) ---------------------------------------------------------------------------
         [0x008, 0x012, 0x006, 0x010, 0x008, 0x012, 0x006, 0x010, 0x001, 0x001, 0x001, 0x005, 0x007, 0x001, 0x005, 0x007], // 8x18
-        [0x008, 0x020, 0x006, 0x01c, 0x008, 0x010, 0x006, 0x00e, 0x001, 0x002, 0x002, 0x00a, 0x00b, 0x001, 0x00a, 0x00b], // 8x32
-        [0x00c, 0x01a, 0x00a, 0x018, 0x00c, 0x01a, 0x00a, 0x018, 0x001, 0x001, 0x001, 0x010, 0x00e, 0x001, 0x010, 0x00e], // 12x26
-        [0x00c, 0x024, 0x00a, 0x020, 0x00c, 0x012, 0x00a, 0x010, 0x001, 0x002, 0x002, 0x00c, 0x012, 0x001, 0x00c, 0x012], // 12x36
-        [0x010, 0x024, 0x00e, 0x020, 0x010, 0x012, 0x00e, 0x010, 0x001, 0x002, 0x002, 0x020, 0x018, 0x001, 0x020, 0x018], // 16x36
-        [0x010, 0x030, 0x00e, 0x02c, 0x010, 0x018, 0x00e, 0x016, 0x001, 0x002, 0x002, 0x031, 0x01c, 0x001, 0x031, 0x01c]  // 16x48
+        [0x008, 0x020, 0x006, 0x01C, 0x008, 0x010, 0x006, 0x00E, 0x001, 0x002, 0x002, 0x00A, 0x00B, 0x001, 0x00A, 0x00B], // 8x32
+        [0x00C, 0x01A, 0x00A, 0x018, 0x00C, 0x01A, 0x00A, 0x018, 0x001, 0x001, 0x001, 0x010, 0x00E, 0x001, 0x010, 0x00E], // 12x26
+        [0x00C, 0x024, 0x00A, 0x020, 0x00C, 0x012, 0x00A, 0x010, 0x001, 0x002, 0x002, 0x00C, 0x012, 0x001, 0x00C, 0x012], // 12x36
+        [0x010, 0x024, 0x00E, 0x020, 0x010, 0x012, 0x00E, 0x010, 0x001, 0x002, 0x002, 0x020, 0x018, 0x001, 0x020, 0x018], // 16x36
+        [0x010, 0x030, 0x00E, 0x02C, 0x010, 0x018, 0x00E, 0x016, 0x001, 0x002, 0x002, 0x031, 0x01C, 0x001, 0x031, 0x01C],  // 16x48
     ];
 
     /**
@@ -193,45 +195,45 @@ class Datamatrix
     protected $chset = [
         'C40' => [ // Basic set for C40 ----------------------------------------------------------------------------
             'S1' => 0x00, 'S2' => 0x01, 'S3' => 0x02, 0x20 => 0x03, 0x30 => 0x04, 0x31 => 0x05, 0x32 => 0x06, 0x33 => 0x07, 0x34 => 0x08, 0x35 => 0x09, //
-            0x36 => 0x0a, 0x37 => 0x0b, 0x38 => 0x0c, 0x39 => 0x0d, 0x41 => 0x0e, 0x42 => 0x0f, 0x43 => 0x10, 0x44 => 0x11, 0x45 => 0x12, 0x46 => 0x13, //
-            0x47 => 0x14, 0x48 => 0x15, 0x49 => 0x16, 0x4a => 0x17, 0x4b => 0x18, 0x4c => 0x19, 0x4d => 0x1a, 0x4e => 0x1b, 0x4f => 0x1c, 0x50 => 0x1d, //
-            0x51 => 0x1e, 0x52 => 0x1f, 0x53 => 0x20, 0x54 => 0x21, 0x55 => 0x22, 0x56 => 0x23, 0x57 => 0x24, 0x58 => 0x25, 0x59 => 0x26, 0x5a => 0x27,
-        ],//
+            0x36 => 0x0A, 0x37 => 0x0B, 0x38 => 0x0C, 0x39 => 0x0D, 0x41 => 0x0E, 0x42 => 0x0F, 0x43 => 0x10, 0x44 => 0x11, 0x45 => 0x12, 0x46 => 0x13, //
+            0x47 => 0x14, 0x48 => 0x15, 0x49 => 0x16, 0x4A => 0x17, 0x4B => 0x18, 0x4C => 0x19, 0x4D => 0x1A, 0x4E => 0x1B, 0x4F => 0x1C, 0x50 => 0x1D, //
+            0x51 => 0x1E, 0x52 => 0x1F, 0x53 => 0x20, 0x54 => 0x21, 0x55 => 0x22, 0x56 => 0x23, 0x57 => 0x24, 0x58 => 0x25, 0x59 => 0x26, 0x5A => 0x27,
+        ], //
         'TXT' => [ // Basic set for TEXT ---------------------------------------------------------------------------
             'S1' => 0x00, 'S2' => 0x01, 'S3' => 0x02, 0x20 => 0x03, 0x30 => 0x04, 0x31 => 0x05, 0x32 => 0x06, 0x33 => 0x07, 0x34 => 0x08, 0x35 => 0x09, //
-            0x36 => 0x0a, 0x37 => 0x0b, 0x38 => 0x0c, 0x39 => 0x0d, 0x61 => 0x0e, 0x62 => 0x0f, 0x63 => 0x10, 0x64 => 0x11, 0x65 => 0x12, 0x66 => 0x13, //
-            0x67 => 0x14, 0x68 => 0x15, 0x69 => 0x16, 0x6a => 0x17, 0x6b => 0x18, 0x6c => 0x19, 0x6d => 0x1a, 0x6e => 0x1b, 0x6f => 0x1c, 0x70 => 0x1d, //
-            0x71 => 0x1e, 0x72 => 0x1f, 0x73 => 0x20, 0x74 => 0x21, 0x75 => 0x22, 0x76 => 0x23, 0x77 => 0x24, 0x78 => 0x25, 0x79 => 0x26, 0x7a => 0x27,
-        ],//
+            0x36 => 0x0A, 0x37 => 0x0B, 0x38 => 0x0C, 0x39 => 0x0D, 0x61 => 0x0E, 0x62 => 0x0F, 0x63 => 0x10, 0x64 => 0x11, 0x65 => 0x12, 0x66 => 0x13, //
+            0x67 => 0x14, 0x68 => 0x15, 0x69 => 0x16, 0x6A => 0x17, 0x6B => 0x18, 0x6C => 0x19, 0x6D => 0x1A, 0x6E => 0x1B, 0x6F => 0x1C, 0x70 => 0x1D, //
+            0x71 => 0x1E, 0x72 => 0x1F, 0x73 => 0x20, 0x74 => 0x21, 0x75 => 0x22, 0x76 => 0x23, 0x77 => 0x24, 0x78 => 0x25, 0x79 => 0x26, 0x7A => 0x27,
+        ], //
         'SH1' => [ // Shift 1 set ----------------------------------------------------------------------------------
             0x00 => 0x00, 0x01 => 0x01, 0x02 => 0x02, 0x03 => 0x03, 0x04 => 0x04, 0x05 => 0x05, 0x06 => 0x06, 0x07 => 0x07, 0x08 => 0x08, 0x09 => 0x09, //
-            0x0a => 0x0a, 0x0b => 0x0b, 0x0c => 0x0c, 0x0d => 0x0d, 0x0e => 0x0e, 0x0f => 0x0f, 0x10 => 0x10, 0x11 => 0x11, 0x12 => 0x12, 0x13 => 0x13, //
-            0x14 => 0x14, 0x15 => 0x15, 0x16 => 0x16, 0x17 => 0x17, 0x18 => 0x18, 0x19 => 0x19, 0x1a => 0x1a, 0x1b => 0x1b, 0x1c => 0x1c, 0x1d => 0x1d, //
-            0x1e => 0x1e, 0x1f => 0x1f,
+            0x0A => 0x0A, 0x0B => 0x0B, 0x0C => 0x0C, 0x0D => 0x0D, 0x0E => 0x0E, 0x0F => 0x0F, 0x10 => 0x10, 0x11 => 0x11, 0x12 => 0x12, 0x13 => 0x13, //
+            0x14 => 0x14, 0x15 => 0x15, 0x16 => 0x16, 0x17 => 0x17, 0x18 => 0x18, 0x19 => 0x19, 0x1A => 0x1A, 0x1B => 0x1B, 0x1C => 0x1C, 0x1D => 0x1D, //
+            0x1E => 0x1E, 0x1F => 0x1F,
         ],                                                                                        //
         'SH2' => [ // Shift 2 set ----------------------------------------------------------------------------------
-            0x21 => 0x00, 0x22 => 0x01, 0x23 => 0x02, 0x24 => 0x03, 0x25 => 0x04, 0x26 => 0x05, 0x27 => 0x06, 0x28 => 0x07, 0x29 => 0x08, 0x2a => 0x09, //
-            0x2b => 0x0a, 0x2c => 0x0b, 0x2d => 0x0c, 0x2e => 0x0d, 0x2f => 0x0e, 0x3a => 0x0f, 0x3b => 0x10, 0x3c => 0x11, 0x3d => 0x12, 0x3e => 0x13, //
-            0x3f => 0x14, 0x40 => 0x15, 0x5b => 0x16, 0x5c => 0x17, 0x5d => 0x18, 0x5e => 0x19, 0x5f => 0x1a, 'F1' => 0x1b, 'US' => 0x1e,
+            0x21 => 0x00, 0x22 => 0x01, 0x23 => 0x02, 0x24 => 0x03, 0x25 => 0x04, 0x26 => 0x05, 0x27 => 0x06, 0x28 => 0x07, 0x29 => 0x08, 0x2A => 0x09, //
+            0x2B => 0x0A, 0x2C => 0x0B, 0x2D => 0x0C, 0x2E => 0x0D, 0x2F => 0x0E, 0x3A => 0x0F, 0x3B => 0x10, 0x3C => 0x11, 0x3D => 0x12, 0x3E => 0x13, //
+            0x3F => 0x14, 0x40 => 0x15, 0x5B => 0x16, 0x5C => 0x17, 0x5D => 0x18, 0x5E => 0x19, 0x5F => 0x1A, 'F1' => 0x1B, 'US' => 0x1E,
         ],           //
         'S3C' => [ // Shift 3 set for C40 --------------------------------------------------------------------------
             0x60 => 0x00, 0x61 => 0x01, 0x62 => 0x02, 0x63 => 0x03, 0x64 => 0x04, 0x65 => 0x05, 0x66 => 0x06, 0x67 => 0x07, 0x68 => 0x08, 0x69 => 0x09, //
-            0x6a => 0x0a, 0x6b => 0x0b, 0x6c => 0x0c, 0x6d => 0x0d, 0x6e => 0x0e, 0x6f => 0x0f, 0x70 => 0x10, 0x71 => 0x11, 0x72 => 0x12, 0x73 => 0x13, //
-            0x74 => 0x14, 0x75 => 0x15, 0x76 => 0x16, 0x77 => 0x17, 0x78 => 0x18, 0x79 => 0x19, 0x7a => 0x1a, 0x7b => 0x1b, 0x7c => 0x1c, 0x7d => 0x1d, //
-            0x7e => 0x1e, 0x7f => 0x1f,
+            0x6A => 0x0A, 0x6B => 0x0B, 0x6C => 0x0C, 0x6D => 0x0D, 0x6E => 0x0E, 0x6F => 0x0F, 0x70 => 0x10, 0x71 => 0x11, 0x72 => 0x12, 0x73 => 0x13, //
+            0x74 => 0x14, 0x75 => 0x15, 0x76 => 0x16, 0x77 => 0x17, 0x78 => 0x18, 0x79 => 0x19, 0x7A => 0x1A, 0x7B => 0x1B, 0x7C => 0x1C, 0x7D => 0x1D, //
+            0x7E => 0x1E, 0x7F => 0x1F,
         ],
         'S3T' => [ // Shift 3 set for TEXT -------------------------------------------------------------------------
             0x60 => 0x00, 0x41 => 0x01, 0x42 => 0x02, 0x43 => 0x03, 0x44 => 0x04, 0x45 => 0x05, 0x46 => 0x06, 0x47 => 0x07, 0x48 => 0x08, 0x49 => 0x09, //
-            0x4a => 0x0a, 0x4b => 0x0b, 0x4c => 0x0c, 0x4d => 0x0d, 0x4e => 0x0e, 0x4f => 0x0f, 0x50 => 0x10, 0x51 => 0x11, 0x52 => 0x12, 0x53 => 0x13, //
-            0x54 => 0x14, 0x55 => 0x15, 0x56 => 0x16, 0x57 => 0x17, 0x58 => 0x18, 0x59 => 0x19, 0x5a => 0x1a, 0x7b => 0x1b, 0x7c => 0x1c, 0x7d => 0x1d, //
-            0x7e => 0x1e, 0x7f => 0x1f,
+            0x4A => 0x0A, 0x4B => 0x0B, 0x4C => 0x0C, 0x4D => 0x0D, 0x4E => 0x0E, 0x4F => 0x0F, 0x50 => 0x10, 0x51 => 0x11, 0x52 => 0x12, 0x53 => 0x13, //
+            0x54 => 0x14, 0x55 => 0x15, 0x56 => 0x16, 0x57 => 0x17, 0x58 => 0x18, 0x59 => 0x19, 0x5A => 0x1A, 0x7B => 0x1B, 0x7C => 0x1C, 0x7D => 0x1D, //
+            0x7E => 0x1E, 0x7F => 0x1F,
         ],                                                                                        //
         'X12' => [ // Set for X12 ----------------------------------------------------------------------------------
-            0x0d => 0x00, 0x2a => 0x01, 0x3e => 0x02, 0x20 => 0x03, 0x30 => 0x04, 0x31 => 0x05, 0x32 => 0x06, 0x33 => 0x07, 0x34 => 0x08, 0x35 => 0x09, //
-            0x36 => 0x0a, 0x37 => 0x0b, 0x38 => 0x0c, 0x39 => 0x0d, 0x41 => 0x0e, 0x42 => 0x0f, 0x43 => 0x10, 0x44 => 0x11, 0x45 => 0x12, 0x46 => 0x13, //
-            0x47 => 0x14, 0x48 => 0x15, 0x49 => 0x16, 0x4a => 0x17, 0x4b => 0x18, 0x4c => 0x19, 0x4d => 0x1a, 0x4e => 0x1b, 0x4f => 0x1c, 0x50 => 0x1d, //
-            0x51 => 0x1e, 0x52 => 0x1f, 0x53 => 0x20, 0x54 => 0x21, 0x55 => 0x22, 0x56 => 0x23, 0x57 => 0x24, 0x58 => 0x25, 0x59 => 0x26, 0x5a => 0x27,
-        ] //
+            0x0D => 0x00, 0x2A => 0x01, 0x3E => 0x02, 0x20 => 0x03, 0x30 => 0x04, 0x31 => 0x05, 0x32 => 0x06, 0x33 => 0x07, 0x34 => 0x08, 0x35 => 0x09, //
+            0x36 => 0x0A, 0x37 => 0x0B, 0x38 => 0x0C, 0x39 => 0x0D, 0x41 => 0x0E, 0x42 => 0x0F, 0x43 => 0x10, 0x44 => 0x11, 0x45 => 0x12, 0x46 => 0x13, //
+            0x47 => 0x14, 0x48 => 0x15, 0x49 => 0x16, 0x4A => 0x17, 0x4B => 0x18, 0x4C => 0x19, 0x4D => 0x1A, 0x4E => 0x1B, 0x4F => 0x1C, 0x50 => 0x1D, //
+            0x51 => 0x1E, 0x52 => 0x1F, 0x53 => 0x20, 0x54 => 0x21, 0x55 => 0x22, 0x56 => 0x23, 0x57 => 0x24, 0x58 => 0x25, 0x59 => 0x26, 0x5A => 0x27,
+        ], //
     ];
 
     // -----------------------------------------------------------------------------
@@ -240,7 +242,8 @@ class Datamatrix
      * This is the class constructor.
      * Creates a datamatrix object
      *
-     * @param $code  (string) Code to represent using Datamatrix.
+     * @param  $code  (string) Code to represent using Datamatrix.
+     *
      * @public
      */
     public function __construct($code)
@@ -272,19 +275,19 @@ class Datamatrix
                 if ($this->last_enc == ENC_EDF) {
                     // switch to ASCII encoding
                     $cw[] = 124;
-                    ++$nd;
+                    $nd++;
                 } elseif (($this->last_enc != ENC_ASCII) and ($this->last_enc != ENC_BASE256)) {
                     // switch to ASCII encoding
                     $cw[] = 254;
-                    ++$nd;
+                    $nd++;
                 }
             }
             if ($params[11] > $nd) {
                 // add first pad
                 $cw[] = 129;
-                ++$nd;
+                $nd++;
                 // add remaining pads
-                for ($i = $nd; $i < $params[11]; ++$i) {
+                for ($i = $nd; $i < $params[11]; $i++) {
                     $cw[] = $this->get253StateCodeword(129, $i);
                 }
             }
@@ -303,15 +306,15 @@ class Datamatrix
         // region data column max index
         $rdci = ($params[5] - 1);
         // for each vertical region
-        for ($vr = 0; $vr < $params[9]; ++$vr) {
+        for ($vr = 0; $vr < $params[9]; $vr++) {
             // for each row on region
-            for ($r = 0; $r < $params[4]; ++$r) {
+            for ($r = 0; $r < $params[4]; $r++) {
                 // get row
                 $row = (($vr * $params[4]) + $r);
                 // for each horizontal region
-                for ($hr = 0; $hr < $params[8]; ++$hr) {
+                for ($hr = 0; $hr < $params[8]; $hr++) {
                     // for each column on region
-                    for ($c = 0; $c < $params[5]; ++$c) {
+                    for ($c = 0; $c < $params[5]; $c++) {
                         // get column
                         $col = (($hr * $params[5]) + $c);
                         // braw bits by case
@@ -345,7 +348,7 @@ class Datamatrix
                                 $cw_bit = pow(2, (8 - ($places[$i] % 10)));
                                 $grid[$row][$col] = (($cw[$cw_id] & $cw_bit) == 0) ? 0 : 1;
                             }
-                            ++$i;
+                            $i++;
                         }
                     }
                 }
@@ -360,6 +363,7 @@ class Datamatrix
      * Returns a barcode array which is readable by TCPDF
      *
      * @return array barcode array readable by TCPDF;
+     *
      * @public
      */
     public function getBarcodeArray()
@@ -370,12 +374,13 @@ class Datamatrix
     /**
      * Product of two numbers in a Power-of-Two Galois Field
      *
-     * @param $a  (int) first number to multiply.
-     * @param $b  (int) second number to multiply.
-     * @param $log  (array) Log table.
-     * @param $alog  (array) Anti-Log table.
-     * @param $gf  (array) Number of Factors of the Reed-Solomon polynomial.
+     * @param  $a  (int) first number to multiply.
+     * @param  $b  (int) second number to multiply.
+     * @param  $log  (array) Log table.
+     * @param  $alog  (array) Anti-Log table.
+     * @param  $gf  (array) Number of Factors of the Reed-Solomon polynomial.
      * @return int product
+     *
      * @protected
      */
     protected function getGFProduct($a, $b, $log, $alog, $gf)
@@ -383,19 +388,21 @@ class Datamatrix
         if (($a == 0) or ($b == 0)) {
             return 0;
         }
-        return ($alog[($log[$a] + $log[$b]) % ($gf - 1)]);
+
+        return $alog[($log[$a] + $log[$b]) % ($gf - 1)];
     }
 
     /**
      * Add error correction codewords to data codewords array (ANNEX E).
      *
-     * @param $wd  (array) Array of datacodewords.
-     * @param $nb  (int) Number of blocks.
-     * @param $nd  (int) Number of data codewords per block.
-     * @param $nc  (int) Number of correction codewords per block.
-     * @param $gf  (int) numner of fields on log/antilog table (power of 2).
-     * @param $pp  (int) The value of its prime modulus polynomial (301 for ECC200).
+     * @param  $wd  (array) Array of datacodewords.
+     * @param  $nb  (int) Number of blocks.
+     * @param  $nd  (int) Number of data codewords per block.
+     * @param  $nc  (int) Number of correction codewords per block.
+     * @param  $gf  (int) numner of fields on log/antilog table (power of 2).
+     * @param  $pp  (int) The value of its prime modulus polynomial (301 for ECC200).
      * @return array data codewords + error codewords
+     *
      * @protected
      */
     protected function getErrorCorrection($wd, $nb, $nd, $nc, $gf = 256, $pp = 301)
@@ -403,7 +410,7 @@ class Datamatrix
         // generate the log ($log) and antilog ($alog) tables
         $log[0] = 0;
         $alog[0] = 1;
-        for ($i = 1; $i < $gf; ++$i) {
+        for ($i = 1; $i < $gf; $i++) {
             $alog[$i] = ($alog[($i - 1)] * 2);
             if ($alog[$i] >= $gf) {
                 $alog[$i] ^= $pp;
@@ -414,9 +421,9 @@ class Datamatrix
         // generate the polynomial coefficients (c)
         $c = array_fill(0, ($nc + 1), 0);
         $c[0] = 1;
-        for ($i = 1; $i <= $nc; ++$i) {
+        for ($i = 1; $i <= $nc; $i++) {
             $c[$i] = $c[($i - 1)];
-            for ($j = ($i - 1); $j >= 1; --$j) {
+            for ($j = ($i - 1); $j >= 1; $j--) {
                 $c[$j] = $c[($j - 1)] ^ $this->getGFProduct($c[$j], $alog[$i], $log, $alog, $gf);
             }
             $c[0] = $this->getGFProduct($c[0], $alog[$i], $log, $alog, $gf);
@@ -427,7 +434,7 @@ class Datamatrix
         // total number of error codewords
         $num_we = ($nb * $nc);
         // for each block
-        for ($b = 0; $b < $nb; ++$b) {
+        for ($b = 0; $b < $nb; $b++) {
             // create interleaved data block
             $block = [];
             for ($n = $b; $n < $num_wd; $n += $nb) {
@@ -436,9 +443,9 @@ class Datamatrix
             // initialize error codewords
             $we = array_fill(0, ($nc + 1), 0);
             // calculate error correction codewords for this block
-            for ($i = 0; $i < $nd; ++$i) {
+            for ($i = 0; $i < $nd; $i++) {
                 $k = ($we[0] ^ $block[$i]);
-                for ($j = 0; $j < $nc; ++$j) {
+                for ($j = 0; $j < $nc; $j++) {
                     $we[$j] = ($we[($j + 1)] ^ $this->getGFProduct($k, $c[($nc - $j - 1)], $log, $alog, $gf));
                 }
             }
@@ -446,20 +453,22 @@ class Datamatrix
             $j = 0;
             for ($i = $b; $i < $num_we; $i += $nb) {
                 $wd[($num_wd + $i)] = $we[$j];
-                ++$j;
+                $j++;
             }
         }
         // reorder codewords
         ksort($wd);
+
         return $wd;
     }
 
     /**
      * Return the 253-state codeword
      *
-     * @param $cwpad  (int) Pad codeword.
-     * @param $cwpos  (int) Number of data codewords from the beginning of encoded data.
+     * @param  $cwpad  (int) Pad codeword.
+     * @param  $cwpos  (int) Number of data codewords from the beginning of encoded data.
      * @return pad codeword
+     *
      * @protected
      */
     protected function get253StateCodeword($cwpad, $cwpos)
@@ -468,15 +477,17 @@ class Datamatrix
         if ($pad > 254) {
             $pad -= 254;
         }
+
         return $pad;
     }
 
     /**
      * Return the 255-state codeword
      *
-     * @param $cwpad  (int) Pad codeword.
-     * @param $cwpos  (int) Number of data codewords from the beginning of encoded data.
+     * @param  $cwpad  (int) Pad codeword.
+     * @param  $cwpos  (int) Number of data codewords from the beginning of encoded data.
      * @return pad codeword
+     *
      * @protected
      */
     protected function get255StateCodeword($cwpad, $cwpos)
@@ -485,15 +496,17 @@ class Datamatrix
         if ($pad > 255) {
             $pad -= 256;
         }
+
         return $pad;
     }
 
     /**
      * Returns true if the char belongs to the selected mode
      *
-     * @param $chr  (int) Character (byte) to check.
-     * @param $mode  (int) Current encoding mode.
-     * @return boolean true if the char is of the selected mode.
+     * @param  $chr  (int) Character (byte) to check.
+     * @param  $mode  (int) Current encoding mode.
+     * @return bool true if the char is of the selected mode.
+     *
      * @protected
      */
     protected function isCharMode($chr, $mode)
@@ -501,56 +514,58 @@ class Datamatrix
         $status = false;
         switch ($mode) {
             case ENC_ASCII:
-            { // ASCII character 0 to 127
+                // ASCII character 0 to 127
                 $status = (($chr >= 0) and ($chr <= 127));
                 break;
-            }
+
             case ENC_C40:
-            { // Upper-case alphanumeric
+                // Upper-case alphanumeric
                 $status = (($chr == 32) or (($chr >= 48) and ($chr <= 57)) or (($chr >= 65) and ($chr <= 90)));
                 break;
-            }
+
             case ENC_TXT:
-            { // Lower-case alphanumeric
+                // Lower-case alphanumeric
                 $status = (($chr == 32) or (($chr >= 48) and ($chr <= 57)) or (($chr >= 97) and ($chr <= 122)));
                 break;
-            }
+
             case ENC_X12:
-            { // ANSI X12
+                // ANSI X12
                 $status = (($chr == 13) or ($chr == 42) or ($chr == 62));
                 break;
-            }
+
             case ENC_EDF:
-            { // ASCII character 32 to 94
+                // ASCII character 32 to 94
                 $status = (($chr >= 32) and ($chr <= 94));
                 break;
-            }
+
             case ENC_BASE256:
-            { // Function character (FNC1, Structured Append, Reader Program, or Code Page)
+                // Function character (FNC1, Structured Append, Reader Program, or Code Page)
                 $status = (($chr == 232) or ($chr == 233) or ($chr == 234) or ($chr == 241));
                 break;
-            }
+
             case ENC_ASCII_EXT:
-            { // ASCII character 128 to 255
+                // ASCII character 128 to 255
                 $status = (($chr >= 128) and ($chr <= 255));
                 break;
-            }
+
             case ENC_ASCII_NUM:
-            { // ASCII digits
+                // ASCII digits
                 $status = (($chr >= 48) and ($chr <= 57));
                 break;
-            }
+
         }
+
         return $status;
     }
 
     /**
      * The look-ahead test scans the data to be encoded to find the best mode (Annex P - steps from J to S).
      *
-     * @param $data  (string) data to encode
-     * @param $pos  (int) current position
-     * @param $mode  (int) current encoding mode
+     * @param  $data  (string) data to encode
+     * @param  $pos  (int) current position
+     * @param  $mode  (int) current encoding mode
      * @return int encoding mode
+     *
      * @protected
      */
     protected function lookAheadTest($data, $pos, $mode)
@@ -585,6 +600,7 @@ class Datamatrix
                 if ($numch[ENC_X12] < ceil(min($numch[ENC_ASCII], $numch[ENC_C40], $numch[ENC_TXT], $numch[ENC_EDF], $numch[ENC_BASE256]))) {
                     return ENC_X12;
                 }
+
                 return ENC_C40;
             }
             // get char
@@ -666,11 +682,12 @@ class Datamatrix
                             $tmpchr = ord($data[$k]);
                             if ($this->isCharMode($tmpchr, ENC_X12)) {
                                 return ENC_X12;
-                            } elseif (!($this->isCharMode($tmpchr, ENC_X12) or $this->isCharMode($tmpchr, ENC_C40))) {
+                            } elseif (! ($this->isCharMode($tmpchr, ENC_X12) or $this->isCharMode($tmpchr, ENC_C40))) {
                                 break;
                             }
-                            ++$k;
+                            $k++;
                         }
+
                         return ENC_C40;
                     }
                 }
@@ -681,55 +698,58 @@ class Datamatrix
     /**
      * Get the switching codeword to a new encoding mode (latch codeword)
      *
-     * @param $mode  (int) New encoding mode.
+     * @param  $mode  (int) New encoding mode.
      * @return (int) Switch codeword.
+     *
      * @protected
      */
     protected function getSwitchEncodingCodeword($mode)
     {
         switch ($mode) {
             case ENC_ASCII:
-            { // ASCII character 0 to 127
+                // ASCII character 0 to 127
                 $cw = 254;
                 if ($this->last_enc == ENC_EDF) {
                     $cw = 124;
                 }
                 break;
-            }
+
             case ENC_C40:
-            { // Upper-case alphanumeric
+                // Upper-case alphanumeric
                 $cw = 230;
                 break;
-            }
+
             case ENC_TXT:
-            { // Lower-case alphanumeric
+                // Lower-case alphanumeric
                 $cw = 239;
                 break;
-            }
+
             case ENC_X12:
-            { // ANSI X12
+                // ANSI X12
                 $cw = 238;
                 break;
-            }
+
             case ENC_EDF:
-            { // ASCII character 32 to 94
+                // ASCII character 32 to 94
                 $cw = 240;
                 break;
-            }
+
             case ENC_BASE256:
-            { // Function character (FNC1, Structured Append, Reader Program, or Code Page)
+                // Function character (FNC1, Structured Append, Reader Program, or Code Page)
                 $cw = 231;
                 break;
-            }
+
         }
+
         return $cw;
     }
 
     /**
      * Choose the minimum matrix size and return the max number of data codewords.
      *
-     * @param $numcw  (int) Number of current codewords.
+     * @param  $numcw  (int) Number of current codewords.
      * @return number of data codewords in matrix
+     *
      * @protected
      */
     protected function getMaxDataCodewords($numcw)
@@ -739,14 +759,16 @@ class Datamatrix
                 return $matrix[11];
             }
         }
+
         return 0;
     }
 
     /**
      * Get high level encoding using the minimum symbol data characters for ECC 200
      *
-     * @param $data  (string) data to encode
+     * @param  $data  (string) data to encode
      * @return array of codewords
+     *
      * @protected
      */
     protected function getHighLevelEncoding($data)
@@ -762,12 +784,12 @@ class Datamatrix
             $this->last_enc = $enc;
             switch ($enc) {
                 case ENC_ASCII:
-                { // STEP B. While in ASCII encodation
+                    // STEP B. While in ASCII encodation
                     if (($data_length > 1) and ($pos < ($data_length - 1)) and ($this->isCharMode(ord($data[$pos]), ENC_ASCII_NUM) and $this->isCharMode(ord($data[$pos + 1]),
-                                ENC_ASCII_NUM))) {
+                        ENC_ASCII_NUM))) {
                         // 1. If the next data sequence is at least 2 consecutive digits, encode the next two digits as a double digit in ASCII mode.
                         $cw[] = (intval(substr($data, $pos, 2)) + 130);
-                        ++$cw_num;
+                        $cw_num++;
                         $pos += 2;
                     } else {
                         // 2. If the look-ahead test (starting at step J) indicates another mode, switch to that mode.
@@ -776,11 +798,11 @@ class Datamatrix
                             // switch to new encoding
                             $enc = $newenc;
                             $cw[] = $this->getSwitchEncodingCodeword($enc);
-                            ++$cw_num;
+                            $cw_num++;
                         } else {
                             // get new byte
                             $chr = ord($data[$pos]);
-                            ++$pos;
+                            $pos++;
                             if ($this->isCharMode($chr, ENC_ASCII_EXT)) {
                                 // 3. If the next data character is extended ASCII (greater than 127) encode it in ASCII mode first using the Upper Shift (value 235) character.
                                 $cw[] = 235;
@@ -789,16 +811,16 @@ class Datamatrix
                             } else {
                                 // 4. Otherwise process the next data character in ASCII encodation.
                                 $cw[] = ($chr + 1);
-                                ++$cw_num;
+                                $cw_num++;
                             }
                         }
                     }
                     break;
-                }
-                case ENC_C40 :   // Upper-case alphanumeric
-                case ENC_TXT :   // Lower-case alphanumeric
-                case ENC_X12 :
-                { // ANSI X12
+
+                case ENC_C40:   // Upper-case alphanumeric
+                case ENC_TXT:   // Lower-case alphanumeric
+                case ENC_X12:
+                    // ANSI X12
                     $temp_cw = [];
                     $p = 0;
                     $epos = $pos;
@@ -809,20 +831,20 @@ class Datamatrix
                     do {
                         // 2. process the next character in C40 encodation.
                         $chr = ord($data[$epos]);
-                        ++$epos;
+                        $epos++;
                         // check for extended character
                         if ($chr & 0x80) {
                             if ($enc == ENC_X12) {
                                 return false;
                             }
-                            $chr = ($chr & 0x7f);
+                            $chr = ($chr & 0x7F);
                             $temp_cw[] = 1; // shift 2
                             $temp_cw[] = 30; // upper shift
                             $p += 2;
                         }
                         if (isset($charset[$chr])) {
                             $temp_cw[] = $charset[$chr];
-                            ++$p;
+                            $p++;
                         } else {
                             if (isset($this->chset['SH1'][$chr])) {
                                 $temp_cw[] = 0; // shift 1
@@ -860,10 +882,10 @@ class Datamatrix
                                 if ($enc != ENC_ASCII) {
                                     // set unlatch character
                                     $cw[] = $this->getSwitchEncodingCodeword(ENC_ASCII);
-                                    ++$cw_num;
+                                    $cw_num++;
                                 }
                                 $cw[] = $this->getSwitchEncodingCodeword($enc);
-                                ++$cw_num;
+                                $cw_num++;
                                 $pos -= $p;
                                 $p = 0;
                                 break;
@@ -877,16 +899,16 @@ class Datamatrix
                         if (($cwr == 1) and ($p == 1)) {
                             // d. If one symbol character remains and one C40 value (data character) remains to be encoded
                             $c1 = array_shift($temp_cw);
-                            --$p;
+                            $p--;
                             $cw[] = ($chr + 1);
-                            ++$cw_num;
+                            $cw_num++;
                             $pos = $epos;
                             $enc = ENC_ASCII;
                             $this->last_enc = $enc;
                         } elseif (($cwr == 2) and ($p == 1)) {
                             // c. If two symbol characters remain and only one C40 value (data character) remains to be encoded
                             $c1 = array_shift($temp_cw);
-                            --$p;
+                            $p--;
                             $cw[] = 254;
                             $cw[] = ($chr + 1);
                             $cw_num += 2;
@@ -911,15 +933,15 @@ class Datamatrix
                                 $enc = ENC_ASCII;
                                 $this->last_enc = $enc;
                                 $cw[] = $this->getSwitchEncodingCodeword($enc);
-                                ++$cw_num;
+                                $cw_num++;
                                 $pos = ($epos - $p);
                             }
                         }
                     }
                     break;
-                }
+
                 case ENC_EDF:
-                { // F. While in EDIFACT (EDF) encodation
+                    // F. While in EDIFACT (EDF) encodation
                     // initialize temporary array with 0 length
                     $temp_cw = [];
                     $epos = $pos;
@@ -929,23 +951,23 @@ class Datamatrix
                         // 2. process the next character in EDIFACT encodation.
                         $chr = ord($data[$epos]);
                         if ($this->isCharMode($chr, ENC_EDF)) {
-                            ++$epos;
+                            $epos++;
                             $temp_cw[] = $chr;
-                            ++$field_length;
+                            $field_length++;
                         }
-                        if (($field_length == 4) or ($epos == $data_length) or !$this->isCharMode($chr, ENC_EDF)) {
+                        if (($field_length == 4) or ($epos == $data_length) or ! $this->isCharMode($chr, ENC_EDF)) {
                             if (($epos == $data_length) and ($field_length < 3)) {
                                 $enc = ENC_ASCII;
                                 $cw[] = $this->getSwitchEncodingCodeword($enc);
-                                ++$cw_num;
+                                $cw_num++;
                                 break;
                             }
                             if ($field_length < 4) {
                                 // set unlatch character
-                                $temp_cw[] = 0x1f;
-                                ++$field_length;
+                                $temp_cw[] = 0x1F;
+                                $field_length++;
                                 // fill empty characters
-                                for ($i = $field_length; $i < 4; ++$i) {
+                                for ($i = $field_length; $i < 4; $i++) {
                                     $temp_cw[] = 0;
                                 }
                                 $enc = ENC_ASCII;
@@ -976,9 +998,9 @@ class Datamatrix
                         }
                     } while ($epos < $data_length);
                     break;
-                }
+
                 case ENC_BASE256:
-                { // G. While in Base 256 (B256) encodation
+                    // G. While in Base 256 (B256) encodation
                     // initialize temporary array with 0 length
                     $temp_cw = [];
                     $field_length = 0;
@@ -991,30 +1013,31 @@ class Datamatrix
                         } else {
                             // 2. Otherwise, process the next character in Base 256 encodation.
                             $chr = ord($data[$pos]);
-                            ++$pos;
+                            $pos++;
                             $temp_cw[] = $chr;
-                            ++$field_length;
+                            $field_length++;
                         }
                     }
                     // set field length
                     if ($field_length <= 249) {
                         $cw[] = $this->get255StateCodeword($field_length, ($cw_num + 1));
-                        ++$cw_num;
+                        $cw_num++;
                     } else {
                         $cw[] = $this->get255StateCodeword((floor($field_length / 250) + 249), ($cw_num + 1));
                         $cw[] = $this->get255StateCodeword(($field_length % 250), ($cw_num + 2));
                         $cw_num += 2;
                     }
-                    if (!empty($temp_cw)) {
+                    if (! empty($temp_cw)) {
                         // add B256 field
                         foreach ($temp_cw as $p => $cht) {
                             $cw[] = $this->get255StateCodeword($cht, ($cw_num + $p + 1));
                         }
                     }
                     break;
-                }
+
             } // end of switch enc
         } // end of while
+
         return $cw;
     }
 
@@ -1022,14 +1045,15 @@ class Datamatrix
      * Places "chr+bit" with appropriate wrapping within array[].
      * (Annex F - ECC 200 symbol character placement)
      *
-     * @param $marr  (array) Array of symbols.
-     * @param $nrow  (int) Number of rows.
-     * @param $ncol  (int) Number of columns.
-     * @param $row  (int) Row number.
-     * @param $col  (int) Column number.
-     * @param $chr  (int) Char byte.
-     * @param $bit  (int) Bit.
+     * @param  $marr  (array) Array of symbols.
+     * @param  $nrow  (int) Number of rows.
+     * @param  $ncol  (int) Number of columns.
+     * @param  $row  (int) Row number.
+     * @param  $col  (int) Column number.
+     * @param  $chr  (int) Char byte.
+     * @param  $bit  (int) Bit.
      * @return array
+     *
      * @protected
      */
     protected function placeModule($marr, $nrow, $ncol, $row, $col, $chr, $bit)
@@ -1043,6 +1067,7 @@ class Datamatrix
             $row += (4 - (($ncol + 4) % 8));
         }
         $marr[(($row * $ncol) + $col)] = ((10 * $chr) + $bit);
+
         return $marr;
     }
 
@@ -1050,13 +1075,14 @@ class Datamatrix
      * Places the 8 bits of a utah-shaped symbol character.
      * (Annex F - ECC 200 symbol character placement)
      *
-     * @param $marr  (array) Array of symbols.
-     * @param $nrow  (int) Number of rows.
-     * @param $ncol  (int) Number of columns.
-     * @param $row  (int) Row number.
-     * @param $col  (int) Column number.
-     * @param $chr  (int) Char byte.
+     * @param  $marr  (array) Array of symbols.
+     * @param  $nrow  (int) Number of rows.
+     * @param  $ncol  (int) Number of columns.
+     * @param  $row  (int) Row number.
+     * @param  $col  (int) Column number.
+     * @param  $chr  (int) Char byte.
      * @return array
+     *
      * @protected
      */
     protected function placeUtah($marr, $nrow, $ncol, $row, $col, $chr)
@@ -1069,6 +1095,7 @@ class Datamatrix
         $marr = $this->placeModule($marr, $nrow, $ncol, $row, $col - 2, $chr, 6);
         $marr = $this->placeModule($marr, $nrow, $ncol, $row, $col - 1, $chr, 7);
         $marr = $this->placeModule($marr, $nrow, $ncol, $row, $col, $chr, 8);
+
         return $marr;
     }
 
@@ -1076,11 +1103,12 @@ class Datamatrix
      * Places the 8 bits of the first special corner case.
      * (Annex F - ECC 200 symbol character placement)
      *
-     * @param $marr  (array) Array of symbols.
-     * @param $nrow  (int) Number of rows.
-     * @param $ncol  (int) Number of columns.
-     * @param $chr  (int) Char byte.
+     * @param  $marr  (array) Array of symbols.
+     * @param  $nrow  (int) Number of rows.
+     * @param  $ncol  (int) Number of columns.
+     * @param  $chr  (int) Char byte.
      * @return array
+     *
      * @protected
      */
     protected function placeCornerA($marr, $nrow, $ncol, $chr)
@@ -1093,6 +1121,7 @@ class Datamatrix
         $marr = $this->placeModule($marr, $nrow, $ncol, 1, $ncol - 1, $chr, 6);
         $marr = $this->placeModule($marr, $nrow, $ncol, 2, $ncol - 1, $chr, 7);
         $marr = $this->placeModule($marr, $nrow, $ncol, 3, $ncol - 1, $chr, 8);
+
         return $marr;
     }
 
@@ -1100,11 +1129,12 @@ class Datamatrix
      * Places the 8 bits of the second special corner case.
      * (Annex F - ECC 200 symbol character placement)
      *
-     * @param $marr  (array) Array of symbols.
-     * @param $nrow  (int) Number of rows.
-     * @param $ncol  (int) Number of columns.
-     * @param $chr  (int) Char byte.
+     * @param  $marr  (array) Array of symbols.
+     * @param  $nrow  (int) Number of rows.
+     * @param  $ncol  (int) Number of columns.
+     * @param  $chr  (int) Char byte.
      * @return array
+     *
      * @protected
      */
     protected function placeCornerB($marr, $nrow, $ncol, $chr)
@@ -1117,6 +1147,7 @@ class Datamatrix
         $marr = $this->placeModule($marr, $nrow, $ncol, 0, $ncol - 2, $chr, 6);
         $marr = $this->placeModule($marr, $nrow, $ncol, 0, $ncol - 1, $chr, 7);
         $marr = $this->placeModule($marr, $nrow, $ncol, 1, $ncol - 1, $chr, 8);
+
         return $marr;
     }
 
@@ -1124,11 +1155,12 @@ class Datamatrix
      * Places the 8 bits of the third special corner case.
      * (Annex F - ECC 200 symbol character placement)
      *
-     * @param $marr  (array) Array of symbols.
-     * @param $nrow  (int) Number of rows.
-     * @param $ncol  (int) Number of columns.
-     * @param $chr  (int) Char byte.
+     * @param  $marr  (array) Array of symbols.
+     * @param  $nrow  (int) Number of rows.
+     * @param  $ncol  (int) Number of columns.
+     * @param  $chr  (int) Char byte.
      * @return array
+     *
      * @protected
      */
     protected function placeCornerC($marr, $nrow, $ncol, $chr)
@@ -1141,6 +1173,7 @@ class Datamatrix
         $marr = $this->placeModule($marr, $nrow, $ncol, 1, $ncol - 1, $chr, 6);
         $marr = $this->placeModule($marr, $nrow, $ncol, 2, $ncol - 1, $chr, 7);
         $marr = $this->placeModule($marr, $nrow, $ncol, 3, $ncol - 1, $chr, 8);
+
         return $marr;
     }
 
@@ -1148,11 +1181,12 @@ class Datamatrix
      * Places the 8 bits of the fourth special corner case.
      * (Annex F - ECC 200 symbol character placement)
      *
-     * @param $marr  (array) Array of symbols.
-     * @param $nrow  (int) Number of rows.
-     * @param $ncol  (int) Number of columns.
-     * @param $chr  (int) Char byte.
+     * @param  $marr  (array) Array of symbols.
+     * @param  $nrow  (int) Number of rows.
+     * @param  $ncol  (int) Number of columns.
+     * @param  $chr  (int) Char byte.
      * @return array
+     *
      * @protected
      */
     protected function placeCornerD($marr, $nrow, $ncol, $chr)
@@ -1165,6 +1199,7 @@ class Datamatrix
         $marr = $this->placeModule($marr, $nrow, $ncol, 1, $ncol - 3, $chr, 6);
         $marr = $this->placeModule($marr, $nrow, $ncol, 1, $ncol - 2, $chr, 7);
         $marr = $this->placeModule($marr, $nrow, $ncol, 1, $ncol - 1, $chr, 8);
+
         return $marr;
     }
 
@@ -1172,9 +1207,10 @@ class Datamatrix
      * Build a placement map.
      * (Annex F - ECC 200 symbol character placement)
      *
-     * @param $nrow  (int) Number of rows.
-     * @param $ncol  (int) Number of columns.
+     * @param  $nrow  (int) Number of rows.
+     * @param  $ncol  (int) Number of columns.
      * @return array
+     *
      * @protected
      */
     protected function getPlacementMap($nrow, $ncol)
@@ -1189,53 +1225,53 @@ class Datamatrix
             // repeatedly first check for one of the special corner cases, then
             if (($row == $nrow) and ($col == 0)) {
                 $marr = $this->placeCornerA($marr, $nrow, $ncol, $chr);
-                ++$chr;
+                $chr++;
             }
             if (($row == ($nrow - 2)) and ($col == 0) and ($ncol % 4)) {
                 $marr = $this->placeCornerB($marr, $nrow, $ncol, $chr);
-                ++$chr;
+                $chr++;
             }
             if (($row == ($nrow - 2)) and ($col == 0) and (($ncol % 8) == 4)) {
                 $marr = $this->placeCornerC($marr, $nrow, $ncol, $chr);
-                ++$chr;
+                $chr++;
             }
-            if (($row == ($nrow + 4)) and ($col == 2) and (!($ncol % 8))) {
+            if (($row == ($nrow + 4)) and ($col == 2) and (! ($ncol % 8))) {
                 $marr = $this->placeCornerD($marr, $nrow, $ncol, $chr);
-                ++$chr;
+                $chr++;
             }
             // sweep upward diagonally, inserting successive characters,
             do {
-                if (($row < $nrow) and ($col >= 0) and (!$marr[(($row * $ncol) + $col)])) {
+                if (($row < $nrow) and ($col >= 0) and (! $marr[(($row * $ncol) + $col)])) {
                     $marr = $this->placeUtah($marr, $nrow, $ncol, $row, $col, $chr);
-                    ++$chr;
+                    $chr++;
                 }
                 $row -= 2;
                 $col += 2;
             } while (($row >= 0) and ($col < $ncol));
-            ++$row;
+            $row++;
             $col += 3;
             // & then sweep downward diagonally, inserting successive characters,...
             do {
-                if (($row >= 0) and ($col < $ncol) and (!$marr[(($row * $ncol) + $col)])) {
+                if (($row >= 0) and ($col < $ncol) and (! $marr[(($row * $ncol) + $col)])) {
                     $marr = $this->placeUtah($marr, $nrow, $ncol, $row, $col, $chr);
-                    ++$chr;
+                    $chr++;
                 }
                 $row += 2;
                 $col -= 2;
             } while (($row < $nrow) and ($col >= 0));
             $row += 3;
-            ++$col;
+            $col++;
             // ... until the entire array is scanned
         } while (($row < $nrow) or ($col < $ncol));
         // lastly, if the lower righthand corner is untouched, fill in fixed pattern
-        if (!$marr[(($nrow * $ncol) - 1)]) {
+        if (! $marr[(($nrow * $ncol) - 1)]) {
             $marr[(($nrow * $ncol) - 1)] = 1;
             $marr[(($nrow * $ncol) - $ncol - 2)] = 1;
         }
+
         return $marr;
     }
-
 } // end DataMatrix class
-//============================================================+
+// ============================================================+
 // END OF FILE
-//============================================================+
+// ============================================================+

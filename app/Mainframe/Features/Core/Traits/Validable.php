@@ -3,13 +3,13 @@
 namespace App\Mainframe\Features\Core\Traits;
 
 use Arr;
-use Validator;
 use Illuminate\Support\MessageBag;
+use Validator;
 
 trait Validable
 {
     /**
-     * @var \Illuminate\Validation\Validator
+     * @var \Illuminate\Validation\Validator|validator
      */
     public $validator;
 
@@ -21,7 +21,6 @@ trait Validable
     /**
      * Setter function for $validator
      *
-     * @param $validator
      * @return $this
      */
     public function setValidator($validator)
@@ -32,7 +31,6 @@ trait Validable
     }
 
     /**
-     * @param $messageBag
      * @return $this
      */
     public function setMessageBag($messageBag)
@@ -59,9 +57,9 @@ trait Validable
 
     /**
      * Get the validator instance. If not instantiated, then instantiate one with no data
-     * and rules and return.
+     *  and rules and return
      *
-     * @return \Illuminate\Contracts\Validation\Validator|\Illuminate\Validation\Validator
+     * @return \Illuminate\Validation\Validator
      */
     public function validator()
     {
@@ -129,29 +127,25 @@ trait Validable
     }
 
     /**
-     * Check if the object/validator is valid. If there is no messages
+     * Check if the object/validator is valid.
      *
      * @return bool
      */
     public function isValid()
     {
-        return !$this->isInvalid();
+        return ! $this->isInvalid();
     }
 
-
-
     /**
-     * Message bag related functions.
+     * The Message-bag related functions.
      * These functions are used for adding messages under different keys under the messageBag.
-     * However, messageBag is isolated from validator. Error messages in the messageBag
-     * doesn't invalidate the parent class.
+     * However, messageBag is isolated from the validator. Error messages in the messageBag
+     * don't invalidate the parent class.
      ***********************************/
 
     /**
      * Add a message to different keys.
      *
-     * @param $bag
-     * @param $message
      * @return $this
      */
     public function addToMessageBag($bag, $message)
@@ -164,7 +158,6 @@ trait Validable
     /**
      * Add a message under the 'errors' key
      *
-     * @param $message
      * @return $this
      */
     public function addErrorMessage($message)
@@ -191,7 +184,6 @@ trait Validable
      * Add a message under the 'messages' key. These messages are used in the FE to show as
      * instruction or neutral messages to the user.
      *
-     * @param $message
      * @return $this
      */
     public function addMessage($message)
@@ -207,7 +199,7 @@ trait Validable
      * neutral messages in the FE.
      *
      * @alias addMessage
-     * @param $data
+     *
      * @return $this
      */
     public function notice($data)
@@ -218,7 +210,6 @@ trait Validable
     /**
      * Add a message under the 'warnings' key
      *
-     * @param $data
      * @return $this
      */
     public function addWarning($data)
@@ -232,7 +223,7 @@ trait Validable
      * Add a message under the 'warnings' key
      *
      * @alias addMessage
-     * @param $data
+     *
      * @return $this
      */
     public function warning($data)
@@ -243,7 +234,6 @@ trait Validable
     /**
      * Add a message under the 'debug' key
      *
-     * @param $data
      * @return $this
      */
     public function addDebugMessage($data)
@@ -256,12 +246,11 @@ trait Validable
     /**
      * Get all the messages of a given key
      *
-     * @param $key
-     * @return mixed|null
+     * @return null|string[]
      */
     public function getMessages($key)
     {
-        if (!$this->messageBag()->count()) {
+        if (! $this->messageBag()->count()) {
             return null;
         }
 
@@ -273,7 +262,6 @@ trait Validable
     /**
      * Checks if a key has any message
      *
-     * @param $key
      * @return bool
      */
     public function hasMessages($key)
@@ -284,7 +272,7 @@ trait Validable
     /**
      * Get all the entries under the 'errors' key
      *
-     * @return mixed|null
+     * @return null|string[]
      */
     public function getErrors()
     {
@@ -308,9 +296,10 @@ trait Validable
      */
     public function getErrorsAsSting()
     {
-        if (!$this->getErrors()) {
+        if (! $this->getErrors()) {
             return null;
         }
+
         return implode(' #', Arr::flatten($this->getErrors()));
     }
 

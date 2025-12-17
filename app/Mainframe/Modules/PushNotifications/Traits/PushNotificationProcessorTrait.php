@@ -60,12 +60,13 @@ trait PushNotificationProcessorTrait
     // public function updated($element) { return $this; }
 
     /**
-     * @param PushNotification $element
+     * @param  PushNotification  $element
      * @return $this
      */
     public function saved($element)
     {
         $element->send();
+
         return $this;
     }
     // public function deleting($element) { return $this; }

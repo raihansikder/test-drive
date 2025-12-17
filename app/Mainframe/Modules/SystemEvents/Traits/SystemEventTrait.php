@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Modules\SystemEvents\Traits;
 
-use App\User;
 use App\SystemEvent;
+use App\User;
 
 /** @mixin \App\SystemEvent */
 trait SystemEventTrait
@@ -37,8 +37,10 @@ trait SystemEventTrait
     | Section: Relations
     |--------------------------------------------------------------------------
     */
-    public function user() { return $this->belongsTo(User::class); }
-
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -54,13 +56,13 @@ trait SystemEventTrait
         $this->name_ext = $this->name;
 
         if ($this->provider) {
-            $this->name_ext .= "-".$this->provider;
+            $this->name_ext .= '-'.$this->provider;
         }
         if ($this->environment) {
-            $this->name_ext .= "-".$this->environment;
+            $this->name_ext .= '-'.$this->environment;
         }
         if ($this->source) {
-            $this->name_ext .= "(".$this->source.")";
+            $this->name_ext .= '('.$this->source.')';
         }
 
         return $this;
@@ -84,16 +86,16 @@ trait SystemEventTrait
      *  - details       : An array or string
      *  - tags          : Array or csv
      *
-     * @param  string  $name
      * @param  mixed  $params  This can be given as an array with keys
      * @param  null  $model
      * @param  null  $details
      * @return void
+     *
      * @noinspection DuplicatedCode
      */
     public static function log(string $name, $params = null, $model = null, $details = null)
     {
-        $systemEvent = new SystemEvent();
+        $systemEvent = new SystemEvent;
 
         $systemEvent->name = $name;
 

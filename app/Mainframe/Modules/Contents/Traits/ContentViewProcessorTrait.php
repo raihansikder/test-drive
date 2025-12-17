@@ -6,13 +6,13 @@ namespace App\Mainframe\Modules\Contents\Traits;
 trait ContentViewProcessorTrait
 {
     /**
-     * @var \App\Module $module
-     * @var \Illuminate\Database\Eloquent\Builder $model
-     * @var \App\Content $element
-     * @var bool $editable
-     * @var array $immutables
-     * @var string $type i.e. View type create, edit, index etc.
-     * @var array $vars Variables shared in view blade
+     * @var \App\Module
+     * @var \Illuminate\Database\Eloquent\Builder
+     * @var \App\Content
+     * @var bool
+     * @var array
+     * @var string i.e. View type create, edit, index etc.
+     * @var array Variables shared in view blade
      */
 
     /**
@@ -20,7 +20,7 @@ trait ContentViewProcessorTrait
      */
     public function immutables()
     {
-        if (!$this->user->isSuperUser()) {
+        if (! $this->user->isSuperUser()) {
             $this->addImmutables(['name', 'key', 'is_active']);
         }
 

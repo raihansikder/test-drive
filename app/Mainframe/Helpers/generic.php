@@ -1,9 +1,12 @@
-<?php /** @noinspection CallableParameterUseCaseInTypeContextInspection */
+<?php
+
+/** @noinspection CallableParameterUseCaseInTypeContextInspection */
 
 /**
  * Generic helper functions to be used by the framework
  *
  * @Author : Raihan S
+ *
  * @email  : raihan.act@gmail.com
  */
 
@@ -31,7 +34,6 @@ function kv($array = [])
 /**
  * returns extension from path
  *
- * @param $path
  * @return mixed
  */
 function extFrmPath($path)
@@ -43,18 +45,15 @@ function extFrmPath($path)
 
 /**
  * Echos a BR. Something handy for echo based debugging :)
- *
- * @param $string
  */
 function echoBr($string)
 {
-    echo $string."<br/>";
+    echo $string.'<br/>';
 }
 
 /**
  * returns the key of a multidimensional array
  *
- * @param $array
  * @return bool|array
  */
 function keyAsArray($array = [])
@@ -80,20 +79,17 @@ function echoArray($my_array)
         echo '<tr><td colspan=2 style="background-color:#333333;"><strong><span style="color: white; "></span></strong></td></tr>';
         foreach ($my_array as $k => $v) {
             echo '<tr><td  style="width:40px;background-color:#F0F0F0;">';
-            echo '<strong>'.$k."</strong></td><td>";
+            echo '<strong>'.$k.'</strong></td><td>';
             echoArray($v);
-            echo "</td></tr>";
+            echo '</td></tr>';
         }
-        echo "</table>";
+        echo '</table>';
 
         return;
     }
     echo $my_array;
 }
 
-/**
- * @param $my_array
- */
 function my_printr($my_array)
 {
     echoArray($my_array);
@@ -102,7 +98,6 @@ function my_printr($my_array)
 /**
  * Shorthand function for echoArray
  *
- * @param $arr
  * @return string
  */
 function printArray($arr)
@@ -113,7 +108,6 @@ function printArray($arr)
 /**
  * Changes array to object
  *
- * @param $array
  * @return object
  */
 function arrayToObject($array)
@@ -126,13 +120,14 @@ function arrayToObject($array)
  *
  * @param  int  $length
  * @return string
+ *
  * @throws \Exception
  */
 function randomString($length = 8)
 {
     $str = '';
     $characters = array_merge(range('A', 'Z'), range('a', 'z'), range('0', '9'));
-    //$characters = array_merge(range('A', 'Z'), range('0', '9'));
+    // $characters = array_merge(range('A', 'Z'), range('0', '9'));
     $max = count($characters) - 1;
     for ($i = 0; $i < $length; $i++) {
         $rand = random_int(0, $max);
@@ -146,7 +141,7 @@ function randomChar($length = 8)
 {
     $str = '';
     $characters = array_merge(range('A', 'Z'), range('a', 'z'));
-    //$characters = array_merge(range('A', 'Z'), range('0', '9'));
+    // $characters = array_merge(range('A', 'Z'), range('0', '9'));
     $max = count($characters) - 1;
     for ($i = 0; $i < $length; $i++) {
         $rand = random_int(0, $max);
@@ -160,6 +155,7 @@ function randomChar($length = 8)
  * generate 8 character random code
  *
  * @return string
+ *
  * @throws \Exception
  */
 function generateCode()
@@ -170,7 +166,6 @@ function generateCode()
 /**
  * Converts input to an array
  *
- * @param $input
  * @return array|mixed|null
  */
 function toArray($input)
@@ -210,7 +205,6 @@ function isJson($value)
  * Check if JSON is valid
  * http://stackoverflow.com/questions/6041741/fastest-way-to-check-if-a-string-is-json-in-php
  *
- * @param $string
  * @return mixed
  */
 function validateJson($string)
@@ -236,15 +230,15 @@ function validateJson($string)
         case JSON_ERROR_SYNTAX:
             $error = 'Syntax error, malformed JSON.';
             break;
-        // PHP >= 5.3.3
+            // PHP >= 5.3.3
         case JSON_ERROR_UTF8:
             $error = 'Malformed UTF-8 characters, possibly incorrectly encoded.';
             break;
-        // PHP >= 5.5.0
+            // PHP >= 5.5.0
         case JSON_ERROR_RECURSION:
             $error = 'One or more recursive references in the value to be encoded.';
             break;
-        // PHP >= 5.5.0
+            // PHP >= 5.5.0
         case JSON_ERROR_INF_OR_NAN:
             $error = 'One or more NAN or INF values in the value to be encoded.';
             break;
@@ -269,7 +263,7 @@ function validateJson($string)
  * Remove UTF-8 BOM from a string
  *
  * http://stackoverflow.com/questions/10290849/how-to-remove-multiple-utf-8-bom-sequences-before-doctype
- * @param $text
+ *
  * @return mixed
  */
 function removeUtf8Bom($text)
@@ -284,7 +278,6 @@ function removeUtf8Bom($text)
  * http://community.sitepoint.com/t/best-way-to-do-array-search-on-multi-dimensional-array/16382/3
  *
  * @param  array  $array
- * @param       $search
  * @param  array  $keys
  * @return array
  */
@@ -329,7 +322,7 @@ function deepSearchArray($array, $search, $keys = [])
  *
  * @param  string  $date1
  * @param  string  $date2
- * @return integer number of days
+ * @return int number of days
  */
 function dateDiff($date1, $date2)
 {
@@ -338,23 +331,19 @@ function dateDiff($date1, $date2)
 
 /**
  * Print date diff
- *
- * @param $start_date
- * @param $end_date
  */
 function printDateDiff($start_date, $end_date)
 {
     $diff = dateDiff($start_date, $end_date);
-    //myprint_r($diff);
+    // myprint_r($diff);
     echo $diff['total_days'];
 }
 
 /**
  * returns a number format with X decimal places
  *
- * @param $number
- * @param $decimalPlaces
  * @return string
+ *
  * @internal param $places
  */
 function decimal($number, $decimalPlaces = 2)
@@ -365,9 +354,6 @@ function decimal($number, $decimalPlaces = 2)
 /**
  * Add padding to a string
  *
- * @param $str
- * @param $count
- * @param $char
  * @return string
  */
 function pad($str, $count = 6, $char = '0')
@@ -378,7 +364,6 @@ function pad($str, $count = 6, $char = '0')
 /**
  * Checks if an input is CSV
  *
- * @param $input
  * @return bool|int
  */
 function isCsv($input)
@@ -396,7 +381,6 @@ function isCsv($input)
 /**
  * Remove special characters from string
  *
- * @param $string
  * @return mixed
  */
 function clean($string)
@@ -409,7 +393,6 @@ function clean($string)
 /**
  * Cleans a string and returns as csv
  *
- * @param $csv
  * @return string
  */
 function cleanCsv($csv)
@@ -422,7 +405,6 @@ function cleanCsv($csv)
 /**
  * Converts a CSV to a one-dimensional array.
  *
- * @param $csv
  * @return array
  */
 function csvToArray($csv)
@@ -433,7 +415,6 @@ function csvToArray($csv)
 /**
  * Converts a one-dimensional array into CSV.
  *
- * @param $array
  * @return string
  */
 function arrayToCsv($array)
@@ -444,7 +425,6 @@ function arrayToCsv($array)
 /**
  * Generates a csv of a one-dimensional array
  *
- * @param $array
  * @return string
  */
 function csvFromArray($array)
@@ -456,7 +436,6 @@ function csvFromArray($array)
  * removes new line tabs etc( '\n','\t') from a string
  * remove-extra-spaces-tabs-and-line-feeds-from-a-sentence-and-substitute
  *
- * @param $str
  * @return mixed
  */
 function cleanStrNTS($str)
@@ -468,8 +447,8 @@ function cleanStrNTS($str)
  * Wraps with comma. This special csv is used search ids in a database that are stored as csv
  * In this approach it is possible to find id (say id=123) by doing string match "%,123,&"
  *
- * @param $str
  * @return string
+ *
  * @internal param $string
  */
 function commaWrap($str)
@@ -485,7 +464,6 @@ function commaWrap($str)
 /**
  * Convert a string to array. The string can be csv '1,2,3' or array expression '[1,2,3]'
  *
- * @param $str
  * @return array
  */
 function strToArray($str)
@@ -498,6 +476,7 @@ function strToArray($str)
  *
  * @param  string  $bytes
  * @return string human-readable file size (2,87 ??)
+ *
  * @author Mogilev Arseny
  */
 function convertFileSize($bytes)
@@ -506,31 +485,31 @@ function convertFileSize($bytes)
     $bytes = floatval($bytes);
     $arBytes = [
         0 => [
-            "UNIT" => "TB",
-            "VALUE" => pow(1024, 4),
+            'UNIT' => 'TB',
+            'VALUE' => pow(1024, 4),
         ],
         1 => [
-            "UNIT" => "GB",
-            "VALUE" => pow(1024, 3),
+            'UNIT' => 'GB',
+            'VALUE' => pow(1024, 3),
         ],
         2 => [
-            "UNIT" => "MB",
-            "VALUE" => pow(1024, 2),
+            'UNIT' => 'MB',
+            'VALUE' => pow(1024, 2),
         ],
         3 => [
-            "UNIT" => "KB",
-            "VALUE" => 1024,
+            'UNIT' => 'KB',
+            'VALUE' => 1024,
         ],
         4 => [
-            "UNIT" => "B",
-            "VALUE" => 1,
+            'UNIT' => 'B',
+            'VALUE' => 1,
         ],
     ];
 
     foreach ($arBytes as $arItem) {
-        if ($bytes >= $arItem["VALUE"]) {
-            $result = $bytes / $arItem["VALUE"];
-            $result = str_replace(".", ",", strval(round($result, 2)))." ".$arItem["UNIT"];
+        if ($bytes >= $arItem['VALUE']) {
+            $result = $bytes / $arItem['VALUE'];
+            $result = str_replace('.', ',', strval(round($result, 2))).' '.$arItem['UNIT'];
             break;
         }
     }
@@ -558,15 +537,13 @@ function isImageExtension($ext = '')
 /**
  * Checks if all the needs are available in an array
  *
- * @param  array  $needles
- * @param  array  $haystack
  * @return bool
  */
 function allInArray(array $needles, array $haystack)
 {
     if (count($needles) && count($haystack)) {
         foreach ($needles as $needle) {
-            if (!in_array($needle, $haystack)) {
+            if (! in_array($needle, $haystack)) {
                 return false;
             }
         }
@@ -580,8 +557,6 @@ function allInArray(array $needles, array $haystack)
 /**
  * Checks if at least one of the needles is available in an array
  *
- * @param  array  $needles
- * @param  array  $haystack
  * @return bool
  */
 function oneInArray(array $needles, array $haystack)
@@ -600,13 +575,11 @@ function oneInArray(array $needles, array $haystack)
 /**
  * Checks if none of the needles are in the array
  *
- * @param  array  $needles
- * @param  array  $haystack
  * @return bool
  */
 function noneInArray(array $needles, array $haystack)
 {
-    return !oneInArray($needles, $haystack);
+    return ! oneInArray($needles, $haystack);
 }
 
 /**
@@ -636,7 +609,7 @@ function removeEmptyVals($array = [])
     $temp = [];
     if (is_array($array) && count($array)) {                    // handle if input is an array1
         foreach ($array as $a) {
-            if (!is_array($a) && trim($a) !== '') {
+            if (! is_array($a) && trim($a) !== '') {
                 $temp[] = trim($a);
             }
         }
@@ -666,7 +639,6 @@ function cleanArray($array = [])
 /**
  * Create a one-dimensional array to be used in Eloquent whereIn
  *
- * @param $val
  * @return array
  */
 function arrayForWhereIn($val)
@@ -688,7 +660,7 @@ function arrayForWhereIn($val)
 }
 
 /**
- * create a letter range with arbitrary length
+ * Create a letter range with arbitrary length
  *
  * @param  int  $length
  * @return array
@@ -713,7 +685,6 @@ function createLetterRange($length)
 /**
  * Change array keys to snake case
  *
- * @param $array
  * @return array
  */
 function snakeCaseKeys($array)
@@ -733,8 +704,6 @@ function snakeCaseKeys($array)
 /**
  * Get percentage
  *
- * @param $number
- * @param $percent
  * @return float|int
  */
 function percent($number, $percent)
@@ -745,8 +714,6 @@ function percent($number, $percent)
 /**
  * Add a percentage to a number
  *
- * @param $number
- * @param $percent
  * @return float|int
  */
 function addPercent($number, $percent)
@@ -757,8 +724,6 @@ function addPercent($number, $percent)
 /**
  * Add a percentage to a number
  *
- * @param $number
- * @param $percent
  * @return float|int
  */
 function subtractPercent($number, $percent)

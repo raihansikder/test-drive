@@ -32,6 +32,7 @@ trait DataBlockTrait
      * Get the final result
      *
      * @return mixed
+     *
      * @deprecated use get()
      */
     public function data()
@@ -51,5 +52,4 @@ trait DataBlockTrait
         });
 
     }
-
 }

@@ -21,7 +21,7 @@ trait CommentProcessorTrait
     //  */
     // public function fill($element)
     // {
-    //     // $element->populate(); 
+    //     // $element->populate();
     //     return $this;
     // }
 
@@ -57,9 +57,9 @@ trait CommentProcessorTrait
      */
     public function saving($element)
     {
-        // Validate. 
+        // Validate.
         // If valid, proceed
-        // if($this->isValid()){                
+        // if($this->isValid()){
         // }
 
         return $this;

@@ -9,7 +9,7 @@ use App\Mainframe\Helpers\Mf;
 */
 $modules = Mf::modules();
 
-# Path root/api/1.0/core
+// Path root/api/1.0/core
 $version = '1.0';
 $namePrefix = 'api.'.$version.'.core';
 $middlewares = ['request.json', 'x-auth-token', 'tenant'];
@@ -19,11 +19,11 @@ Route::prefix("core/{$version}")->middleware($middlewares)->group(function () us
     /*-----------------------------------------
     | Authentication API
     |-----------------------------------------*/
-    Route::post('register/{groupName?}', 'Auth\RegisterController@register')->name($namePrefix.".register");
-    Route::post('login', 'Auth\LoginController@login')->name($namePrefix.".login");
+    Route::post('register/{groupName?}', 'Auth\RegisterController@register')->name($namePrefix.'.register');
+    Route::post('login', 'Auth\LoginController@login')->name($namePrefix.'.login');
     Route::post('password/email',
-        'Auth\ForgotPasswordController@sendResetLinkEmail')->name($namePrefix.".reset-password");
-    Route::post('logout', 'Auth\LoginController@logout')->name($namePrefix.".logout");
+        'Auth\ForgotPasswordController@sendResetLinkEmail')->name($namePrefix.'.reset-password');
+    Route::post('logout', 'Auth\LoginController@logout')->name($namePrefix.'.logout');
 
     /*------------------------------------------
     | Module REST API + Helper APIs
@@ -68,13 +68,13 @@ Route::prefix("core/{$version}")->middleware($middlewares)->group(function () us
     /*-----------------------------------------
     | User API (Requires bearer token)
     |-----------------------------------------*/
-    Route::middleware(['bearer-token'])->group(function () use ($modules, $namePrefix) {
+    Route::middleware(['bearer-token'])->group(function () use ($namePrefix) {
 
         // Dashboard data
         Route::get('/', 'HomeController@index')->middleware(['verified'])->name($namePrefix.'.home');
 
         // APIs with 'use' prefix  (http://root/api/1.0/user/...)
-        Route::prefix('user')->group(function () use ($modules, $namePrefix) {
+        Route::prefix('user')->group(function () use ($namePrefix) {
 
             $namePrefix .= '.user'; // 'api.1.0.user'
 

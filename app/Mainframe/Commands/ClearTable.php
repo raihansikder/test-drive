@@ -9,6 +9,8 @@ class ClearTable extends Command
 {
     /**
      * The name and signature of the console command.
+     * {table}: Name of the database table to clear
+     * {--retain=180}: Number of days to retain records. Records older than this will be deleted
      *
      * @var string
      */
@@ -23,19 +25,16 @@ class ClearTable extends Command
 
     /**
      * Execute the console command.
-     *
      */
     public function handle()
     {
         $table = $this->argument('table');
         $retain = (int) $this->option('retain');
 
-
         DB::table($table)
             ->where('updated_at', '<=', now()->subDays($retain))
             ->delete();
 
-        $this->info("Deleted entries from table:{$table} that are older than {$retain} days");
+        $this->info("Deleted entries from table:$table that are older than $retain days");
     }
-
 }

@@ -4,7 +4,6 @@ namespace App\Mainframe\Modules\Spreads\Traits;
 
 trait SpreadDatatableTrait
 {
-
     // /**
     //  * Note: Define Query Source
     //  *
@@ -48,6 +47,7 @@ trait SpreadDatatableTrait
      * Note: Modify datatable values
      *
      * @return mixed
+     *
      * @var $dt \Yajra\DataTables\DataTableAbstract
      */
     // public function modify($dt)

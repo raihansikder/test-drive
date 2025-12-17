@@ -12,8 +12,11 @@ class Select extends Input
      * @var array|mixed
      */
     public $nullOption;
+
     public $nullOptionText;
+
     public $zeroOption;
+
     public $zeroOptionText;
 
     /**
@@ -35,7 +38,7 @@ class Select extends Input
         $this->zeroOptionText = $this->var['zero_option_text'] ?? '-All-';
         // $this->options[null] = '-'; // By default laravel Form::select adds and empty selection for null
 
-        if (!$this->isEditable) {
+        if (! $this->isEditable) {
             $this->params = array_merge(['disabled' => 'disabled'], $this->params);
         }
 
@@ -81,7 +84,7 @@ class Select extends Input
      */
     public function showNullOption()
     {
-        return !$this->isMultiple() && $this->nullOption;
+        return ! $this->isMultiple() && $this->nullOption;
     }
 
     /**
@@ -93,5 +96,4 @@ class Select extends Input
     {
         return $this->zeroOption;
     }
-
 }

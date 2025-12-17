@@ -69,5 +69,4 @@ trait ChangeProcessorTrait
         // All field edits are disabled
         return $this->element->tableColumns();
     }
-
 }

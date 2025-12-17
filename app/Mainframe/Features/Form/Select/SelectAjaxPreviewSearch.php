@@ -1,4 +1,6 @@
-<?php /** @noinspection PhpVariableVariableInspection */
+<?php
+
+/** @noinspection PhpVariableVariableInspection */
 
 namespace App\Mainframe\Features\Form\Select;
 
@@ -7,11 +9,17 @@ use Str;
 class SelectAjaxPreviewSearch extends SelectAjax
 {
     public $advancedSearch;
+
     public $preview;
+
     public $modal; // View path to modal
+
     public $previewUrl; // Get preview HTML from this url
+
     public $previewUrlParam; // sends id=xx to the get preview(view-partial)route
+
     public $datatable; // Datatable object
+
     public $datatableView; // Datatable view blade
 
     public function __construct(&$var = [], $element = null)

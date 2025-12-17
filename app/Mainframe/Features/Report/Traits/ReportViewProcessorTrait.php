@@ -2,9 +2,9 @@
 
 namespace App\Mainframe\Features\Report\Traits;
 
-use App\Report;
 use App\Mainframe\Features\Report\ReportBuilder;
 use App\Mainframe\Features\Report\ReportViewProcessor;
+use App\Report;
 
 /** @mixin ReportViewProcessor $this */
 trait ReportViewProcessorTrait
@@ -26,7 +26,7 @@ trait ReportViewProcessorTrait
      */
     public function showSaveReportBtn()
     {
-        if (!module('reports')->is_active) {
+        if (! module('reports')->is_active) {
             return false;
         }
 
@@ -111,7 +111,6 @@ trait ReportViewProcessorTrait
     /**
      * Link to module element
      *
-     * @param $row
      * @return string|null
      */
     public function elementViewUrl($row)
@@ -152,7 +151,6 @@ trait ReportViewProcessorTrait
     /**
      * Table column titles
      *
-     * @param $index
      * @return string
      */
     public function columnTitle($index)
@@ -204,5 +202,4 @@ trait ReportViewProcessorTrait
         return $this->report->buildUrl($params);
 
     }
-
 }

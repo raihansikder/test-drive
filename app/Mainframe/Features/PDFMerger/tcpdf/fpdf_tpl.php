@@ -1,4 +1,5 @@
 <?php
+
 //
 //  FPDF_TPL - Version 1.2.3
 //
@@ -24,42 +25,42 @@ class FPDF_TPL extends FPDF
      *
      * @var array
      */
-    var $tpls = [];
+    public $tpls = [];
 
     /**
      * Current Template-ID
      *
      * @var int
      */
-    var $tpl = 0;
+    public $tpl = 0;
 
     /**
      * "In Template"-Flag
      *
-     * @var boolean
+     * @var bool
      */
-    var $_intpl = false;
+    public $_intpl = false;
 
     /**
      * Nameprefix of Templates used in Resources-Dictonary
      *
      * @var string A String defining the Prefix used as Template-Object-Names. Have to beginn with an /
      */
-    var $tplprefix = "/TPL";
+    public $tplprefix = '/TPL';
 
     /**
      * Resources used By Templates and Pages
      *
      * @var array
      */
-    var $_res = [];
+    public $_res = [];
 
     /**
      * Last used Template data
      *
      * @var array
      */
-    var $lastUsedTemplateData = [];
+    public $lastUsedTemplateData = [];
 
     /**
      * Start a Template
@@ -77,15 +78,16 @@ class FPDF_TPL extends FPDF
      * @param  int  $h  The height given in user-unit
      * @return int The ID of new created Template
      */
-    function beginTemplate($x = null, $y = null, $w = null, $h = null)
+    public function beginTemplate($x = null, $y = null, $w = null, $h = null)
     {
         if (is_subclass_of($this, 'TCPDF')) {
             $this->Error('This method is only usable with FPDF. Use TCPDF methods startTemplate() instead.');
+
             return;
         }
 
         if ($this->page <= 0) {
-            $this->error("You have to add a page to fpdf first!");
+            $this->error('You have to add a page to fpdf first!');
         }
 
         if ($x == null) {
@@ -103,7 +105,7 @@ class FPDF_TPL extends FPDF
 
         // Save settings
         $this->tpl++;
-        $tpl =& $this->tpls[$this->tpl];
+        $tpl = &$this->tpls[$this->tpl];
         $tpl = [
             'o_x' => $this->x,
             'o_y' => $this->y,
@@ -137,7 +139,7 @@ class FPDF_TPL extends FPDF
 
         if ($this->CurrentFont) {
             $fontkey = $this->FontFamily.$this->FontStyle;
-            $this->_res['tpl'][$this->tpl]['fonts'][$fontkey] =& $this->fonts[$fontkey];
+            $this->_res['tpl'][$this->tpl]['fonts'][$fontkey] = &$this->fonts[$fontkey];
 
             $this->_out(sprintf('BT /F%d %.2f Tf ET', $this->CurrentFont['i'], $this->FontSizePt));
         }
@@ -151,16 +153,17 @@ class FPDF_TPL extends FPDF
      *
      * @return mixed If a template is opened, the ID is returned. If not a false is returned.
      */
-    function endTemplate()
+    public function endTemplate()
     {
         if (is_subclass_of($this, 'TCPDF')) {
             $args = func_get_args();
+
             return call_user_func_array([$this, 'TCPDF::endTemplate'], $args);
         }
 
         if ($this->_intpl) {
             $this->_intpl = false;
-            $tpl =& $this->tpls[$this->tpl];
+            $tpl = &$this->tpls[$this->tpl];
             $this->SetXY($tpl['o_x'], $tpl['o_y']);
             $this->tMargin = $tpl['o_tMargin'];
             $this->lMargin = $tpl['o_lMargin'];
@@ -176,7 +179,7 @@ class FPDF_TPL extends FPDF
 
             $fontkey = $this->FontFamily.$this->FontStyle;
             if ($fontkey) {
-                $this->CurrentFont =& $this->fonts[$fontkey];
+                $this->CurrentFont = &$this->fonts[$fontkey];
             }
 
             return $this->tpl;
@@ -199,23 +202,24 @@ class FPDF_TPL extends FPDF
      * @param  int  $_y  The y-position
      * @param  int  $_w  The new width of the template
      * @param  int  $_h  The new height of the template
+     *
      * @retrun array The height and width of the template
      */
-    function useTemplate($tplidx, $_x = null, $_y = null, $_w = 0, $_h = 0)
+    public function useTemplate($tplidx, $_x = null, $_y = null, $_w = 0, $_h = 0)
     {
         if ($this->page <= 0) {
             $this->error('You have to add a page first!');
         }
 
-        if (!isset($this->tpls[$tplidx])) {
+        if (! isset($this->tpls[$tplidx])) {
             $this->error('Template does not exist!');
         }
 
         if ($this->_intpl) {
-            $this->_res['tpl'][$this->tpl]['tpls'][$tplidx] =& $this->tpls[$tplidx];
+            $this->_res['tpl'][$this->tpl]['tpls'][$tplidx] = &$this->tpls[$tplidx];
         }
 
-        $tpl =& $this->tpls[$tplidx];
+        $tpl = &$this->tpls[$tplidx];
         $w = $tpl['w'];
         $h = $tpl['h'];
 
@@ -245,7 +249,7 @@ class FPDF_TPL extends FPDF
             'lty' => ($this->h - $_y - $_h) - ($this->h - $h) * ($_h / $h),
         ];
 
-        $this->_out(sprintf('q %.4F 0 0 %.4F %.4F %.4F cm', $tData['scaleX'], $tData['scaleY'], $tData['tx'] * $this->k, $tData['ty'] * $this->k)); // Translate 
+        $this->_out(sprintf('q %.4F 0 0 %.4F %.4F %.4F cm', $tData['scaleX'], $tData['scaleY'], $tData['tx'] * $this->k, $tData['ty'] * $this->k)); // Translate
         $this->_out(sprintf('%s%d Do Q', $this->tplprefix, $tplidx));
 
         $this->lastUsedTemplateData = $tData;
@@ -262,13 +266,13 @@ class FPDF_TPL extends FPDF
      * @param  int  $_h  The height of the template
      * @return array The height and width of the template
      */
-    function getTemplateSize($tplidx, $_w = 0, $_h = 0)
+    public function getTemplateSize($tplidx, $_w = 0, $_h = 0)
     {
-        if (!isset($this->tpls[$tplidx])) {
+        if (! isset($this->tpls[$tplidx])) {
             return false;
         }
 
-        $tpl =& $this->tpls[$tplidx];
+        $tpl = &$this->tpls[$tplidx];
         $w = $tpl['w'];
         $h = $tpl['h'];
 
@@ -284,7 +288,7 @@ class FPDF_TPL extends FPDF
             $_h = $_w * $h / $w;
         }
 
-        return ["w" => $_w, "h" => $_h];
+        return ['w' => $_w, 'h' => $_h];
     }
 
     /**
@@ -294,6 +298,7 @@ class FPDF_TPL extends FPDF
     {
         if (is_subclass_of($this, 'TCPDF')) {
             $args = func_get_args();
+
             return call_user_func_array([$this, 'TCPDF::SetFont'], $args);
         }
 
@@ -302,16 +307,16 @@ class FPDF_TPL extends FPDF
         $fontkey = $this->FontFamily.$this->FontStyle;
 
         if ($this->_intpl) {
-            $this->_res['tpl'][$this->tpl]['fonts'][$fontkey] =& $this->fonts[$fontkey];
+            $this->_res['tpl'][$this->tpl]['fonts'][$fontkey] = &$this->fonts[$fontkey];
         } else {
-            $this->_res['page'][$this->page]['fonts'][$fontkey] =& $this->fonts[$fontkey];
+            $this->_res['page'][$this->page]['fonts'][$fontkey] = &$this->fonts[$fontkey];
         }
     }
 
     /**
      * See FPDF/TCPDF-Documentation ;-)
      */
-    function Image(
+    public function Image(
         $file,
         $x = '',
         $y = '',
@@ -334,14 +339,15 @@ class FPDF_TPL extends FPDF
     ) {
         if (is_subclass_of($this, 'TCPDF')) {
             $args = func_get_args();
+
             return call_user_func_array([$this, 'TCPDF::Image'], $args);
         }
 
         $ret = parent::Image($file, $x, $y, $w, $h, $type, $link);
         if ($this->_intpl) {
-            $this->_res['tpl'][$this->tpl]['images'][$file] =& $this->images[$file];
+            $this->_res['tpl'][$this->tpl]['images'][$file] = &$this->images[$file];
         } else {
-            $this->_res['page'][$this->page]['images'][$file] =& $this->images[$file];
+            $this->_res['page'][$this->page]['images'][$file] = &$this->images[$file];
         }
 
         return $ret;
@@ -351,10 +357,11 @@ class FPDF_TPL extends FPDF
      * See FPDF-Documentation ;-)
      * AddPage is not available when you're "in" a template.
      */
-    function AddPage($orientation = '', $format = '', $keepmargins = false, $tocpage = false)
+    public function AddPage($orientation = '', $format = '', $keepmargins = false, $tocpage = false)
     {
         if (is_subclass_of($this, 'TCPDF')) {
             $args = func_get_args();
+
             return call_user_func_array([$this, 'TCPDF::AddPage'], $args);
         }
 
@@ -368,10 +375,11 @@ class FPDF_TPL extends FPDF
     /**
      * Preserve adding Links in Templates ...won't work
      */
-    function Link($x, $y, $w, $h, $link, $spaces = 0)
+    public function Link($x, $y, $w, $h, $link, $spaces = 0)
     {
         if (is_subclass_of($this, 'TCPDF')) {
             $args = func_get_args();
+
             return call_user_func_array([$this, 'TCPDF::Link'], $args);
         }
 
@@ -382,23 +390,26 @@ class FPDF_TPL extends FPDF
         parent::Link($x, $y, $w, $h, $link);
     }
 
-    function AddLink()
+    public function AddLink()
     {
         if (is_subclass_of($this, 'TCPDF')) {
             $args = func_get_args();
+
             return call_user_func_array([$this, 'TCPDF::AddLink'], $args);
         }
 
         if ($this->_intpl) {
             $this->Error('Adding links in templates aren\'t possible!');
         }
+
         return parent::AddLink();
     }
 
-    function SetLink($link, $y = 0, $page = -1)
+    public function SetLink($link, $y = 0, $page = -1)
     {
         if (is_subclass_of($this, 'TCPDF')) {
             $args = func_get_args();
+
             return call_user_func_array([$this, 'TCPDF::SetLink'], $args);
         }
 
@@ -411,7 +422,7 @@ class FPDF_TPL extends FPDF
     /**
      * Private Method that writes the form xobjects
      */
-    function _putformxobjects()
+    public function _putformxobjects()
     {
         $filter = ($this->compress) ? '/Filter /FlateDecode ' : '';
         reset($this->tpls);
@@ -476,13 +487,13 @@ class FPDF_TPL extends FPDF
     /**
      * Overwritten to add _putformxobjects() after _putimages()
      */
-    function _putimages()
+    public function _putimages()
     {
         parent::_putimages();
         $this->_putformxobjects();
     }
 
-    function _putxobjectdict()
+    public function _putxobjectdict()
     {
         parent::_putxobjectdict();
 
@@ -496,7 +507,7 @@ class FPDF_TPL extends FPDF
     /**
      * Private Method
      */
-    function _out($s)
+    public function _out($s)
     {
         if ($this->state == 2 && $this->_intpl) {
             $this->tpls[$this->tpl]['buffer'] .= $s."\n";

@@ -6,7 +6,6 @@ use App\Project\Features\Modular\BaseModule\BaseModuleObserver;
 
 class SupportTicketObserver extends BaseModuleObserver
 {
-
     // /**
     //  * @param  App\SupportTicket  $element
     //  * @return void|bool

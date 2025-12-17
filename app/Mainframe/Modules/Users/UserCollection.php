@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Modules\Users;
 
-use Illuminate\Pagination\Paginator;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Pagination\Paginator;
 
 /** @mixin Paginator */
 class UserCollection extends ResourceCollection

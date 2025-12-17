@@ -3,25 +3,25 @@
 namespace App\Mainframe\Modules\Users;
 
 use App\Group;
-use Watson\Rememberable\Rememberable;
+use App\Mainframe\Features\Core\Traits\Validable;
+use App\Mainframe\Features\Modular\BaseModule\Traits\ModularTrait;
+use App\Mainframe\Modules\Users\Traits\UserTrait;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use OwenIt\Auditing\Contracts\Auditable;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Mainframe\Features\Core\Traits\Validable;
-use App\Mainframe\Modules\Users\Traits\UserTrait;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\Mainframe\Features\Modular\BaseModule\Traits\ModularTrait;
+use Watson\Rememberable\Rememberable;
 
-class User extends Authenticatable implements MustVerifyEmail, Auditable
+class User extends Authenticatable implements Auditable, MustVerifyEmail
 {
-    use SoftDeletes,
-        Rememberable,
-        \OwenIt\Auditing\Auditable,
-        ModularTrait,
-        Validable,
+    use ModularTrait,
         Notifiable,
-        UserTrait;
+        \OwenIt\Auditing\Auditable,
+        Rememberable,
+        SoftDeletes,
+        UserTrait,
+        Validable;
 
     /*
     |--------------------------------------------------------------------------
@@ -70,9 +70,11 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
     ];
 
     protected $hidden = ['password', 'remember_token'];
+
     protected $dates = [
         'created_at', 'updated_at', 'deleted_at', 'first_login_at', 'last_login_at', 'email_verified_at',
     ];
+
     protected $casts = [
         'group_ids' => 'array',
         'created_at' => 'datetime',
@@ -85,7 +87,9 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
 
     // protected $with = [];
     protected $appends = [];
-    protected $spreadFields = ['group_ids' => Group::class,];
+
+    protected $spreadFields = ['group_ids' => Group::class];
+
     protected $tagFields = [];
 
     /*
@@ -99,12 +103,14 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
      * @var bool
      */
     protected $tenantEnabled = false;
+
     /**
      * If true then tenants will be able to see items where tenant_id=0
      *
      * @var bool
      */
     protected $showGlobalTenantElements = true;
+
     /**
      * If true then tenants will be able to see items where tenant_id=null
      *
@@ -121,24 +127,34 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
      * Password validation rule
      */
     public const PASSWORD_VALIDATION_RULE = 'required|confirmed|min:6|regex:/[a-zA-Z]/|regex:/[0-9]/';
+
     /*
     |--------------------------------------------------------------------------
     | User group definitions
     |--------------------------------------------------------------------------
     */
     public const SUPERUSER_GROUP_ID = 1;
+
     public const API_GROUP_ID = 2;
+
     public const TENANT_ADMIN_GROUP_ID = 3;
+
     public const PROJECT_ADMIN_GROUP_ID = 4;
+
     public const USER_GROUP_ID = 5;
 
     public const SUPERUSER_GROUP = 'superuser';
+
     public const API_GROUP = 'api';
+
     public const TENANT_ADMIN_GROUP = 'tenant-admin';
+
     public const PROJECT_ADMIN_GROUP = 'project-admin';
+
     public const USER_GROUP = 'user';
 
     public const GENDER_MALE = 'Male';
+
     public const GENDER_FEMALE = 'Female';
 
     /**

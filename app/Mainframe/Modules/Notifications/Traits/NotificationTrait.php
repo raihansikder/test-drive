@@ -6,7 +6,7 @@ trait NotificationTrait
 {
     /*
     |--------------------------------------------------------------------------
-    | Section: Autofill functions 
+    | Section: Autofill functions
     |--------------------------------------------------------------------------
     */
 
@@ -68,6 +68,8 @@ trait NotificationTrait
     /**
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function notifiable() { return $this->morphTo(); }
-
+    public function notifiable()
+    {
+        return $this->morphTo();
+    }
 }

@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Features\Report\Traits;
 
-use App\Module;
 use App\Mainframe\Features\Report\ReportBuilder;
+use App\Module;
 
 /** @mixin ReportBuilder $this */
 trait ModuleReportBuilderTrait
@@ -13,9 +13,9 @@ trait ModuleReportBuilderTrait
      */
     public function transformRequest()
     {
-        # Hide inactive items for non-admins
-        if (!$this->user->isSuperUser()) {
-            request()->merge(['is_active' => 1,]); // Note: creates field ambiguity if join is made
+        // Hide inactive items for non-admins
+        if (! $this->user->isSuperUser()) {
+            request()->merge(['is_active' => 1]); // Note: creates field ambiguity if join is made
         }
     }
 
@@ -77,12 +77,11 @@ trait ModuleReportBuilderTrait
      */
     public function selectedColumns()
     {
-        # Check if the column names are available in request().
+        // Check if the column names are available in request().
         if ($columns = $this->getColumnsFromRequest()) {
             return $columns;
         }
 
-        return ['id', 'name', 'created_at', 'updated_at',];
+        return ['id', 'name', 'created_at', 'updated_at'];
     }
-
 }

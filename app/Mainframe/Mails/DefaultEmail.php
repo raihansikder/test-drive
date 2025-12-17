@@ -2,14 +2,12 @@
 
 namespace App\Mainframe\Mails;
 
-use App\Module;
 use App\Email;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Queue\SerializesModels;
 
 class DefaultEmail extends Mailable
 {
@@ -47,5 +45,4 @@ class DefaultEmail extends Mailable
     {
         return new Content(html: 'mainframe.emails.email');
     }
-
 }

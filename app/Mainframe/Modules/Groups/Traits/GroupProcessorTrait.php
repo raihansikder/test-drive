@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Modules\Groups\Traits;
 
-use Artisan;
 use App\Group;
+use Artisan;
 
 /** @mixin \App\Mainframe\Modules\Groups\GroupProcessor */
 trait GroupProcessorTrait
@@ -23,7 +23,6 @@ trait GroupProcessorTrait
     /**
      * Validation rules. For regular expression validation use array instead of pipe
      *
-     * @param       $element
      * @param  array  $merge
      * @return array
      */
@@ -48,7 +47,7 @@ trait GroupProcessorTrait
     */
 
     /**
-     * @param $element Group
+     * @param  $element  Group
      * @return $this
      */
     public function saving($element)
@@ -56,6 +55,7 @@ trait GroupProcessorTrait
         if ($this->isValid()) {
             $this->setPermissions($element);
         }
+
         return $this;
     }
     // public function creating($element) { return $this; }
@@ -69,6 +69,7 @@ trait GroupProcessorTrait
     public function updated($element)
     {
         $this->clearCacheIfPermissionHasChanged();
+
         return $this;
     }
     // public function saved($element) { return $this; }
@@ -135,5 +136,4 @@ trait GroupProcessorTrait
             Artisan::call('cache:clear');
         }
     }
-
 }

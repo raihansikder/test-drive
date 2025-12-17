@@ -42,7 +42,7 @@ trait SupportTicketTagTrait
 
     /*
     |--------------------------------------------------------------------------
-    | Section: Autofill functions 
+    | Section: Autofill functions
     |--------------------------------------------------------------------------
     */
     // /**
@@ -60,6 +60,7 @@ trait SupportTicketTagTrait
     public function setNameExt()
     {
         $this->name_ext = $this->name;
+
         return $this;
     }
 

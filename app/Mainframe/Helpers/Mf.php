@@ -1,20 +1,21 @@
 <?php
 
+/** @noinspection PhpUnused */
+
 namespace App\Mainframe\Helpers;
 
+use App\Content;
+use App\Module;
+use App\ModuleGroup;
+use App\User;
 use Arr;
 use Auth;
-use Schema;
-use App\User;
-use App\Module;
-use App\Content;
-use App\ModuleGroup;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Schema;
 
 /**
  * Class Mf
- *
- * @package App\Mainframe\Features
  */
 class Mf
 {
@@ -58,9 +59,8 @@ class Mf
     }
 
     /**
-     * Get mainframe config from config/mainframe/config.php
+     * Get a mainframe config from config/mainframe/config.php
      *
-     * @param $key
      * @return \Illuminate\Config\Repository|\Illuminate\Contracts\Foundation\Application|mixed
      */
     public static function config($key)
@@ -69,9 +69,9 @@ class Mf
     }
 
     /**
-     * Get project name. This is a CamelCase name of the project
+     * Get the project name. This is a CamelCase name of the project
      *
-     * @return \Illuminate\Config\Repository|\Illuminate\Contracts\Foundation\Application|mixed
+     * @return string|null
      */
     public static function project()
     {
@@ -102,7 +102,7 @@ class Mf
     /**
      * Get project directory app/Project
      *
-     * @return array|\Illuminate\Config\Repository|\Illuminate\Contracts\Foundation\Application|mixed|string|string[]
+     * @return string
      */
     public static function projectDir()
     {
@@ -134,7 +134,6 @@ class Mf
     /**
      * Project config
      *
-     * @param $key
      * @return \Illuminate\Config\Repository|\Illuminate\Contracts\Foundation\Application|mixed
      */
     public static function projectConfig($key)
@@ -145,11 +144,10 @@ class Mf
     }
 
     /**
-     * Common function to get current user.
+     * Common function to get the current user.
      * Do not change this function.
      *
-     * @param  null  $id
-     * @return null|User|\Illuminate\Database\Eloquent\Model|\Illuminate\Database\Query\Builder|mixed
+     * @return \App\User|\Illuminate\Contracts\Auth\Authenticatable|mixed|null
      */
     public static function user($id = null)
     {
@@ -158,31 +156,29 @@ class Mf
             return User::byId($id);
         }
 
-        // Resolved from logged in user
+        // Try to resolve user from logged-in user
         if (Auth::check()) {
             return Auth::user();
         }
 
-        // Check if usr is bearer
+        // Try to resolve user from bearer
         if ($user = Auth::guard('bearer')->user()) {
             return $user;
         }
 
-        // Check if usr is API caller
+        // Try to resolve user from X-Auth-Token
         if ($user = Auth::guard('x-auth')->user()) {
             return $user;
         }
 
-        // Return an empty guest user instance
-        // return null;
-
+        // By default, return guest user
         return User::guestInstance();
     }
 
     /**
      * Get cached module list
      *
-     * @return mixed|Module[]
+     * @return Collection<Module>
      */
     public static function modules()
     {
@@ -194,7 +190,7 @@ class Mf
     /**
      * Get cached module groups
      *
-     * @return mixed|ModuleGroup[]
+     * @return Collection<ModuleGroup>
      */
     public static function moduleGroups()
     {
@@ -204,20 +200,20 @@ class Mf
     }
 
     /**
-     * Create a unique signature/key for a HTTP request made
+     * Create a unique signature/key for an HTTP request made
      * Usually used for caching.
      *
-     * @param  String  $append  Raw Query string
-     * @return string
+     * @param  string|null  $append  Raw Query string
      */
-    public static function httpRequestSignature($append = null)
+    public static function httpRequestSignature(?string $append = null)
     {
-        $signature = json_encode(Arr::dot(request()->all()));
-        if (user()) {
-            $signature .= user()->uuid;
+        $signature = json_encode(Arr::dot(request()->all())); // Take all request params
+
+        if (user()) { // Concat User UUID
+            $signature .= '.'.user()->uuid;
         }
 
-        return $signature.$append;
+        return $signature.'.'.$append; // Append any additional string
     }
 
     /*
@@ -226,15 +222,14 @@ class Mf
     |--------------------------------------------------------------------------
     |
     | Often we shall need to fetch the columns of an existing table. The
-    | default Schema::functions do not cache these results which is
-    | not performance friendly. Here we have a list of similar
+    | default Schema::functions do not cache these results, which is
+    | not performance-friendly. Here we have a list of similar
     | functions where have cached the values.
     */
 
     /**
      * Get columns of a table.
      *
-     * @param $table
      * @param  null  $cache
      * @return array
      */
@@ -242,16 +237,14 @@ class Mf
     {
         $cache = $cache ?: timer('very-long');
 
-        return \Cache::remember("columns-of-{$table}", $cache, function () use ($table) {
+        return \Cache::remember("columns-of-$table", $cache, function () use ($table) {
             return Schema::getColumnListing($table);
         });
     }
 
     /**
-     * Check if a table has column
+     * Check if a table has the given column
      *
-     * @param $table
-     * @param $column
      * @param  null  $cache
      * @return bool
      */
@@ -265,7 +258,6 @@ class Mf
     /**
      * Check if the given table has a tenant field (tenant_id)
      *
-     * @param $table
      * @return bool
      */
     public static function tableHasTenant($table)
@@ -276,44 +268,42 @@ class Mf
     /**
      * Get content
      *
-     * @param $key
-     * @param  string  $part
-     * @return mixed|null
+     * @return string|null
      */
-    public static function content($key, $part = 'body')
+    public static function content(string $key, string $part = 'body')
     {
         $content = Content::where('key', $key)->where('is_active', 1)->first();
-        if ($content) {
-            return $content->part($part);
-        }
 
-        return null;
+        return $content?->part($part);
     }
 
     /**
-     * Create a URL by adding the given params to an url
+     * Create a URL by adding the given params to a URL
      * Ref: https://www.php.net/manual/en/function.parse-url.php
      * https://www.php.net/manual/en/function.parse-str.php
      *
-     * @param $url
-     * @param  null|string|array  $params
-     * @return string
+     * @param  string  $url  The URL to add params to
+     * @param  array|string|null  $params  The params to add to the URL
+     * @return string The modified URL
      */
     public static function link($url, $params = null)
     {
-        $url = trim($url, "&?=");
+        $url = trim($url, '&?=');
         $base = preg_replace('/\?.*/', '',
-            $url); //https://stackoverflow.com/questions/4270677/removing-query-string-in-php-sometimes-based-on-referrer
+            $url); // https://stackoverflow.com/questions/4270677/removing-query-string-in-php-sometimes-based-on-referrer
 
-        $oldQueryStr = parse_url($url, PHP_URL_QUERY); //
+        $oldQueryStr = parse_url($url,
+            PHP_URL_QUERY); // Temporary variable to store the old query string of the given URL
 
+        // Convert old URL query params to array from URL query string
         $oldParams = [];
         if ($oldQueryStr != '') {
             parse_str($oldQueryStr, $oldParams); // Assign the parameter array to $oldParams
         }
 
+        // Convert new params to array
         $newParams = $params ?? [];
-        if (!is_array($params)) {
+        if (! is_array($params)) {
             parse_str($params, $newParams); // Assign the parameter array to $newParams
         }
 
@@ -324,20 +314,17 @@ class Mf
             $newUrl .= '?'.http_build_query($mergedParams);
         }
 
-        // $url .= (parse_url($url, PHP_URL_QUERY) ? '&' : '?').http_build_query($mergedParams);
-
-        return trim($newUrl, "&?=");
+        return trim($newUrl, '&?='); // Trim the URL of any leading or trailing '&' or '?' characters
     }
 
     /**
      * Cache key for a specific request / url
      * Format url-key-f7fd51329cc3b37990056f286d25157b95a11f09-user:234-{append}
      *
-     * @param  string  $append
-     * @param  array  $except
+     * @param  string  $append  Additional string to append to the key
      * @return string
      */
-    public static function urlKey(string $append = '', array $except = []): string
+    public static function urlKey(string $append = '', array $except = [])
     {
         $segments = [
             'url-key',
@@ -346,7 +333,7 @@ class Mf
 
         $user = user();
         if ($user && $user->id) {
-            $segments[] = "user:{$user->id}";
+            $segments[] = "user:$user->id";
         }
 
         if ($append !== '') {
@@ -358,10 +345,6 @@ class Mf
 
     /**
      * Cache key for a specific request / url without user encoded
-     *
-     * @param  string  $append
-     * @param  array  $except
-     * @return string
      */
     public static function statelessUrlKey(string $append = '', array $except = []): string
     {
@@ -378,11 +361,9 @@ class Mf
     }
 
     /**
-     * Encode the current request URL into a string that can be used as key for caching
-     * @param $except
-     * @return string
+     * Encode the current request URL into a string that can be used as a key for caching
      */
-    public static function urlEncoded($except = [])
+    public static function urlEncoded(array $except = []): string
     {
         $url = request()->url();
         $queryParams = request()->query();
@@ -390,12 +371,8 @@ class Mf
         ksort($queryParams);
         $queryString = http_build_query(array_excludes($queryParams, $except));
 
-        $fullUrl = "{$url}?{$queryString}";
+        $fullUrl = "$url?$queryString";
 
         return sha1($fullUrl);
     }
-
-
-
-
 }

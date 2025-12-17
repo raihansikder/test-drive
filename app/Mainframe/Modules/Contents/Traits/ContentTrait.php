@@ -52,7 +52,6 @@ trait ContentTrait
     /**
      * Get parts
      *
-     * @param $value
      * @return array|mixed
      */
     public function getPartsAttribute($value)
@@ -86,6 +85,7 @@ trait ContentTrait
         $this->key = $this->key ?: $this->name;
 
         $this->key = \Str::kebab(strtolower($this->key));
+
         return $this;
     }
 
@@ -109,7 +109,7 @@ trait ContentTrait
      */
     public function part($key = null)
     {
-        if (!$key || $key == 'body') {
+        if (! $key || $key == 'body') {
             return $this->mutate(($this->body));
         }
 
@@ -127,7 +127,6 @@ trait ContentTrait
     /**
      * Mutate the content. Replace keywords with a desired string
      *
-     * @param $str
      * @return string
      */
     public function mutate($str)
@@ -142,7 +141,6 @@ trait ContentTrait
     /**
      * Check if content has a part with given key
      *
-     * @param $key
      * @return bool
      */
     public function hasPart($key)
@@ -159,7 +157,6 @@ trait ContentTrait
     /**
      * Get content by key content key
      *
-     * @param $key
      * @param  int  $cache
      * @return Content|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|object|null
      */

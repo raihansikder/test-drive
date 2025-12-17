@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Features\Report;
 
-use App\Module;
 use App\Mainframe\Features\Report\Traits\ModuleReportBuilderTrait;
+use App\Module;
 
 class ModuleReportBuilder extends ReportBuilder
 {
@@ -15,7 +15,7 @@ class ModuleReportBuilder extends ReportBuilder
      * @param  Module|mixed  $module  Module instance or module name
      * @param  string|null  $dataSource  Data source for the report
      * @param  string|null  $path  Path to store the report
-     * @param  integer|null  $cache  Cache duration in minutes
+     * @param  int|null  $cache  Cache duration in minutes
      */
     public function __construct($module = null, $dataSource = null, $path = null, $cache = null)
     {
@@ -23,5 +23,4 @@ class ModuleReportBuilder extends ReportBuilder
         $this->enableAutoRun();
         parent::__construct($dataSource, $path, $cache);
     }
-
 }

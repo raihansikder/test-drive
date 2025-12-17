@@ -2,9 +2,9 @@
 
 namespace App\Mainframe\Features\Cacher;
 
-use Str;
 use Cache;
 use Cached;
+use Str;
 
 class Cacher
 {
@@ -14,6 +14,7 @@ class Cacher
      * @var string
      */
     public $key;
+
     /**
      * Seconds for caching
      *
@@ -29,8 +30,8 @@ class Cacher
     /**
      * Get kebab-case key
      *
-     * @param $str
      * @return string
+     *
      * @throws \Exception
      */
     public function key($str = null)
@@ -42,14 +43,13 @@ class Cacher
 
     public static function value($key, $seconds = null)
     {
-        $cached = new Cached();
+        $cached = new Cached;
         $cached->key = $key;
-        $function = lcfirst(Str::camel($key)); //camelCaseFunction
+        $function = lcfirst(Str::camel($key)); // camelCaseFunction
         if (isset($seconds) && $seconds < 1) {
             Cache::forget($key);
         }
 
         return $cached->$function($seconds);
     }
-
 }

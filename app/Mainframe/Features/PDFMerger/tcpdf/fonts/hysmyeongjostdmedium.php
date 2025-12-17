@@ -1,4 +1,5 @@
 <?php
+
 $type = 'cidfont0';
 $name = 'HYSMyeongJoStd-Medium-Acro'; // AdobeMyungjoStd-Medium-Acro in acrobat 6
 $displayname = 'MyungJo Medium (Korean)';
@@ -37,7 +38,7 @@ $cw = [
     122 => 500, 123 => 583, 124 => 583, 125 => 583, 126 => 750,
 ];
 $_cr = [
-    //array(97, 97, 500),
+    // array(97, 97, 500),
     [8094, 8190, 500],
 ];
 foreach ($_cr as $_r) {

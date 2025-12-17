@@ -2,12 +2,12 @@
 
 namespace App\Mainframe\Features\Modular\Immutable;
 
-use App\User;
 use App\Mainframe\Features\Core\Traits\HasModule;
+use App\User;
 
 class Immutable
 {
-    use HasModule, HasImmutables;
+    use HasImmutables, HasModule;
 
     /**
      * Array of database field names that are immutable
@@ -15,30 +15,35 @@ class Immutable
      * @var array
      */
     public $immutables = [];
+
     /**
      * Module
      *
      * @var \App\Module
      */
     public $module;
+
     /**
      * Database table name of the module
      *
      * @var string
      */
     public $table;
+
     /**
      * Database table fields
      *
      * @var array
      */
     public $fields;
+
     /**
      * Mainframe element/model
      *
      * @var \App\Mainframe\Features\Modular\BaseModule\BaseModule
      */
     public $element;
+
     /**
      * User
      *
@@ -54,7 +59,6 @@ class Immutable
     public $processor;
 
     /**
-     * @param  $element
      * @param  User|null  $user
      */
     public function __construct($element, $user = null)
@@ -77,8 +81,8 @@ class Immutable
     }
 
     /**
-     * @param $immutables
      * @return void
+     *
      * @alias addImmutables
      */
     public function add($immutables = [])
@@ -93,6 +97,7 @@ class Immutable
     public function setProcessor($processor)
     {
         $this->processor = $processor;
+
         return $this;
     }
 }

@@ -47,6 +47,7 @@ trait PushNotificationDatatableTrait
      * Note: Modify datatable values
      *
      * @return mixed
+     *
      * @var $dt \Yajra\DataTables\DataTableAbstract
      */
     // public function modify($dt)

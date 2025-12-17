@@ -2,11 +2,11 @@
 
 namespace App\Mainframe\Modules\Users\Traits;
 
-use Arr;
 use App\Country;
+use App\Mainframe\Modules\Users\UserProcessor;
+use Arr;
 use Carbon\Carbon;
 use Illuminate\Validation\Rule;
-use App\Mainframe\Modules\Users\UserProcessor;
 
 /** @mixin UserProcessor $this */
 trait UserProcessorTrait
@@ -56,7 +56,7 @@ trait UserProcessorTrait
             'dob' => [
                 'nullable',
                 'date:Y-m-d',
-                'before:'.date("Y-m-d", strtotime("-18 years")),
+                'before:'.date('Y-m-d', strtotime('-18 years')),
             ],
         ];
 
@@ -129,14 +129,14 @@ trait UserProcessorTrait
      */
     public function fillCountryBasedOnCountryCode()
     {
-        if (!request('country_code')) {
+        if (! request('country_code')) {
             return $this;
         }
 
         $country = Country::where('iso2', request('country_code'))->remember(timer('very-long'))->first();
 
-        if (!$country) {
-            $this->error("Country code ".request('country_code')." is not valid");
+        if (! $country) {
+            $this->error('Country code '.request('country_code').' is not valid');
 
             return $this;
         }
@@ -176,7 +176,7 @@ trait UserProcessorTrait
     {
         $user = $this->element;
         if (count($user->group_ids) > 1) {
-            $this->fieldError('group_ids', "User can have one group selected");
+            $this->fieldError('group_ids', 'User can have one group selected');
         }
 
         return $this;
@@ -190,8 +190,8 @@ trait UserProcessorTrait
     public function checkUserMustHaveOneGroup()
     {
         $user = $this->element;
-        if (!is_array($user->group_ids) || !count($user->group_ids)) {
-            $this->fieldError('group_ids', "User must have one group selected");
+        if (! is_array($user->group_ids) || ! count($user->group_ids)) {
+            $this->fieldError('group_ids', 'User must have one group selected');
         }
 
         return $this;
@@ -221,7 +221,7 @@ trait UserProcessorTrait
     {
         $user = $this->element;
 
-        //user is sales admin
+        // user is sales admin
         // if (user()->isSalesAdmin() && ! in_array($user->group_ids[0], ['19', '20', '21', '22', '23', '28', '29'])) {
         //     $this->fieldError('group_ids', "Sales admin can only create resellers, vendors, sales admin,sales user or client user");
         // }

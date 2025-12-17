@@ -2,10 +2,10 @@
 
 namespace App\Mainframe\Modules\ModuleGroups\Traits;
 
-use Str;
 use App\Module;
 use App\ModuleGroup;
 use Illuminate\Validation\Rule;
+use Str;
 
 /** @mixin \App\Mainframe\Modules\Modules\ModuleProcessor $this */
 trait ModuleGroupProcessorTrait
@@ -25,7 +25,6 @@ trait ModuleGroupProcessorTrait
     public function fill($element)
     {
         // $element->populate();
-
 
         return $this;
     }
@@ -144,6 +143,4 @@ trait ModuleGroupProcessorTrait
 
         return $this;
     }
-
-
 }

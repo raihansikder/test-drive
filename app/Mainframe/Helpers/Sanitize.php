@@ -7,7 +7,6 @@ class Sanitize
     /**
      * cleans a string and returns as csv
      *
-     * @param $csv
      * @return string
      */
     public static function csv($csv)
@@ -33,7 +32,7 @@ class Sanitize
         $temp = [];
         if (is_array($array) && count($array)) { // handle if input is an array1
             foreach ($array as $a) {
-                if (!is_array($a) && strlen(trim($a))) {
+                if (! is_array($a) && strlen(trim($a))) {
                     $temp[] = $a;
                 }
             }
@@ -46,7 +45,6 @@ class Sanitize
      * removes new line tabs etc( '\n','\t') from a string
      * remove-extra-spaces-tabs-and-line-feeds-from-a-sentence-and-substitute
      *
-     * @param $str
      * @return mixed
      */
     public static function string($str)

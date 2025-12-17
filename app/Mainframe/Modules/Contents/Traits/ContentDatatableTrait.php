@@ -15,7 +15,7 @@ trait ContentDatatableTrait
      */
     public function source()
     {
-        return Content::with(['updater:id,name',]); // Model based query.
+        return Content::with(['updater:id,name']); // Model based query.
     }
 
     /*---------------------------------
@@ -56,6 +56,7 @@ trait ContentDatatableTrait
      * Note: Modify datatable values
      *
      * @return mixed
+     *
      * @var $dt \Yajra\DataTables\DataTableAbstract
      */
     // public function modify($dt)

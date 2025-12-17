@@ -12,12 +12,13 @@ trait DataBlockControllerTrait
      *
      * @param  string  $key
      * @return \Illuminate\Http\JsonResponse
+     *
      * @throws \Exception
      */
     public function show($key)
     {
         $class = $this->resolveClass($key);
-        if (!class_exists($class)) {
+        if (! class_exists($class)) {
             return $this->fail("Class {$class} not found")->json();
         }
 
@@ -30,7 +31,6 @@ trait DataBlockControllerTrait
     /**
      * Resolve class to execute the request
      *
-     * @param $key
      * @return string
      */
     public function resolveClass($key)
@@ -39,7 +39,7 @@ trait DataBlockControllerTrait
 
         // $path defined in controller
         if (isset($this->path)) {
-            $path = rtrim($this->path, "\\")."\\".$class;
+            $path = rtrim($this->path, '\\').'\\'.$class;
             if (class_exists($path)) {
                 return $path;
             }
@@ -57,5 +57,4 @@ trait DataBlockControllerTrait
         // Default Mainframe location
         return '\App\Mainframe\DataBlocks\\'.$class;
     }
-
 }

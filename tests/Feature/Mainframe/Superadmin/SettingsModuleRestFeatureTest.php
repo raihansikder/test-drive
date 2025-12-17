@@ -1,207 +1,133 @@
 <?php
 
-namespace Tests\Feature\Mainframe\Superadmin;
-
-use App\Mainframe\Helpers\Test\SuperadminTestCase;
 use App\Module;
 use App\Setting;
 
-class SettingsModuleRestFeatureTest extends SuperadminTestCase
-{
-    /**
-     * The module name that is being tested
-     *
-     * @var string
-     */
-    public $moduleName = 'settings';
+beforeEach(function () {
+    $this->module = Module::byName('settings');
+    login(user(config('test.super_admin_user_id')));
+});
 
-    /**
-     * @var \App\Mainframe\Modules\Modules\Module
-     */
-    public $module;
+test('user can see create form', function () {
+    $this->get('/'.$this->module->route_path.'/create')
+        ->assertStatus(200)
+        ->assertSee($this->module->title);
+});
 
-    /**
-     * Setup the class. This works like constructor.
-     */
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->module = Module::byName($this->moduleName);
-    }
+test('user can not store invalid element', function () {
+    $name = $this->faker->slug;
+    $this->followingRedirects()
+        ->post('/'.$this->module->route_path, [
+            'name' => $name,
+        ])
+        ->assertStatus(200)
+        ->assertSee('Fail')
+        ->assertSee('The title field is required.')
+        ->assertSee('The type field is required');
+});
 
+test('user can store valid element', function () {
+    $name = $this->faker->slug;
+    $this->followingRedirects()
+        ->post('/'.$this->module->route_path, [
+            'name' => $name,
+            'title' => strtoupper($name),
+            'type' => 'string',
+            'value' => $this->faker->sentence,
+            'description' => $this->faker->sentence,
+        ])
+        ->assertStatus(200)
+        ->assertSee('Success');
+});
 
-    /*
-    |--------------------------------------------------------------------------
-    | Test functions
-    |--------------------------------------------------------------------------
-    |
-    | List of test functions
-    |
-    */
-    /**
-     * Superadmin can see create form.
-     *
-     * @return void
-     */
-    public function test_user_can_see_create_form()
-    {
-        $this->get('/' . $this->module->route_path . '/create')
-            ->assertStatus(200)
-            ->assertSee($this->module->title);
-    }
+test('user can not store element of same name', function () {
+    $latest = $this->latest(Setting::class);
 
-    /**
-     * Superadmin can create a new Setting by passing validations.
-     *
-     * @return void
-     */
-    public function test_user_can_not_store_invalid_element()
-    {
-        $name = $this->faker->slug;
-        $this->followingRedirects()
-            ->post('/' . $this->module->route_path, [
-                'name' => $name,
-            ])
-            ->assertStatus(200)
-            ->assertSee('Fail')
-            ->assertSee('The title field is required.')
-            ->assertSee('The type field is required');
-    }
+    $this->followingRedirects()
+        ->post('/'.$this->module->route_path, [
+            'name' => $latest->name,
+            'title' => strtoupper($latest->name),
+            'type' => 'string',
+            'value' => $this->faker->sentence,
+            'description' => $this->faker->sentence,
+        ])
+        ->assertStatus(200)
+        ->assertSee('Fail')
+        ->assertSee('The name has already been taken.');
+});
 
-    public function test_user_can_store_valid_element()
-    {
-        $name = $this->faker->slug;
-        $this->followingRedirects()
-            ->post('/' . $this->module->route_path, [
-                'name' => $name,
-                'title' => strtoupper($name),
-                'type' => 'string',
-                'value' => $this->faker->sentence,
-                'description' => $this->faker->sentence,
-            ])
-            ->assertStatus(200)
-            ->assertSee('Success');
-    }
+test('user can view list', function () {
+    $latest = $this->latest(Setting::class);
 
-    public function test_user_can_not_store_element_of_same_name()
-    {
-        $latest = $this->latest(Setting::class);
+    $this->get('/'.$this->module->route_path)
+        ->assertStatus(200)
+        ->assertSee($this->module->title);
 
-        $this->followingRedirects()
-            ->post('/' . $this->module->route_path, [
-                'name' => $latest->name,
-                'title' => strtoupper($latest->name),
-                'type' => 'string',
-                'value' => $this->faker->sentence,
-                'description' => $this->faker->sentence,
-            ])
-            ->assertStatus(200)
-            ->assertSee('Fail')
-            ->assertSee('The name has already been taken.');
-    }
+    $this->get('/'.$this->module->route_path.'/datatable/json')
+        ->assertStatus(200)
+        ->assertSee($latest->name);
+});
 
-    /**
-     * Superadmin can view list of lorem-ipsums
-     *
-     * @return void
-     */
-    public function test_user_can_view_list()
-    {
-        $latest = $this->latest(Setting::class);
+test('user can view element', function () {
+    $latest = $this->latest(Setting::class);
 
-        $this->get('/' . $this->module->route_path)
-            ->assertStatus(200)
-            ->assertSee($this->module->title);
+    $this->followingRedirects()
+        ->get("/{$this->module->route_path}/{$latest->id}")
+        ->assertStatus(200)
+        ->assertSee($latest->name);
+});
 
-        $this->get('/' . $this->module->route_path . '/datatable/json')
-            ->assertStatus(200)
-            ->assertSee($latest->name);
-    }
+test('user can edit element', function () {
+    $latest = $this->latest(Setting::class);
 
-    /**
-     * Superadmin can view the element as a JSON if ret=json is passed.
-     *
-     * @return void
-     */
-    public function test_user_can_view_element()
-    {
-        $latest = $this->latest(Setting::class);
+    $this->get("/{$this->module->route_path}/{$latest->id}/edit")
+        ->assertStatus(200)
+        ->assertSee($latest->name);
+});
 
-        $this->followingRedirects()
-            ->get("/{$this->module->route_path}/{$latest->id}")
-            ->assertStatus(200)
-            ->assertSee($latest->name);
+test('user can update element', function () {
+    $latest = $this->latest(Setting::class);
+    $newValue = $this->faker->sentence;
 
-    }
+    $this->followingRedirects()
+        ->patch("/{$this->module->route_path}/{$latest->id}", [
+            'value' => $newValue,
+        ])
+        ->assertStatus(200)
+        ->assertSee('Success')
+        ->assertSee($newValue);
+});
 
-    /**
-     * Superadmin can view edit page.
-     *
-     * @return void
-     */
-    public function test_user_can_edit_element()
-    {
-        $latest = $this->latest(Setting::class);
+test('user can delete element', function () {
+    // Note: The element got deleted earlier so had to add a delay for deletion so that
+    //  other tests can run and then the delete is executed.
+    // $this->markTestSkipped('Skipped because it executes and makes the element inaccessible');
+    // sleep(1);
+    // ------------------------------------------------------------------------------------------
+    $setting = $this->latest(Setting::class);
 
-        $this->get("/{$this->module->route_path}/{$latest->id}/edit")
-            ->assertStatus(200)
-            ->assertSee($latest->name);
+    $upload = $setting->uploads()->create([
+        'uploadable_id' => $setting->id,
+        'uploadable_type' => Setting::class,
+        'name' => 'test.jpg',
+        'path' => 'test.jpg',
+    ]);
 
-    }
+    // delete with redirect=success to index route.
+    $this->followingRedirects()
+        ->delete("/{$this->module->route_path}/{$setting->id}?redirect_success=".route($this->module->name.'.index'))
+        ->assertStatus(200)
+        ->assertSee($this->module->title);
 
-    /**
-     * Superadmin can update an element
-     *
-     * @return void
-     */
-    public function test_user_can_update_element()
-    {
-        $latest = $this->latest(Setting::class);
-        $newValue = $this->faker->sentence;
+    // Check if it has been soft deleted.
+    $this->assertDatabaseMissing('uploads', ['id' => $upload->id, 'deleted_at' => null]);
+});
 
-        $this->followingRedirects()
-            ->patch("/{$this->module->route_path}/{$latest->id}", [
-                'value' => $newValue,
-            ])
-            ->assertStatus(200)
-            ->assertSee('Success')
-            ->assertSee($newValue);
-
-    }
-
-    /**
-     * Superadmin can delete an element
-     *
-     * @return void
-     */
-    public function test_user_can_delete_element()
-    {
-        // Note: The element got deleted earlier so had to add a delay for deletion so that
-        //  other tests can run and then the delete is executed.
-        // $this->markTestSkipped('Skipped because it executes and makes the element inaccessible');
-        // sleep(1);
-        // ------------------------------------------------------------------------------------------
-
-        $latest = $this->latest(Setting::class);
-
-        // delete with redirect=success to index route.
-        $this->followingRedirects()
-            ->delete("/{$this->module->route_path}/{$latest->id}?redirect_success=" . route($this->module->name . '.index'))
-            ->assertStatus(200)
-            ->assertSee($this->module->title);
-
-        // Check if it has been soft deleted.
-        $this->assertDatabaseMissing($this->module->module_table, ['id' => $latest->id, 'deleted_at' => null]);
-
-    }
-
-    /*
-    |--------------------------------------------------------------------------
-    | Helpers
-    |--------------------------------------------------------------------------
-    |
-    | These are not actual tests rather helpers to fun the tests.
-    |
-    */
-
-}
+/*
+|--------------------------------------------------------------------------
+| Helpers
+|--------------------------------------------------------------------------
+|
+| These are not actual tests rather helpers to fun the tests.
+|
+*/

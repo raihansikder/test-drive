@@ -9,16 +9,14 @@ use Swift_Message;
 
 /**
  * Trait MailTracking
- *
- * @package Tests
  */
 
 /**
  * Trait MailTracking
  *
- * @package Tests
  * @see  https://github.com/spinen/laravel-mail-assertions/blob/develop/src/MailTracking.php
  * @see     https://gist.github.com/JeffreyWay/b501c53d958b07b8a332
+ *
  * @tutorial https://laracasts.com/series/phpunit-testing-in-laravel/episodes/12
  */
 trait MailTrackingTrait
@@ -72,7 +70,7 @@ trait MailTrackingTrait
      * @param  \Swift_Message|null  $message  If null then the latest email will be retrieved.
      * @return $this
      */
-    public function seeEmailTo($recipients, Swift_Message $message = null)
+    public function seeEmailTo($recipients, ?Swift_Message $message = null)
     {
         $recipients = Arr::wrap($recipients);
 
@@ -91,7 +89,7 @@ trait MailTrackingTrait
      * @param  \Swift_Message|null  $message  If null then the latest email will be retrieved.
      * @return $this
      */
-    public function seeEmailBcc($recipients, Swift_Message $message = null)
+    public function seeEmailBcc($recipients, ?Swift_Message $message = null)
     {
         $recipients = Arr::wrap($recipients);
 
@@ -110,7 +108,7 @@ trait MailTrackingTrait
      * @param  \Swift_Message|null  $message  If null then the latest email will be retrieved.
      * @return $this
      */
-    public function seeEmailCc($recipients, Swift_Message $message = null)
+    public function seeEmailCc($recipients, ?Swift_Message $message = null)
     {
         $recipients = Arr::wrap($recipients);
 
@@ -128,7 +126,7 @@ trait MailTrackingTrait
      * @param  \Swift_Message|null  $message  If null then the latest email will be retrieved.
      * @return $this
      */
-    public function seeEmailFrom($sender, Swift_Message $message = null)
+    public function seeEmailFrom($sender, ?Swift_Message $message = null)
     {
         $this->assertArrayHasKey($sender, $this->getEmail($message)->getFrom(), "No email was sent from $sender");
 
@@ -139,13 +137,12 @@ trait MailTrackingTrait
      * Assert that the last email's body does not contain the given text.
      *
      * @param  string  $excerpt
-     * @param  Swift_Message|null  $message
      * @return $this
      */
-    protected function seeEmailDoesNotContain($excerpt, Swift_Message $message = null)
+    protected function seeEmailDoesNotContain($excerpt, ?Swift_Message $message = null)
     {
         $this->assertStringNotContainsString($excerpt, $this->getEmail($message)
-            ->getBody(), "The last email sent contained the provided text in its body.");
+            ->getBody(), 'The last email sent contained the provided text in its body.');
 
         return $this;
     }
@@ -154,13 +151,12 @@ trait MailTrackingTrait
      * Assert that the last email's body equals the given text.
      *
      * @param  string  $body
-     * @param  Swift_Message|null  $message
      * @return $this
      */
-    protected function seeEmailEquals($body, Swift_Message $message = null)
+    protected function seeEmailEquals($body, ?Swift_Message $message = null)
     {
         $this->assertEquals($body, $this->getEmail($message)
-            ->getBody(), "The last email sent did not match the given email.");
+            ->getBody(), 'The last email sent did not match the given email.');
 
         return $this;
     }
@@ -169,11 +165,10 @@ trait MailTrackingTrait
      * Assert that the last email had the given priority level.
      * The value is an integer where 1 is the highest priority and 5 is the lowest.
      *
-     * @param  integer  $priority
-     * @param  Swift_Message|null  $message
+     * @param  int  $priority
      * @return $this
      */
-    protected function seeEmailPriorityEquals($priority, Swift_Message $message = null)
+    protected function seeEmailPriorityEquals($priority, ?Swift_Message $message = null)
     {
         $actual_priority = $this->getEmail($message)
             ->getPriority();
@@ -188,10 +183,9 @@ trait MailTrackingTrait
      * Assert that the last email was set to reply to the given address.
      *
      * @param  string  $reply_to
-     * @param  Swift_Message|null  $message
      * @return $this
      */
-    protected function seeEmailReplyTo($reply_to, Swift_Message $message = null)
+    protected function seeEmailReplyTo($reply_to, ?Swift_Message $message = null)
     {
         $this->assertArrayHasKey($reply_to, (array) $this->getEmail($message)
             ->getReplyTo(),
@@ -203,8 +197,9 @@ trait MailTrackingTrait
     /**
      * Assert that the given number of emails were sent.
      *
-     * @param  integer  $count
+     * @param  int  $count
      * @return MailTracking $this
+     *
      * @deprecated in favor of seeEmailCountEquals
      */
     protected function seeEmailsSent($count)
@@ -215,7 +210,7 @@ trait MailTrackingTrait
     /**
      * Assert that the given number of emails were sent.
      *
-     * @param  integer  $count
+     * @param  int  $count
      * @return $this
      */
     protected function seeEmailCountEquals($count)
@@ -231,11 +226,11 @@ trait MailTrackingTrait
      * Assert that the last email's subject matches the given string.
      *
      * @param  string  $subject
-     * @param  Swift_Message|null  $message
      * @return MailTracking $this
+     *
      * @deprecated in favor of seeEmailSubjectEquals
      */
-    protected function seeEmailSubject($subject, Swift_Message $message = null)
+    protected function seeEmailSubject($subject, ?Swift_Message $message = null)
     {
         return $this->seeEmailSubjectEquals($subject, $message);
     }
@@ -244,13 +239,12 @@ trait MailTrackingTrait
      * Assert that the last email's subject contains the given string.
      *
      * @param  string  $excerpt
-     * @param  Swift_Message|null  $message
      * @return $this
      */
-    protected function seeEmailSubjectContains($excerpt, Swift_Message $message = null)
+    protected function seeEmailSubjectContains($excerpt, ?Swift_Message $message = null)
     {
         $this->assertStringContainsString($excerpt, $this->getEmail($message)
-            ->getSubject(), "The last email sent did not contain the provided subject.");
+            ->getSubject(), 'The last email sent did not contain the provided subject.');
 
         return $this;
     }
@@ -259,13 +253,12 @@ trait MailTrackingTrait
      * Assert that the last email's subject does not contain the given string.
      *
      * @param  string  $excerpt
-     * @param  Swift_Message|null  $message
      * @return $this
      */
-    protected function seeEmailSubjectDoesNotContain($excerpt, Swift_Message $message = null)
+    protected function seeEmailSubjectDoesNotContain($excerpt, ?Swift_Message $message = null)
     {
         $this->assertStringNotContainsString($excerpt, $this->getEmail($message)
-            ->getSubject(), "The last email sent contained the provided text in its subject.");
+            ->getSubject(), 'The last email sent contained the provided text in its subject.');
 
         return $this;
     }
@@ -274,10 +267,9 @@ trait MailTrackingTrait
      * Assert that the last email's subject matches the given string.
      *
      * @param  string  $subject
-     * @param  Swift_Message|null  $message
      * @return $this
      */
-    protected function seeEmailSubjectEquals($subject, Swift_Message $message = null)
+    protected function seeEmailSubjectEquals($subject, ?Swift_Message $message = null)
     {
         $this->assertEquals($subject, $this->getEmail($message)
             ->getSubject(), "The last email sent did not contain a subject of $subject.");
@@ -296,7 +288,7 @@ trait MailTrackingTrait
         $this->emails[] = $email;
     }
 
-    public function getEmail(Swift_Message $message = null)
+    public function getEmail(?Swift_Message $message = null)
     {
         $this->seeEmailWasSent();
 
@@ -307,12 +299,10 @@ trait MailTrackingTrait
     {
         return end($this->emails);
     }
-
 }
 
 class TestingMailEventListener implements Swift_Events_EventListener
 {
-
     public $test;
 
     public function __construct($test)

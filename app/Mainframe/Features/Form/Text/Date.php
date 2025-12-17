@@ -6,7 +6,6 @@ use Carbon\Carbon;
 
 class Date extends InputText
 {
-
     public $format = 'd-m-Y';
 
     /**
@@ -31,7 +30,7 @@ class Date extends InputText
 
         $date = $this->value();
 
-        if (!$date) {
+        if (! $date) {
             return null;
         }
 

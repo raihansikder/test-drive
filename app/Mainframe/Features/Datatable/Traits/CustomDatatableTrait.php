@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Features\Datatable\Traits;
 
-use URL;
 use App\Mainframe\Features\Datatable\Datatable;
+use URL;
 
 /** @mixin Datatable */
 trait CustomDatatableTrait
@@ -17,8 +17,8 @@ trait CustomDatatableTrait
      */
     public function ajaxUrl()
     {
-        # Important! Check if a URL is already assigned
-        if (!$this->ajaxUrl) {
+        // Important! Check if a URL is already assigned
+        if (! $this->ajaxUrl) {
             $this->ajaxUrl = route('datatable.json', classKey($this)); // Default common route for dynamic datatables
         }
 

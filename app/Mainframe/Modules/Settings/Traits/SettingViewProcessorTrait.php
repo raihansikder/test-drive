@@ -8,13 +8,13 @@ use App\Mainframe\Modules\Settings\SettingViewProcessor;
 trait SettingViewProcessorTrait
 {
     /**
-     * @var \App\Module $module
-     * @var \Illuminate\Database\Eloquent\Builder $model
-     * @var \App\Setting $element
-     * @var bool $editable
-     * @var array $immutables
-     * @var string $type i.e. View type create, edit, index etc.
-     * @var array $vars Variables shared in view blade
+     * @var \App\Module
+     * @var \Illuminate\Database\Eloquent\Builder
+     * @var \App\Setting
+     * @var bool
+     * @var array
+     * @var string i.e. View type create, edit, index etc.
+     * @var array Variables shared in view blade
      */
 
     // Note: See parent class for available functions

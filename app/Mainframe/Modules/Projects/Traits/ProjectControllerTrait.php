@@ -29,6 +29,7 @@ trait ProjectControllerTrait
      * List returns a collection of objects as Json for an API call
      *
      * @return \Illuminate\Http\JsonResponse
+     *
      * @throws \Exception
      */
     public function listJson()
@@ -40,6 +41,7 @@ trait ProjectControllerTrait
      * Module Report
      *
      * @return bool|\Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\Support\Collection|\Illuminate\View\View|mixed
+     *
      * @throws \Exception
      */
     // public function report()

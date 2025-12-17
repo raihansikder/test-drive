@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Modules\InAppNotifications;
 
-use App\Project\Features\Modular\BaseModule\BaseModule;
 use App\Mainframe\Modules\InAppNotifications\Traits\InAppNotificationTrait;
+use App\Project\Features\Modular\BaseModule\BaseModule;
 
 class InAppNotification extends BaseModule
 {
@@ -50,7 +50,7 @@ class InAppNotification extends BaseModule
 
     // protected $guarded = [];
     // protected $dates = ['created_at', 'updated_at', 'deleted_at'];
-    protected $casts = ['data' => 'array',];
+    protected $casts = ['data' => 'array'];
     // protected $with = [];
     // protected $appends = ['data_json', 'response_json', 'response_options_json', 'images_json',];
 

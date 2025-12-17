@@ -21,7 +21,7 @@ trait CountryProcessorTrait
     //  */
     // public function fill($element)
     // {
-    //     // $element->populate(); 
+    //     // $element->populate();
     //     return $this;
     // }
 
@@ -57,7 +57,7 @@ trait CountryProcessorTrait
     public function saving($element)
     {
         // Validate. Then if valid, do further processing
-        // if($this->isValid()){                
+        // if($this->isValid()){
         // }
 
         return $this;

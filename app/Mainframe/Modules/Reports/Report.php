@@ -38,5 +38,4 @@ class Report extends BaseModule
     public static $types = [
         'Module Generic Report' => 'Module Generic Report',
     ];
-
 }

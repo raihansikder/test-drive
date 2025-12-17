@@ -3,31 +3,29 @@
 namespace App\Mainframe\Modules\Settings\Traits;
 
 use App\Module;
-use App\Setting;
 use App\Project\Modules\Emails\Email;
+use App\Setting;
 
 trait SettingTrait
 {
     /**
      * A shorthand function to get setting by name
      *
-     * @param $name
-     * @param  bool  $cache
      * @return array|bool|mixed|null|string
      */
     public static function read($name, bool $cache = true)
     {
         /** @var Setting $setting */
 
-        # Get the current version
-        if (!$cache) {
+        // Get the current version
+        if (! $cache) {
             $setting = Setting::where('name', $name)->first();
             if ($setting) {
                 return $setting->getValue();
             }
         }
 
-        # Get the cached version
+        // Get the cached version
         if ($setting = Setting::where('name', $name)->remember(timer('long'))->first()) {
             return $setting->getValue();
         }
@@ -83,7 +81,7 @@ trait SettingTrait
         | Step 1. Save the \App\Email entry
         |--------------------------------------------------------------------------
         */
-        $email = new Email();
+        $email = new Email;
         $email->subject = 'Test Setting Save | '.now();
         $email->to = ['test@gmail.com'];
         // $email->cc = [];
@@ -105,5 +103,4 @@ trait SettingTrait
         }
 
     }
-
 }

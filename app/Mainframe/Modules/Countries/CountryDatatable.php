@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Modules\Countries;
 
-use App\Project\Features\Datatable\ModuleDatatable;
 use App\Mainframe\Modules\Countries\Traits\CountryDatatableTrait;
+use App\Project\Features\Datatable\ModuleDatatable;
 
 class CountryDatatable extends ModuleDatatable
 {

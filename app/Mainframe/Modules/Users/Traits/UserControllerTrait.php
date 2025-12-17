@@ -2,13 +2,13 @@
 
 namespace App\Mainframe\Modules\Users\Traits;
 
-use Hash;
-use App\User;
-use Validator;
-use App\Project\Modules\Users\UserList;
-use App\Project\Modules\Users\UserDatatable;
-use App\Mainframe\Modules\Users\UserResource;
 use App\Mainframe\Modules\Users\UserCollection;
+use App\Mainframe\Modules\Users\UserResource;
+use App\Project\Modules\Users\UserDatatable;
+use App\Project\Modules\Users\UserList;
+use App\User;
+use Hash;
+use Validator;
 
 trait UserControllerTrait
 {
@@ -22,21 +22,22 @@ trait UserControllerTrait
      * Index
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View
+     *
      * @throws \Exception
      */
     public function index()
     {
-        if (!$this->user->can('view-any', $this->model)) {
+        if (! $this->user->can('view-any', $this->model)) {
             return $this->permissionDenied();
         }
 
-        # Respond as JSON/API
+        // Respond as JSON/API
         if ($this->expectsJson()) {
             // Note - Example with custom UserCollection
             return (new UserList($this->module))->json(UserCollection::class);
         }
 
-        # Show default module grid
+        // Show default module grid
         $this->view->setType('index')->setDatatable($this->datatable());
 
         return $this->view($this->view->gridPath());
@@ -45,21 +46,21 @@ trait UserControllerTrait
     /**
      * Show
      *
-     * @param $id
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     *
      * @urlParam  id required The ID of the item.
      */
     public function show($id)
     {
-        if (!$this->element = $this->model->with($this->relations())->find($id)) {
+        if (! $this->element = $this->model->with($this->relations())->find($id)) {
             return $this->notFound();
         }
 
-        if (!$this->user->can('view', $this->element)) {
+        if (! $this->user->can('view', $this->element)) {
             return $this->permissionDenied();
         }
 
-        # Redirect to edit page.
+        // Redirect to edit page.
         // Note - Example with custom UserResource
         return $this->load(new UserResource($this->element))
             ->to(route($this->moduleName.'.edit', $id))
@@ -110,8 +111,8 @@ trait UserControllerTrait
     public function storeRequestValidator()
     {
         return Validator::make(request()->all(),
-            ['password' => User::PASSWORD_VALIDATION_RULE,],
-            ['password.regex' => 'The password field should be mix of letters and numbers.',]
+            ['password' => User::PASSWORD_VALIDATION_RULE],
+            ['password.regex' => 'The password field should be mix of letters and numbers.']
         );
 
     }
@@ -127,8 +128,6 @@ trait UserControllerTrait
 
         return $this->validator();
     }
-
-
 
     /*
     |--------------------------------------------------------------------------

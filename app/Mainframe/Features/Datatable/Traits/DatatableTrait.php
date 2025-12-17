@@ -1,16 +1,17 @@
 <?php
+
 /** @noinspection PhpUnnecessaryLocalVariableInspection */
 
 /** @noinspection UnknownColumnInspection */
 
 namespace App\Mainframe\Features\Datatable\Traits;
 
+use App\Mainframe\Features\Datatable\Datatable;
+use App\Mainframe\Helpers\Mf;
+use Arr;
 use DB;
 use Str;
 use URL;
-use Arr;
-use App\Mainframe\Helpers\Mf;
-use App\Mainframe\Features\Datatable\Datatable;
 
 /** @mixin Datatable */
 trait DatatableTrait
@@ -59,7 +60,6 @@ trait DatatableTrait
     /**
      * Creates a SQL query string
      *
-     * @param $columns
      * @return array
      */
     public function selectQueryString($columns)
@@ -94,7 +94,6 @@ trait DatatableTrait
     /**
      * Apply query filter
      *
-     * @param $query
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
      */
     public function filter($query)
@@ -110,7 +109,7 @@ trait DatatableTrait
     /**
      * Auto-apply filter based on the request query
      *
-     * @param $query \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder|mixed
+     * @param  $query  \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder|mixed
      * @return \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder|mixed
      */
     public function applyAutoFilterUsingRequestParameters($query)
@@ -140,7 +139,7 @@ trait DatatableTrait
                 $val = request($column);
             }
 
-            if (!is_array($val) && $val == '') {
+            if (! is_array($val) && $val == '') {
                 continue;
             }
 
@@ -181,12 +180,11 @@ trait DatatableTrait
     /**
      * Get datatable default search input value
      *
-     * @param  string  $key
      * @return mixed|null
      */
     public function searchValue(string $key = 'value')
     {
-        if (!$search = request('search')) {
+        if (! $search = request('search')) {
             return null;
         }
 
@@ -197,7 +195,8 @@ trait DatatableTrait
      * Modify datatable values
      *
      * @return \Yajra\DataTables\DataTableAbstract
-     * @var $dt \Yajra\DataTables\DataTableAbstract
+     *
+     * @var \Yajra\DataTables\DataTableAbstract
      */
     public function modify($dt)
     {
@@ -217,7 +216,8 @@ trait DatatableTrait
      * Transform values based on the transform array
      *
      * @return \Yajra\DataTables\DataTableAbstract
-     * @var $dt \Yajra\DataTables\DataTableAbstract
+     *
+     * @var \Yajra\DataTables\DataTableAbstract
      */
     public function transformValues($dt)
     {
@@ -238,7 +238,8 @@ trait DatatableTrait
      * Transform boolean field values. Show Yes/No instead of 1/0
      *
      * @return \Yajra\DataTables\DataTableAbstract
-     * @var $dt \Yajra\DataTables\DataTableAbstract
+     *
+     * @var \Yajra\DataTables\DataTableAbstract
      */
     public function transformBooleans($dt)
     {
@@ -253,6 +254,7 @@ trait DatatableTrait
                     if ($row->$field == 0) {
                         return '<span class="text-red">No</span>';
                     }
+
                     return $row->$field;
                 });
             }
@@ -265,7 +267,8 @@ trait DatatableTrait
      * Transform datetime field values
      *
      * @return \Yajra\DataTables\DataTableAbstract
-     * @var $dt \Yajra\DataTables\DataTableAbstract
+     *
+     * @var \Yajra\DataTables\DataTableAbstract
      */
     public function transformDatetimes($dt)
     {
@@ -290,7 +293,8 @@ trait DatatableTrait
      * Transform date field values using formatDate function
      *
      * @return \Yajra\DataTables\DataTableAbstract
-     * @var $dt \Yajra\DataTables\DataTableAbstract
+     *
+     * @var \Yajra\DataTables\DataTableAbstract
      */
     public function transformDates($dt)
     {
@@ -344,7 +348,8 @@ trait DatatableTrait
      * A route is automatically created for all modules to access this controller function
      *
      * @return \Illuminate\Http\JsonResponse
-     * @var \Yajra\DataTables\DataTables $dt
+     *
+     * @var \Yajra\DataTables\DataTables
      */
     public function json()
     {
@@ -363,7 +368,7 @@ trait DatatableTrait
         $query = $this->query();
 
         // Set a default limit if not set in the request
-        if (!request('length')) {
+        if (! request('length')) {
             $query->limit(10);
         }
 
@@ -375,7 +380,6 @@ trait DatatableTrait
     /**
      * Check if a column exists in the data table
      *
-     * @param $column
      * @return bool
      */
     public function hasColumn($column)
@@ -405,6 +409,7 @@ trait DatatableTrait
      * Titles extracted from the column definition
      *
      * @return array
+     *
      * @noinspection PhpUnusedParameterInspection
      */
     public function titles()
@@ -437,7 +442,7 @@ trait DatatableTrait
             // The reduce method reduces the collection to a single value, passing the result of
             // each iteration into the subsequent iteration:
             ->reduce(function ($carry, $item) {
-                if (!in_array($item[1], $this->hidden())) {
+                if (! in_array($item[1], $this->hidden())) {
                     return $carry."{ data: '".$item[1]."', name: '".$item[0]."' },";
                 }
 
@@ -459,6 +464,4 @@ trait DatatableTrait
 
         return $this->ajaxUrl;
     }
-
-
 }

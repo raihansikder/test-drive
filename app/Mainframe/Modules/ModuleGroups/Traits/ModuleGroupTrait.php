@@ -2,9 +2,9 @@
 
 namespace App\Mainframe\Modules\ModuleGroups\Traits;
 
-use Str;
 use App\Module;
 use App\ModuleGroup;
+use Str;
 
 /** @mixin \App\Mainframe\Modules\ModuleGroups\ModuleGroup $this */
 trait ModuleGroupTrait
@@ -61,7 +61,6 @@ trait ModuleGroupTrait
     /**
      * Show the permission selection checkbox grid in groups details page
      *
-     * @param $tree
      * @return string|void
      */
     public static function renderTree($tree = null)
@@ -72,7 +71,7 @@ trait ModuleGroupTrait
         $html = '';
 
         if (is_array($tree)) {
-            $html .= "<ul>";
+            $html .= '<ul>';
             foreach ($tree as $leaf) {
                 // $perm = 'perm-'.$leaf['type'].'-'.$leaf['item']->name;
                 $perm = $leaf['item']->name;
@@ -81,26 +80,26 @@ trait ModuleGroupTrait
                 $html .= "<div class='clearfix'></div><li class='pull-left'>".
                     "<input name='permission[]' type='checkbox' v-model='permission' value='$val'
 				v-on:click='clicked'/>".
-                    "<label><b>".$leaf['item']->title."</b> - <small>".$leaf['item']->desc."</small></label> <div class='clearfix'></div>";
+                    '<label><b>'.$leaf['item']->title.'</b> - <small>'.$leaf['item']->desc."</small></label> <div class='clearfix'></div>";
 
                 if ($leaf['type'] === 'module') {
                     $html .= "<ul class='pull-left module-permissions'>";
                     foreach ($module_permissions as $k => $v) {
                         $val = "$perm-$k";
-                        $html .= "<li>".
+                        $html .= '<li>'.
                             "<input name='permission[]' type='checkbox' v-model='permission'  value='$val'/>".
-                            "<label>".$v."</label>".
-                            "</li>";
+                            '<label>'.$v.'</label>'.
+                            '</li>';
                     }
-                    $html .= "</ul>";
+                    $html .= '</ul>';
                 }
 
                 if (isset($leaf['children']) && count($leaf['children'])) {
                     $html .= self::renderTree($leaf['children']);
                 }
-                $html .= "</li>";
+                $html .= '</li>';
             }
-            $html .= "</ul>";
+            $html .= '</ul>';
 
             return $html;
         }
@@ -192,6 +191,7 @@ trait ModuleGroupTrait
         if (Str::contains($this->icon_css, ['fa', 'fi'])) {
             return "<i class='".$this->icon_css."'></i>";
         }
+
         return "<ion-icon name='".$this->icon_css."'></ion-icon>";
     }
 }

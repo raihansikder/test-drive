@@ -1,18 +1,19 @@
 <?php
 
+/** @noinspection PhpUnused */
+
+use App\Mainframe\Helpers\Mf;
 use App\Module;
 use App\Setting;
-use App\Mainframe\Helpers\Mf;
 use Illuminate\Support\MessageBag;
 
 /**
  * Get mainframe config
  * from config/mainframe/config.php
  *
- * @param $key
  * @return \Illuminate\Config\Repository|\Illuminate\Contracts\Foundation\Application|mixed
  */
-function mf_config($key)
+function mf_config($key): mixed
 {
     return Mf::config($key);
 }
@@ -20,10 +21,9 @@ function mf_config($key)
 /**
  * Project config
  *
- * @param $key
  * @return \Illuminate\Config\Repository|\Illuminate\Contracts\Foundation\Application|mixed
  */
-function project_config($key)
+function project_config($key): mixed
 {
     return Mf::projectConfig($key);
 }
@@ -88,7 +88,7 @@ function projectNamespace()
     return Mf::projectNamespace();
 }
 
-function projectDir()
+function projectDir(): string
 {
     return Mf::projectDir();
 }
@@ -114,10 +114,10 @@ function projectPublic()
 }
 
 /**
- * returns sentry object of currently logged in user
+ * Returns sentry object of currently logged-in user
  *
  * @param  bool|null  $id
- * @return \Illuminate\Contracts\Auth\Authenticatable|\App\User
+ * @return \App\User
  */
 function user($id = null)
 {
@@ -128,7 +128,7 @@ function user($id = null)
  * Alias function for user
  *
  * @param  null  $id
- * @return \App\User|\Illuminate\Contracts\Auth\Authenticatable
+ * @return \App\User
  */
 function logged($id = null)
 {
@@ -138,7 +138,7 @@ function logged($id = null)
 /**
  * Get bearer user
  *
- * @return \Illuminate\Contracts\Auth\Authenticatable
+ * @return \App\User
  */
 function bearer()
 {
@@ -148,7 +148,7 @@ function bearer()
 /**
  * Get bearer user
  *
- * @return \Illuminate\Contracts\Auth\Authenticatable
+ * @return \App\User
  */
 function apiCaller()
 {
@@ -168,7 +168,6 @@ function modules()
 /**
  * Short-hand function to get module by name
  *
- * @param $name
  * @return \App\Module|mixed
  */
 function module($name)
@@ -189,7 +188,6 @@ function uuid()
 /**
  * Get setting by name
  *
- * @param $name
  * @return null|array|bool|mixed|string
  */
 function setting($name)
@@ -213,6 +211,8 @@ function urlKey($append = '', $except = [])
  *
  * @param  string  $append
  * @return string
+ *
+ * @noinspection PhpUnused
  */
 function statelessUrlKey($append = '', $except = [])
 {
@@ -223,16 +223,16 @@ function statelessUrlKey($append = '', $except = [])
  * Get cached data
  *
  * @param  string  $key  kebab-case string input
- * @param  null  $seconds
+ * @param  ?int  $seconds
  * @return mixed
  */
 function cached($key, $seconds = null)
 {
-    $cached = new Cached();
+    $cached = new Cached;
     $cached->key = $key;
-    $function = lcfirst(Str::camel($key)); //camelCaseFunction
+    $function = lcfirst(Str::camel($key)); // camelCaseFunction
 
-    if (isset($seconds) && $seconds < 1) {
+    if ($seconds !== null && $seconds < 1) {
         Cache::forget($key);
     }
 
@@ -240,12 +240,11 @@ function cached($key, $seconds = null)
 }
 
 /**
- * Get time in seconds
+ * Get cached timer
  *
  * @param  null  $key
- * @return \Illuminate\Config\Repository|int|mixed
  */
-function timer($key = null)
+function timer($key = null): int
 {
     return \App\Mainframe\Helpers\Cache::time($key);
 }
@@ -253,7 +252,6 @@ function timer($key = null)
 /**
  * returns absolute path from a relative path
  *
- * @param $relativePath
  * @return string
  */
 function absPath($relativePath)
@@ -264,7 +262,7 @@ function absPath($relativePath)
 /**
  * Return md5 key for a query.
  *
- * @param $query \Illuminate\Database\Query\Builder
+ * @param  $query  \Illuminate\Database\Query\Builder
  * @return string
  */
 function querySignature($query)
@@ -272,26 +270,28 @@ function querySignature($query)
     return md5($query->toSql().json_encode($query->getBindings()));
 }
 
-function error($message = '', $setMsg = true, $ret = false)
+function error($message = '', $setMsg = true, $ret = false): bool
 {
     $key = 'errors';
     if ($setMsg && strlen($message)) {
-        if (!in_array($message, Session::get($key, []))) {
-            // Session::push($key, $message);
-        }
+        // Push message to session
+        // if (! in_array($message, Session::get($key, []))) {
+        //     // Session::push($key, $message);
+        // }
         resolve(MessageBag::class)->add($key, $message);
     }
 
     return $ret;
 }
 
-function message($message = '', $setMsg = true, $ret = false)
+function message($message = '', $setMsg = true, $ret = false): bool
 {
     $key = 'messages';
     if ($setMsg && strlen($message)) {
-        if (!in_array($message, Session::get($key, []))) {
-            // Session::push($key, $message);
-        }
+        // Push message to session
+        // if (! in_array($message, Session::get($key, []))) {
+        //     // Session::push($key, $message);
+        // }
         resolve(MessageBag::class)->add($key, $message);
     }
 
@@ -305,6 +305,7 @@ function message($message = '', $setMsg = true, $ret = false)
  * @param  bool  $ret
  * @param  bool  $setMsg
  * @return bool
+ *
  * @deprecated use error()
  */
 function setError($message = '', $setMsg = true, $ret = false)
@@ -325,7 +326,6 @@ function messageBag()
 /**
  * Get content
  *
- * @param $key
  * @param  string  $part
  * @return mixed|null
  */
@@ -351,11 +351,8 @@ function classKey($class)
 
 /**
  * Get the class name from key. my-demo-class -> MyDemoClass
- *
- * @param $key
- * @return string
  */
-function classFromKey($key)
+function classFromKey($key): string
 {
     return Str::ucfirst(Str::camel($key));
 }
@@ -366,7 +363,7 @@ function classFromKey($key)
  * @param  stdClass|string  $class
  * @return string myClassName
  */
-function classVar($class)
+function classVar($class): string
 {
     if (is_string($class)) {
         return lcfirst(className($class));
@@ -381,7 +378,7 @@ function classVar($class)
  * @param  stdClass|string  $class
  * @return string my_class_name
  */
-function classSnakeKey($class)
+function classSnakeKey($class): string
 {
     if (is_string($class)) {
         return Str::snake(className($class));
@@ -391,8 +388,10 @@ function classSnakeKey($class)
 }
 
 /**
+ * Return only class name excluding namespace from a string or stdClass
+ *
  * @param  stdClass|string  $class
- * @return mixed|string
+ * @return string
  */
 function className($class)
 {
@@ -408,23 +407,31 @@ function className($class)
 /**
  * Add params to an existing url
  *
- * @param $url
  * @param  string|array|null  $params
- * @return string
  */
-function urlWithParams($url, $params = null)
+function urlWithParams($url, $params = null): string
 {
     return Mf::link($url, $params);
 }
 
 /**
- * Flatten array keys
+ * Flatten array keys for a multidimensional array
  *
- * @param $array
- * @param $keys
- * @return array|mixed
+ * $array = [
+ *  'user' => [
+ *  'name' => 'John',
+ *  'email' => 'john@example.com'
+ * ],
+ *  'settings' => [
+ *  'theme' => 'dark',
+ *  'language' => 'en'
+ * ]
+ * ];
+ *
+ * $keys = array_flat_keys($array, []);
+ * // Result: ['user', 'name', 'email', 'settings', 'theme', 'language']
  */
-function array_flat_keys($array, $keys = [])
+function array_flat_keys($array, array $keys): array
 {
     foreach ($array as $key => $value) {
         $keys[] = $key;
@@ -438,18 +445,17 @@ function array_flat_keys($array, $keys = [])
 }
 
 /**
- * @param  string  $bucket  bucket name i.e. public
- * @param  int  $tenant  Tenant id
- * @return string
+ * @param  string|null  $bucket  bucket name i.e. public
+ * @param  int|null  $tenant  Tenant id
  */
-function uploadDir($bucket = null, $tenant = null)
+function uploadDir(?string $bucket = null, ?int $tenant = null): string
 {
-    $dir = $bucket ?: trim(config('mainframe.config.upload_root'), "\\/ ");
+    $dir = $bucket ?: trim(config('mainframe.config.upload_root'), '\\/ ');
     $tenant = $tenant ?: '0';
 
     $dir .= '/'.$tenant;
 
-    // ->public/files/{tenant_id}/2021/12/25/23/59
+    // Generate: public/files/{tenant_id}/2021/12/25/23/59
     $dir .= '/'.date('Y').'/'.date('m').'/'.date('d').'/'.date('H').'/'.date('i');
 
     return $dir;
@@ -457,16 +463,12 @@ function uploadDir($bucket = null, $tenant = null)
 
 /**
  * Exclude some items from one-dimensional array
- *
- * @param $array
- * @param  array  $except
- * @return mixed
  */
-function array_excludes($array, array $except)
+function array_excludes($array, array $except): array
 {
     $temp = [];
     foreach ($array as $item) {
-        if (!in_array($item, $except)) {
+        if (! in_array($item, $except)) {
             $temp[] = $item;
         }
     }
@@ -476,17 +478,13 @@ function array_excludes($array, array $except)
 
 /**
  * Check if array keys are equal or not
- *
- * @param $array1
- * @param $array2
- * @return bool
  */
-function array_keys_equal($array1, $array2)
+function array_keys_equal($array1, $array2): bool
 {
     sort($array1);
     sort($array2);
 
-    return !array_diff_key($array1, $array2) && !array_diff_key($array2, $array1);
+    return ! array_diff_key($array1, $array2) && ! array_diff_key($array2, $array1);
 }
 
 /**
@@ -502,7 +500,6 @@ function clean_output_buffer()
         ob_end_clean(); // Note- Use this to solve download open issue
     }
 }
-
 
 // /**
 //  * Add items to an existing array
@@ -521,10 +518,10 @@ function clean_output_buffer()
  * Remove items from an existing array
  *
  * @param  array  $remove
- * @return array
  */
-function array_remove($array, $remove = [])
+function array_remove($array, $remove = []): array
 {
     $filtered = array_diff($array, $remove);
+
     return array_values($filtered);
 }

@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Modules\SupportTickets;
 
-use App\Project\Features\Modular\ModularController\ModularController;
 use App\Mainframe\Modules\SupportTickets\Traits\SupportTicketControllerTrait;
+use App\Project\Features\Modular\ModularController\ModularController;
 
 class SupportTicketController extends ModularController
 {

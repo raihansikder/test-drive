@@ -2,9 +2,9 @@
 
 namespace App\Mainframe\Modules\Modules\Traits;
 
-use Str;
 use App\Module;
 use App\ModuleGroup;
+use Str;
 
 /** @mixin Module */
 trait ModuleTrait
@@ -23,7 +23,6 @@ trait ModuleTrait
     }
 
     /**
-     * @param $name
      * @return mixed|Module
      */
     public static function byName($name)
@@ -34,7 +33,6 @@ trait ModuleTrait
     }
 
     /**
-     * @param $class
      * @return Module|mixed
      */
     public static function byClass($class)
@@ -82,7 +80,7 @@ trait ModuleTrait
     {
         $stack = [$this];
         for ($i = $this->parent_id; ;) {
-            if (!$i) {
+            if (! $i) {
                 break;
             }
 
@@ -108,7 +106,7 @@ trait ModuleTrait
     {
         $stack = [$this];
         for ($i = $this->module_group_id; ;) {
-            if (!$i) {
+            if (! $i) {
                 break;
             }
             if ($predecessor = ModuleGroup::remember(timer('long'))->find($i)) {
@@ -156,7 +154,7 @@ trait ModuleTrait
      */
     public static function rootModelNameFromTable($table)
     {
-        return "\\App\\".Module::modelNameFromTable($table);
+        return '\\App\\'.Module::modelNameFromTable($table);
     }
 
     /**
@@ -185,7 +183,6 @@ trait ModuleTrait
     }
 
     /**
-     * @param $table
      * @return Module|null
      */
     public static function fromTable($table)
@@ -289,7 +286,7 @@ trait ModuleTrait
     {
         $paths = [
             $this->model,                          // 1. Check for DB value
-            //'\App\\'.$this->modelClassName(),    // 2. Check in Laravel App\ // Risky
+            // '\App\\'.$this->modelClassName(),    // 2. Check in Laravel App\ // Risky
             // $this->moduleNameSpace().'\\'.$this->modelClassName(), // Check in App\Mainframe\Modules
         ];
 
@@ -312,7 +309,7 @@ trait ModuleTrait
         $classPath = $this->rootModelClassPath();
 
         if (class_exists($classPath)) {
-            return (new $classPath);
+            return new $classPath;
         }
         // $classPath = $this->modelClassPath(); // Note: Now points to \App\Model.
     }
@@ -350,14 +347,13 @@ trait ModuleTrait
     /**
      * Create instance of a model.
      *
-     * @param $element
      * @return \App\Mainframe\Features\Modular\Validator\ModelProcessor|mixed
      */
     public function processorInstance($element)
     {
         $classPath = $this->processorClassPath();
 
-        return (new $classPath($element));
+        return new $classPath($element);
     }
 
     /**
@@ -407,7 +403,6 @@ trait ModuleTrait
     /**
      * Get module name from class name/path.
      *
-     * @param $class
      * @return string
      */
     public static function nameFromClass($class)
@@ -454,7 +449,7 @@ trait ModuleTrait
         if (Str::contains($this->icon_css, ['fa', 'fi'])) {
             return "<i class='".$this->icon_css."'></i>";
         }
+
         return "<ion-icon name='".$this->icon_css."'></ion-icon>";
     }
-
 }

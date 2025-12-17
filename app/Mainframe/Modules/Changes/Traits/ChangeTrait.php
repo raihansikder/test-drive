@@ -40,15 +40,18 @@ trait ChangeTrait
     | Section: Relations
     |--------------------------------------------------------------------------
     */
-    public function changeable() { return $this->morphTo(); }
+    public function changeable()
+    {
+        return $this->morphTo();
+    }
 
     /*
     |--------------------------------------------------------------------------
-    | Section: Autofill functions 
+    | Section: Autofill functions
     |--------------------------------------------------------------------------
     */
     // /**
-    //  * Populate model    
+    //  * Populate model
     //  * return $this
     //  */
     // public function populate()

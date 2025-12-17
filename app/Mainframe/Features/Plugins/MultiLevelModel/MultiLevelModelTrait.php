@@ -2,10 +2,12 @@
 
 namespace App\Mainframe\Features\Plugins\MultiLevelModel;
 
-/** @mixin \App\SupportTicket */
+/** @mixin \App\SupportTicket $this
+ * @property array|mixed $lower_level_ids
+ * @property array|mixed $upper_level_ids
+ */
 trait MultiLevelModelTrait
 {
-
     // /**
     //  * return $this
     //  */
@@ -51,7 +53,6 @@ trait MultiLevelModelTrait
     //     $this->name_ext = $str;
     //     return $this;
     // }
-
 
     /**
      * Set and array of upper level ids up till origin [3,2,1]
@@ -132,13 +133,13 @@ trait MultiLevelModelTrait
     }
 
     /**
-     * Check if an element is the end node and has no futher child
+     * Check if an element is the end node and has no further child
      *
      * @return bool
      */
     public function isEndNode()
     {
-        return !$this->children()->remember(timer('long'))->exists();
+        return ! $this->children()->remember(timer('long'))->exists();
     }
 
     /**
@@ -151,7 +152,7 @@ trait MultiLevelModelTrait
         $items = self::active()->get();
         $bucket = [];
         foreach ($items as $productLevel) {
-            if (!$productLevel->children()->exists()) {
+            if (! $productLevel->children()->exists()) {
                 $bucket[] = $productLevel;
             }
         }
@@ -179,5 +180,4 @@ trait MultiLevelModelTrait
     {
         return $this->hasMany(self::class, 'parent_id');
     }
-
 }

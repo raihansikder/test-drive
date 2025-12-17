@@ -2,10 +2,10 @@
 
 namespace App\Mainframe\Modules\SupportTicketCategories\Traits;
 
-use Arr;
-use App\SupportTicketCategory;
-use Illuminate\Validation\Rule;
 use App\Mainframe\Helpers\Convert;
+use App\SupportTicketCategory;
+use Arr;
+use Illuminate\Validation\Rule;
 
 trait SupportTicketCategoryProcessorTrait
 {
@@ -23,7 +23,7 @@ trait SupportTicketCategoryProcessorTrait
      */
     public function fill($element)
     {
-        // $element->populate(); 
+        // $element->populate();
         $element->parent_id = $element->parent_id ?? 0;
         $element->order = $element->order ?? 999;
 
@@ -147,12 +147,11 @@ trait SupportTicketCategoryProcessorTrait
      *
      * @return $this
      */
-
     public function checkValidEmailRecipients()
     {
         $element = $this->element;
 
-        if (!$element->email_recipients) {
+        if (! $element->email_recipients) {
             return $this;
 
         }

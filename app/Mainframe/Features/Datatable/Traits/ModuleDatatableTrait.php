@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Features\Datatable\Traits;
 
-use URL;
 use App\Module;
+use URL;
 
 /** @mixin \App\Mainframe\Features\Datatable\ModuleDatatable */
 trait ModuleDatatableTrait
@@ -37,7 +37,6 @@ trait ModuleDatatableTrait
     }
 
     /**
-     * @param $query
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder|mixed|void
      */
     public function filter($query)
@@ -71,7 +70,7 @@ trait ModuleDatatableTrait
      *
      * @return \Yajra\DataTables\DataTableAbstract
      *
-     * @var $dt \Yajra\DataTables\DataTableAbstract
+     * @var \Yajra\DataTables\DataTableAbstract
      */
     public function modify($dt)
     {
@@ -132,8 +131,8 @@ trait ModuleDatatableTrait
      */
     public function ajaxUrl()
     {
-        # Important! Check if a URL is already assigned
-        if (!$this->ajaxUrl) {
+        // Important! Check if a URL is already assigned
+        if (! $this->ajaxUrl) {
             $this->ajaxUrl = route($this->module->name.'.datatable-json');
         }
 
@@ -159,7 +158,7 @@ trait ModuleDatatableTrait
             $module = Module::byName($this->moduleName);
         }
 
-        if (!$module) {
+        if (! $module) {
             return false;
         }
 
@@ -185,7 +184,7 @@ trait ModuleDatatableTrait
     {
         /** @var \App\Mainframe\Features\Modular\BaseModule\BaseModule $this */
         $model = $this->module->modelInstance();
+
         return array_merge($this->datetimes, $model->getDates());
     }
-
 }

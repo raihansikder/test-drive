@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Modules\Contents;
 
-use App\Project\Features\Modular\BaseModule\BaseModule;
 use App\Mainframe\Modules\Contents\Traits\ContentTrait;
+use App\Project\Features\Modular\BaseModule\BaseModule;
 
 class Content extends BaseModule
 {
@@ -34,6 +34,7 @@ class Content extends BaseModule
     // protected $casts = [];
     // protected $with = [];
     protected $appends = ['parts_array'];
+
     protected $tagFields = ['tags'];
 
     /*

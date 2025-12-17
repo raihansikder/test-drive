@@ -2,10 +2,10 @@
 
 namespace App\Mainframe\Http\Controllers\Auth;
 
-use Illuminate\View\View;
-use Illuminate\Contracts\View\Factory;
 use App\Project\Http\Controllers\BaseController;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Auth\ConfirmsPasswords;
+use Illuminate\View\View;
 
 class ConfirmPasswordController extends BaseController
 {

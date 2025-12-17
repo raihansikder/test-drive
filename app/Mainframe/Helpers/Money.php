@@ -32,7 +32,6 @@ class Money
     /**
      * Show money amount with an optional prefix (i.e. $)
      *
-     * @param $amount
      * @param  null  $prefix
      * @param  bool  $comma
      * @return string
@@ -56,7 +55,6 @@ class Money
     /**
      * Print the money amount
      *
-     * @param $amount
      * @param  null  $prefix
      * @return string
      */

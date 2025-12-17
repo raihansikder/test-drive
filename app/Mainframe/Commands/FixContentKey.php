@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Commands;
 
-use DB;
 use App\Content;
+use DB;
 
 class FixContentKey extends MakeModule
 {
@@ -24,7 +24,7 @@ class FixContentKey extends MakeModule
     /**
      * Execute the console command.
      *
-     * @return mixed|null
+     * @return void
      */
     public function handle()
     {
@@ -33,7 +33,7 @@ class FixContentKey extends MakeModule
 
         DB::table('contents')->latest()->chunk(10, function ($contents) {
 
-            /** @var Content $upload */
+            /** @var Content $content */
             foreach ($contents as $content) {
 
                 $str = multipleStrReplace($content->parts, ['name' => 'key']);
@@ -52,5 +52,4 @@ class FixContentKey extends MakeModule
 
         $this->info('... Done');
     }
-
 }

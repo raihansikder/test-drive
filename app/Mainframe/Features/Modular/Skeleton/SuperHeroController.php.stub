@@ -19,7 +19,8 @@ class SuperHeroController extends ModularController
     |--------------------------------------------------------------------------
     */
     protected $moduleName = 'super-heroes';
-    /** @var SuperHero */
+
+    /** @var SuperHero|mixed */
     protected $element;
 
     /*
@@ -153,13 +154,14 @@ class SuperHeroController extends ModularController
      */
     public function restore($id = null)
     {
-        return parent::restore($id);
+        parent::restore($id);
     }
 
     /**
      * SuperHero Datatable to show in module grid
      *
      * @return SuperHeroDatatable
+     * @throws \Exception
      */
     public function datatable()
     {
