@@ -5,7 +5,9 @@
 use App\Mainframe\Helpers\Mf;
 use App\Module;
 use App\Setting;
+use Illuminate\Support\Collection;
 use Illuminate\Support\MessageBag;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * Get mainframe config
@@ -59,9 +61,9 @@ function mfPublic()
 }
 
 /**
- * Get project name. This is a CamelCase name of the project
+ * Get the project name. This is a CamelCase name of the project
  *
- * @return \Illuminate\Config\Repository|\Illuminate\Contracts\Foundation\Application|mixed
+ * @return string|null
  */
 function project()
 {
@@ -114,23 +116,21 @@ function projectPublic()
 }
 
 /**
- * Returns sentry object of currently logged-in user
+ * Returns sentry object of a currently logged-in user
  *
- * @param  bool|null  $id
  * @return \App\User
  */
-function user($id = null)
+function user(?bool $id = null)
 {
     return Mf::user($id);
 }
 
 /**
- * Alias function for user
+ * Alias function for user()
  *
- * @param  null  $id
  * @return \App\User
  */
-function logged($id = null)
+function logged(?int $id = null)
 {
     return user($id);
 }
@@ -158,7 +158,7 @@ function apiCaller()
 /**
  * Get a cached version of active modules.
  *
- * @return \App\Module[]|mixed
+ * @return Collection<Module>
  */
 function modules()
 {
@@ -166,9 +166,9 @@ function modules()
 }
 
 /**
- * Short-hand function to get module by name
+ * Shorthand function to get module by name
  *
- * @return \App\Module|mixed
+ * @return \App\Module|null
  */
 function module($name)
 {
@@ -188,7 +188,7 @@ function uuid()
 /**
  * Get setting by name
  *
- * @return null|array|bool|mixed|string
+ * @return null|mixed
  */
 function setting($name)
 {
@@ -198,23 +198,24 @@ function setting($name)
 /**
  * Cache key for a specific request / url + user
  *
- * @param  string  $append
  * @return string
  */
-function urlKey($append = '', $except = [])
+function urlKey(string $append = '', array $except = [])
 {
+
+    $except = Arr::wrap($except);
+
     return Mf::urlKey($append, $except);
 }
 
 /**
  * Cache key for a specific request / url without user encoded
  *
- * @param  string  $append
  * @return string
  *
  * @noinspection PhpUnused
  */
-function statelessUrlKey($append = '', $except = [])
+function statelessUrlKey(string $append = '', array $except = [])
 {
     return Mf::statelessUrlKey($append, $except);
 }
@@ -223,10 +224,9 @@ function statelessUrlKey($append = '', $except = [])
  * Get cached data
  *
  * @param  string  $key  kebab-case string input
- * @param  ?int  $seconds
  * @return mixed
  */
-function cached($key, $seconds = null)
+function cached(string $key, ?int $seconds = null)
 {
     $cached = new Cached;
     $cached->key = $key;
@@ -241,18 +241,16 @@ function cached($key, $seconds = null)
 
 /**
  * Get cached timer
- *
- * @param  null  $key
  */
-function timer($key = null): int
+function timer(?string $key = null): int
 {
     return \App\Mainframe\Helpers\Cache::time($key);
 }
 
 /**
- * returns absolute path from a relative path
+ * returns an absolute path from a relative path
  *
- * @return string
+ * @return string relative path
  */
 function absPath($relativePath)
 {
@@ -260,34 +258,22 @@ function absPath($relativePath)
 }
 
 /**
- * Return md5 key for a query.
+ * Return the md5 key for a query.
  *
- * @param  $query  \Illuminate\Database\Query\Builder
  * @return string
  */
-function querySignature($query)
+function querySignature(Builder|\Illuminate\Database\Query\Builder $query)
 {
     return md5($query->toSql().json_encode($query->getBindings()));
 }
 
-function error($message = '', $setMsg = true, $ret = false): bool
+/**
+ * Add an error in the MessageBag
+ */
+function error(string $message = '', bool $setMsg = true, bool $ret = false): bool
 {
     $key = 'errors';
-    if ($setMsg && strlen($message)) {
-        // Push message to session
-        // if (! in_array($message, Session::get($key, []))) {
-        //     // Session::push($key, $message);
-        // }
-        resolve(MessageBag::class)->add($key, $message);
-    }
-
-    return $ret;
-}
-
-function message($message = '', $setMsg = true, $ret = false): bool
-{
-    $key = 'messages';
-    if ($setMsg && strlen($message)) {
+    if ($setMsg && $message !== '') {
         // Push message to session
         // if (! in_array($message, Session::get($key, []))) {
         //     // Session::push($key, $message);
@@ -299,16 +285,30 @@ function message($message = '', $setMsg = true, $ret = false): bool
 }
 
 /**
- * This function pushes an error string to 'error' array of session.
+ * Add a neutral message in the MessageBag
+ */
+function message(string $message = '', bool $setMsg = true, bool $ret = false): bool
+{
+    $key = 'messages';
+    if ($setMsg && $message !== '') {
+        // Push message to session
+        // if (! in_array($message, Session::get($key, []))) {
+        //     // Session::push($key, $message);
+        // }
+        resolve(MessageBag::class)->add($key, $message);
+    }
+
+    return $ret;
+}
+
+/**
+ * This function pushes an error string to the 'error' array of the session.
  *
- * @param  string  $message
- * @param  bool  $ret
- * @param  bool  $setMsg
  * @return bool
  *
  * @deprecated use error()
  */
-function setError($message = '', $setMsg = true, $ret = false)
+function setError(string $message = '', bool $setMsg = true, bool $ret = false)
 {
     return error($message, $setMsg, $ret);
 }
@@ -326,10 +326,9 @@ function messageBag()
 /**
  * Get content
  *
- * @param  string  $part
- * @return mixed|null
+ * @return string|null
  */
-function content($key, $part = 'body')
+function content($key, string $part = 'body')
 {
     return Mf::content($key, $part);
 }
@@ -340,7 +339,7 @@ function content($key, $part = 'body')
  * @param  stdClass|string|mixed  $class
  * @return string my-class-name
  */
-function classKey($class)
+function classKey(mixed $class)
 {
     if (is_string($class)) {
         return Str::slug(Str::kebab(className($class)));
@@ -350,7 +349,7 @@ function classKey($class)
 }
 
 /**
- * Get the class name from key. my-demo-class -> MyDemoClass
+ * Get the class name from a key. 'my-demo-class' -> MyDemoClass
  */
 function classFromKey($key): string
 {
@@ -360,10 +359,9 @@ function classFromKey($key): string
 /**
  * variableCase form class
  *
- * @param  stdClass|string  $class
  * @return string myClassName
  */
-function classVar($class): string
+function classVar(mixed $class): string
 {
     if (is_string($class)) {
         return lcfirst(className($class));
@@ -375,10 +373,9 @@ function classVar($class): string
 /**
  * Snake case key of class
  *
- * @param  stdClass|string  $class
  * @return string my_class_name
  */
-function classSnakeKey($class): string
+function classSnakeKey(mixed $class): string
 {
     if (is_string($class)) {
         return Str::snake(className($class));
@@ -390,10 +387,9 @@ function classSnakeKey($class): string
 /**
  * Return only class name excluding namespace from a string or stdClass
  *
- * @param  stdClass|string  $class
  * @return string
  */
-function className($class)
+function className(mixed $class)
 {
     if (is_string($class)) {
         $pieces = explode('\\', $class);
@@ -406,10 +402,8 @@ function className($class)
 
 /**
  * Add params to an existing url
- *
- * @param  string|array|null  $params
  */
-function urlWithParams($url, $params = null): string
+function urlWithParams($url, array|string|null $params = null): string
 {
     return Mf::link($url, $params);
 }
@@ -431,7 +425,7 @@ function urlWithParams($url, $params = null): string
  * $keys = array_flat_keys($array, []);
  * // Result: ['user', 'name', 'email', 'settings', 'theme', 'language']
  */
-function array_flat_keys($array, array $keys): array
+function array_flat_keys($array, array $keys = []): array
 {
     foreach ($array as $key => $value) {
         $keys[] = $key;
@@ -445,13 +439,13 @@ function array_flat_keys($array, array $keys): array
 }
 
 /**
- * @param  string|null  $bucket  bucket name i.e. public
- * @param  int|null  $tenant  Tenant id
+ * @param  string|null  $bucket  bucket name i.e., public
+ * @param  int|null  $tenant  Tenant Id
  */
 function uploadDir(?string $bucket = null, ?int $tenant = null): string
 {
     $dir = $bucket ?: trim(config('mainframe.config.upload_root'), '\\/ ');
-    $tenant = $tenant ?: '0';
+    $tenant = $tenant ?: 0;
 
     $dir .= '/'.$tenant;
 
@@ -462,7 +456,7 @@ function uploadDir(?string $bucket = null, ?int $tenant = null): string
 }
 
 /**
- * Exclude some items from one-dimensional array
+ * Exclude some items from a one-dimensional array
  */
 function array_excludes($array, array $except): array
 {
@@ -504,7 +498,7 @@ function clean_output_buffer()
 // /**
 //  * Add items to an existing array
 //  *
-//  * @param  array  $add
+//  * @param array $add
 //  * @return array
 //  */
 // if (!function_exists('array_add')) {
@@ -516,10 +510,8 @@ function clean_output_buffer()
 
 /**
  * Remove items from an existing array
- *
- * @param  array  $remove
  */
-function array_remove($array, $remove = []): array
+function array_remove($array, array $remove = []): array
 {
     $filtered = array_diff($array, $remove);
 
