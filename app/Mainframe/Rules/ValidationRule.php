@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Rules;
 
-use Illuminate\Contracts\Validation\Rule;
 use App\Mainframe\Features\Modular\BaseModule\BaseModule;
+use Illuminate\Contracts\Validation\Rule;
 
 class ValidationRule implements Rule
 {
@@ -26,7 +26,7 @@ class ValidationRule implements Rule
     {
         $element = $this->element;
 
-        if ($element->$attribute != $value) {
+        if ($value != $element->$attribute) {
             return true;
         }
 

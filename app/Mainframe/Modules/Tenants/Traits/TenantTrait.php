@@ -18,6 +18,7 @@ trait TenantTrait
         if (defined(Tenant::class.'::GLOBAL_TENANT_ID')) {
             return Tenant::GLOBAL_TENANT_ID;
         }
+
         return 0;
     }
 
@@ -29,6 +30,7 @@ trait TenantTrait
         if (defined(Tenant::class.'::NON_TENANT_ID')) {
             return Tenant::NON_TENANT_ID;
         }
+
         return null;
     }
 
@@ -42,11 +44,10 @@ trait TenantTrait
         // dd('here');
         $tenant = Tenant::updateOrCreate(
             ['id' => $element->id], [
-            'name' => $element->name,
-        ]);
+                'name' => $element->name,
+            ]);
 
         $element->tenant_id = $tenant->id;
         $element->saveQuietly();
     }
-
 }

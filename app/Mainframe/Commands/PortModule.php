@@ -2,11 +2,11 @@
 
 namespace App\Mainframe\Commands;
 
-use Artisan;
-use App\Module;
-use Illuminate\Support\Str;
 use App\Mainframe\Helpers\Mf;
+use App\Module;
+use Artisan;
 use Illuminate\Console\Command;
+use Illuminate\Support\Str;
 use Symfony\Component\Console\Output\ConsoleOutput;
 
 class PortModule extends Command
@@ -27,32 +27,26 @@ class PortModule extends Command
      */
     protected $description = 'This updates the class paths in modules table of a given module to match the new project';
 
-    /** @var string */
-    private $moduleName;
-
-    /** * @var string */
-    private $projectName;
-
     /**
      * Execute the console command.
      *
-     * @return mixed|null
+     * @return void
      */
     public function handle()
     {
-        $this->moduleName = Str::kebab(Str::plural($this->argument('module_name')));
-        $this->projectName = ucfirst(Str::camel($this->option('project'))) ?: Mf::project();
-        $this->info('Porting module:'.$this->moduleName.' to project -> \''.$this->projectName.'\'');
+        $moduleName = Str::kebab(Str::plural($this->argument('module_name')));
+        $projectName = ucfirst(Str::camel($this->option('project'))) ?: Mf::project();
+        $this->info('Porting module:'.$moduleName.' to project -> \''.$projectName.'\'');
         /*---------------------------------
         | Update modules table
         |---------------------------------*/
 
         $query = Module::query();
-        if ($this->moduleName != 'alls') {  // Since it is turned to plural anyway
-            $query->where('name', $this->moduleName);
+        if ($moduleName != 'alls') {  // Since it is turned to plural anyway
+            $query->where('name', $moduleName);
         }
 
-        $output = new ConsoleOutput();
+        $output = new ConsoleOutput;
 
         $query->chunk(10, function ($modules) use ($output) {
 
@@ -81,10 +75,6 @@ class PortModule extends Command
         $output->writeLn('php artisan route:clear');
         Artisan::call('route:clear');
 
-        // $output->writeLn('php artisan mainframe:create-root-models');
-        // Artisan::call('mainframe:create-root-models');
-
         $this->info('... Done');
     }
-
 }

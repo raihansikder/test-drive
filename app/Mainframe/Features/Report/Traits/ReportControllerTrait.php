@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Features\Report\Traits;
 
-use Cache;
 use App\Mainframe\Features\Report\ReportBuilder;
+use Cache;
 
 trait ReportControllerTrait
 {
@@ -12,13 +12,14 @@ trait ReportControllerTrait
      *
      * @param  string  $key
      * @return \Illuminate\Http\JsonResponse
+     *
      * @throws \Exception
      */
     public function show($key)
     {
         $class = $this->resolveClass($key); // my-demo-class -> MyDemoClass
 
-        if (!class_exists($class)) {
+        if (! class_exists($class)) {
             return $this->fail("Class {$class} not found")->json();
         }
 
@@ -26,7 +27,7 @@ trait ReportControllerTrait
         $report = new $class;
 
         if ($this->permissionKeyExists($key)) { // config/mainframe/permissions.php . Define key under 'custom.reports'
-            if (!$this->user->can($key)) {
+            if (! $this->user->can($key)) {
                 return $this->permissionDenied();
             }
         }
@@ -38,7 +39,6 @@ trait ReportControllerTrait
     /**
      * Resolve class to execute the request
      *
-     * @param $key
      * @return string
      */
     public function resolveClass($key)
@@ -48,7 +48,7 @@ trait ReportControllerTrait
 
             // $path defined in controller
             if (isset($this->path)) {
-                $path = rtrim($this->path, "\\")."\\".$class;
+                $path = rtrim($this->path, '\\').'\\'.$class;
                 if (class_exists($path)) {
                     return $path;
                 }
@@ -72,12 +72,10 @@ trait ReportControllerTrait
     /**
      * Check permission
      *
-     * @param $key
      * @return \Illuminate\Config\Repository|\Illuminate\Contracts\Foundation\Application|mixed
      */
     public function permissionKeyExists($key)
     {
         return config('mainframe.permissions.custom.reports.'.$key);
     }
-
 }

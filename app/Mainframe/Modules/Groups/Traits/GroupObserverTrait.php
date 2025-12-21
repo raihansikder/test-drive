@@ -2,7 +2,4 @@
 
 namespace App\Mainframe\Modules\Groups\Traits;
 
-trait GroupObserverTrait
-{
-
-}
+trait GroupObserverTrait {}

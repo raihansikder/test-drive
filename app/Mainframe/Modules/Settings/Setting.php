@@ -10,6 +10,7 @@ class Setting extends BaseModule
     use SettingTrait;
 
     protected $moduleName = 'settings';
+
     protected $table = 'settings';
 
     // protected $forceDeleting = false;

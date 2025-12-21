@@ -23,9 +23,9 @@ class ResetPassword extends \Illuminate\Auth\Notifications\ResetPassword impleme
         }
 
         return (new MailMessage)->view('mainframe.emails.auth.reset-password', [
-                // 'url' => url(config('app.url').route('password.reset', ['token' => $this->token, 'email' => $notifiable->getEmailForPasswordReset()], false)),
-                'url' => route('password.reset', ['token' => $this->token, 'email' => $notifiable->getEmailForPasswordReset()]),
-            ]
+            // 'url' => url(config('app.url').route('password.reset', ['token' => $this->token, 'email' => $notifiable->getEmailForPasswordReset()], false)),
+            'url' => route('password.reset', ['token' => $this->token, 'email' => $notifiable->getEmailForPasswordReset()]),
+        ]
         )->subject(__('Reset Password'));
     }
 

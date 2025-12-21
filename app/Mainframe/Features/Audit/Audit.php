@@ -27,6 +27,7 @@ use Illuminate\Database\Eloquent\Builder;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $auditable
  * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $user
+ *
  * @method static Builder|Audit newModelQuery()
  * @method static Builder|Audit newQuery()
  * @method static Builder|Audit query()
@@ -48,6 +49,7 @@ use Illuminate\Database\Eloquent\Builder;
  * @method static Builder|Audit whereUserId($value)
  * @method static Builder|Audit whereUserType($value)
  * @method static Builder|Audit whereUuid($value)
+ *
  * @mixin \Eloquent
  */
 class Audit extends \OwenIt\Auditing\Models\Audit
@@ -66,5 +68,4 @@ class Audit extends \OwenIt\Auditing\Models\Audit
             // $element->fillModuleAndElement('auditable');
         });
     }
-
 }

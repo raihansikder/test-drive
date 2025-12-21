@@ -2030,6 +2030,7 @@ label.required::after {
 .back-link {
     border: 1px solid transparent;
     background-color: transparent;
+    margin-bottom: 10px;
 }
 
 .back-link i {

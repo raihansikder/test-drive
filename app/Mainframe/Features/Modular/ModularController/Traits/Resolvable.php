@@ -35,7 +35,7 @@ trait Resolvable
 
         foreach ($classPaths as $classPath) {
             if (class_exists($classPath)) {
-                return (new $classPath);
+                return new $classPath;
             }
         }
 

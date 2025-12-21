@@ -1,9 +1,11 @@
 <?php
 
+/** @noinspection ALL */
+
 namespace App\Mainframe\Features\Content;
 
-use Str;
 use App\Content;
+use Str;
 
 /** @mixin DynamicContent $this */
 trait DynamicContentTrait
@@ -55,6 +57,7 @@ trait DynamicContentTrait
      * Store all the replaced content in $replaced array
      *
      * @return DynamicContentTrait|mixed|string
+     *
      * @throws \Throwable
      */
     public function process()
@@ -66,6 +69,7 @@ trait DynamicContentTrait
      * Set the segments based on content source
      *
      * @return $this
+     *
      * @throws \Throwable
      */
     public function setSegments()
@@ -82,7 +86,6 @@ trait DynamicContentTrait
             $this->segments[$this::DEFAULT_BODY] = $this->text; // 'body' is the default part
 
             return $this;
-
         }
 
         if ($content = $this->content()) {
@@ -97,13 +100,13 @@ trait DynamicContentTrait
         $this->segments[$this::DEFAULT_BODY] = '';
 
         return $this;
-
     }
 
     /**
      * Replace
      *
      * @return mixed|string
+     *
      * @throws \Throwable
      */
     public function replaceKeys()
@@ -149,6 +152,7 @@ trait DynamicContentTrait
      *
      * @param  string  $part
      * @return mixed|string
+     *
      * @throws \Throwable
      */
     public function get($part = null)
@@ -160,7 +164,6 @@ trait DynamicContentTrait
         }
 
         return $this->process()->part($part);
-
     }
 
     /**
@@ -179,7 +182,7 @@ trait DynamicContentTrait
     /**
      * Get the content object from database
      *
-     * @return Content|mixed|null
+     * @return Content|object|null
      */
     public function content()
     {
@@ -196,5 +199,4 @@ trait DynamicContentTrait
 
         return $this;
     }
-
 }

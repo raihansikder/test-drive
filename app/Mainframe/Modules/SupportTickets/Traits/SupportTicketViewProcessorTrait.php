@@ -6,17 +6,17 @@ namespace App\Mainframe\Modules\SupportTickets\Traits;
 trait SupportTicketViewProcessorTrait
 {
     /**
-     * @var \App\Module $module
-     * @var \Illuminate\Database\Eloquent\Builder $model
-     * @var \App\SupportTicket $element
-     * @var bool $editable
-     * @var array $immutables
-     * @var string $type i.e. View type create, edit, index etc.
-     * @var array $vars Variables shared in view blade
+     * @var \App\Module
+     * @var \Illuminate\Database\Eloquent\Builder
+     * @var \App\SupportTicket
+     * @var bool
+     * @var array
+     * @var string i.e. View type create, edit, index etc.
+     * @var array Variables shared in view blade
      */
 
     // Note: See parent class for available functions
-    // public function immutables() { $this->addImmutables(['your_field']); return $this->immutables; }
+    // public function immutables() { $this->mergeImmutables(['your_field']); return $this->immutables; }
     // public function hiddenFields() { $this->addHiddenFields(['your_field']); return $this->hiddenFields; }
 
     /*
@@ -53,9 +53,10 @@ trait SupportTicketViewProcessorTrait
      */
     public function showReviewerSection()
     {
-        if (!$this->element->isCreated()) {
+        if (! $this->element->isCreated()) {
             return false;
         }
+
         return $this->user->isAdmin();
     }
 

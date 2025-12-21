@@ -20,7 +20,7 @@ trait NotificationProcessorTrait
      */
     public function fill($element)
     {
-        // $element->populate(); 
+        // $element->populate();
         return $this;
     }
 

@@ -13,7 +13,6 @@ class BaseModuleObserver
         $element->autoFill(); // This has been moved to processor forSave()
     }
 
-
     // public function creating($element) { }
     // public function created($element) { }
     // public function updating($element) { }

@@ -10,7 +10,8 @@ class Tenant extends BaseModule
     use TenantTrait;
 
     public const GLOBAL_TENANT_ID = 0; // These elements are accessible by all tenant
-    public const NON_TENANT_ID    = null; // Only accessible by admin/non-tenant user
+
+    public const NON_TENANT_ID = null; // Only accessible by admin/non-tenant user
 
     /*
     |--------------------------------------------------------------------------
@@ -24,5 +25,4 @@ class Tenant extends BaseModule
         'name',
         'is_active',
     ];
-
 }

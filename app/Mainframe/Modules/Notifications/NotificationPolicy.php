@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Modules\Notifications;
 
-use App\Project\Features\Modular\BaseModule\BaseModulePolicy;
 use App\Mainframe\Modules\Notifications\Traits\NotificationPolicyTrait;
+use App\Project\Features\Modular\BaseModule\BaseModulePolicy;
 
 class NotificationPolicy extends BaseModulePolicy
 {

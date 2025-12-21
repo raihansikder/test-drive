@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Modules\InAppNotifications;
 
-use App\Project\Features\Modular\BaseModule\BaseModulePolicy;
 use App\Mainframe\Modules\InAppNotifications\Traits\InAppNotificationPolicyTrait;
+use App\Project\Features\Modular\BaseModule\BaseModulePolicy;
 
 class InAppNotificationPolicy extends BaseModulePolicy
 {

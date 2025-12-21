@@ -24,7 +24,7 @@ class SelectArrayMultiple extends SelectArray
     public function print()
     {
 
-        if (!is_array($this->value())) {
+        if (! is_array($this->value())) {
             return '';
         }
 

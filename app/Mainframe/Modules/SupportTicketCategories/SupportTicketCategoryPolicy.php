@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Modules\SupportTicketCategories;
 
-use App\Project\Features\Modular\BaseModule\BaseModulePolicy;
 use App\Mainframe\Modules\SupportTicketCategories\Traits\SupportTicketCategoryPolicyTrait;
+use App\Project\Features\Modular\BaseModule\BaseModulePolicy;
 
 class SupportTicketCategoryPolicy extends BaseModulePolicy
 {

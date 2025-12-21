@@ -45,13 +45,17 @@ trait SupportTicketCategoryTrait
      * Alias method to get the processor
      *
      * @return SupportTicketCategoryProcessor
+     *
      * @noinspection SenselessProxyMethodInspection
      */
-    public function processor() { return parent::processor(); }
+    public function processor()
+    {
+        return parent::processor();
+    }
 
     /*
     |--------------------------------------------------------------------------
-    | Section: Autofill functions 
+    | Section: Autofill functions
     |--------------------------------------------------------------------------
     */
     // /**

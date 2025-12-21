@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Modules\Users\Traits;
 
-use Arr;
 use App\User;
+use Arr;
 
 trait UserDatatableTrait
 {
@@ -40,7 +40,7 @@ trait UserDatatableTrait
     /**
      * Apply filter on the query.
      *
-     * @param $query \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder|mixed
+     * @param  $query  \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder|mixed
      * @return \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder|mixed
      */
     public function filter($query)
@@ -66,7 +66,7 @@ trait UserDatatableTrait
         if ($val = request('created_at_till')) { // From date range picker
             $query->where($this->table.'created_at', '<=', date_create($val)->format('Y-m-d 23:59:59'));
         }
-        /*---------------------------------------------------------------___-----*/
+        /* ---------------------------------------------------------------___----- */
 
         return $query;
     }
@@ -75,7 +75,8 @@ trait UserDatatableTrait
      * Modify datatable values
      *
      * @return \Yajra\DataTables\DataTableAbstract
-     * @var $dt \Yajra\DataTables\DataTableAbstract
+     *
+     * @var \Yajra\DataTables\DataTableAbstract
      */
     public function modify($dt)
     {

@@ -2,13 +2,13 @@
 
 namespace App\Mainframe\Jobs;
 
-use DB;
 use App\PushNotification;
+use DB;
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 
 class JobSendPushNotifications implements ShouldQueue
 {
@@ -58,7 +58,7 @@ class JobSendPushNotifications implements ShouldQueue
             'content_available' => true,
             'priority' => 'high',
             'to' => $this->pushNotification->device_token,
-            //'registration_id' => $this->pushNotification->device_token, // Use for sending single push on Multiple devices
+            // 'registration_id' => $this->pushNotification->device_token, // Use for sending single push on Multiple devices
             'notification' => [
                 'title' => $this->pushNotification->name,
                 'body' => $this->pushNotification->body,
@@ -69,8 +69,8 @@ class JobSendPushNotifications implements ShouldQueue
                 'data' => $this->pushNotification->data,
             ],
 
-            'data' => json_decode($this->pushNotification->data, true)
-            //{"purchase_id":325,"partner_id":66,"partner_name":"....}
+            'data' => json_decode($this->pushNotification->data, true),
+            // {"purchase_id":325,"partner_id":66,"partner_name":"....}
         ];
 
         /******************************************
@@ -78,20 +78,20 @@ class JobSendPushNotifications implements ShouldQueue
          ******************************************/
         $curl = curl_init();
         curl_setopt_array($curl, [
-            CURLOPT_URL => "https://fcm.googleapis.com/fcm/send",
+            CURLOPT_URL => 'https://fcm.googleapis.com/fcm/send',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_SSL_VERIFYHOST => false,
             CURLOPT_SSL_VERIFYPEER => false,
-            CURLOPT_ENCODING => "",
+            CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
             CURLOPT_TIMEOUT => 30,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => json_encode($data),
             CURLOPT_HTTPHEADER => [
-                "authorization: Key=".env('PUSH_NOTIFICATION_AUTHORIZATION'),
-                "cache-control: no-cache",
-                "content-type: application/json",
+                'authorization: Key='.env('PUSH_NOTIFICATION_AUTHORIZATION'),
+                'cache-control: no-cache',
+                'content-type: application/json',
             ],
         ]);
 
@@ -106,7 +106,7 @@ class JobSendPushNotifications implements ShouldQueue
          ******************************************/
         $response = json_decode($response);
         if (isset($response->multicast_id)) {
-            # Update DB with results
+            // Update DB with results
             DB::table('push_notifications')->where('id', $this->pushNotification->id)->update([
                 'multicast_id' => $response->multicast_id,
                 'success_count' => $response->success,

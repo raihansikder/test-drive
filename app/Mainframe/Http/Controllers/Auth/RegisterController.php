@@ -2,20 +2,20 @@
 
 namespace App\Mainframe\Http\Controllers\Auth;
 
-use Route;
-use App\User;
 use App\Group;
-use Illuminate\View\View;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Http\RedirectResponse;
+use App\Project\Http\Controllers\BaseController;
+use App\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\View\Factory;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use App\Project\Http\Controllers\BaseController;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\View\View;
+use Route;
 
 class RegisterController extends BaseController
 {
@@ -86,7 +86,7 @@ class RegisterController extends BaseController
         }
 
         // If not group defined in url then register in default 'user' group.
-        if (!$this->group) {
+        if (! $this->group) {
             $this->group = Group::byName($this->defaultGroupName);
         }
     }
@@ -98,7 +98,7 @@ class RegisterController extends BaseController
      */
     public function showRegistrationForm()
     {
-        if (!$this->groupAllowed()) {
+        if (! $this->groupAllowed()) {
             return $this->permissionDenied('Group not allowed for registration');
         }
 
@@ -109,19 +109,18 @@ class RegisterController extends BaseController
     /**
      * Handle a registration request for the application.
      *
-     * @param  Request  $request
      * @return JsonResponse|RedirectResponse|Response
      */
     public function register(Request $request)
     {
-        if (!$this->groupAllowed()) {
+        if (! $this->groupAllowed()) {
             return $this->permissionDenied();
         }
 
         $this->attemptRegistration();
 
         $this->redirectTo = route('login');
-        if (!$this->user) { // Redirect to register page if failed
+        if (! $this->user) { // Redirect to register page if failed
             $this->redirectTo = route('register', $this->group->name);
         }
 
@@ -151,7 +150,7 @@ class RegisterController extends BaseController
 
         // Create user
         $this->user = $this->createUser();
-        if (!$this->user) {
+        if (! $this->user) {
             $this->fail('Registration was not successful');
 
             return $this;
@@ -189,7 +188,7 @@ class RegisterController extends BaseController
      */
     public function groupAllowed()
     {
-        if (!in_array($this->group->name, $this->groupsAllowedForRegistration)) {
+        if (! in_array($this->group->name, $this->groupsAllowedForRegistration)) {
             return false;
         }
 
@@ -199,7 +198,6 @@ class RegisterController extends BaseController
     /**
      * The user has been successfully registered.
      *
-     * @param  Request  $request
      * @param  User  $user  ```
      * @return Factory|JsonResponse|RedirectResponse|View|void
      */
@@ -214,5 +212,4 @@ class RegisterController extends BaseController
             ->setRedirectTo($this->redirectPath())
             ->send();
     }
-
 }

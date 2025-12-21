@@ -34,11 +34,14 @@ trait CommentTrait
     | Section: Relations
     |--------------------------------------------------------------------------
     */
-    public function commentable() { return $this->morphTo(); }
+    public function commentable()
+    {
+        return $this->morphTo();
+    }
 
     /*
     |--------------------------------------------------------------------------
-    | Section: Autofill functions 
+    | Section: Autofill functions
     |--------------------------------------------------------------------------
     */
 

@@ -38,9 +38,7 @@ class CreateSuperHeroesTable extends Migration
                 $table->string('slug', 50)->nullable()->default(null)->index();
 
                 /******* Custom columns **********/
-                //  Add module specific fields and denormalized fields. In computing, denormalization is the process of
-                //  improving the read performance of a database, at the expense of losing some write performance,
-                //  by adding redundant copies of data or by grouping it.
+
 
                 //$table->string('title', 100)->nullable()->default(null);
                 //$table->text('field')->nullable()->default(null);
@@ -49,8 +47,8 @@ class CreateSuperHeroesTable extends Migration
                 $table->tinyInteger('is_active')->nullable()->default(1);
                 $table->unsignedInteger('created_by')->nullable()->default(null)->index();
                 $table->unsignedInteger('updated_by')->nullable()->default(null)->index();
-                $table->timestamps();
-                $table->softDeletes();
+                $table->timestamps(); // ->timestampsTz() For timezone
+                $table->softDeletes(); // ->softDeletesTz() For timezone
                 $table->unsignedInteger('deleted_by')->nullable()->default(null)->index();
             });
         }

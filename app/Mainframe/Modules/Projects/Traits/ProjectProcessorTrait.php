@@ -78,7 +78,7 @@ trait ProjectProcessorTrait
     /**
      * Run validations for saving. This should be common for both creating and updating.
      *
-     * @param $project \App\Project
+     * @param  $project  \App\Project
      * @return $this
      */
     public function saving($project)

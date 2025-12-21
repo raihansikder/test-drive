@@ -40,5 +40,4 @@ class ModuleIntegrityTest extends TestCase
                 ' ⚠️'.$class.'::$with attribute should be kept empty. Instead load on runtime $model->load(...)');
         }
     }
-
 }

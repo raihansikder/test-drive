@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Modules\PushNotifications;
 
-use App\Project\Features\Modular\BaseModule\BaseModulePolicy;
 use App\Mainframe\Modules\PushNotifications\Traits\PushNotificationPolicyTrait;
+use App\Project\Features\Modular\BaseModule\BaseModulePolicy;
 
 class PushNotificationPolicy extends BaseModulePolicy
 {

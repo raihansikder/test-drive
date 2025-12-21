@@ -1,11 +1,15 @@
-<?php /** @noinspection ALL */
+<?php
+
+/** @noinspection ALL */
 
 /**
  * @file
  * PDFMerger created in December 2009
+ *
  * @author Jarrod Nettles <jarrod@squarecrow.com>
  * Updated by Vasiliy Zaytsev February 2016
  * vasiliy.zaytsev@ffwagency.com
+ *
  * @version 2.0
  * This version (comparing to 1.0) supports PDF 1.5 and PDF 1.6.
  * Class for easily merging PDFs (or specific pages of PDFs) together into one.
@@ -16,11 +20,17 @@
  * Note that your PDFs are merged in the order that you provide them using the
  * addPDF function, same as the pages. If you put pages 12-14 before 1-5 then
  * 12-15 will be placed first in the output.
+ *
  * @uses tcpdf 6.2.12 by Nicola Asuni
+ *
  * @link https://github.com/tecnickcom/TCPDF/tree/master official clone of lib
+ *
  * @uses tcpdi_parser 1.0 by Paul Nicholls, patched by own TCPdiParserException
+ *
  * @link https://github.com/pauln/tcpdi_parser source of tcpdi_parser.php
+ *
  * @uses TCPDI 1.0 by Paul Nicholls with FPDF_TPL extension 1.2.3 by Setasign
+ *
  * @link https://github.com/pauln/tcpdi tcpdi.php
  * All of these packages are free and open source software, bundled with this
  * class for ease of use. PDFMerger has all the limitations of the FPDI package
@@ -32,7 +42,8 @@ namespace App\Mainframe\Features\PDFMerger;
 
 class PDFMerger
 {
-    private $_files;    //['form.pdf']  ["1,2,4, 5-19"]
+    private $_files;    // ['form.pdf']  ["1,2,4, 5-19"]
+
     private $_fpdi;
 
     /**
@@ -42,15 +53,13 @@ class PDFMerger
      */
     public function __construct()
     {
-        require_once('tcpdf/tcpdf.php');
-        require_once('tcpdf/tcpdi.php');
+        require_once 'tcpdf/tcpdf.php';
+        require_once 'tcpdf/tcpdi.php';
     }
 
     /**
      * Add a PDF for inclusion in the merge with a valid file path. Pages should be formatted: 1,3,6, 12-16.
      *
-     * @param $filepath
-     * @param $pages
      * @return void
      */
     public function addPDF($filepath, $pages = 'all')
@@ -71,27 +80,29 @@ class PDFMerger
     /**
      * Merges your provided PDFs and outputs to specified location.
      *
-     * @param $outputmode
-     * @param $outputname
+     * @param  $outputname
      * @return PDF
+     *
      * @throws \Exception
      */
     public function merge($outputmode = 'browser', $outputpath = 'newfile.pdf')
     {
-        if (!isset($this->_files) || !is_array($this->_files)): throw new \Exception("No PDFs to merge."); endif;
+        if (! isset($this->_files) || ! is_array($this->_files)) {
+            throw new \Exception('No PDFs to merge.');
+        }
 
         $fpdi = new \TCPDI;
         $fpdi->SetPrintHeader(false);
         $fpdi->SetPrintFooter(false);
 
-        //merger operations
+        // merger operations
         foreach ($this->_files as $file) {
             $filename = $file[0];
             $filepages = $file[1];
 
             $count = $fpdi->setSourceFile($filename);
 
-            //add the pages
+            // add the pages
             if ($filepages == 'all') {
                 for ($i = 1; $i <= $count; $i++) {
                     $template = $fpdi->importPage($i);
@@ -103,7 +114,9 @@ class PDFMerger
                 }
             } else {
                 foreach ($filepages as $page) {
-                    if (!$template = $fpdi->importPage($page)): throw new \Exception("Could not load page '$page' in PDF '$filename'. Check that the page exists."); endif;
+                    if (! $template = $fpdi->importPage($page)) {
+                        throw new \Exception("Could not load page '$page' in PDF '$filename'. Check that the page exists.");
+                    }
                     $size = $fpdi->getTemplateSize($template);
                     $orientation = ($size['h'] > $size['w']) ? 'P' : 'L';
 
@@ -113,7 +126,7 @@ class PDFMerger
             }
         }
 
-        //output operations
+        // output operations
         $mode = $this->_switchmode($outputmode);
 
         if ($mode == 'S') {
@@ -121,12 +134,14 @@ class PDFMerger
         } else {
             if ($mode == 'F') {
                 $fpdi->Output($outputpath, $mode);
+
                 return true;
             } else {
                 if ($fpdi->Output($outputpath, $mode) == '') {
                     return true;
                 } else {
                     throw new \Exception("Error outputting PDF to '$outputmode'.");
+
                     return false;
                 }
             }
@@ -137,7 +152,6 @@ class PDFMerger
     /**
      * FPDI uses single characters for specifying the output location. Change our more descriptive string into proper format.
      *
-     * @param $mode
      * @return string
      */
     private function _switchmode($mode)
@@ -164,8 +178,8 @@ class PDFMerger
     /**
      * Takes our provided pages in the form of 1,3,4,16-50 and creates an array of all pages
      *
-     * @param $pages
      * @return array
+     *
      * @throws \Exception
      */
     private function _rewritepages($pages)
@@ -173,20 +187,25 @@ class PDFMerger
         $pages = str_replace(' ', '', $pages);
         $part = explode(',', $pages);
 
-        //parse hyphens
+        // parse hyphens
         foreach ($part as $i) {
             $ind = explode('-', $i);
 
             if (count($ind) == 2) {
-                $x = $ind[0]; //start page
-                $y = $ind[1]; //end page
+                $x = $ind[0]; // start page
+                $y = $ind[1]; // end page
 
-                if ($x > $y): throw new \Exception("Starting page, '$x' is greater than ending page '$y'.");
-                    return false; endif;
+                if ($x > $y) {
+                    throw new \Exception("Starting page, '$x' is greater than ending page '$y'.");
 
-                //add middle pages
-                while ($x <= $y): $newpages[] = (int) $x;
-                    $x++; endwhile;
+                    return false;
+                }
+
+                // add middle pages
+                while ($x <= $y) {
+                    $newpages[] = (int) $x;
+                    $x++;
+                }
             } else {
                 $newpages[] = (int) $ind[0];
             }
@@ -194,5 +213,4 @@ class PDFMerger
 
         return $newpages;
     }
-
 }

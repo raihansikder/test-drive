@@ -7,10 +7,15 @@ use Illuminate\Support\Str;
 class Button extends Form
 {
     public $label;
+
     public $type = 'button';
+
     public $name;
+
     public $value;
+
     public $params;
+
     public $isEditable;
 
     /**
@@ -36,5 +41,4 @@ class Button extends Form
         // Force add form-control class
         $this->params['id'] = $this->params['id'] ?? $this->name;
     }
-
 }

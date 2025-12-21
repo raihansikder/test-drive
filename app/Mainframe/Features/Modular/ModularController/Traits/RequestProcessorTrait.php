@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Features\Modular\ModularController\Traits;
 
-use Illuminate\Support\Str;
 use App\Mainframe\Features\Modular\ModularController\ModularController;
+use Illuminate\Support\Str;
 
 /**
  * @mixin ModularController
@@ -63,12 +63,12 @@ trait RequestProcessorTrait
     public function attemptStore()
     {
         // Before going to processor and model run an initial validation in controller.
-        if (!$this->validateStoreRequest()) {
+        if (! $this->validateStoreRequest()) {
             return $this;
         }
 
         // If request is valid then only call processor which also calls model save.
-        if (!$this->fill()->save()) {
+        if (! $this->fill()->save()) {
             return $this;
         }
 
@@ -96,12 +96,12 @@ trait RequestProcessorTrait
     {
 
         // Before going to processor and model run an initial validation in controller.
-        if (!$this->validateUpdateRequest()) {
+        if (! $this->validateUpdateRequest()) {
             return $this;
         }
 
         // If request is valid then only call processor which also calls model save.
-        if (!$this->fill()->save()) {
+        if (! $this->fill()->save()) {
             return $this;
         }
 
@@ -135,17 +135,18 @@ trait RequestProcessorTrait
      * Validate and delete
      *
      * @return \App\Mainframe\Features\Modular\ModularController\Traits\RequestProcessorTrait
+     *
      * @throws \Exception
      */
     public function attemptDestroy()
     {
         // Before going to processor and model run an initial validation in controller.
-        if (!$this->validateDeleteRequest()) {
+        if (! $this->validateDeleteRequest()) {
             return $this;
         }
 
         // If request is valid then only call processor which also calls model save.
-        if (!$this->fill()->delete()) {
+        if (! $this->fill()->delete()) {
             return $this;
         }
 
@@ -185,5 +186,4 @@ trait RequestProcessorTrait
     {
         return 'The '.Str::singular($this->module->title).' has been deleted';
     }
-
 }

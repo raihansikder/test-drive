@@ -1,24 +1,25 @@
 <?php
 
+/** @noinspection PhpUnused */
+
 namespace App\Mainframe\Helpers;
 
+use Carbon\CarbonInterval;
 use DB;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * // Note: this is part of the old implementation and needs to be removed.
  * Class Cache
- *
- * @package App\Mainframe\Helpers
  */
 class Cache extends \Illuminate\Support\Facades\Cache
 {
     /**
-     * Get cache time
+     * Get cache time(seconds)
      *
-     * @param  int|string  $key  e.g., 10 minutes, 1 day, 1 week, 1 month, 1 year
-     * @return \Illuminate\Config\Repository|int|mixed
+     * @param  int|string|null  $key  e.g., 10 minutes, 1 day, 1 week, 1 month, 1 year
      */
-    public static function time($key = 0)
+    public static function time(int|string|null $key): int
     {
         // Request cache refresh
         if (request('no_cache') == 'true') {
@@ -26,7 +27,7 @@ class Cache extends \Illuminate\Support\Facades\Cache
         }
 
         // Query cache disabled in .env
-        if (!config('mainframe.config.query_cache')) {
+        if (! config('mainframe.config.query_cache')) {
             return 0;
         }
 
@@ -45,23 +46,18 @@ class Cache extends \Illuminate\Support\Facades\Cache
             return config('mainframe.cache-time.'.$key, 0);
         }
 
-        // Parse key to seconds
+        // Parse key to seconds 10 minutes, 1 day, 1 week, 1 month, 1 year
         if (is_string($key)) {
-            return \Carbon\CarbonInterval::make($key)->totalSeconds;
+            return CarbonInterval::make($key)->totalSeconds;
         }
-
 
         return 0;
     }
 
     /**
      * Cache query result
-     *
-     * @param $query \Illuminate\Database\Query\Builder
-     * @param $seconds
-     * @return mixed
      */
-    public static function query($query, $seconds = 0)
+    public static function query(Builder|\Illuminate\Database\Query\Builder $query, int $seconds = 0): mixed
     {
         $key = querySignature($query);
 
@@ -83,18 +79,20 @@ class Cache extends \Illuminate\Support\Facades\Cache
      * @param  int  $seconds  Minutes to cache
      * @return array|mixed Array of objects as query result
      */
-    public static function rawQuery($sql, $seconds = 0)
+    public static function rawQuery(string $sql, int $seconds = 0): mixed
     {
         $key = md5($sql);
 
         if ($seconds <= 0) {
             Cache::forget($key);
 
-            return DB::select(DB::raw($sql));
+            // return DB::select(DB::raw($sql)); // Old
+            return DB::select($sql); // New
         }
 
         return \Cache::remember($key, $seconds, function () use ($sql) {
-            return DB::select(DB::raw($sql));
+            // return DB::select(DB::raw($sql)); // Old
+            return DB::select($sql);
         });
     }
 }

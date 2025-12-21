@@ -15,7 +15,7 @@ trait CountryViewProcessorTrait
      */
 
     // Note: See parent class for available functions
-    // public function immutables() { $this->addImmutables(['your_field']); return $this->immutables; }
+    // public function immutables() { $this->mergeImmutables(['your_field']); return $this->immutables; }
     // public function hiddenFields() { $this->addHiddenFields(['your_field']); return $this->hiddenFields; }
 
     /*

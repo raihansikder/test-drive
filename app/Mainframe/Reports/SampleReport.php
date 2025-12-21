@@ -2,10 +2,10 @@
 
 namespace App\Mainframe\Reports;
 
-use DB;
-use GeoJson\Feature\FeatureCollection;
 use App\Mainframe\Features\Report\ReportBuilder;
 use App\Mainframe\Features\Report\Traits\ModuleReportBuilderTrait;
+use DB;
+use GeoJson\Feature\FeatureCollection;
 
 class SampleReport extends ReportBuilder
 {
@@ -62,7 +62,6 @@ class SampleReport extends ReportBuilder
     {
         return 'project.reports.my-report.filter';
     }
-
 
     /*---------------------------------
     | Section: Query building
@@ -151,7 +150,7 @@ class SampleReport extends ReportBuilder
      */
     public function additionalSelectedColumnsDueToGroupBy()
     {
-        //return ['total_minutes'];
+        // return ['total_minutes'];
         return ['first_from', 'last_till', 'total_duration'];
 
     }
@@ -161,11 +160,11 @@ class SampleReport extends ReportBuilder
      */
     public function additionalAliasColumnsDueToGroupBy()
     {
-        //return ['Total (Minutes)'];
+        // return ['Total (Minutes)'];
         return ['From', 'Till', 'Total Duration'];
     }
 
-    //------------------- Group by -------------------------------//
+    // ------------------- Group by -------------------------------//
 
     /*---------------------------------
     | Mutate Results
@@ -175,6 +174,7 @@ class SampleReport extends ReportBuilder
      * Function changes result, show_column, aliasColumns for the final output
      *
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Support\Collection
+     *
      * @throws \Exception
      */
     public function mutateResult()
@@ -205,7 +205,7 @@ class SampleReport extends ReportBuilder
      */
     public function linkUser($row)
     {
-        if (!$row->user) {
+        if (! $row->user) {
             return null;
         }
 
@@ -218,7 +218,7 @@ class SampleReport extends ReportBuilder
      */
     public function linkSite($row)
     {
-        if (!$row->site) {
+        if (! $row->site) {
             return null;
         }
 
@@ -226,18 +226,16 @@ class SampleReport extends ReportBuilder
     }
 
     /**
-     * @param $row
      * @return mixed|null|string
      */
     public function linkZone($row)
     {
-        if (!$row->zone) {
+        if (! $row->zone) {
             return null;
         }
 
         return $row->zone->name;
     }
-
 
     /*---------------------------------
     | Additional view variables
@@ -263,7 +261,6 @@ class SampleReport extends ReportBuilder
         foreach ($zoneDurations as $zoneDuration) {
 
             /** @var ZoneDuration $zoneDuration */
-
             if ($zoneDuration->zone && $zoneDuration->zone->geo_json) {
 
                 // Show total time in map label
@@ -272,7 +269,7 @@ class SampleReport extends ReportBuilder
                 $total = $result->where('zone_id', $zoneDuration->zone_id)
                     ->sum('total_minutes');
 
-                $label = "{$zoneDuration->zone->name} (".gmdate("H:i:s", $total).")";
+                $label = "{$zoneDuration->zone->name} (".gmdate('H:i:s', $total).')';
 
                 /** @var Feature $feature */
                 $feature = Gis::setProperty($zoneDuration->zone->geo_json, 'label', $label);
@@ -306,7 +303,7 @@ class SampleReport extends ReportBuilder
                 $html .= "<tr><td>{$type}</td><td>{$count}</td></tr>";
             }
 
-            $html .= "</table>";
+            $html .= '</table>';
             $popups[$id] = $html;
         }
 
@@ -331,10 +328,10 @@ class SampleReport extends ReportBuilder
         // ->where('zone_id',197)
         // ->distinct('user_id')
 
-        # Apply filters
+        // Apply filters
         $query = $this->filter($query);
 
-        # Group-by
+        // Group-by
         $query->groupBy('zone_id')->groupBy('user_id');
 
         $results = $query->get();
@@ -353,7 +350,7 @@ class SampleReport extends ReportBuilder
             $total = collect($roles)->sum();
             $stats[$zoneId]['Total'] = $total;
             foreach ($roles as $roleName => $count) {
-                $stats[$zoneId][$roleName] = $count." (".round(($count * 100) / $total, 1)."%)";
+                $stats[$zoneId][$roleName] = $count.' ('.round(($count * 100) / $total, 1).'%)';
             }
         }
 

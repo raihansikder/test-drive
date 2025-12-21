@@ -30,5 +30,4 @@ class HomeController extends BaseController
             ->setViewVars(['sampleData' => $sampleData])
             ->send();
     }
-
 }

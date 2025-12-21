@@ -80,7 +80,8 @@ trait GroupDatatableTrait
      * Modify datatable values
      *
      * @return mixed
-     * @var $dt \Yajra\DataTables\DataTableAbstract
+     *
+     * @var \Yajra\DataTables\DataTableAbstract
      */
     public function modify($dt)
     {

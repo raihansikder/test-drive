@@ -15,8 +15,6 @@ class SampleContent extends DynamicContent
 
     /**
      * Unique identifier
-     *
-     * @var
      */
     public $key;
 
@@ -28,5 +26,4 @@ class SampleContent extends DynamicContent
             '[CONTENT]' => 'New Content',
         ];
     }
-
 }

@@ -8,7 +8,6 @@ use Illuminate\Support\HtmlString;
 
 trait Componentable
 {
-
     /**
      * The registered components.
      *
@@ -19,9 +18,6 @@ trait Componentable
     /**
      * Register a custom component.
      *
-     * @param       $name
-     * @param       $view
-     * @param array $signature
      *
      * @return void
      */
@@ -33,7 +29,6 @@ trait Componentable
     /**
      * Check if a component is registered.
      *
-     * @param $name
      *
      * @return bool
      */
@@ -45,8 +40,6 @@ trait Componentable
     /**
      * Render a custom component.
      *
-     * @param        $name
-     * @param  array $arguments
      *
      * @return HtmlString
      */
@@ -56,15 +49,13 @@ trait Componentable
         $data = $this->getComponentData($component['signature'], $arguments);
 
         return new HtmlString(
-          $this->view->make($component['view'], $data)->render()
+            $this->view->make($component['view'], $data)->render()
         );
     }
 
     /**
      * Prepare the component data, while respecting provided defaults.
      *
-     * @param  array $signature
-     * @param  array $arguments
      *
      * @return array
      */
@@ -93,9 +84,8 @@ trait Componentable
     /**
      * Dynamically handle calls to the class.
      *
-     * @param  string $method
+     * @param  string  $method
      * @param  array  $parameters
-     *
      * @return \Illuminate\Contracts\View\View|mixed
      *
      * @throws \BadMethodCallException

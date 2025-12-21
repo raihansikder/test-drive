@@ -2,7 +2,4 @@
 
 namespace App\Mainframe\Modules\Projects\Traits;
 
-trait ProjectObserverTrait
-{
-
-}
+trait ProjectObserverTrait {}

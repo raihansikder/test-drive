@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Features\Modular\ModularController\Traits;
 
-use Validator;
 use App\Mainframe\Features\Modular\ModularController\ModularController;
+use Validator;
 
 /**
  * @mixin ModularController
@@ -95,12 +95,12 @@ trait RequestValidator
         ];
 
         $message = [
-            //'password.regex' => "The password field should be mix of letters and numbers.",
+            // 'password.regex' => "The password field should be mix of letters and numbers.",
         ];
 
         $validator = Validator::make(request()->all(), $rules, $message);
 
-        //$this->fieldError('name','Error Lorem Ipsum'); // Sample error message.
+        // $this->fieldError('name','Error Lorem Ipsum'); // Sample error message.
 
         return $validator;
     }
@@ -114,16 +114,16 @@ trait RequestValidator
     public function updateRequestValidator()
     {
         $rules = [
-            //'name' => 'required',
+            // 'name' => 'required',
         ];
 
         $message = [
-            //'password.regex' => "The password field should be mix of letters and numbers.",
+            // 'password.regex' => "The password field should be mix of letters and numbers.",
         ];
 
         $validator = Validator::make(request()->all(), $rules, $message);
 
-        //$this->fieldError('name','Error Lorem Ipsum'); // Sample error message.
+        // $this->fieldError('name','Error Lorem Ipsum'); // Sample error message.
 
         return $validator;
     }
@@ -139,16 +139,16 @@ trait RequestValidator
     public function saveRequestValidator()
     {
         $rules = [
-            //'name' => 'required',
+            // 'name' => 'required',
         ];
 
         $message = [
-            //'password.regex' => "The password field should be mix of letters and numbers.",
+            // 'password.regex' => "The password field should be mix of letters and numbers.",
         ];
 
         $validator = Validator::make(request()->all(), $rules, $message);
 
-        //$this->fieldError('name','Error Lorem Ipsum'); // Sample error message.
+        // $this->fieldError('name','Error Lorem Ipsum'); // Sample error message.
 
         return $validator;
     }

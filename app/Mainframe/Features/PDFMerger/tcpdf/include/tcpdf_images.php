@@ -1,5 +1,6 @@
 <?php
-//============================================================+
+
+// ============================================================+
 // File name   : tcpdf_images.php
 // Version     : 1.0.005
 // Begin       : 2002-08-03
@@ -31,31 +32,34 @@
 // Description :
 //   Static image methods used by the TCPDF class.
 //
-//============================================================+
+// ============================================================+
 
 /**
  * @file
  * This is a PHP class that contains static image methods for the TCPDF class.<br>
- * @package com.tecnick.tcpdf
+ *
  * @author Nicola Asuni
+ *
  * @version 1.0.005
  */
 
 /**
  * @class TCPDF_IMAGES
  * Static image methods used by the TCPDF class.
- * @package com.tecnick.tcpdf
+ *
  * @brief PHP class for generating PDF documents without requiring external extensions.
+ *
  * @version 1.0.005
+ *
  * @author Nicola Asuni - info@tecnick.com
  */
 class TCPDF_IMAGES
 {
-
     /**
      * Array of hinheritable SVG properties.
      *
      * @since 5.0.000 (2010-05-02)
+     *
      * @public static
      */
     public static $svginheritprop = [
@@ -71,40 +75,45 @@ class TCPDF_IMAGES
     /**
      * Return the image type given the file name or array returned by getimagesize() function.
      *
-     * @param $imgfile  (string) image file name
-     * @param $iminfo  (array) array of image information returned by getimagesize() function.
+     * @param  $imgfile  (string) image file name
+     * @param  $iminfo  (array) array of image information returned by getimagesize() function.
      * @return string image type
+     *
      * @since 4.8.017 (2009-11-27)
+     *
      * @public static
      */
     public static function getImageFileType($imgfile, $iminfo = [])
     {
         $type = '';
-        if (isset($iminfo['mime']) and !empty($iminfo['mime'])) {
+        if (isset($iminfo['mime']) and ! empty($iminfo['mime'])) {
             $mime = explode('/', $iminfo['mime']);
-            if ((count($mime) > 1) and ($mime[0] == 'image') and (!empty($mime[1]))) {
+            if ((count($mime) > 1) and ($mime[0] == 'image') and (! empty($mime[1]))) {
                 $type = strtolower(trim($mime[1]));
             }
         }
         if (empty($type)) {
             $fileinfo = pathinfo($imgfile);
-            if (isset($fileinfo['extension']) and (!TCPDF_STATIC::empty_string($fileinfo['extension']))) {
+            if (isset($fileinfo['extension']) and (! TCPDF_STATIC::empty_string($fileinfo['extension']))) {
                 $type = strtolower(trim($fileinfo['extension']));
             }
         }
         if ($type == 'jpg') {
             $type = 'jpeg';
         }
+
         return $type;
     }
 
     /**
      * Set the transparency for the given GD image.
      *
-     * @param $new_image  (image) GD image object
-     * @param $image  (image) GD image object.
-     * return GD image object.
+     * @param  $new_image  (image) GD image object
+     * @param  $image  (image) GD image object.
+     *                return GD image object.
+     *
      * @since 4.9.016 (2010-04-20)
+     *
      * @public static
      */
     public static function setGDImageTransparency($new_image, $image)
@@ -121,6 +130,7 @@ class TCPDF_IMAGES
         $tid = imagecolorallocate($new_image, $tcol['red'], $tcol['green'], $tcol['blue']);
         imagefill($new_image, 0, 0, $tid);
         imagecolortransparent($new_image, $tid);
+
         return $new_image;
     }
 
@@ -128,10 +138,12 @@ class TCPDF_IMAGES
      * Convert the loaded image to a PNG and then return a structure for the PDF creator.
      * This function requires GD library and write access to the directory defined on K_PATH_CACHE constant.
      *
-     * @param $image  (image) Image object.
-     * @param $tempfile  (string) Temporary file name.
-     * return image PNG image object.
+     * @param  $image  (image) Image object.
+     * @param  $tempfile  (string) Temporary file name.
+     *                   return image PNG image object.
+     *
      * @since 4.9.016 (2010-04-20)
+     *
      * @public static
      */
     public static function _toPNG($image, $tempfile)
@@ -146,6 +158,7 @@ class TCPDF_IMAGES
         $retvars = self::_parsepng($tempfile);
         // tidy up by removing temporary image
         unlink($tempfile);
+
         return $retvars;
     }
 
@@ -153,10 +166,11 @@ class TCPDF_IMAGES
      * Convert the loaded image to a JPEG and then return a structure for the PDF creator.
      * This function requires GD library and write access to the directory defined on K_PATH_CACHE constant.
      *
-     * @param $image  (image) Image object.
-     * @param $quality  (int) JPEG quality.
-     * @param $tempfile  (string) Temporary file name.
-     * return image JPEG image object.
+     * @param  $image  (image) Image object.
+     * @param  $quality  (int) JPEG quality.
+     * @param  $tempfile  (string) Temporary file name.
+     *                   return image JPEG image object.
+     *
      * @public static
      */
     public static function _toJPEG($image, $quality, $tempfile)
@@ -166,20 +180,22 @@ class TCPDF_IMAGES
         $retvars = self::_parsejpeg($tempfile);
         // tidy up by removing temporary image
         unlink($tempfile);
+
         return $retvars;
     }
 
     /**
      * Extract info from a JPEG file without using the GD library.
      *
-     * @param $file  (string) image file to parse
+     * @param  $file  (string) image file to parse
      * @return array structure containing the image data
+     *
      * @public static
      */
     public static function _parsejpeg($file)
     {
         // check if is a local file
-        if (!@file_exists($file)) {
+        if (! @file_exists($file)) {
             // try to encode spaces on filename
             $tfile = str_replace(' ', '%20', $file);
             if (@file_exists($tfile)) {
@@ -188,7 +204,7 @@ class TCPDF_IMAGES
         }
         $a = getimagesize($file);
         if (empty($a)) {
-            //Missing or incorrect image file
+            // Missing or incorrect image file
             return false;
         }
         if ($a[2] != 2) {
@@ -198,7 +214,7 @@ class TCPDF_IMAGES
         // bits per pixel
         $bpc = isset($a['bits']) ? intval($a['bits']) : 8;
         // number of image channels
-        if (!isset($a['channels'])) {
+        if (! isset($a['channels'])) {
             $channels = 3;
         } else {
             $channels = intval($a['channels']);
@@ -206,26 +222,26 @@ class TCPDF_IMAGES
         // default colour space
         switch ($channels) {
             case 1:
-            {
+
                 $colspace = 'DeviceGray';
                 break;
-            }
+
             case 3:
-            {
+
                 $colspace = 'DeviceRGB';
                 break;
-            }
+
             case 4:
-            {
+
                 $colspace = 'DeviceCMYK';
                 break;
-            }
+
             default:
-            {
+
                 $channels = 3;
                 $colspace = 'DeviceRGB';
                 break;
-            }
+
         }
         // get file content
         $data = file_get_contents($file);
@@ -255,14 +271,16 @@ class TCPDF_IMAGES
         } else {
             $icc = false;
         }
+
         return ['w' => $a[0], 'h' => $a[1], 'ch' => $channels, 'icc' => $icc, 'cs' => $colspace, 'bpc' => $bpc, 'f' => 'DCTDecode', 'data' => $data];
     }
 
     /**
      * Extract info from a PNG file without using the GD library.
      *
-     * @param $file  (string) image file to parse
+     * @param  $file  (string) image file to parse
      * @return array structure containing the image data
+     *
      * @public static
      */
     public static function _parsepng($file)
@@ -272,15 +290,15 @@ class TCPDF_IMAGES
             // Can't open image file
             return false;
         }
-        //Check signature
+        // Check signature
         if (fread($f, 8) != chr(137).'PNG'.chr(13).chr(10).chr(26).chr(10)) {
             // Not a PNG file
             return false;
         }
-        //Read header chunk
+        // Read header chunk
         fread($f, 4);
         if (fread($f, 4) != 'IHDR') {
-            //Incorrect PNG file
+            // Incorrect PNG file
             return false;
         }
         $w = TCPDF_STATIC::_freadint($f);
@@ -296,27 +314,31 @@ class TCPDF_IMAGES
         } else {
             // alpha channel
             fclose($f);
+
             return 'pngalpha';
         }
         if (ord(fread($f, 1)) != 0) {
             // Unknown compression method
             fclose($f);
+
             return false;
         }
         if (ord(fread($f, 1)) != 0) {
             // Unknown filter method
             fclose($f);
+
             return false;
         }
         if (ord(fread($f, 1)) != 0) {
             // Interlacing not supported
             fclose($f);
+
             return false;
         }
         fread($f, 4);
         $channels = ($ct == 2 ? 3 : 1);
         $parms = '/DecodeParms << /Predictor 15 /Colors '.$channels.' /BitsPerComponent '.$bpc.' /Columns '.$w.' >>';
-        //Scan chunks looking for palette, transparency and image data
+        // Scan chunks looking for palette, transparency and image data
         $pal = '';
         $trns = '';
         $data = '';
@@ -338,7 +360,7 @@ class TCPDF_IMAGES
                 } else { // Indexed
                     if ($n > 0) {
                         $trns = [];
-                        for ($i = 0; $i < $n; ++$i) {
+                        for ($i = 0; $i < $n; $i++) {
                             $trns[] = ord($t[$i]);
                         }
                     }
@@ -352,12 +374,13 @@ class TCPDF_IMAGES
                 // skip profile name
                 $len = 0;
                 while ((ord(fread($f, 1)) != 0) and ($len < 80)) {
-                    ++$len;
+                    $len++;
                 }
                 // get compression method
                 if (ord(fread($f, 1)) != 0) {
                     // Unknown filter method
                     fclose($f);
+
                     return false;
                 }
                 // read ICC Color Profile
@@ -375,17 +398,18 @@ class TCPDF_IMAGES
         if (($colspace == 'Indexed') and (empty($pal))) {
             // Missing palette
             fclose($f);
+
             return false;
         }
         fclose($f);
+
         return [
             'w' => $w, 'h' => $h, 'ch' => $channels, 'icc' => $icc, 'cs' => $colspace, 'bpc' => $bpc, 'f' => 'FlateDecode', 'parms' => $parms, 'pal' => $pal, 'trns' => $trns,
             'data' => $data,
         ];
     }
-
 } // END OF TCPDF_IMAGES CLASS
 
-//============================================================+
+// ============================================================+
 // END OF FILE
-//============================================================+
+// ============================================================+

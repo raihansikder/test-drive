@@ -8,20 +8,28 @@ class Comment extends Form
 {
     /** @var string */
     public $containerClass;
+
     /** @var null|mixed */
     public $moduleId;
+
     /** @var null|mixed */
     public $elementId;
+
     /** @var null|mixed */
     public $elementUuid;
+
     /** @var null|mixed */
     public $type;
+
     /** @var int */
     public $limit;
+
     /** @var null|int */
     public $tenantId;
+
     /** @var string */
     public $commentBoxId;
+
     /** * @var string */
     public $commentableType;
 

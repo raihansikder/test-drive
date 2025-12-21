@@ -15,7 +15,7 @@ class Date
      */
     public static function formatted($date, $format = null)
     {
-        if (!$date) {
+        if (! $date) {
             return null;
         }
 
@@ -37,7 +37,7 @@ class Date
      */
     public static function formattedDateTime($date, $format = null)
     {
-        if (!$date) {
+        if (! $date) {
             return null;
         }
 
@@ -49,5 +49,4 @@ class Date
 
         return Carbon::createFromDate($date)->format($format);
     }
-
 }

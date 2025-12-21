@@ -38,7 +38,8 @@ class CheckCrossTenantDuplication extends ValidationRule
             $query->where('id', '!=', $element->id);
         }
 
-        if ($exists = $query->exists()) {
+        // Check if the name is already taken
+        if ($query->exists()) {
             return false;
         }
 

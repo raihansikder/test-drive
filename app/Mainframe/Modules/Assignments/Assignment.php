@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Modules\Assignments;
 
-use App\Project\Features\Modular\BaseModule\BaseModule;
 use App\Mainframe\Modules\Assignments\Traits\AssignmentTrait;
+use App\Project\Features\Modular\BaseModule\BaseModule;
 
 class Assignment extends BaseModule
 {

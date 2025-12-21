@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Commands;
 
-use DB;
 use Artisan;
+use DB;
 
 class RefreshModules extends MakeModule
 {
@@ -24,7 +24,7 @@ class RefreshModules extends MakeModule
     /**
      * Execute the console command.
      *
-     * @return mixed|null
+     * @return void
      */
     public function handle()
     {
@@ -37,7 +37,7 @@ class RefreshModules extends MakeModule
 
         $items = config($config);
 
-        if (!$items) {
+        if (! $items) {
             $this->info('No config found at '.$config);
         } else {
 
@@ -61,7 +61,7 @@ class RefreshModules extends MakeModule
 
         $items = config($config);
 
-        if (!$items) {
+        if (! $items) {
             $this->info('No config found at '.$config);
         } else {
 
@@ -81,5 +81,4 @@ class RefreshModules extends MakeModule
         Artisan::call('cache:clear');
 
     }
-
 }

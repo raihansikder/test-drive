@@ -1,27 +1,28 @@
 <?php
 
+/** @noinspection LaravelUnknownRouteNameInspection */
+
 namespace App\Mainframe\Features\Report\Traits;
 
-use Str;
-use URL;
+use App\Mainframe\Features\Report\ReportBuilder;
+use App\Mainframe\Features\Report\ReportViewProcessor;
+use App\Mainframe\Helpers\Convert;
+use App\Report;
 use DateTime;
 use Debugbar;
-use App\Report;
-use Illuminate\View\View;
-use Illuminate\Http\JsonResponse;
-use App\Mainframe\Helpers\Convert;
-use Illuminate\Support\Collection;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Database\Eloquent\Model;
-use PhpOffice\PhpSpreadsheet\Writer\Csv;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Exception;
-use App\Mainframe\Features\Report\ReportBuilder;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
-use App\Mainframe\Features\Report\ReportViewProcessor;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\ResourceCollection;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
+use Illuminate\View\View;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Csv;
+use PhpOffice\PhpSpreadsheet\Writer\Exception;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Str;
+use URL;
 
 /** @mixin ReportBuilder $this */
 trait Output
@@ -30,11 +31,12 @@ trait Output
      * Generate report output
      *
      * @return Factory|\Illuminate\Http\JsonResponse|null|string|View
+     *
      * @throws \Exception
      */
     public function output()
     {
-        if (!$this->isValid()) {
+        if (! $this->isValid()) {
             return $this->responseInvalid();
         }
 
@@ -84,6 +86,8 @@ trait Output
      * Invalid request
      *
      * @return Factory|\Illuminate\Http\JsonResponse|View
+     *
+     * @throws \Exception
      */
     public function responseInvalid()
     {
@@ -152,6 +156,7 @@ trait Output
      *
      * @param  string|null  $resource  Define a ResourceCollection
      * @return array
+     *
      * @throws \Exception
      */
     public function jsonPayload($resource = null)
@@ -165,7 +170,7 @@ trait Output
         }
 
         /** @var Collection $mutatedResults */
-        $result = !is_array($mutatedResults) ? $mutatedResults->toArray() : $mutatedResults;
+        $result = ! is_array($mutatedResults) ? $mutatedResults->toArray() : $mutatedResults;
 
         $result['items'] = $items ?? $result['data'] ?? [];
 
@@ -178,6 +183,7 @@ trait Output
      * Output JSON
      *
      * @return JsonResponse
+     *
      * @throws \Exception
      */
     public function json($resource = null)
@@ -192,6 +198,7 @@ trait Output
      *
      * @param  bool  $csv
      * @return null|string
+     *
      * @throws \Exception
      */
     public function excel($csv = false)
@@ -212,11 +219,12 @@ trait Output
      * Download CSV
      *
      * @return null|string
+     *
      * @throws \Exception
      */
     public function csv()
     {
-        return $this->excel($csv = true);
+        return $this->excel(csv: true);
     }
 
     /**
@@ -263,7 +271,6 @@ trait Output
     /**
      * View blade path
      *
-     * @param $type
      * @return string
      */
     public function viewPath($type)
@@ -280,6 +287,7 @@ trait Output
      *
      * @param  null  $type  blank|print|null
      * @return Factory|View
+     *
      * @throws \Exception
      */
     public function html($type = null)
@@ -293,22 +301,19 @@ trait Output
     /**
      * Dump data into excel
      *
-     * @param $selectedColumns
-     * @param $aliasColumns
-     * @param $result
      * @param  bool  $csv
+     *
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      * @throws Exception
      */
     public function dumpExcel($selectedColumns, $aliasColumns, $result, $csv = false)
     {
-        Debugbar::disable(); // Disable debugger. Because it add debug codes in output file.
+        Debugbar::disable(); // Force disable debugger. Because it adds debug codes in output file.
 
         $ext = $csv ? '.csv' : '.xlsx';
 
-        $spreadsheet = new Spreadsheet();
+        $spreadsheet = new Spreadsheet;
 
-        /** @var Worksheet $sheet */
         $sheet = $spreadsheet->getActiveSheet();
         $ranges = $this->excelColumnRange(count($selectedColumns));
 
@@ -364,19 +369,17 @@ trait Output
     /**
      * Create column range for Excel
      *
-     * @param $no_of_columns
      * @return array // ['A','B', ... 'AA', 'ZZ']
      */
-    public function excelColumnRange($no_of_columns)
+    public function excelColumnRange($noOfColumns)
     {
-        $letters = range('A', 'Z');
-
         $range = [];
-        for ($i = 0; $i < $no_of_columns; $i++) {
+        $letters = range('A', 'Z');
+        for ($i = 0; $i < $noOfColumns; $i++) {
             $position = $i * 26;
             foreach ($letters as $ii => $letter) {
                 $position++;
-                if ($position <= $no_of_columns) {
+                if ($position <= $noOfColumns) {
                     $range[] = ($position > 26 ? $range[$i - 1] : '').$letter;
                 }
             }
@@ -403,10 +406,12 @@ trait Output
      * Function changes result, show_column, aliasColumns for the final output
      *
      * @return LengthAwarePaginator|Collection
+     *
      * @throws \Exception
      */
     public function mutateResult()
     {
+        /** @noinspection PhpUnnecessaryLocalVariableInspection */
         $result = $this->result();
         // foreach ($result as $row) {
         //     $row->is_active = randomString();
@@ -418,13 +423,11 @@ trait Output
     /**
      * Change value of a single field in a result row
      *
-     * @param $row
-     * @param $column
      * @param  null  $val
      */
     public function mutate($row, $column, $val = null)
     {
-        if (!$this->selectedColumnsHas($column)) {
+        if (! $this->selectedColumnsHas($column)) {
             return;
         }
 
@@ -433,6 +436,7 @@ trait Output
 
     /**
      * @return ReportViewProcessor
+     *
      * @noinspection PhpUnnecessaryLocalVariableInspection
      */
     public function viewProcessor()
@@ -551,13 +555,14 @@ trait Output
     }
 
     /**
-     * Transforms the values of a cell. This is useful for creating links, changing colors etc.
+     * Transforms the values of a cell. This is useful for creating links, changing colors, etc.
      *
      * @param  string  $column
      * @param  Model|object|array  $row
      * @param  string  $value
      * @param  string|null  $moduleName
      * @return string|null
+     *
      * @deprecated use cell()
      */
     public function transformRow($column, $row, $value, $moduleName = null)
@@ -575,9 +580,8 @@ trait Output
     }
 
     /**
-     * Extracts the 'column' name part form 'table.column'
+     * Extracts the 'column' name part from 'table.column'
      *
-     * @param $column
      * @return string
      */
     public function extractColumn($column)
@@ -594,7 +598,7 @@ trait Output
     }
 
     /**
-     * Transforms the values of a cell. This is useful for creating links, changing colors etc.
+     * Transforms the values of a cell. This is useful for creating links, changing colors, etc.
      *
      * @param  string  $column
      * @param  Model|object|array  $row
@@ -628,7 +632,6 @@ trait Output
     /**
      * Check if the column is linkable
      *
-     * @param $column
      * @return bool
      */
     public function cellIsLinkable($column)
@@ -643,30 +646,28 @@ trait Output
      */
     public function outputIsLinkable()
     {
+        /** @noinspection PhpInArrayCanBeReplacedWithComparisonInspection */
         return in_array($this->outputType(), ['html']);
     }
 
     /**
      * Apply Link to column
      *
-     * @param $column
-     * @param $row
-     * @param $route
      * @return mixed|string
      */
     public function linkCell($column, $row, $route = null)
     {
-        if (!$this->outputIsLinkable()) {
+        if (! $this->outputIsLinkable()) {
             return $row->$column;
         }
 
-        if (!$route) {
+        if (! $route) {
             $route = $this->elementViewUrl($row);
         }
 
         // Add link
         if ($route) {
-            return "<a href='{$route}'>".$row->$column.'</a>';
+            return "<a href='$route'>".$row->$column.'</a>';
         }
 
         return $row->$column;
@@ -675,16 +676,15 @@ trait Output
     /**
      * Link to module element
      *
-     * @param $row
      * @return string|null
      */
     public function elementViewUrl($row)
     {
-        if (!$this->module) {
+        if (! $this->module) {
             return null;
         }
 
-        if (!isset($row->id)) {
+        if (! isset($row->id)) {
             return null;
         }
 
@@ -760,7 +760,6 @@ trait Output
     /**
      * Show column title with link
      *
-     * @param $index
      * @return string
      */
     public function columnTitle($index)
@@ -770,7 +769,7 @@ trait Output
 
         $column = $this->extractColumn($report->mutateSelectedColumns()[$index] ?? 'NA');
 
-        if (!$this->columnIsSortable($column)) {
+        if (! $this->columnIsSortable($column)) {
             return $alias;
         }
 
@@ -802,7 +801,7 @@ trait Output
         $requests['order_by'] = $orderBy;
         $url = $this->buildUrl($requests);
 
-        return " <a class='{$linkCss}' href='{$url}'>$alias {$icon}</a>";
+        return " <a class='$linkCss' href='$url'>$alias $icon</a>";
     }
 
     /**
@@ -822,7 +821,6 @@ trait Output
     /**
      * Check if column is sortable
      *
-     * @param $column
      * @return bool
      */
     public function columnIsSortable($column)
@@ -880,12 +878,11 @@ trait Output
     {
         $selectColumns = $this->selectedColumns();
         foreach ($selectColumns as $selectColumn) {
-            if (!in_array($selectColumn, $this->columnOptions())) {
+            if (! in_array($selectColumn, $this->columnOptions())) {
                 $this->error($selectColumn.'- is not a valid field');
             }
         }
 
         return $this;
     }
-
 }

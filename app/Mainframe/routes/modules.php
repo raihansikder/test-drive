@@ -1,8 +1,9 @@
-<?php /** @noinspection DuplicatedCode */
+<?php
+
+/** @noinspection DuplicatedCode */
 
 use App\Mainframe\Helpers\Mf;
 use App\Mainframe\Modules\Uploads\UploadController;
-use App\Mainframe\Modules\ModuleGroups\ModuleGroupController;
 
 $modules = Mf::modules();
 $moduleGroups = Mf::moduleGroups();
@@ -11,8 +12,7 @@ $moduleGroups = Mf::moduleGroups();
 | Common routes for all modules
 |--------------------------------------------------------------------------
 */
-Route::middleware(['auth', 'verified', 'tenant'])->group(function () use ($modules, $moduleGroups) {
-
+Route::middleware(['auth', 'verified', 'tenant'])->group(function () use ($modules) {
     foreach ($modules as $module) {
         $path = $module->route_path;
         $controller = $module->controller;
@@ -46,21 +46,24 @@ Route::middleware(['auth', 'verified', 'tenant'])->group(function () use ($modul
         ]);
     }
 
-    // Module-group index routes
-    foreach ($moduleGroups as $moduleGroup) {
-        $path = $moduleGroup->route_path;
-        Route::get('module-groups/index/'.$path,
-            [ModuleGroupController::class, 'home'])->name($moduleGroup->route_name.'.index');
-    }
+    // /**
+    //  * Module group routes
+    //  * Todo: No need to define module-group routes.
+    //  * { "route_path": "mg-settings", "route_name": "mg-settings", "default_route": "mg-settings.index"}
+    //  */
+    //
+    // foreach ($moduleGroups as $group) {
+    //     $path = $group->route_path; //
+    //     Route::get($path, [ModuleGroupController::class, 'home'])->name($group->default_route);
+    // }
 
-    # Update uploaded file
+    // Update uploaded file
     Route::post('update-file', [UploadController::class, 'updateExistingUpload'])->name('uploads.update-file');
-    # Reorder files
+    // Reorder files
     Route::post('update-upload-order', [UploadController::class, 'reorder'])->name('uploads.reorder');
-    # Show image from storage directory
+    // Show image from storage directory
     Route::get('show-image/{id}', [UploadController::class, 'showImage'])->name('show.image');
-    # Download
+    // Download
     Route::get('download/{uuid}', [UploadController::class, 'download'])->name('download');
     Route::get('download-zip', [UploadController::class, 'downloadZip'])->name('download.zip');
-
 });

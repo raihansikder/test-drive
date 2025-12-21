@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Features\Core\Traits;
 
-use App\Module;
 use App\Mainframe\Features\Datatable\Datatable;
+use App\Module;
 
 trait HasModule
 {
@@ -26,7 +26,7 @@ trait HasModule
             $module = Module::byName($module);
         }
 
-        if (!$module) {
+        if (! $module) {
             return false;
         }
 
@@ -38,7 +38,6 @@ trait HasModule
     }
 
     /**
-     * @param  string  $table
      * @return $this
      */
     public function setTable(string $table)

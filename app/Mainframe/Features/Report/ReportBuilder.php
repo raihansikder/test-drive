@@ -2,39 +2,39 @@
 
 namespace App\Mainframe\Features\Report;
 
-use Illuminate\Database\Query\Builder;
-use App\Mainframe\Features\Report\Traits\Query;
-use App\Mainframe\Features\Report\Traits\Output;
 use App\Mainframe\Features\Report\Traits\Columns;
-use App\Mainframe\Http\Controllers\BaseController;
 use App\Mainframe\Features\Report\Traits\Filterable;
+use App\Mainframe\Features\Report\Traits\Output;
+use App\Mainframe\Features\Report\Traits\Query;
+use App\Mainframe\Http\Controllers\BaseController;
+use Illuminate\Database\Query\Builder;
 
 class ReportBuilder extends BaseController
 {
-    use Filterable, Columns, Query, Output;
+    use Columns, Filterable, Output, Query;
 
-    /** @var  \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Model DB Table/View names */
+    /** @var \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Model DB Table/View names */
     public $dataSource;
 
     /** @var string */
     public $table;
 
-    /** @var  string Directory location of the report blade templates */
+    /** @var string Directory location of the report blade templates */
     public $path = 'mainframe.layouts.report';
 
     /** @var int Cache time */
     public $cache = 1;
 
-    /** @var  Builder */
+    /** @var Builder */
     public $query;
 
-    /** @var  \Illuminate\Support\Collection */
+    /** @var \Illuminate\Support\Collection */
     public $result;
 
-    /** @var integer */
+    /** @var int */
     public $total;
 
-    /** @var integer Default rows per page */
+    /** @var int Default rows per page */
     public $rowsPerPage;
 
     /** @var array sting search with %*** % */

@@ -2,10 +2,10 @@
 
 namespace App\Mainframe\Http\Controllers\Auth;
 
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use App\Project\Http\Controllers\BaseController;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ForgotPasswordController extends BaseController
 {
@@ -37,7 +37,6 @@ class ForgotPasswordController extends BaseController
     /**
      * Validate the email for the given request.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return void
      */
     protected function validateEmail(Request $request)
@@ -57,7 +56,6 @@ class ForgotPasswordController extends BaseController
     /**
      * Get the response for a successful password reset link.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  string  $response
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
@@ -73,7 +71,6 @@ class ForgotPasswordController extends BaseController
     /**
      * Get the response for a failed password reset link.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  string  $response
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
@@ -87,5 +84,4 @@ class ForgotPasswordController extends BaseController
             ->withInput($request->only('email'))
             ->withErrors(['email' => trans($response)]);
     }
-
 }

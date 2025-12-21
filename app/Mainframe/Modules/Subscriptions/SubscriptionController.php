@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Modules\Subscriptions;
 
-use App\Project\Features\Modular\ModularController\ModularController;
 use App\Mainframe\Modules\Subscriptions\Traits\SubscriptionControllerTrait;
+use App\Project\Features\Modular\ModularController\ModularController;
 
 class SubscriptionController extends ModularController
 {

@@ -50,9 +50,13 @@ class Upload extends BaseModule
      * Upload type options
      */
     public const TYPE_GENERIC = 'Generic';
+
     public const TYPE_PROFILE_PIC = 'Profile Picture';
+
     public const TYPE_LOGO = 'Logo';
+
     public const TYPE_SUPPORTING_DOCUMENT = 'Supporting Document';
+
     public const TYPE_SETTING_PUBLIC = 'Setting (Public)';
 
     public static $types = [
@@ -73,5 +77,4 @@ class Upload extends BaseModule
         self::TYPE_PROFILE_PIC,
         self::TYPE_LOGO,
     ];
-
 }

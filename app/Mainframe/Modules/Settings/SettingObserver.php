@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Modules\Settings;
 
-use App\Project\Features\Modular\BaseModule\BaseModuleObserver;
 use App\Mainframe\Modules\Settings\Traits\SettingObserverTrait;
+use App\Project\Features\Modular\BaseModule\BaseModuleObserver;
 
 class SettingObserver extends BaseModuleObserver
 {

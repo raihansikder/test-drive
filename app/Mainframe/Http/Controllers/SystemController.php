@@ -2,13 +2,13 @@
 
 namespace App\Mainframe\Http\Controllers;
 
-use Str;
-use Auth;
-use Artisan;
-use App\User;
 use App\Group;
 use App\Module;
 use App\ModuleGroup;
+use App\User;
+use Artisan;
+use Auth;
+use Str;
 
 class SystemController extends BaseController
 {
@@ -25,6 +25,7 @@ class SystemController extends BaseController
     public function impersonate(User $user)
     {
         Auth::login($user);
+
         return redirect('/');
     }
 
@@ -57,16 +58,16 @@ class SystemController extends BaseController
 
         echo '<pre>[<br/>';
         foreach ($modules as $module) {
-            echo "\"".trim($module->name)."\"  =>[<br/>";
+            echo '"'.trim($module->name).'"  =>[<br/>';
 
             foreach ($module->tableColumns() as $column) {
-                if (!in_array($column, $skip)) {
+                if (! in_array($column, $skip)) {
                     echo "      \"$column\" => ";
 
                     $val = $module->$column;
 
                     if (is_string($val)) {
-                        echo "\"".trim(htmlentities(str_replace('"', '\"', $val)))."\"";
+                        echo '"'.trim(htmlentities(str_replace('"', '\"', $val))).'"';
                     } else {
                         if (is_null($val)) {
                             echo 'null';
@@ -107,7 +108,7 @@ class SystemController extends BaseController
             echo "\"$module->name\"  =>[<br/>";
 
             foreach ($module->tableColumns() as $column) {
-                if (!in_array($column, $skip)) {
+                if (! in_array($column, $skip)) {
                     echo "      \"$column\" => ";
 
                     $val = $module->$column;

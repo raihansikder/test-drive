@@ -4,7 +4,6 @@ namespace App\Mainframe\Features\Form\Text;
 
 class Datetime extends Date
 {
-
     public $format = 'd-m-Y H:i:s';
 
     /**
@@ -18,5 +17,4 @@ class Datetime extends Date
         parent::__construct($var, $element);
 
     }
-
 }

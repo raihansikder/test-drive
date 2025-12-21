@@ -33,11 +33,14 @@ trait SpreadTrait
     | Section: Relations
     |--------------------------------------------------------------------------
     */
-    public function spreadable() { return $this->morphTo(); }
+    public function spreadable()
+    {
+        return $this->morphTo();
+    }
 
     /*
     |--------------------------------------------------------------------------
-    | Section: Autofill functions 
+    | Section: Autofill functions
     |--------------------------------------------------------------------------
     */
     // /**

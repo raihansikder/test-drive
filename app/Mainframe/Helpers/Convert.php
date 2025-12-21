@@ -15,6 +15,7 @@ class Convert
         if (is_array($val)) {
             return $val;
         }
+
         return Sanitize::array(explode(',', Sanitize::csv($val)));
     }
 
@@ -29,13 +30,13 @@ class Convert
         if (is_string($val)) {
             return $val;
         }
+
         return implode(',', Sanitize::array($val));
     }
 
     /**
      * Convert a string to array. The string can be csv '1,2,3' or array expression '[1,2,3]'
      *
-     * @param $str
      * @return array
      */
     public static function strToArray($str)

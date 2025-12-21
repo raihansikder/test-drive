@@ -2,36 +2,16 @@
 
 namespace App\Mainframe\Helpers\Test;
 
-use App\User;
 use App\Mainframe\Features\Modular\BaseModule\BaseModule;
+use Log;
 
 trait TestHelperTrait
 {
     /**
-     * Get the latest user
-     *
-     * @return \App\User|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|object|null
-     */
-    public function latestUser()
-    {
-        return User::latest()->first();
-    }
-
-    /**
-     * Get last updated user
-     *
-     * @return \Illuminate\Database\Eloquent\Model|object
-     */
-    public function lastUpdatedUser()
-    {
-        return User::orderBy('updated_at', 'DESC')->first();
-    }
-
-    /**
      * Get the 'errors'=>... from a response
      *
-     * @param $response
      * @return mixed|null
+     *
      * @throws \JsonException
      */
     public function errors($response)
@@ -42,9 +22,10 @@ trait TestHelperTrait
     /**
      * Get errors from response
      *
-     * @param $response
      * @return array|mixed
+     *
      * @depricated Use errors()
+     *
      * @throws \JsonException
      */
     public function getErrorsFromResponse($response)
@@ -55,7 +36,6 @@ trait TestHelperTrait
     /**
      * Get the 'date'=>... from a response
      *
-     * @param $response
      * @return mixed|null
      */
     public function payload($response)
@@ -66,23 +46,13 @@ trait TestHelperTrait
     /**
      * Get the data from response
      *
-     * @param $response
      * @return mixed|null
+     *
      * @depricated use payload()
      */
     public function getPayloadFromResponse($response)
     {
         return json_decode($response->getContent(), true)['data'] ?? null;
-    }
-
-    /**
-     * Get auth_token of latest user
-     *
-     * @return \Illuminate\Database\Eloquent\HigherOrderBuilderProxy|mixed|string|null
-     */
-    public function getBearerToken()
-    {
-        return $this->latestUser()->auth_token;
     }
 
     /**
@@ -92,24 +62,24 @@ trait TestHelperTrait
      * @param  bool  $print
      * @return \App\Mainframe\Features\Modular\BaseModule\BaseModule
      */
-    public function latest($class = null, $print = true)
+    public function latest($class = null, $print = false)
     {
-        if (!$class && isset($this->module)) {
+        if (! $class && isset($this->module)) {
             $class = $this->module->modelInstance();
         }
 
         /** @var BaseModule $latest */
-        $latest = $class::latest()->first();
+        $latest = $class::latest('id')->first();
         if ($print) {
             $this->printFetched($latest);
         }
+
         return $latest;
     }
 
     /**
      * Get last updated model
      *
-     * @param  $class
      * @return \App\Mainframe\Features\Modular\BaseModule\BaseModule|null
      */
     public function lastUpdate($class)
@@ -118,51 +88,44 @@ trait TestHelperTrait
     }
 
     /**
-     * Update the last item name with TEST-- prefix
+     * Print comment during test to help better understand the scenario on test run
      *
-     * @param $response
-     * @return $this
+     * @param  mixed|null  $value
+     * @return void
      */
-    public function markAsTest($response)
+    public function print(?string $msg = null, $value = null)
     {
-        $payload = $this->payload($response);
-        if (isset($payload['id'])) {
-            $this->module->modelInstance()->find($payload['id'])
-                ->update(['name' => 'TEST-- '.now()]);
+
+        // 📥 🧰 🟥 🟩
+        if ($msg) {
+            fwrite(STDOUT, $msg."\n");
         }
-        return $this;
+
+        if ($value) {
+            fwrite(STDOUT, $this->convertToJson($value)."\n");
+        }
+        // fwrite(STDOUT, "--------------------------------\n");
     }
 
     /**
-     * Print comment during test to help better understand the scenario on test run
+     * Convert a value to json string
      *
-     * @param  null  $str
-     * @param  null  $value
-     * @return void
+     * @param  mixed  $input
      */
-    public function print($str = null, $value = null)
+    public function convertToJson($input): string
     {
-        // 📥 🧰 🟥 🟩
-
-        if ($str) {
-            fwrite(STDOUT, $str."\n");
+        if (is_array($input) || is_object($input)) {
+            return json_encode($input, JSON_PRETTY_PRINT);
+        } elseif (isJson($input)) {
+            return json_encode(json_decode($input), JSON_PRETTY_PRINT);
         }
 
-        if (is_array($value)) {
-            fwrite(STDOUT, print_r($value, true));
-        } elseif (isJson($value)) {
-            fwrite(STDOUT, json_encode(json_decode($value), JSON_PRETTY_PRINT));
-        } else {
-            fwrite(STDOUT, $value);
-        }
-        fwrite(STDOUT, "\n\n");
-        // fwrite(STDOUT, "----------------------------------------------------- \n\n");
+        return (string) $input;
     }
 
     /**
      * Print fetched data
      *
-     * @param $data
      * @return void
      */
     public function printFetched($data)
@@ -174,25 +137,39 @@ trait TestHelperTrait
     /**
      * Print string with new line.
      *
-     * @param  string  $str
+     * @param  string  $msg
      * @param  null  $value
      * @return void
      */
-    public function printLn($str = '', $value = null)
+    public function printLn($msg = '', $value = null)
     {
         // 📥 🧰 🟥 🟩
-        fwrite(STDOUT, "----------------------------------------------------- \n");
-        $this->print($str, $value);
+        // fwrite(STDOUT, "--------------------------------\n");
+        $this->print($msg, $this->convertToJson($value));
+    }
+
+    /**
+     * Print in console and write in log
+     *
+     * @return void
+     */
+    public function log(?string $msg = null, mixed $value = null)
+    {
+        if ($msg) {
+            Log::info($msg);
+        }
+        if ($value) {
+            Log::info('└──'.$this->convertToJson($value));
+        }
+        $this->printLn($msg, $value);
     }
 
     /**
      * Print comparison
      *
-     * @param $got
-     * @param $expected
      * @return void
      */
-    public function printCompare($got = null, $expected = null, $msg = null)
+    public function printComparison($got = null, $expected = null, $msg = null)
     {
         sort($got);
         sort($expected);

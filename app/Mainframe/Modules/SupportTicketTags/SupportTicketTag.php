@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Modules\SupportTicketTags;
 
-use App\Project\Features\Modular\BaseModule\BaseModule;
 use App\Mainframe\Modules\SupportTicketTags\Traits\SupportTicketTagTrait;
+use App\Project\Features\Modular\BaseModule\BaseModule;
 
 class SupportTicketTag extends BaseModule
 {

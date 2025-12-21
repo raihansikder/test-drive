@@ -2,12 +2,12 @@
 
 namespace App\Mainframe\Providers;
 
-use Gate;
-use Auth;
-use App\User;
-use Illuminate\Http\Request;
 use App\Mainframe\Features\Resolvers\PolicyResolver;
+use App\User;
+use Auth;
+use Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Http\Request;
 
 class AuthServiceProvider extends ServiceProvider
 {

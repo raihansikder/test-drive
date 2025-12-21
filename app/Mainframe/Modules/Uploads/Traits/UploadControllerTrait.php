@@ -2,21 +2,20 @@
 
 namespace App\Mainframe\Modules\Uploads\Traits;
 
-use Str;
-use File;
-use Storage;
-use Response;
-use App\Upload;
-use ZipArchive;
 use App\Module;
-use Illuminate\Support\Arr;
+use App\Upload;
+use File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
+use Response;
+use Storage;
+use Str;
+use ZipArchive;
 
 /** @mixin \App\Mainframe\Modules\Uploads\UploadController $this */
 trait UploadControllerTrait
 {
-
     use CanUploadTrait;
 
     /*
@@ -40,6 +39,7 @@ trait UploadControllerTrait
      * before moving on to processor level.
      *
      * @return \Illuminate\Validation\Validator
+     *
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
      */
@@ -70,14 +70,14 @@ trait UploadControllerTrait
     // public function attemptDestroy() { }
 
     /**
-     * @param  Request  $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\View\View|void
+     *
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
      */
     public function store(Request $request)
     {
-        if (!user()->can('create', $this->model)) {
+        if (! user()->can('create', $this->model)) {
             return $this->permissionDenied();
         }
 
@@ -85,13 +85,13 @@ trait UploadControllerTrait
 
         $this->element->type = $request->get('upload_type'); // for avoiding generic type field conflict
 
-        if (!$this->element->path = $this->attemptUpload()) {
+        if (! $this->element->path = $this->attemptUpload()) {
             return $this->fail('The file could not be uploaded')->send();
         }
 
         $this->attemptStore();
 
-        if (!$this->isValid()) {
+        if (! $this->isValid()) {
             $this->element = null;
         }
 
@@ -114,7 +114,6 @@ trait UploadControllerTrait
      * @param  string  $uuid
      * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\BinaryFileResponse|\Symfony\Component\HttpFoundation\StreamedResponse|void
      */
-
     public function download($uuid)
     {
         clean_output_buffer();
@@ -122,7 +121,7 @@ trait UploadControllerTrait
             ->remember(timer('long'))
             ->first();
 
-        if (!$upload) {
+        if (! $upload) {
             return $this->notFound();
         }
 
@@ -144,8 +143,8 @@ trait UploadControllerTrait
      * Reorder JobUnits/Paragraphs with in paragraphs.
      * IDs are sent as an array job_unit_ids
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
+     *
      * @throws \Exception
      */
     public function reorder(Request $request)
@@ -162,9 +161,10 @@ trait UploadControllerTrait
     /**
      * Show images or other types of uploads from storage.
      *
-     * @param $id
      * @return \Illuminate\Http\Response
+     *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     *
      * @depricated use showUpload
      */
     public function showImage($id)
@@ -175,8 +175,8 @@ trait UploadControllerTrait
     /**
      * Show images or other types of uploads from storage.
      *
-     * @param $id
      * @return \Illuminate\Http\Response
+     *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function showUpload($id)
@@ -185,7 +185,7 @@ trait UploadControllerTrait
 
         $path = $upload->path;
 
-        if (!Storage::exists($path)) {
+        if (! Storage::exists($path)) {
             abort(404);
         }
         $file = Storage::get($path);
@@ -202,20 +202,21 @@ trait UploadControllerTrait
      * Update
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\View\View|void
+     *
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
      */
     public function updateExistingUpload()
     {
-        if (!user()->can('update', $this->model)) {
+        if (! user()->can('update', $this->model)) {
             return $this->permissionDenied();
         }
 
-        if (!$this->file = $this->getFile()) {
+        if (! $this->file = $this->getFile()) {
             return $this->fail('No file in http request')->send();
         }
 
-        if (!$id = \request('upload_id')) {
+        if (! $id = \request('upload_id')) {
             return $this->fail('No upload id found')->send();
         }
 
@@ -223,14 +224,14 @@ trait UploadControllerTrait
         $upload = $this->element;
         $oldFilePath = $upload->path; // Store old file path before it gets overwritten
 
-        if (!$path = $this->attemptUpload()) {
+        if (! $path = $this->attemptUpload()) {
             return $this->fail('Can not move file to destination from tmp')->send();
         }
         $upload->path = $path;
 
         $this->attemptStore();
 
-        if (!$this->isValid()) {
+        if (! $this->isValid()) {
             $upload = null;
         } else {
             Upload::deleteFilePath($oldFilePath); // Delete the physical file
@@ -248,13 +249,13 @@ trait UploadControllerTrait
     {
         // Step 1- Get the uploads
         $uploads = $this->getUploadsForZip();
-        if (!count($uploads)) {
+        if (! count($uploads)) {
             abort('No files to zip');
         }
 
         // Step 2- Define the zip file name
         $fileName = \request('zip_file_name') ?: Str::random(8).'-'.time();
-        if (!Str::endsWith($fileName, '.zip')) {
+        if (! Str::endsWith($fileName, '.zip')) {
             $fileName .= '.zip';
         }
 
@@ -284,11 +285,11 @@ trait UploadControllerTrait
     /**
      * Get Uploads under an element using element_uuid.
      *
-     * @return \App\Project\Features\Modular\BaseModule\BaseModule[]|\App\Upload[]|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Query\Builder[]|\Illuminate\Support\Collection|null
+     * @return \App\Project\Features\Modular\BaseModule\BaseModule[]|\App\Upload[]|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection|null
      */
     public function getUploadsOfElement()
     {
-        if (!$elementUuid = \request('element_uuid')) {
+        if (! $elementUuid = \request('element_uuid')) {
             abort(400, 'Element not found');
         }
 
@@ -304,14 +305,14 @@ trait UploadControllerTrait
     /**
      * Get Uploads under an element using module_id, element_id
      *
-     * @return \App\Project\Features\Modular\BaseModule\BaseModule[]|\App\Upload[]|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Query\Builder[]|\Illuminate\Support\Collection|null
+     * @return \App\Project\Features\Modular\BaseModule\BaseModule[]|\App\Upload[]|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection|null
      */
     public function getUploadsOfElementByModuleId()
     {
         $moduleId = \request('module_id');
         $elementId = \request('element_id');
 
-        if (!$moduleId || !$elementId) {
+        if (! $moduleId || ! $elementId) {
             abort(400, 'Module and element id not valid');
         }
 

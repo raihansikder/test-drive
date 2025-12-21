@@ -4,7 +4,6 @@ namespace App\Mainframe\Features\Report;
 
 class ModuleList extends ModuleReportBuilder
 {
-
     // /**
     //  * Query select table
     //  *

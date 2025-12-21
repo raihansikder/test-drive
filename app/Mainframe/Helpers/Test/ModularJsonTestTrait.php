@@ -1,11 +1,13 @@
-<?php /** @noinspection ALL */
+<?php
+
+/** @noinspection ALL */
 
 /** @noinspection PhpUndefinedClassInspection */
 
 namespace App\Mainframe\Helpers\Test;
 
-use Str;
 use App\Mainframe\Features\Responder\Response;
+use Str;
 
 /** @mixin SuperadminModularTestCase */
 trait ModularJsonTestTrait
@@ -20,21 +22,22 @@ trait ModularJsonTestTrait
      * User can not store invalid element
      *
      * @return \Illuminate\Foundation\Testing\TestResponse
+     *
      * @throws \JsonException
      */
     public function test_json_user_can_not_store_invalid_element()
     {
-        # Code: Prepare URL, data etc
+        // Code: Prepare URL, data etc
         $url = "/{$this->module->route_path}?ret=json";
         $input = [];
 
-        # Code: Execute request, check status
-        $this->print(self::MSG_CREATE_ELEMENT, ["POST:".$url, $input]);
+        // Code: Execute request, check status
+        $this->print(self::MSG_CREATE_ELEMENT, ['POST:'.$url, $input]);
         $response = $this->post($url, $input);
         $this->print(self::MSG_GOT_RESPONSE_CONTENT, $response->getContent());
         $response->assertStatus(200);
 
-        # Code: Check additional response data
+        // Code: Check additional response data
         $expectation = [
             'code' => 422,
             'status' => 'fail',
@@ -43,7 +46,7 @@ trait ModularJsonTestTrait
         $this->print(self::MSG_CHECK_RESPONSE_CONTAINS, $expectation);
         $response->assertJson($expectation);
 
-        # Code: Additionally check error messages
+        // Code: Additionally check error messages
         $errors = $this->getErrorsFromResponse($response);
         $this->print(self::MSG_ERRORS_FOUND, $errors);
 
@@ -59,11 +62,12 @@ trait ModularJsonTestTrait
      * User can create a new element if input is valid
      *
      * @return \Illuminate\Foundation\Testing\TestResponse
+     *
      * @noinspection PhpUndefinedClassInspection@throws \Exception
      */
     public function test_json_user_can_store_valid_element()
     {
-        # Code: Prepare URL, data etc
+        // Code: Prepare URL, data etc
         $url = "/{$this->module->route_path}?ret=json";
         $inputs = $this->inputs();
         $inputs_modified = array_merge(
@@ -71,13 +75,13 @@ trait ModularJsonTestTrait
             ['redirect_success' => '#new']
         );
 
-        # Code: Execute request, check status
-        $this->print(self::MSG_CREATE_ELEMENT, ["POST:".$url, $inputs_modified]);
+        // Code: Execute request, check status
+        $this->print(self::MSG_CREATE_ELEMENT, ['POST:'.$url, $inputs_modified]);
         $response = $this->post($url, $inputs_modified);
         $this->print(self::MSG_GOT_RESPONSE_CONTENT, $response->getContent());
         $response->assertStatus(200);
 
-        # Code: Check response
+        // Code: Check response
         $expectation = [
             'code' => 200,
             'status' => 'success',
@@ -86,7 +90,7 @@ trait ModularJsonTestTrait
         $this->print(self::MSG_CHECK_RESPONSE_CONTAINS, $expectation);
         $response->assertJson($expectation);
 
-        # Code: Additionally check payload data
+        // Code: Additionally check payload data
         $this->print(self::MSG_CHECK_RESPONSE_CONTAINS, $inputs);
         $payload = $this->getPayloadFromResponse($response);
 
@@ -101,24 +105,25 @@ trait ModularJsonTestTrait
      * Check duplicate fields
      *
      * @return \Illuminate\Foundation\Testing\TestResponse
+     *
      * @noinspection PhpUndefinedClassInspection
      */
     public function test_json_user_can_not_store_duplicate_element()
     {
-        # Code: Prepare URL, data etc
+        // Code: Prepare URL, data etc
         $latest = $this->latest();
         $url = "/{$this->module->route_path}?ret=json";
         $input = [
             'name' => $latest->name,
         ];
 
-        # Code: Execute request, check status
-        $this->print(self::MSG_CREATE_ELEMENT, ["POST:".$url, $input]);
+        // Code: Execute request, check status
+        $this->print(self::MSG_CREATE_ELEMENT, ['POST:'.$url, $input]);
         $response = $this->post($url, $input);
         $this->print(self::MSG_GOT_RESPONSE_CONTENT, $response->getContent());
         $response->assertStatus(200);
 
-        # Code: Check additional response data
+        // Code: Check additional response data
         $expectation = [
             'code' => Response::HTTP_UNPROCESSABLE_ENTITY,
             'status' => 'fail',
@@ -126,7 +131,7 @@ trait ModularJsonTestTrait
                 'name' => $latest->name,
             ],
             'validation_errors' => [
-                'name' => ["The name has already been taken."],
+                'name' => ['The name has already been taken.'],
             ],
         ];
         $this->print(self::MSG_CHECK_RESPONSE_CONTAINS, $expectation);
@@ -142,31 +147,31 @@ trait ModularJsonTestTrait
      */
     public function test_json_user_can_view_list()
     {
-        # Code: Prepare URL, data etc
+        // Code: Prepare URL, data etc
         $url = "/{$this->module->route_path}/list/json";
 
-        # Code: Execute request, check status
-        $this->print(self::MSG_GET_FROM, "GET:".$url);
+        // Code: Execute request, check status
+        $this->print(self::MSG_GET_FROM, 'GET:'.$url);
         $response = $this->get($url);
         $this->print(self::MSG_GOT_RESPONSE_CONTENT, $response->getContent());
         $response->assertStatus(200);
 
-        # Code: Check additional response data
+        // Code: Check additional response data
         $expectation = [
             'data' => [
-                "current_page",
-                "first_page_url",
-                "from",
-                "last_page",
-                "last_page_url",
-                "links" => [],
-                "next_page_url",
-                "path",
-                "per_page",
-                "prev_page_url",
-                "to",
-                "total",
-                "items" => [],
+                'current_page',
+                'first_page_url',
+                'from',
+                'last_page',
+                'last_page_url',
+                'links' => [],
+                'next_page_url',
+                'path',
+                'per_page',
+                'prev_page_url',
+                'to',
+                'total',
+                'items' => [],
             ],
         ];
         $this->print(self::MSG_CHECK_RESPONSE_CONTAINS, $expectation);
@@ -179,25 +184,26 @@ trait ModularJsonTestTrait
      * User can view element as a json object
      *
      * @return \Illuminate\Foundation\Testing\TestResponse
+     *
      * @noinspection PhpUndefinedClassInspection
      */
     public function test_json_user_can_view_element()
     {
-        # Code: Prepare URL, data etc
+        // Code: Prepare URL, data etc
         $latest = $this->latest();
         $url = "/{$this->module->route_path}/$latest->id?ret=json";
 
-        # Code: Execute request, check status
-        $this->print(self::MSG_CREATE_ELEMENT, "GET:".$url);
+        // Code: Execute request, check status
+        $this->print(self::MSG_CREATE_ELEMENT, 'GET:'.$url);
         $response = $this->get($url);
         $this->print(self::MSG_GOT_RESPONSE_CONTENT, $response->getContent());
         $response->assertStatus(200);
 
-        # Code: Check additional response data
+        // Code: Check additional response data
         $expectation = [
-            "code" => 200,
-            "status" => "success",
-            "data" => $latest->toArray(),
+            'code' => 200,
+            'status' => 'success',
+            'data' => $latest->toArray(),
         ];
 
         $this->print(self::MSG_CHECK_RESPONSE_CONTAINS, $expectation);
@@ -210,22 +216,23 @@ trait ModularJsonTestTrait
      * User can update an element with valid data
      *
      * @return \Illuminate\Foundation\Testing\TestResponse
+     *
      * @noinspection PhpUndefinedClassInspection
      */
     public function test_json_user_can_update_element()
     {
-        # Code: Prepare URL, data et
+        // Code: Prepare URL, data et
         $latest = $this->latest();
         $url = "/{$this->module->route_path}/$latest->id?ret=json";
         $updates = $this->updateValues();
 
-        # Code: Execute request, check status
-        $this->print(self::MSG_UPDATE_ELEMENT, ["PATCH:".$url, $updates]);
+        // Code: Execute request, check status
+        $this->print(self::MSG_UPDATE_ELEMENT, ['PATCH:'.$url, $updates]);
         $response = $this->patch($url, $updates);
         $this->print(self::MSG_GOT_RESPONSE_CONTENT, $response->getContent());
         $response->assertStatus(200);
 
-        # Code: Check additional response data
+        // Code: Check additional response data
         $expectation = [
             'code' => 200,
             'status' => 'success',
@@ -241,22 +248,23 @@ trait ModularJsonTestTrait
      * User can update an element with valid data
      *
      * @return \Illuminate\Foundation\Testing\TestResponse
+     *
      * @noinspection PhpUndefinedClassInspection
      */
     public function test_json_user_can_resave_an_element_without_changing()
     {
-        # Code: Prepare URL, data etc
+        // Code: Prepare URL, data etc
         $latest = $this->latest();
         $url = "/{$this->module->route_path}/$latest->id?ret=json";
         $updates = $latest->toArray();
 
-        # Code: Execute request, check status
-        $this->print(self::MSG_UPDATE_ELEMENT, ["PATCH:".$url, $updates]);
+        // Code: Execute request, check status
+        $this->print(self::MSG_UPDATE_ELEMENT, ['PATCH:'.$url, $updates]);
         $response = $this->patch($url, $updates);
         $this->print(self::MSG_GOT_RESPONSE_CONTENT, $response->getContent());
         $response->assertStatus(200);
 
-        # Code: Check additional response data
+        // Code: Check additional response data
         $expectation = [
             'code' => 200,
             'status' => 'success',
@@ -277,21 +285,21 @@ trait ModularJsonTestTrait
     {
         sleep(1); // Add delay
 
-        # Code: Prepare URL, data etc
+        // Code: Prepare URL, data etc
         $latest = $this->latest();
         $url = "/{$this->module->route_path}/$latest->id?ret=json";
 
-        # Code: Execute request, check status
-        $this->print(self::MSG_DELETE_ELEMENT, "DELETE:".$url);
+        // Code: Execute request, check status
+        $this->print(self::MSG_DELETE_ELEMENT, 'DELETE:'.$url);
         $response = $this->delete($url);
         $this->print(self::MSG_GOT_RESPONSE_CONTENT, $response->getContent());
         $response->assertStatus(200);
 
-        # Code: Check additional response data
+        // Code: Check additional response data
         $expectation = [
             'code' => 200,
             'status' => 'success',
-            'message' => "The ".Str::singular($this->module->title)." has been deleted",
+            'message' => 'The '.Str::singular($this->module->title).' has been deleted',
             'data' => [
                 'code' => $latest->code,
                 'name' => $latest->name,
@@ -302,9 +310,8 @@ trait ModularJsonTestTrait
 
         // Code: Check if it has been soft deleted.
         $this->assertDatabaseMissing($this->module->tableName(), ['id' => $latest->id, 'deleted_at' => null]);
-        $this->print(self::MSG_CHECK_DB." :".$this->module->tableName()." soft deleted #".$latest->id);
+        $this->print(self::MSG_CHECK_DB.' :'.$this->module->tableName().' soft deleted #'.$latest->id);
 
         return $response;
     }
-
 }

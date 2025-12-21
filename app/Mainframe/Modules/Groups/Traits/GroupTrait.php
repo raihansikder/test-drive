@@ -2,15 +2,14 @@
 
 namespace App\Mainframe\Modules\Groups\Traits;
 
-use DB;
-use Artisan;
-use App\User;
 use App\Group;
+use App\User;
+use Artisan;
+use DB;
 use InvalidArgumentException;
 
 trait GroupTrait
 {
-
     protected $allowedPermissionsValues = [0, 1];
 
     /*
@@ -29,11 +28,12 @@ trait GroupTrait
      *
      * @param  mixed  $permissions
      * @return array
+     *
      * @throws \InvalidArgumentException
      */
     public function getPermissionsAttribute($permissions)
     {
-        if (!$permissions) {
+        if (! $permissions) {
             return [];
         }
 
@@ -41,12 +41,13 @@ trait GroupTrait
             return $permissions;
         }
 
-        if (!$_permissions = json_decode($permissions, true)) {
+        if (! $_permissions = json_decode($permissions, true)) {
             throw new InvalidArgumentException("Cannot JSON decode permissions [$permissions].");
         }
 
         return $_permissions;
     }
+
     /*
     |--------------------------------------------------------------------------
     | Section: Mutators
@@ -55,8 +56,8 @@ trait GroupTrait
     /**
      * Mutator for taking permissions.
      *
-     * @param  array  $permissions
      * @return void
+     *
      * @throws \InvalidArgumentException
      */
     public function setPermissionsAttribute(array $permissions)
@@ -67,7 +68,7 @@ trait GroupTrait
         // Loop through and adjust permissions as needed
         foreach ($permissions as $permission => &$value) {
             // Lets make sure their is a valid permission value
-            if (!in_array($value = (int) $value, $this->allowedPermissionsValues)) {
+            if (! in_array($value = (int) $value, $this->allowedPermissionsValues)) {
                 throw new InvalidArgumentException("Invalid value [$value] for permission [$permission] given.");
             }
 
@@ -77,7 +78,7 @@ trait GroupTrait
             }
         }
 
-        $this->attributes['permissions'] = (!empty($permissions)) ? json_encode($permissions) : '';
+        $this->attributes['permissions'] = (! empty($permissions)) ? json_encode($permissions) : '';
     }
     /*
     |--------------------------------------------------------------------------
@@ -91,7 +92,10 @@ trait GroupTrait
     |--------------------------------------------------------------------------
     */
 
-    public function users() { return $this->belongsToMany(User::class, 'user_group'); }
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'user_group');
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -101,7 +105,7 @@ trait GroupTrait
 
     /*
     |--------------------------------------------------------------------------
-    | Section: Autofill functions 
+    | Section: Autofill functions
     |--------------------------------------------------------------------------
     */
 
@@ -152,7 +156,7 @@ trait GroupTrait
                     // We will make sure that the merged permission does not
                     // exactly match our permission, but starts with it.
                     if ($checkPermission != $groupPermission and starts_with($groupPermission,
-                            $checkPermission) and $value == 1) {
+                        $checkPermission) and $value == 1) {
                         $matched = true;
                         break;
                     }
@@ -173,7 +177,7 @@ trait GroupTrait
                         // We will make sure that the merged permission does not
                         // exactly match our permission, but ends with it.
                         if ($checkPermission != $groupPermission and ends_with($groupPermission,
-                                $checkPermission) and $value == 1) {
+                            $checkPermission) and $value == 1) {
                             $matched = true;
                             break;
                         }
@@ -192,7 +196,7 @@ trait GroupTrait
                             // We will make sure that the merged permission does not
                             // exactly match our permission, but starts wtih it.
                             if ($checkGroupPermission != $permission and starts_with($permission,
-                                    $checkGroupPermission) and $value == 1) {
+                                $checkGroupPermission) and $value == 1) {
                                 $matched = true;
                                 break;
                             }
@@ -230,7 +234,6 @@ trait GroupTrait
      * Returns if the user has access to any of the
      * given permissions.
      *
-     * @param  array  $permissions
      * @return bool
      */
     public function hasAnyAccess(array $permissions)
@@ -241,8 +244,7 @@ trait GroupTrait
     /**
      * Load config permission to database
      *
-     * @param $config
-     * @return false
+     * @return bool
      */
     public function refreshPermissionFromConfig($config = null)
     {
@@ -251,8 +253,9 @@ trait GroupTrait
 
         $permission = config($config);
 
-        if (!$permission) {
+        if (! $permission) {
             $this->error('No config found at '.$config);
+
             return false;
         }
 
@@ -274,7 +277,6 @@ trait GroupTrait
     /**
      * Get group by name
      *
-     * @param $name
      * @return \App\Group
      */
     public static function byName($name)

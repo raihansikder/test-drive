@@ -23,7 +23,7 @@ trait SpreadProcessorTrait
      */
     public function fill($element)
     {
-        // $element->populate(); 
+        // $element->populate();
         $element->is_active = 1; // Always set as active
 
         return $this;

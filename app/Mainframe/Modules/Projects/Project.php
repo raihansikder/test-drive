@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Modules\Projects;
 
-use App\Project\Features\Modular\BaseModule\BaseModule;
 use App\Mainframe\Modules\Projects\Traits\ProjectTrait;
+use App\Project\Features\Modular\BaseModule\BaseModule;
 
 class Project extends BaseModule
 {

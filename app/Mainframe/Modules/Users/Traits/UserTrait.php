@@ -2,18 +2,18 @@
 
 namespace App\Mainframe\Modules\Users\Traits;
 
-use Str;
-use Arr;
-use App\User;
-use App\Group;
-use App\Upload;
 use App\Country;
-use Carbon\Carbon;
+use App\Group;
 use App\InAppNotification;
-use InvalidArgumentException;
-use Illuminate\Database\Eloquent\Builder;
-use App\Project\Notifications\Auth\VerifyEmail;
 use App\Project\Notifications\Auth\ResetPassword;
+use App\Project\Notifications\Auth\VerifyEmail;
+use App\Upload;
+use App\User;
+use Arr;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
+use InvalidArgumentException;
+use Str;
 
 /** @mixin User $this */
 trait UserTrait
@@ -85,7 +85,6 @@ trait UserTrait
     /**
      * Mutator for taking permissions.
      *
-     * @param  array  $permissions
      * @return void
      */
     public function setPermissionsAttribute(array $permissions)
@@ -96,7 +95,7 @@ trait UserTrait
         // Loop through and adjust permissions as needed
         foreach ($permissions as $permission => &$value) {
             // Lets make sure there is a valid permission value
-            if (!in_array($value = (int) $value, $this->allowedPermissionsValues)) {
+            if (! in_array($value = (int) $value, $this->allowedPermissionsValues)) {
                 throw new InvalidArgumentException("Invalid value [$value] for permission [$permission] given.");
             }
 
@@ -106,18 +105,18 @@ trait UserTrait
             }
         }
 
-        $this->attributes['permissions'] = (!empty($permissions)) ? json_encode($permissions) : '';
+        $this->attributes['permissions'] = (! empty($permissions)) ? json_encode($permissions) : '';
     }
 
     /**
      * Mutator for giving permissions.
      *
      * @param  mixed  $permissions
-     * @return array  $_permissions
+     * @return array $_permissions
      */
     public function getPermissionsAttribute($permissions)
     {
-        if (!$permissions) {
+        if (! $permissions) {
             return [];
         }
 
@@ -125,7 +124,7 @@ trait UserTrait
             return $permissions;
         }
 
-        if (!$_permissions = json_decode($permissions, true)) {
+        if (! $_permissions = json_decode($permissions, true)) {
             throw new InvalidArgumentException("Cannot JSON decode permissions [$permissions].");
         }
 
@@ -143,9 +142,15 @@ trait UserTrait
     | Section: Relations
     |--------------------------------------------------------------------------
     */
-    public function groups() { return $this->belongsToMany(Group::class, 'user_group'); }
+    public function groups()
+    {
+        return $this->belongsToMany(Group::class, 'user_group');
+    }
 
-    public function country() { return $this->belongsTo(Country::class); }
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
 
     public function inAppNotifications()
     {
@@ -153,7 +158,10 @@ trait UserTrait
         // return $this->morphMany(InAppNotification::class, 'notifiable'); // Note: Do not use morphMany
     }
 
-    public function sGroups() { return $this->spreadModels('groups'); }
+    public function sGroups()
+    {
+        return $this->spreadModels('groups');
+    }
 
     // public function sTags() { return $this->spreadTags('first_name'); }
 
@@ -165,7 +173,7 @@ trait UserTrait
 
     /*
     |--------------------------------------------------------------------------
-    | Section: Autofill functions 
+    | Section: Autofill functions
     |--------------------------------------------------------------------------
     */
     /**
@@ -215,7 +223,7 @@ trait UserTrait
     public function resolveName()
     {
         $value = $this->name_initial.' '.$this->first_name.' '.$this->last_name;
-        if (!strlen(trim($value))) {
+        if (! strlen(trim($value))) {
             $value = trim($this->full_name);
         }
 
@@ -278,7 +286,7 @@ trait UserTrait
      */
     public function hasLoggedIn()
     {
-        if ($this->authTokenHasExpired() || !$this->auth_token) {
+        if ($this->authTokenHasExpired() || ! $this->auth_token) {
             $this->updateAuthToken();
         }
 
@@ -294,7 +302,7 @@ trait UserTrait
      */
     public function authTokenHasExpired()
     {
-        if (!$this->last_login_at) {
+        if (! $this->last_login_at) {
             return false;
         }
 
@@ -311,7 +319,7 @@ trait UserTrait
         $this->last_login_at = now();
         $updates = ['last_login_at' => now()];
 
-        if (!$this->first_login_at) {
+        if (! $this->first_login_at) {
             $this->first_login_at = now();
             $updates['first_login_at'] = now();
         }
@@ -388,7 +396,7 @@ trait UserTrait
      */
     public function isGuest()
     {
-        return !$this->id;
+        return ! $this->id;
     }
 
     /**
@@ -422,6 +430,7 @@ trait UserTrait
      *
      * @param  string  $name
      * @return bool
+     *
      * @deprecated use isInGroup()
      */
     public function inGroup($name)
@@ -457,7 +466,7 @@ trait UserTrait
     {
         $names = Arr::wrap($names);
         foreach ($names as $name) {
-            if (!$this->isInGroup($name)) {
+            if (! $this->isInGroup($name)) {
                 return false;
             }
         }
@@ -468,7 +477,6 @@ trait UserTrait
     /**
      * Checks if user belongs to the groupId
      *
-     * @param $group_id
      * @return bool
      */
     public function inGroupId($group_id)
@@ -489,7 +497,7 @@ trait UserTrait
     /**
      * Checks if user belongs to one of the following
      *
-     * @param $group_ids array
+     * @param  $group_ids  array
      * @return bool
      */
     public function inGroupIds($group_ids = [])
@@ -512,7 +520,7 @@ trait UserTrait
     public function inAllGroupIds($group_ids = [])
     {
         foreach ($group_ids as $group_id) {
-            if (!$this->inGroupId($group_id)) {
+            if (! $this->inGroupId($group_id)) {
                 return false;
             }
         }
@@ -542,7 +550,6 @@ trait UserTrait
         return $this->inGroupId(Group::api()->id);
     }
 
-
     /*--------------------------------------
     | Section: Permission related functions
     |-------------------------------------*/
@@ -562,6 +569,7 @@ trait UserTrait
         }
 
         $permissions = array_merge($permissions, $this->permissions);
+
         return $permissions;
     }
 
@@ -577,6 +585,7 @@ trait UserTrait
      * @param  string|array  $permissions
      * @param  bool  $all
      * @return bool
+     *
      * @alias hasPermission($permissions, $all = true)
      */
     public function hasAccess($permissions, $all = true)
@@ -596,6 +605,7 @@ trait UserTrait
      * @param  string|array  $permissions
      * @param  bool  $all
      * @return bool
+     *
      * @noinspection PhpUnusedLocalVariableInspection
      * @noinspection NestedPositiveIfStatementsInspection
      */
@@ -625,7 +635,7 @@ trait UserTrait
                     // We will make sure that the merged permission does not
                     // exactly match our permission, but starts with it.
                     if ($checkPermission != $mergedPermission && Str::startsWith($mergedPermission,
-                            $checkPermission) and $value == 1) {
+                        $checkPermission) and $value == 1) {
                         $matched = true;
                         break;
                     }
@@ -641,7 +651,7 @@ trait UserTrait
                         // We will make sure that the merged permission does not
                         // exactly match our permission, but ends with it.
                         if ($checkPermission != $mergedPermission && Str::endsWith($mergedPermission,
-                                $checkPermission) and $value == 1) {
+                            $checkPermission) and $value == 1) {
                             $matched = true;
                             break;
                         }
@@ -660,7 +670,7 @@ trait UserTrait
                             // We will make sure that the merged permission does not
                             // exactly match our permission, but starts with it.
                             if ($checkMergedPermission != $permission && Str::startsWith($permission,
-                                    $checkMergedPermission) && $value == 1) {
+                                $checkMergedPermission) && $value == 1) {
                                 $matched = true;
                                 break;
                             }
@@ -690,14 +700,13 @@ trait UserTrait
             }
         }
 
-        return !($all === false);
+        return ! ($all === false);
     }
 
     /**
      * Returns if the user has access to any of the
      * given permissions.
      *
-     * @param  array  $permissions
      * @return bool
      */
     public function hasAnyAccess(array $permissions)
@@ -725,7 +734,6 @@ trait UserTrait
     /**
      * Find user based on bearer token(auth_token)
      *
-     * @param $id
      * @return User|mixed|null
      */
     public static function byId($id = null)
@@ -805,7 +813,7 @@ trait UserTrait
     public function sendEmailVerificationNotification()
     {
         // Note: Utilize project asset instead of Mainframe default
-        $this->notifyNow(new VerifyEmail());
+        $this->notifyNow(new VerifyEmail);
     }
 
     /**
@@ -840,15 +848,4 @@ trait UserTrait
 
         $notification->process()->save();
     }
-
-    /**
-     * Retrieve the timezone.
-     *
-     * @return string
-     */
-    public function timezone()
-    {
-        return $this->timezone ?? config('app.timezone');
-    }
-
 }

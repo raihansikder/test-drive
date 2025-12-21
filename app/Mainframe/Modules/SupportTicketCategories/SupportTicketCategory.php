@@ -2,13 +2,13 @@
 
 namespace App\Mainframe\Modules\SupportTicketCategories;
 
-use App\Project\Features\Modular\BaseModule\BaseModule;
 use App\Mainframe\Features\Plugins\MultiLevelModel\MultiLevelModelTrait;
 use App\Mainframe\Modules\SupportTicketCategories\Traits\SupportTicketCategoryTrait;
+use App\Project\Features\Modular\BaseModule\BaseModule;
 
 class SupportTicketCategory extends BaseModule
 {
-    use SupportTicketCategoryTrait, MultiLevelModelTrait;
+    use MultiLevelModelTrait, SupportTicketCategoryTrait;
 
     /*
    |--------------------------------------------------------------------------

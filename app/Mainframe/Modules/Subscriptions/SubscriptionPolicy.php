@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Modules\Subscriptions;
 
-use App\Project\Features\Modular\BaseModule\BaseModulePolicy;
 use App\Mainframe\Modules\Subscriptions\Traits\SubscriptionPolicyTrait;
+use App\Project\Features\Modular\BaseModule\BaseModulePolicy;
 
 class SubscriptionPolicy extends BaseModulePolicy
 {

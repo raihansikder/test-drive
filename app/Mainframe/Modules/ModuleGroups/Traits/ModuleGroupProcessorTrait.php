@@ -2,9 +2,10 @@
 
 namespace App\Mainframe\Modules\ModuleGroups\Traits;
 
-use Str;
+use App\Module;
 use App\ModuleGroup;
 use Illuminate\Validation\Rule;
+use Str;
 
 /** @mixin \App\Mainframe\Modules\Modules\ModuleProcessor $this */
 trait ModuleGroupProcessorTrait
@@ -24,12 +25,6 @@ trait ModuleGroupProcessorTrait
     public function fill($element)
     {
         // $element->populate();
-        $element->parent_id = (!$element->parent_id) ? 0 : $element->parent_id;
-        $element->level = (!$element->level) ? 0 : $element->level;
-        $element->order = (!$element->order) ? 999 : $element->order;
-        $element->default_route = (!$element->default_route) ? $element->name.'.index' : $element->default_route;
-        $element->color_css = (!$element->color_css) ? 'navy' : $element->color_css;
-        $element->icon_css = (!$element->icon_css) ? 'fa fa-cube' : $element->icon_css;
 
         return $this;
     }
@@ -42,15 +37,20 @@ trait ModuleGroupProcessorTrait
     public static function rules($element, $merge = [])
     {
         $rules = [
-            'name' => [
+            // 'name' => [
+            //     'required',
+            //     'between:1,255',
+            //     Rule::unique('module_groups', 'name')
+            //         ->ignore($element->id)->whereNull('deleted_at'),
+            //     'Regex:/^[a-z\-]+$/',
+            // ],
+            'title' => [
                 'required',
                 'between:1,255',
-                'unique:module_groups,name,'.(isset($element->id) ? (string) $element->id : 'null').',id,deleted_at,NULL',
                 Rule::unique('module_groups', 'name')
                     ->ignore($element->id)->whereNull('deleted_at'),
-                'Regex:/^[a-z\-]+$/',
+                // Rule::unique('modules', 'name')->whereNull('deleted_at'),
             ],
-            'title' => 'required|between:1,255|unique:module_groups,title,'.(isset($element->id) ? (string) $element->id : 'null').',id,deleted_at,NULL',
             // 'is_active' => 'in:1,0',
         ];
 
@@ -72,11 +72,20 @@ trait ModuleGroupProcessorTrait
      */
     public function saving($element)
     {
+        $element->name = 'mg-'.Str::kebab($element->title);
+        $element->parent_id = $element->parent_id ?: 0;
+        $element->level = $element->level ?: 0;
+        $element->order = $element->order ?: 999;
+        $element->route_name = $element->name;
+        $element->color_css = $element->color_css ?: 'navy';
+        $element->icon_css = $element->icon_css ?: 'fa fa-cube';
+
         // First validate
+        $this->invalidIfModuleExistsWithSameName();
         // Then do further processing
         if ($this->isValid()) {
-            $element->route_path = Str::kebab($element->name);
-            $element->route_name = Str::kebab($element->name);
+            $element->route_path = $element->name;
+            $element->default_route = $element->route_name.'.index';
         }
 
         return $this;
@@ -88,14 +97,18 @@ trait ModuleGroupProcessorTrait
 
     /**
      * @param  ModuleGroup  $element
-     * @return \App\Project\Modules\ModuleGroups\ModuleGroupProcessor
+     * @return $this
      */
-    // public function saved($element)
-    // {
-    //     $element->refresh(); // Get the updated model(and relations) before using.
-    //
-    //     return $this;
-    // }
+    public function saved($element)
+    {
+        // $element->refresh(); // Get the updated model(and relations) before using.
+
+        \Artisan::call('cache:clear');
+        \Artisan::call('route:clear');
+        $this->notice('Cache cleared.');
+
+        return $this;
+    }
     // public function deleting($element) { return $this; }
     // public function deleted($element) { return $this; }
 
@@ -117,4 +130,17 @@ trait ModuleGroupProcessorTrait
     |--------------------------------------------------------------------------
     */
 
+    /**
+     * Invalid if module exists with same name
+     *
+     * @return $this
+     */
+    public function invalidIfModuleExistsWithSameName()
+    {
+        if (Module::where('name', $this->element->name)->exists()) {
+            $this->error('Conflict with existing module. Please put a different value.', 'title');
+        }
+
+        return $this;
+    }
 }

@@ -83,7 +83,7 @@ function handleSuccess(response, callbackSuccess) {
 	// Default success handling.
 	hideModals();
 	processResponse(response)
-	showMsgModal(response, default_modal_timeout);
+	// showMsgModal(response, default_modal_timeout);
 }
 
 
@@ -113,6 +113,7 @@ function processResponse(response) {
 		handleRedirectWithModal(response, default_modal_timeout);
 		return;
 	}
+	showMsgModal(response, default_modal_timeout);
 	processMetaResponse(response);			// Process div hide, Dt refresh etc.
 }
 
@@ -195,8 +196,8 @@ function responseHasMetaRefreshDatatableId(response) {
  */
 function responseHasRedirect(response) {
 
-	if(responseHasMetaHideClass(response)
-		|| responseHasMetaRefreshDatatableId(response)){
+	if (responseHasMetaHideClass(response)
+		|| responseHasMetaRefreshDatatableId(response)) {
 		return false;
 	}
 
@@ -215,7 +216,7 @@ function handleRedirectWithModal(response, timeout = null) {
 		timeout = default_modal_timeout;
 	}
 
-	showMsgModal(response);
+	showResponseModal(response, timeout);
 	msgModalDisableClosing();
 	msgModalAddMsg('Redirecting. Please wait ...');
 	setTimeout(function () {
@@ -287,13 +288,15 @@ function msgModalAddMsg(msg) {
  * Disable the close button and other close actions.
  */
 function msgModalDisableClosing() {
+
+	// console.log('msgModalDisableClosing...');
 	$('#msgModal').modal({
 		backdrop: 'static',   // Prevents closing on clicking outside the modal
 		keyboard: false      // Prevents closing on pressing ESC key
 	});
 
-	$('#msgModal .close').prop('disabled', true); // Disable close button
-	$('#msgModal .close-btn').hide(); // or hide it
+	$('#msgModal .close').hide(); // Disable close button
+	$('#msgModal .btn-modal-close').hide(); // or hide it
 }
 
 /**
@@ -301,13 +304,14 @@ function msgModalDisableClosing() {
  */
 function msgModalEnableClosing() {
 
+	// console.log('msgModalEnableClosing...');
 	$('#msgModal').modal({
 		backdrop: true,     // Enables closing on clicking outside the modal
 		keyboard: true      // Enables closing on pressing ESC key
 	});
 
-	$('#msgModal .close').prop('disabled', false); // To re-enable later
-	$('#msgModal .close-btn').show(); // or show it again
+	$('#msgModal .close').show(); // To re-enable later
+	$('#msgModal .btn-modal-close').show(); // or show it again
 }
 
 /**

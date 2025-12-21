@@ -4,8 +4,8 @@ namespace App\Mainframe\Modules\SupportTickets\Traits;
 
 use App\Email;
 use App\Module;
-use App\SupportTicketTag;
 use App\SupportTicketCategory;
+use App\SupportTicketTag;
 
 /** @mixin \App\SupportTicket */
 trait SupportTicketTrait
@@ -40,11 +40,20 @@ trait SupportTicketTrait
     |--------------------------------------------------------------------------
     */
 
-    public function primaryCategory() { return $this->belongsTo(SupportTicketCategory::class, 'primary_category_id'); }
+    public function primaryCategory()
+    {
+        return $this->belongsTo(SupportTicketCategory::class, 'primary_category_id');
+    }
 
-    public function secondaryCategory() { return $this->belongsTo(SupportTicketCategory::class, 'secondary_category_id'); }
+    public function secondaryCategory()
+    {
+        return $this->belongsTo(SupportTicketCategory::class, 'secondary_category_id');
+    }
 
-    public function supportTicketTagIds() { return $this->spreadModels('support_ticket_tag_ids'); }
+    public function supportTicketTagIds()
+    {
+        return $this->spreadModels('support_ticket_tag_ids');
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -54,7 +63,7 @@ trait SupportTicketTrait
 
     /*
     |--------------------------------------------------------------------------
-    | Section: Autofill functions 
+    | Section: Autofill functions
     |--------------------------------------------------------------------------
     */
     // /**
@@ -95,10 +104,9 @@ trait SupportTicketTrait
      *
      * @return $this
      */
-
     public function fillSupportTicketTagNames()
     {
-        if (!$this->support_ticket_tag_ids) {
+        if (! $this->support_ticket_tag_ids) {
             $this->support_ticket_tag_names = null;
             $this->support_ticket_tag_names_formatted = null;
 
@@ -128,7 +136,7 @@ trait SupportTicketTrait
      */
     public function sendEmail()
     {
-        if (!$this->emailRecipients()) {
+        if (! $this->emailRecipients()) {
             return $this;
         }
         /*
@@ -136,12 +144,12 @@ trait SupportTicketTrait
         | Step 1. Save the \App\Email entry
         |--------------------------------------------------------------------------
         */
-        $email = new Email();
+        $email = new Email;
 
         $email->subject = 'Support Ticket (#'.pad($this->id).') Created';
         $email->to = $this->emailRecipients();
         $email->html = view('project.emails.support-ticket-created', ['element' => $this]);
-        $email->name = now()." | ".$email->subject;
+        $email->name = now().' | '.$email->subject;
         $email->module_id = Module::byName($this->moduleName)->id;
         $email->element_id = $this->id;
 
@@ -152,7 +160,7 @@ trait SupportTicketTrait
         | Step 2. Send the saved email
         |--------------------------------------------------------------------------
         */
-        //dd($processor->isValid());
+        // dd($processor->isValid());
         if ($processor->isValid()) {
             // $email->send(); // Immediate send (synchronous)
             $email->queue();   // Queue up!! (Preferable)
@@ -171,12 +179,12 @@ trait SupportTicketTrait
         | Step 1. Save the \App\Email entry
         |--------------------------------------------------------------------------
         */
-        $email = new Email();
+        $email = new Email;
 
         $email->subject = 'Support Ticket (#'.pad($this->id).') status has been updated to '.$this->status_name;
         $email->to = $this->emailRecipients();
         $email->html = view('project.emails.support-ticket-updated', ['element' => $this]);
-        $email->name = now()." | ".$email->subject;
+        $email->name = now().' | '.$email->subject;
         $email->module_id = Module::byName($this->moduleName)->id;
         $email->element_id = $this->id;
 
@@ -187,7 +195,7 @@ trait SupportTicketTrait
         | Step 2. Send the saved email
         |--------------------------------------------------------------------------
         */
-        //dd($processor->isValid());
+        // dd($processor->isValid());
         if ($processor->isValid()) {
             // $email->send(); // Immediate send (synchronous)
             $email->queue();   // Queue up!! (Preferable)
@@ -204,19 +212,19 @@ trait SupportTicketTrait
     {
         $emails = [];
 
-        # Add primary_category email recipients
+        // Add primary_category email recipients
         if ($this->primaryCategory && $this->primaryCategory->email_recipients) {
             foreach ($this->primaryCategory->email_recipients as $emailRecipient) {
                 $emails[] = $emailRecipient;
             }
         }
-        # Add secondary_category email recipients
+        // Add secondary_category email recipients
         if ($this->secondaryCategory && $this->secondaryCategory->email_recipients) {
             foreach ($this->secondaryCategory->email_recipients as $emailRecipient) {
                 $emails[] = $emailRecipient;
             }
         }
-        # Add creator email
+        // Add creator email
         if ($this->creator) {
             $emails[] = $this->creator->email;
         }

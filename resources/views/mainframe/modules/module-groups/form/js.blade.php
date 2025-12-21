@@ -57,6 +57,6 @@
      * Add CSS for validation rules
      */
     function addValidationRules() {
-        $("input[name=name]").addClass('validate[required]');
+		$("input[name=title]").addClass('validate[required]');
     }
 </script>

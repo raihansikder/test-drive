@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Modules\SupportTickets;
 
-use App\Project\Features\Modular\Validator\ModelProcessor;
 use App\Mainframe\Modules\SupportTickets\Traits\SupportTicketProcessorTrait;
+use App\Project\Features\Modular\Validator\ModelProcessor;
 
 class SupportTicketProcessor extends ModelProcessor
 {

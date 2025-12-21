@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Modules\Countries;
 
-use App\Project\Features\Modular\BaseModule\BaseModule;
 use App\Mainframe\Modules\Countries\Traits\CountryTrait;
+use App\Project\Features\Modular\BaseModule\BaseModule;
 
 class Country extends BaseModule
 {

@@ -2,7 +2,4 @@
 
 namespace App\Mainframe\Modules\Tenants\Traits;
 
-trait TenantObserverTrait
-{
-
-}
+trait TenantObserverTrait {}

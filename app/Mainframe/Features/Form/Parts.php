@@ -16,7 +16,7 @@ class Parts extends Input
 
         $this->type = $var['type'] ?? 'text'; // Can be text or password
 
-        if (!$this->isEditable) {
+        if (! $this->isEditable) {
             $this->params['readonly'] = 'readonly';
         }
     }
@@ -53,5 +53,4 @@ class Parts extends Input
 
         return $value;
     }
-
 }

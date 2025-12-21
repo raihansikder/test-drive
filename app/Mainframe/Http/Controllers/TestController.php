@@ -20,14 +20,15 @@ class TestController extends BaseController
      * Show the application dashboard based on different user type/group.
      *
      * @return \Illuminate\Contracts\Support\Renderable|\Illuminate\Http\RedirectResponse
+     *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function test()
     {
 
         dd(user()->inGroup('superauser'));
+
         return +user()->inGroup('superaadmin');
 
     }
-
 }

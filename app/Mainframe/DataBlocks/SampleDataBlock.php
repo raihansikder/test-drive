@@ -23,7 +23,7 @@ class SampleDataBlock extends DataBlock
     /**
      * Process the result
      */
-    public function process()
+    public function process(): void
     {
         $this->data = [
             'user' => [
@@ -34,5 +34,5 @@ class SampleDataBlock extends DataBlock
         ];
     }
 
-    // Write Additional helper for data calculation if needed.
+    // Write additional helpers for data calculation if needed.
 }

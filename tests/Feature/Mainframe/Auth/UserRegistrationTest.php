@@ -1,184 +1,116 @@
 <?php
 
-namespace Tests\Feature\Mainframe\Auth;
-
-use Mail;
-use App\User;
-use Notification;
-use Tests\TestCase;
 use App\Project\Notifications\Auth\VerifyEmail;
+use App\User;
 
-class UserRegistrationTest extends TestCase
-{
-    /**
-     * Set up the test environment
-     *
-     * @return void
-     */
-    protected function setUp(): void
-    {
-        parent::setUp();
-    }
-
-    /**
-     * Test if guest can access and view the registration page
-     *
-     * @test
-     * @return void
-     */
-    public function test_see_registration_page()
-    {
-        $this->get('register')
-            ->assertStatus(200)
-            ->assertSee('User Registration')->assertSeeInOrder([
-                'Email',
-                'Password',
-                'Confirm Password',
-                'Register',
-            ]);
-    }
-
-    /**
-     * Test if guest can register and be assigned to default user group
-     * Verifies email notification and login redirect behavior
-     *
-     * @test
-     * @return void
-     */
-    public function test_guest_can_register_to_default_user_group()
-    {
-        Mail::fake();
-        Notification::fake();
-
-        $firstName = $this->faker->firstName;
-        $email = $this->faker->email;
-
-        $this->followingRedirects()
-            ->post('register', [
-                'first_name' => $firstName,
-                'last_name' => $this->faker->lastName,
-                'email' => $email,
-                'password' => $this->password,
-                'password_confirmation' => $this->password,
-                // 'group_ids' => [Group::byName('user')->id], // Note: If no group is specified then by default 'user' group will be selected
-            ])
-            ->assertStatus(200)
-            ->assertSee("A verification link has been sent to your email address. Click the link and login with your username and password to complete the verification.");
-
-        $user = User::where('email', $email)->first(); // Get this newly created user from database
-
-        Notification::assertSentTo([$user], VerifyEmail::class); // This is a mailable class
-
-        $this->assertDatabaseHas('users', [
-            'id' => $user->id,
-            'email_verified_at' => null,
-            'group_ids' => "[\"".User::USER_GROUP_ID."\"]",
+test('see registration page', function () {
+    $this->get('register')
+        ->assertStatus(200)
+        ->assertSee('User Registration')->assertSeeInOrder([
+            'Email',
+            'Password',
+            'Confirm Password',
+            'Register',
         ]);
+});
 
-        echo "User #{$user->id} : {$user->email} created";
+test('guest can register to default user group', function () {
+    Mail::fake();
+    Notification::fake();
 
-        $this->followingRedirects()
-            ->post('login', [
-                'email' => $user->email,
-                'password' => $this->password,
-            ])
-            ->assertStatus(200)
-            ->assertSee("Before proceeding, please check your email for a verification link.");
+    $firstName = $this->faker->firstName;
+    $email = $this->faker->email;
 
+    $this->followingRedirects()
+        ->post('register', [
+            'first_name' => $firstName,
+            'last_name' => $this->faker->lastName,
+            'email' => $email,
+            'password' => $this->password,
+            'password_confirmation' => $this->password,
+            // 'group_ids' => [Group::byName('user')->id], // Note: If no group is specified then by default 'user' group will be selected
+        ])
+        ->assertStatus(200)
+        ->assertSee('A verification link has been sent to your email address. Click the link and login with your username and password to complete the verification.');
 
-        $this->followingRedirects()
-            ->post('email/resend')
-            ->assertStatus(200)
-            ->assertSee('Email verification required')
-            ->assertDontSee("Resend verification link");
+    $user = User::where('email', $email)->first();
 
-        Notification::assertSentTo([$user], VerifyEmail::class);
-    }
+    // Get this newly created user from database
+    Notification::assertSentTo([$user], VerifyEmail::class);
 
+    // This is a mailable class
+    $this->assertDatabaseHas('users', [
+        'id' => $user->id,
+        'email_verified_at' => null,
+        'group_ids' => '["'.User::USER_GROUP_ID.'"]',
+    ]);
 
-    /**
-     * Test if guest is redirected to login when accessing verification code page
-     *
-     * @test
-     * @return void
-     */
-    public function test_guest_cannot_see_resend_verification_code_page()
-    {
-        $this->withExceptionHandling();
-        // Guest is redirected to login
-        $this->get('email/verify')->assertRedirect('login');
-    }
+    echo "User #{$user->id} : {$user->email} created";
 
+    $this->followingRedirects()
+        ->post('login', [
+            'email' => $user->email,
+            'password' => $this->password,
+        ])
+        ->assertStatus(200)
+        ->assertSee('Before proceeding, please check your email for a verification link.');
 
-    /**
-     * Test if verified user is redirected to dashboard after verification
-     *
-     * @test
-     * @return void
-     */
-    public function test_verified_user_can_see_dashboard_upon_login()
-    {
-        $user = $this->newlyRegisteredUser();
-        $user->update(['email_verified_at' => now()]); // Force verify
-        $this->be($user);
-        $this->followingRedirects()->get('email/verify')->assertSee('Dashboard');
-    }
+    $this->followingRedirects()
+        ->post('email/resend')
+        ->assertStatus(200)
+        ->assertSee('Email verification required')
+        ->assertDontSee('Resend verification link');
 
-    /**
-     * Test if verified user can successfully login and access dashboard
-     *
-     * @test
-     * @return void
-     */
-    public function test_verified_user_can_login_and_see_dashboard()
-    {
-        $user = $this->newlyRegisteredUser(); // Get this newly created user from database
+    Notification::assertSentTo([$user], VerifyEmail::class);
+});
 
-        $this->followingRedirects()
-            ->post('login', [
-                'email' => $user->email,
-                'password' => $this->password,
-            ])
-            ->assertStatus(200)
-            ->assertSee('Dashboard');
-    }
+test('guest cannot see resend verification code page', function () {
+    $this->withExceptionHandling();
 
-    /**
-     * Test if user can access and verify sample data block variable
-     *
-     * @test
-     * @return void
-     */
-    public function test_user_can_access_data_block_variable()
-    {
-        $user = $this->newlyRegisteredUser(); // Get this newly created user from database
+    // Guest is redirected to login
+    $this->get('email/verify')->assertRedirect('login');
+});
 
-        $this->be($user);
-        $this->followingRedirects()
-            ->get('/')
-            ->assertStatus(200)
-            ->assertViewHas('sampleData', [
-                'books' => [
-                    'purchased' => 10,
-                    'read' => 7,
-                ],
-            ]);
-    }
+test('verified user can see dashboard upon login', function () {
+    $user = latest(User::class);
 
-    /*
-    |--------------------------------------------------------------------------
-    | Helpers
-    |--------------------------------------------------------------------------
-    */
+    $user->update(['email_verified_at' => now()]);
+    // Force verify
+    $this->be($user);
+    $this->followingRedirects()->get('email/verify')->assertSee('Dashboard');
+});
 
-    /**
-     * Helper method to retrieve the most recently registered user
-     *
-     * @return \App\User
-     */
-    public function newlyRegisteredUser()
-    {
-        return $this->latestUser();
-    }
+test('verified user can login and see dashboard', function () {
+    $user = latest(User::class);
 
-}
+    // Get this newly created user from database
+    $this->followingRedirects()
+        ->post('login', [
+            'email' => $user->email,
+            'password' => $this->password,
+        ])
+        ->assertStatus(200)
+        ->assertSee('Dashboard');
+});
+
+test('user can access data block variable', function () {
+    $user = latest(User::class);
+
+    // Get this newly created user from database
+    $this->be($user);
+    $this->followingRedirects()
+        ->get('/')
+        ->assertStatus(200)
+        ->assertViewHas('sampleData', [
+            'books' => [
+                'purchased' => 10,
+                'read' => 7,
+            ],
+        ]);
+});
+
+/*
+|--------------------------------------------------------------------------
+| Helpers
+|--------------------------------------------------------------------------
+*/

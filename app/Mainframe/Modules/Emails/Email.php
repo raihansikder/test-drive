@@ -10,8 +10,11 @@ class Email extends BaseModule
     use EmailTrait;
 
     public const STATUS_QUEUED = 'Queued';
+
     public const STATUS_SENT = 'Sent';
+
     public const STATUS_FAILED = 'Failed';
+
     public const STATUS_DISCARDED = 'Discarded';
 
     /**
@@ -20,6 +23,7 @@ class Email extends BaseModule
      * @var bool
      */
     public static $auditingDisabled = true;
+
     /*
     |--------------------------------------------------------------------------
     | Properties

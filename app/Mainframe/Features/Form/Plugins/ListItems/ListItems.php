@@ -2,21 +2,29 @@
 
 namespace App\Mainframe\Features\Form\Plugins\ListItems;
 
-use Arr;
-use App\Module;
 use App\Mainframe\Features\Form\Form;
+use App\Module;
+use Arr;
 use Illuminate\Database\Eloquent\Builder;
 
 class ListItems extends Form
 {
     public $items;
+
     public $columns;
+
     public $createLink;
+
     public $label;
+
     public $tableId;
+
     public $createText;
+
     public $linkColumn;
+
     public $tableClass;
+
     public $showSerial;
 
     public function __construct($var = [], $element = null)

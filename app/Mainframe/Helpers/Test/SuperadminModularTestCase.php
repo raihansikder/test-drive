@@ -1,4 +1,5 @@
 <?php
+
 /** @noinspection PhpUndefinedClassInspection */
 
 namespace App\Mainframe\Helpers\Test;
@@ -11,10 +12,7 @@ class SuperadminModularTestCase extends UserModularTestCase
     {
         parent::setUp();
 
-        $this->user = User::remember(timer('long'))->find(env('SUPERADMIN_USER_ID'));
+        $this->user = User::remember(timer('long'))->find(env('TEST_SUPERADMIN_USER_ID'));
         $this->be($this->user); // Impersonate as the currently created admin user
     }
-
 }
-
-

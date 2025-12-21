@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Modules\Subscriptions;
 
-use App\Project\Features\Modular\BaseModule\BaseModule;
 use App\Mainframe\Modules\Subscriptions\Traits\SubscriptionTrait;
+use App\Project\Features\Modular\BaseModule\BaseModule;
 
 class Subscription extends BaseModule
 {
@@ -21,5 +21,4 @@ class Subscription extends BaseModule
         'name',
         'is_active',
     ];
-
 }

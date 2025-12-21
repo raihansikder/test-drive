@@ -1,13 +1,15 @@
-<?php /** @noinspection ALL */
+<?php
+
+/** @noinspection ALL */
 
 namespace App\Mainframe\Http\Controllers\Auth;
 
-use App\User;
 use App\Group;
-use Validator;
 use App\Tenant;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Validator;
 
 class RegisterTenantController extends RegisterController
 {
@@ -37,7 +39,6 @@ class RegisterTenantController extends RegisterController
     /**
      * Handle a registration request for the application.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
     public function register(Request $request)
@@ -45,7 +46,7 @@ class RegisterTenantController extends RegisterController
         $this->attemptRegistration();
 
         $this->redirectTo = route('login');
-        if (!$this->user) { // Redirect to register page if failed
+        if (! $this->user) { // Redirect to register page if failed
             $this->redirectTo = route('register.tenant');
         }
 
@@ -76,7 +77,7 @@ class RegisterTenantController extends RegisterController
 
         // Validation success. Now create tenant
         $this->tenant = $this->createTenant();
-        if (!$this->tenant) {
+        if (! $this->tenant) {
             $this->fail('Tenant creation failed');
 
             return $this;
@@ -84,7 +85,7 @@ class RegisterTenantController extends RegisterController
 
         // Create user
         $this->user = $this->createUser();
-        if (!$this->user) {
+        if (! $this->user) {
             $this->fail('User creation failed');
             Tenant::where('id', $this->tenant->id)->forceDelete();
 
@@ -129,5 +130,4 @@ class RegisterTenantController extends RegisterController
             'tenant_id' => $this->tenant->id,
         ]);
     }
-
 }

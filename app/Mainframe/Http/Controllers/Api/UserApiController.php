@@ -1,4 +1,5 @@
 <?php
+
 /**
  * User/Bearer API
  */
@@ -18,5 +19,4 @@ class UserApiController extends ApiController
     {
         parent::__construct();
     }
-
 }

@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Modules\SystemEvents;
 
-use App\Project\Features\Modular\BaseModule\BaseModule;
 use App\Mainframe\Modules\SystemEvents\Traits\SystemEventTrait;
+use App\Project\Features\Modular\BaseModule\BaseModule;
 
 class SystemEvent extends BaseModule
 {
@@ -63,7 +63,8 @@ class SystemEvent extends BaseModule
     */
     // public static $types = [];
     public static $envs = ['local', 'development', 'staging', 'production'];
-    public static $types = ['Issue', 'Event', 'Log'];
-    public static $sources = ['BE', 'Android', 'iOS'];
 
+    public static $types = ['Issue', 'Event', 'Log'];
+
+    public static $sources = ['BE', 'Android', 'iOS'];
 }

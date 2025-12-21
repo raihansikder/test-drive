@@ -23,7 +23,7 @@ class CleanEmails extends MakeModule
     /**
      * Execute the console command.
      *
-     * @return mixed|null
+     * @return void
      */
     public function handle()
     {
@@ -37,5 +37,4 @@ class CleanEmails extends MakeModule
         $this->info('... Done');
 
     }
-
 }

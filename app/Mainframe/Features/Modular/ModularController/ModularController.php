@@ -2,15 +2,15 @@
 
 namespace App\Mainframe\Features\Modular\ModularController;
 
-use App\Mainframe\Http\Controllers\BaseController;
-use App\Mainframe\Features\Modular\ModularController\Traits\Resolvable;
-use App\Mainframe\Features\Modular\ModularController\Traits\RequestValidator;
-use App\Mainframe\Features\Modular\ModularController\Traits\RequestProcessorTrait;
 use App\Mainframe\Features\Modular\ModularController\Traits\ModularControllerTrait;
+use App\Mainframe\Features\Modular\ModularController\Traits\RequestProcessorTrait;
+use App\Mainframe\Features\Modular\ModularController\Traits\RequestValidator;
+use App\Mainframe\Features\Modular\ModularController\Traits\Resolvable;
+use App\Mainframe\Http\Controllers\BaseController;
 
 class ModularController extends BaseController
 {
-    use RequestValidator, RequestProcessorTrait, Resolvable, ModularControllerTrait;
+    use ModularControllerTrait, RequestProcessorTrait, RequestValidator, Resolvable;
 
     /**
      * ModularController constructor.
@@ -20,5 +20,4 @@ class ModularController extends BaseController
         parent::__construct();
         $this->initModularController();
     }
-
 }

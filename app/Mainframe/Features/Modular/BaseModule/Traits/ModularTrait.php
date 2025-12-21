@@ -1,31 +1,31 @@
 <?php
-/** @noinspection PhpPossiblePolymorphicInvocationInspection */
-
-/** @noinspection PhpUndefinedFieldInspection */
-/** @noinspection PhpUndefinedMethodInspection */
-/** @noinspection PhpUnused */
-/** @noinspection UnknownTableOrViewInspection */
 
 namespace App\Mainframe\Features\Modular\BaseModule\Traits;
 
-use DB;
-use Str;
-use App\User;
 use App\Change;
+use App\Comment;
+use App\Mainframe\Features\Core\ViewProcessor;
+use App\Mainframe\Features\Modular\BaseModule\BaseModule;
+use App\Mainframe\Helpers\Mf;
 use App\Module;
+use App\Project;
 use App\Spread;
 use App\Tenant;
 use App\Upload;
-use App\Comment;
-use App\Project;
-use App\Mainframe\Helpers\Mf;
-use Illuminate\Database\Eloquent\Model;
+use App\User;
+use DB;
 use Illuminate\Database\Eloquent\Builder;
-use App\Mainframe\Features\Core\ViewProcessor;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use App\Mainframe\Features\Modular\BaseModule\BaseModule;
+use Str;
 
-/** @mixin User $this */
+/**
+ * @mixin User $this
+ * @property int $tenant_sl
+ * @property mixed $element_id
+ * @property int $module_id
+ * @property string $element_uuid
+ */
 trait ModularTrait
 {
     /*
@@ -48,6 +48,7 @@ trait ModularTrait
      * Check if tenant is enabled
      *
      * @return bool
+     *
      * @depricated use isTenant
      */
     public function tenantEnabled()
@@ -59,6 +60,7 @@ trait ModularTrait
      * Check if tenant is enabled
      *
      * @return bool
+     *
      * @alias for tenantEnabled
      */
     public function isTenantEnabled()
@@ -140,14 +142,12 @@ trait ModularTrait
     /**
      * Eloquent query scope for $query->active()
      *
-     * @param $query
      * @return Builder
      */
     public function scopeActive($query)
     {
         return $query->where($this->getTable().'.is_active', 1);
     }
-
 
     /*
     |--------------------------------------------------------------------------
@@ -174,7 +174,6 @@ trait ModularTrait
     {
         return 'App\\'.class_basename($this);
     }
-
 
     /**
      * Gets all attribute names except the specified array.
@@ -223,7 +222,6 @@ trait ModularTrait
     /**
      * Get an array of columns that ends with the given string
      *
-     * @param $str
      * @return array
      */
     public function getColumnsThatEndsWith($str)
@@ -235,6 +233,7 @@ trait ModularTrait
                 $found[] = $column;
             }
         }
+
         return $found;
     }
 
@@ -242,7 +241,9 @@ trait ModularTrait
      * Get all the table columns of the model
      *
      * @return array
+     *
      * @depricated
+     *
      * @alias for columns()
      */
     public function tableColumns()
@@ -260,7 +261,6 @@ trait ModularTrait
         return Mf::tableColumns($this->getTable());
     }
 
-
     /*
     |--------------------------------------------------------------------------
     | Section : Changes and value transition related functions
@@ -271,22 +271,20 @@ trait ModularTrait
 
     /**
      * Get the latest changes.
-     * http://www.laravel-auditing.com
      *
-     * @return mixed
+     * @link https://laravel-auditing.com/guide/getting-audits.html#getting-the-modified-properties
+     *
+     * @return null|array
      */
     public function latestChanges()
     {
-        return $this->audits()->latest()->first()->getModified();
+        return $this->audits()->latest()->first()?->getModified();
     }
 
     /**
      * Check if the value of a field has changed
-     *
-     * @param $field
-     * @return bool
      */
-    public function fieldHasChanged($field)
+    public function fieldHasChanged($field): bool
     {
         if (array_key_exists($field, $this->getChanges())) {
             return true; // This only works inside boot::saved()
@@ -303,7 +301,8 @@ trait ModularTrait
      * Get the last updater user of a field
      *
      * @param  string  $field
-     * @return Model|\Illuminate\Database\Query\Builder|mixed|null
+     * @return \App\User|object|null
+     * @noinspection PhpPossiblePolymorphicInvocationInspection
      */
     public function updaterOfField($field)
     {
@@ -313,6 +312,7 @@ trait ModularTrait
 
         foreach ($audits as $audit) {
             $userId = $audit->user_id;
+            /** @var \OwenIt\Auditing\Audit $audit */
             $changes = $audit->getModified();
             if (array_key_exists($field, $changes)) {
                 break;
@@ -329,7 +329,6 @@ trait ModularTrait
     /**
      * Get old and new value of a changed field
      *
-     * @param $field
      * @return array
      */
     public function transition($field)
@@ -355,11 +354,11 @@ trait ModularTrait
      */
     public function hasTransition($field, $from, $to)
     {
-        if (!is_array($from)) {
+        if (! is_array($from)) {
             $from = [$from];
         }
 
-        if (!is_array($to)) {
+        if (! is_array($to)) {
             $to = [$to];
         }
 
@@ -381,7 +380,7 @@ trait ModularTrait
      */
     public function hasTransitionFrom($field, $from)
     {
-        if (!is_array($from)) {
+        if (! is_array($from)) {
             $from = [$from];
         }
 
@@ -403,7 +402,7 @@ trait ModularTrait
      */
     public function hasTransitionTo($field, $to)
     {
-        if (!is_array($to)) {
+        if (! is_array($to)) {
             $to = [$to];
         }
 
@@ -419,7 +418,6 @@ trait ModularTrait
     /**
      * Get an array of allowed next transition values for a specific field
      *
-     * @param $field
      * @param  null  $from
      * @return array
      */
@@ -459,7 +457,6 @@ trait ModularTrait
     /**
      * Get a change from a tracked field.
      *
-     * @param $field
      * @return HasMany
      */
     public function track($field)
@@ -487,10 +484,10 @@ trait ModularTrait
             $userIds[] = $this->creator->id;
         }
         // Get the creator
-        // if the creator and updater are same, no need to add the id twice
+        // if the creator and updater are the same, no need to add the id twice
         if (isset($this->updater->id, $this->creator->id) && $this->creator->id !== $this->updater->id) {
             $userIds[] = $this->updater->id;
-        } //get the updater
+        } // get the updater
 
         return $userIds;
     }
@@ -505,7 +502,9 @@ trait ModularTrait
      * Checks if a user has tenant context
      *
      * @return bool
+     *
      * @internal param $name
+     * @noinspection UnknownTableOrViewInspection
      */
     public function hasTenantContext()
     {
@@ -522,11 +521,11 @@ trait ModularTrait
     {
         $user = $user ?: user();
 
-        if (!$this->hasTenantContext()) {
+        if (! $this->hasTenantContext()) {
             return true;
         }
 
-        // If the element (tenant=null) then it is a global element and should be accessible by all the tenants
+        // If the element (tenant=null), then it is a global element and should be accessible by all the tenants
         if ($this->tenant_id == null) {
             return true;
         }
@@ -586,7 +585,7 @@ trait ModularTrait
      */
     public function isCreating()
     {
-        return !$this->isUpdating();
+        return ! $this->isUpdating();
     }
 
     /**
@@ -638,7 +637,6 @@ trait ModularTrait
      * Note: Native laravel 11 function
      * Disable model events while saving.
      *
-     * @param  array  $options
      * @return mixed
      */
     public function saveQuietly(array $options = [])
@@ -687,7 +685,7 @@ trait ModularTrait
 
     /**
      * Check if an element is valid for saving.
-     * This runs the full business logic of processor but doesn't save.
+     * This runs the full business logic of the processor but doesn't save.
      *
      * @return bool
      */
@@ -716,7 +714,6 @@ trait ModularTrait
         return $this;
     }
 
-
     /*
     |--------------------------------------------------------------------------
     | Section: Spread related functions
@@ -734,6 +731,7 @@ trait ModularTrait
 
             if (empty($ids)) {
                 $this->spreads()->where('key', $field)->forceDelete();
+
                 continue;
             }
 
@@ -745,7 +743,7 @@ trait ModularTrait
             $name = $this->getTable();
 
             foreach ($newIds as $relatedId) {
-                if (!$relatedId) {
+                if (! $relatedId) {
                     continue;
                 }
                 $spread = [
@@ -776,6 +774,7 @@ trait ModularTrait
 
             if (empty($tags)) {
                 $this->spreads()->where('key', $field)->forceDelete();
+
                 continue;
             }
 
@@ -804,9 +803,8 @@ trait ModularTrait
     }
 
     /**
-     * Get spread tags as array
+     * Get spread tags as an array
      *
-     * @param $field
      * @return array
      */
     public function getSpreadTags($field)
@@ -822,7 +820,7 @@ trait ModularTrait
         $this->uuid = $this->uuid ?? uuid();
         $this->created_by = $this->created_by ?? user()->id;
         $this->created_at = $this->created_at ?? now();
-        $this->updated_by = user()->id; // Force fill the current user
+        $this->updated_by = user()->id; // Force-fill the current user
         $this->updated_at = $this->updated_at ?? now();
         $this->autoFillTenant();
 
@@ -830,14 +828,14 @@ trait ModularTrait
     }
 
     /**
-     * Fill tenant id once during creation. Later tenant id can not be
+     * Fill tenant id once during creation. Later tenant id cannot be
      * updated.
      */
     public function autoFillTenant()
     {
         if ($this->hasTenantContext()) {
             $this->tenant_id = $this->tenant_id ?: user()->tenant_id;
-            // $this->project_id = $this->project_id ?: $this->tenant->project_id; // Excluded project_id injection because settings table had no project_id
+            // $this->project_id = $this->project_id ?: $this->tenant->project_id; // Excluded project_id injection because the 'settings' table had no project_id
         }
 
         return $this;
@@ -871,6 +869,7 @@ trait ModularTrait
      *
      * @param  string  $fieldPrefix  i.e.uploadable
      * @return $this
+     * @noinspection PhpPossiblePolymorphicInvocationInspection
      */
     public function fillModuleAndElement($fieldPrefix)
     {
@@ -929,6 +928,8 @@ trait ModularTrait
      * Get an instance of the view processor
      *
      * @return \App\Mainframe\Features\Core\ViewProcessor
+     *
+     * @noinspection ClassConstantCanBeUsedInspection
      */
     public function viewProcessor()
     {
@@ -1010,6 +1011,7 @@ trait ModularTrait
     {
         if ($this->isCreated()) {
             $params = array_merge(['element' => $this], $params);
+
             return route($this->module()->route_name.'.show', $params);
         }
 
@@ -1026,6 +1028,7 @@ trait ModularTrait
     {
         if ($this->isCreated()) {
             $params = array_merge(['element' => $this], $params);
+
             return route($this->module()->route_name.'.edit', $params);
         }
 
@@ -1042,6 +1045,7 @@ trait ModularTrait
     {
         if ($this->isCreated()) {
             $params = array_merge(['element' => $this], $params);
+
             return route($this->module()->route_name.'.update', $params);
         }
 
@@ -1058,6 +1062,7 @@ trait ModularTrait
     {
         if ($this->isCreated()) {
             $params = array_merge(['element' => $this], $params);
+
             return route($this->module()->route_name.'.destroy', $params);
         }
 
@@ -1107,6 +1112,7 @@ trait ModularTrait
     {
         if ($this->isCreated()) {
             $params = array_merge(['id' => $this], $params);
+
             return route($this->module()->route_name.'.uploads', $params);
         }
 
@@ -1123,6 +1129,7 @@ trait ModularTrait
     {
         if ($this->isCreated()) {
             $params = array_merge(['id' => $this], $params);
+
             return route($this->module()->route_name.'.changes', $params);
         }
 
@@ -1139,6 +1146,7 @@ trait ModularTrait
     {
         if ($this->isCreated()) {
             $params = array_merge(['id' => $this], $params);
+
             return route($this->module()->route_name.'.clone', $params);
         }
 
@@ -1156,7 +1164,6 @@ trait ModularTrait
     {
         return "<a href='".$this->editUrl($params)."'>".($this->$field ?? $field).'</a>';
     }
-
 
     /*
     |--------------------------------------------------------------------------
@@ -1236,27 +1243,40 @@ trait ModularTrait
     */
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Tenant>
      */
-    public function tenant() { return $this->belongsTo(Tenant::class); }
+    public function tenant()
+    {
+        return $this->belongsTo(Tenant::class);
+    }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Project>
      */
-    public function project() { return $this->belongsTo(Project::class); }
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
+    }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<User>
      */
-    public function creator() { return $this->belongsTo(User::class, 'created_by'); }
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<User>
      */
-    public function updater() { return $this->belongsTo(User::class, 'updated_by'); }
+    public function updater()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
+    }
 
     /**
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Module>
+     * @noinspection PhpUndefinedMethodInspection
      */
     public function linkedModule()
     {
@@ -1264,7 +1284,7 @@ trait ModularTrait
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<Change>
      */
     public function changes()
     {
@@ -1273,7 +1293,7 @@ trait ModularTrait
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<Upload>
      */
     public function uploads()
     {
@@ -1290,13 +1310,12 @@ trait ModularTrait
     }
 
     /**
-     * @param $slug
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function spreadModels($slug)
     {
         $key = $slug;
-        if (!Str::endsWith($slug, '_ids')) {
+        if (! Str::endsWith($slug, '_ids')) {
             $key = Str::singular($slug).'_ids';
         }
 
@@ -1306,7 +1325,6 @@ trait ModularTrait
     }
 
     /**
-     * @param $field
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function spreadTags($field)
@@ -1331,7 +1349,7 @@ trait ModularTrait
      */
     public function putTenantSerial()
     {
-        if (!$this->tenant_id) {
+        if (! $this->tenant_id) {
             return;
         }
         if ($this->tenant_sl) {
@@ -1377,7 +1395,7 @@ trait ModularTrait
      */
     public function smsRecipients()
     {
-        //$mobiles = collect($mobiles)->unique()->filter(function ($value) { return !is_null($value); })->all();
+        // $mobiles = collect($mobiles)->unique()->filter(function ($value) { return !is_null($value); })->all();
         return array_unique(array_filter([
             optional($this->creator)->mobile,
             optional($this->updater)->mobile,
@@ -1390,7 +1408,7 @@ trait ModularTrait
      *
      * @return void
      */
-    public function syncData() { }
+    public function syncData() {}
 
     /**
      * Function to fill the denormalized fields. This should be called in processor saving() once the validations
@@ -1398,7 +1416,10 @@ trait ModularTrait
      *
      * @return $this
      */
-    public function denormalize() { return $this; }
+    public function denormalize()
+    {
+        return $this;
+    }
 
     // /**
     //  * Set name_ext values
@@ -1445,8 +1466,7 @@ trait ModularTrait
     /**
      * Find an element by name
      *
-     * @param $name
-     * @return \App\Mainframe\Features\Modular\BaseModule\BaseModule
+     * @return \Eloquent|null
      */
     public static function byName($name)
     {
@@ -1456,8 +1476,7 @@ trait ModularTrait
     /**
      * Find an element by uuid
      *
-     * @param $uuid
-     * @return \App\Mainframe\Features\Modular\BaseModule\BaseModule
+     * @return \Eloquent|null
      */
     public static function byUuid($uuid)
     {
@@ -1467,7 +1486,6 @@ trait ModularTrait
     /**
      * Find an element by slug
      *
-     * @param $slug
      * @return \Illuminate\Database\Eloquent\Model|object|null
      */
     public static function bySlug($slug)
@@ -1478,7 +1496,6 @@ trait ModularTrait
     /**
      * Find an element by code
      *
-     * @param $code
      * @return \Illuminate\Database\Eloquent\Model|object|null
      */
     public static function byCode($code)
@@ -1518,12 +1535,13 @@ trait ModularTrait
     {
         $class = $this->module()->rootModelClassPath();
 
-        // Mark upload as deleted
+        // Soft-deletes
         $valuesToMarkDeleted = ['deleted_at' => now(), 'deleted_by' => user()->id];
+        $this->uploads()->update($valuesToMarkDeleted);
+        $this->changes()->update($valuesToMarkDeleted);
+        $this->comments()->update($valuesToMarkDeleted);
 
-        // DB::table('uploads')->where('uploadable_type', $class)
-        //     ->where('uploadable_id', $this->id)->update($valuesToMarkDeleted);
-
+        // Hard delete
         DB::table('changes')->where('changeable_type', $class)
             ->where('changeable_id', $this->id)->delete();
 
@@ -1531,45 +1549,43 @@ trait ModularTrait
             ->where('spreadable_id', $this->id)->delete();
     }
 
-
     /*
     |--------------------------------------------------------------------------
     | Cache related helpers
     |--------------------------------------------------------------------------
-    |    
+    |
     |
     */
     /**
      * Get the element's cache prefix
      *
-     * @param $field
      * @return string
      */
     public function cachePrefix($field = 'id')
     {
-        return $this->module()->name."[{$field}={$this->$field}]";
+        return $this->module()->name."[$field=$this->$field]";
     }
-
 
     /**
      * Get the element's cache key'
      *
-     * @param $field
      * @return array
+     *
+     * @noinspection PhpUnusedParameterInspection
      */
     public function elementSpecificCacheKeys($field = 'id')
     {
         $keys = [];
 
-        if (!$this->$field) {
+        if (! $this->$field) {
             return $keys;
         }
 
         $keys = config('cache.keys.'.$this->module()->name, []);
         // return $keys;
 
-        return collect($keys)->filter(function ($key, $value) use ($field) {
-            return Str::contains($key, "["); // Keep only that has [id=
+        return collect($keys)->filter(function ($key, $value) {
+            return Str::contains($key, '['); // Keep only that has [id=
         })->values()->map(function ($key) use ($field) {
             return str_replace('%d', $this->$field, $key);
         })->toArray();
@@ -1579,6 +1595,7 @@ trait ModularTrait
      * Clear all element-specific cache
      *
      * @return void
+     *
      * @throws \Exception
      */
     public function clearElementCache()
@@ -1589,5 +1606,4 @@ trait ModularTrait
             cache()->forget($key);
         }
     }
-
 }

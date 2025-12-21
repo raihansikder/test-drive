@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Modules\Packages;
 
-use App\Project\Features\Modular\BaseModule\BaseModule;
 use App\Mainframe\Modules\Packages\Traits\PackageTrait;
+use App\Project\Features\Modular\BaseModule\BaseModule;
 
 class Package extends BaseModule
 {

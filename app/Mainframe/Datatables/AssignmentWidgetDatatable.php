@@ -1,9 +1,11 @@
 <?php
 
+/** @noinspection ALL */
+
 namespace App\Mainframe\Datatables;
 
-use App\Mainframe\Modules\Assignments\AssignmentDatatable;
 use App\Mainframe\Features\Datatable\Traits\CustomDatatableTrait;
+use App\Mainframe\Modules\Assignments\AssignmentDatatable;
 
 class AssignmentWidgetDatatable extends AssignmentDatatable
 {
@@ -26,6 +28,7 @@ class AssignmentWidgetDatatable extends AssignmentDatatable
             // [$this->table.'.is_active', 'is_active', 'Active'],
         ];
     }
+
     /*---------------------------------
     | Section: SQL Select query
     |---------------------------------*/
@@ -42,6 +45,7 @@ class AssignmentWidgetDatatable extends AssignmentDatatable
 
         return $this->selectQueryString($columns);
     }
+
     /*---------------------------------
    | Section : Modify row-columns
    |---------------------------------*/
@@ -55,11 +59,10 @@ class AssignmentWidgetDatatable extends AssignmentDatatable
 
         if ($this->hasColumn('created_at')) {
             $dt->editColumn('created_at', function ($row) {
-                return "<span class='text-bold'>".optional($row->assignee)->name."</span><br/> "
-                    ."<span class=''>".formatDateTime($row->created_at)."</span>"
-                    // ."<br/> ".optional($row->creator)->name
-                    // ." ".optional($row->creator)->email
-                    ;
+                return "<span class='text-bold'>".optional($row->assignee)->name.'</span><br/> '
+                    ."<span class=''>".formatDateTime($row->created_at).'</span>';
+                // ."<br/> ".optional($row->creator)->name
+                // ." ".optional($row->creator)->email
             }
             );
         }

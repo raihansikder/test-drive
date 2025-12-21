@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Commands;
 
-use File;
 use App\Module;
+use File;
 
 class CreateRootModels extends MakeModule
 {
@@ -24,7 +24,7 @@ class CreateRootModels extends MakeModule
     /**
      * Execute the console command.
      *
-     * @return mixed|null
+     * @return void
      */
     public function handle()
     {
@@ -66,5 +66,4 @@ class {$module->modelClassName()} extends {$extends}
             }
         }
     }
-
 }

@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Commands;
 
-use DB;
 use App\Module;
+use DB;
 use Illuminate\Database\Query\Builder;
 
 class FixPolymorphicType extends MakeModule
@@ -36,7 +36,7 @@ class FixPolymorphicType extends MakeModule
     /**
      * Execute the console command.
      *
-     * @return mixed|null
+     * @return void
      */
     public function handle()
     {
@@ -47,7 +47,7 @@ class FixPolymorphicType extends MakeModule
             $this->info("Fixing $table.$field ...");
             foreach ($modules as $module) {
                 DB::table($table)->where(function (Builder $q) use ($field, $module) {
-                    $q->where($field, 'LIKE', "%".$module->modelClassName());
+                    $q->where($field, 'LIKE', '%'.$module->modelClassName());
                 })->update([
                     $field => 'App\\'.class_basename($module->model),
                 ]);
@@ -57,5 +57,4 @@ class FixPolymorphicType extends MakeModule
         $this->info('... Done');
 
     }
-
 }

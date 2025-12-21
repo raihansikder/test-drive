@@ -2,13 +2,13 @@
 
 namespace App\Mainframe\Http\Controllers\Auth;
 
+use App\Project\Http\Controllers\BaseController;
 use App\User;
-use Illuminate\View\View;
-use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Auth\ResetsPasswords;
-use App\Project\Http\Controllers\BaseController;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class ResetPasswordController extends BaseController
 {
@@ -38,7 +38,6 @@ class ResetPasswordController extends BaseController
      * Display the password reset view for the given token.
      * If no token is present, display the link request form.
      *
-     * @param  Request  $request
      * @param  string|null  $token
      * @return Factory|View
      */
@@ -66,7 +65,6 @@ class ResetPasswordController extends BaseController
     /**
      * Get the response for a successful password reset.
      *
-     * @param  Request  $request
      * @param  string  $response
      * @return RedirectResponse
      */

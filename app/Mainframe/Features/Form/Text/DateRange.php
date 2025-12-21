@@ -6,7 +6,6 @@ use Carbon\Carbon;
 
 class DateRange extends Date
 {
-
     public $format = 'd-m-Y';
 
     /**
@@ -31,7 +30,7 @@ class DateRange extends Date
 
         $date = $this->value();
 
-        if (!$date) {
+        if (! $date) {
             return null;
         }
 
@@ -58,7 +57,7 @@ class DateRange extends Date
 
     public function rangeAllText()
     {
-        return "Select date range";
+        return 'Select date range';
         // return "<span>Date range - All </span><i class='fa fa-caret-down'></i>";
     }
 
@@ -71,5 +70,4 @@ class DateRange extends Date
     {
         return config('mainframe.config.date_format');
     }
-
 }

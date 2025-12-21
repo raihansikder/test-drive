@@ -2,13 +2,16 @@
 
 namespace App\Mainframe\Features\Core;
 
-use App\Module;
-use App\Mainframe\Features\Report\Traits\ReportViewProcessorTrait;
+use App\Mainframe\Features\Modular\BaseModule\Traits\HasElement;
+use App\Mainframe\Features\Modular\BaseModule\Traits\HasHidden;
 use App\Mainframe\Features\Modular\BaseModule\Traits\ViewProcessorTrait;
+use App\Mainframe\Features\Modular\Immutable\HasImmutables;
+use App\Mainframe\Features\Report\Traits\ReportViewProcessorTrait;
+use App\Module;
 
 class ViewProcessor
 {
-    use ViewProcessorTrait, ReportViewProcessorTrait;
+    use HasElement, HasHidden, HasImmutables, ReportViewProcessorTrait, ViewProcessorTrait;
 
     /** @var \App\User|null */
     public $user;
@@ -21,7 +24,7 @@ class ViewProcessor
     public $vars;
 
     /**
-     * Type of view create, edit, index
+     * Type of view i.e., create, edit, index
      *
      * @var string
      */
@@ -40,7 +43,7 @@ class ViewProcessor
     public $editable;
 
     /**
-     * Fields that can not be editable in the view
+     * Fields that cannot be editable in the view
      *
      * @var array
      */
@@ -51,7 +54,7 @@ class ViewProcessor
      *
      * @var array
      */
-    public $hiddenFields = [];
+    public $hidden = [];
 
     /** @var \App\Mainframe\Features\Datatable\Datatable */
     public $datatable;
@@ -60,6 +63,8 @@ class ViewProcessor
     {
         $this->user = user();
         $this->setElement($element);
+        if ($this->isEditing()) {
+            $this->mergeImmutables($element->processor()->getImmutables());
+        }
     }
-
 }

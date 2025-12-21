@@ -20,7 +20,7 @@ trait UploadProcessorTrait
      */
     public function fill($element)
     {
-        // $element->populate(); 
+        // $element->populate();
         return $this;
     }
 
@@ -54,10 +54,10 @@ trait UploadProcessorTrait
      */
     public function saving($element)
     {
-        // Validate. 
+        // Validate.
         // If valid, proceed
         // if ($this->isValid()) {
-        //   
+        //
         // }
 
         return $this;
@@ -87,6 +87,7 @@ trait UploadProcessorTrait
     public function deleted($element)
     {
         Upload::deleteFilePath($element->path); // Delete file from disk
+
         return $this;
     }
 

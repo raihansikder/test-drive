@@ -2,27 +2,37 @@
 
 namespace App\Mainframe\Features\Form\Select;
 
-use Cache;
-use App\Module;
-use Illuminate\Support\Arr;
-use Illuminate\Database\Eloquent\Builder;
 use App\Mainframe\Features\Modular\BaseModule\BaseModule;
+use App\Module;
+use Cache;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Arr;
 
 class SelectModel extends SelectArray
 {
     public $nameField;
+
     public $valueField;
+
     public $orderBy;
+
     public $table;
 
     /** @var BaseModule|null */
     public $model;
+
     public $query;
+
     public $result;
+
     public $showInactive;
+
     public $cache = 5;
+
     public $dataAttributes;
+
     public $link = false;
+
     public $dry = false; // if true, no DB query will run to fetch results. Useful when you want to show an empty choice at some stage
 
     /**
@@ -96,7 +106,7 @@ class SelectModel extends SelectArray
             ->toArray();
 
         // $options[0] = null; // Zero fill empty selection
-        if (!$this->isMultiple()) {
+        if (! $this->isMultiple()) {
             $options[null] = $this->nullOptionText;  // Null fill empty selection
         }
 
@@ -122,7 +132,7 @@ class SelectModel extends SelectArray
             ->select($this->columns())
             ->whereNull('deleted_at');
 
-        if (!$this->showInactive) {
+        if (! $this->showInactive) {
             $q->where('is_active', 1);
         }
 
@@ -199,8 +209,9 @@ class SelectModel extends SelectArray
             } elseif (isset($this->model) && $this->link) {
                 $target = $this->model->query()->remember(timer('long'))->find($this->value());
 
-                if ($target && !is_array($target)) {
+                if ($target && ! is_array($target)) {
                     $link = " <a href='".$target->editUrl()."' target='_blank' class='label-open-link'><ion-icon name='open-outline'></ion-icon></a>";
+
                     return $this->label.$link;
                 }
             }
@@ -208,5 +219,4 @@ class SelectModel extends SelectArray
 
         return parent::label();
     }
-
 }

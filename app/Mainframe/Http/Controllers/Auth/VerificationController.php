@@ -2,16 +2,16 @@
 
 namespace App\Mainframe\Http\Controllers\Auth;
 
-use Illuminate\View\View;
-use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Routing\Redirector;
-use Illuminate\Auth\Events\Verified;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Foundation\Auth\VerifiesEmails;
 use App\Project\Http\Controllers\BaseController;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Auth\Events\Verified;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Foundation\Auth\VerifiesEmails;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
+use Illuminate\View\View;
 
 class VerificationController extends BaseController
 {
@@ -33,6 +33,7 @@ class VerificationController extends BaseController
      * @var string
      */
     protected $redirectTo = '/'; // Default redirect to home '/'
+
     /** @var string */
     protected $view = 'mainframe.auth.verify';
 
@@ -52,7 +53,6 @@ class VerificationController extends BaseController
     /**
      * Show the email verification notice.
      *
-     * @param  Request  $request
      * @return Factory|RedirectResponse|Redirector|View
      */
     public function show(Request $request)
@@ -69,17 +69,17 @@ class VerificationController extends BaseController
     /**
      * Mark the authenticated user's email address as verified.
      *
-     * @param  Request  $request
      * @return JsonResponse|RedirectResponse
+     *
      * @throws AuthorizationException
      */
     public function verify(Request $request)
     {
-        if (!hash_equals((string) $request->route('id'), (string) $request->user()->getKey())) {
+        if (! hash_equals((string) $request->route('id'), (string) $request->user()->getKey())) {
             throw new AuthorizationException;
         }
 
-        if (!hash_equals((string) $request->route('hash'), sha1($request->user()->getEmailForVerification()))) {
+        if (! hash_equals((string) $request->route('hash'), sha1($request->user()->getEmailForVerification()))) {
             throw new AuthorizationException;
         }
 
@@ -105,14 +105,12 @@ class VerificationController extends BaseController
     /**
      * The user has been verified.
      *
-     * @param  Request  $request
      * @return Factory|JsonResponse|RedirectResponse|View|void
      */
     protected function verified(Request $request)
     {
-        return $this->success("Your email has been verified successfully")
+        return $this->success('Your email has been verified successfully')
             ->setRedirectTo($this->redirectPath())
             ->send();
     }
-
 }

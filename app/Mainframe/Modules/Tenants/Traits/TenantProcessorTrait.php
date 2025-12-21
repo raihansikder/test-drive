@@ -78,7 +78,7 @@ trait TenantProcessorTrait
     /**
      * Run validations for saving. This should be common for both creating and updating.
      *
-     * @param $tenant \App\Mainframe\Modules\Superheroes\Tenant
+     * @param  $tenant  \App\Mainframe\Modules\Superheroes\Tenant
      * @return $this
      */
     public function saving($tenant)

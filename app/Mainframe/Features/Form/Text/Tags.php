@@ -7,6 +7,7 @@ use App\Mainframe\Features\Form\Input;
 class Tags extends Input
 {
     public $tags;
+
     public $separator;
 
     public function __construct($var = [], $element = null)
@@ -36,5 +37,4 @@ class Tags extends Input
 
         return trim($value, '[]');
     }
-
 }

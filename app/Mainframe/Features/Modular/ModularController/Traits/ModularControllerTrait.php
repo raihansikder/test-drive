@@ -1,23 +1,25 @@
-<?php /** @noinspection PhpRedundantOptionalArgumentInspection */
+<?php
+
+/** @noinspection PhpRedundantOptionalArgumentInspection */
 
 /** @noinspection PhpPossiblePolymorphicInvocationInspection */
 
 namespace App\Mainframe\Features\Modular\ModularController\Traits;
 
-use Arr;
-use View;
-use Throwable;
+use App\Mainframe\Features\Datatable\ModuleDatatable;
+use App\Mainframe\Features\Modular\ModularController\ModularController;
+use App\Mainframe\Features\Report\ModuleReportBuilder;
+use App\Mainframe\Modules\Comments\CommentController;
+use App\Mainframe\Modules\SuperHeroes\SuperHeroResource;
 use App\Module;
-use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 use App\Project\Features\Report\ModuleList;
 use App\Project\Modules\Uploads\UploadController;
-use App\Mainframe\Features\Datatable\ModuleDatatable;
-use App\Mainframe\Modules\Comments\CommentController;
-use App\Mainframe\Features\Report\ModuleReportBuilder;
-use App\Mainframe\Modules\SuperHeroes\SuperHeroResource;
-use App\Mainframe\Features\Modular\ModularController\ModularController;
+use Arr;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Throwable;
+use View;
 
 /** @mixin ModularController */
 trait ModularControllerTrait
@@ -39,7 +41,7 @@ trait ModularControllerTrait
             $this->element = $payload;
         }
 
-        // Share these variables in  all views
+        // Share these variables in all views
         View::share([
             'module' => $this->module,
             'model' => $this->model,
@@ -52,20 +54,21 @@ trait ModularControllerTrait
      * Index
      *
      * @return \Illuminate\Contracts\View\Factory|JsonResponse|\Illuminate\View\View
+     *
      * @throws \Exception
      */
     public function index()
     {
-        if (!$this->user->can('view-any', $this->model)) {
+        if (! $this->user->can('view-any', $this->model)) {
             return $this->permissionDenied();
         }
 
-        # Respond as JSON/API
+        // Respond as JSON/API
         if ($this->expectsJson()) {
             return $this->listJson();
         }
 
-        # Show default module grid
+        // Show default module grid
         $this->view->setType('index')->setDatatable($this->datatable());
 
         return $this->view($this->view->gridPath());
@@ -74,13 +77,13 @@ trait ModularControllerTrait
     /**
      * Store
      *
-     * @param  Request  $request
      * @return JsonResponse|RedirectResponse
+     *
      * @noinspection PhpUnusedParameterInspection
      */
     public function store(Request $request)
     {
-        if (!$this->user->can('create', $this->model)) {
+        if (! $this->user->can('create', $this->model)) {
             return $this->permissionDenied();
         }
 
@@ -100,19 +103,19 @@ trait ModularControllerTrait
     /**
      * Show
      *
-     * @param $id
      * @return JsonResponse|RedirectResponse
+     *
      * @urlParam  id required The ID of the item.
      */
     public function show($id)
     {
-        # Get the element
-        if (!$this->element = $this->model->with($this->relationsFromRequest())->find($id)) {
+        // Get the element
+        if (! $this->element = $this->model->with($this->relationsFromRequest())->find($id)) {
             return $this->notFound();
         }
 
-        # Check permission
-        if (!$this->user->can('view', $this->element)) {
+        // Check permission
+        if (! $this->user->can('view', $this->element)) {
             return $this->permissionDenied();
         }
 
@@ -121,7 +124,7 @@ trait ModularControllerTrait
         //     return $this->load(new SuperHeroResource($this->element))->json();
         // }
 
-        # Redirect to edit page
+        // Redirect to edit page
         return $this->load($this->element)
             ->to(route($this->moduleName.'.edit', $id))
             ->send();
@@ -132,24 +135,25 @@ trait ModularControllerTrait
      * Show create form.
      *
      * @return \Illuminate\Contracts\View\View|JsonResponse
+     *
      * @throws \Exception
      */
     public function create()
     {
-        # Fill the model
+        // Fill the model
         $this->element = $this->element ?: $this->model->fill(request()->all());
         $this->element->uuid = $this->uuid();
         $this->element->is_active = 1; // Note: Set to active by default while creating
 
-        # Check permission
-        if (!$this->user->can('create', $this->element)) {
+        // Check permission
+        if (! $this->user->can('create', $this->element)) {
             return $this->permissionDenied();
         }
 
-        # Set view processor attributes
+        // Set view processor attributes
         $this->view->setType('create')->setElement($this->element);
 
-        # Load view with view vars
+        // Load view with view vars
         return $this->view($this->view->formPath('create'))
             ->with($this->view->varsCreate());
     }
@@ -157,27 +161,26 @@ trait ModularControllerTrait
     /**
      * Show edit form
      *
-     * @param $id
      * @return \Illuminate\Contracts\View\View|JsonResponse
      */
     public function edit($id)
     {
-        # Get the element
-        if (!$this->element = $this->model->find($id)) {
+        // Get the element
+        if (! $this->element = $this->model->find($id)) {
             return $this->notFound();
         }
 
-        # Check permission
-        if (!$this->user->can('view', $this->element)) {
+        // Check permission
+        if (! $this->user->can('view', $this->element)) {
             return $this->permissionDenied();
         }
 
-        # Set view processor attributes
+        // Set view processor attributes
         $this->view->setType('edit')
             ->setElement($this->element)
             ->addImmutables($this->element->processor()->getImmutables());
 
-        # Load view with view vars
+        // Load view with view vars
         return $this->view($this->view->formPath('edit'))
             ->with($this->view->viewVarsEdit());
     }
@@ -185,14 +188,13 @@ trait ModularControllerTrait
     /**
      * Update
      *
-     * @param  Request  $request
-     * @param $id
      * @return JsonResponse|RedirectResponse
+     *
      * @noinspection PhpUnusedParameterInspection
      */
     public function update(Request $request, $id)
     {
-        if (!$this->element = $this->model->find($id)) {
+        if (! $this->element = $this->model->find($id)) {
             return $this->notFound();
         }
 
@@ -213,13 +215,13 @@ trait ModularControllerTrait
     /**
      * Delete
      *
-     * @param $id
      * @return JsonResponse|RedirectResponse
+     *
      * @throws \Exception
      */
     public function destroy($id)
     {
-        if (!$this->element = $this->model->find($id)) {
+        if (! $this->element = $this->model->find($id)) {
             return $this->notFound();
         }
 
@@ -242,6 +244,7 @@ trait ModularControllerTrait
      *
      * @param  null  $id
      * @return void
+     *
      * @noinspection PhpUnusedParameterInspection
      */
     public function restore($id = null)
@@ -252,12 +255,11 @@ trait ModularControllerTrait
     /**
      * Clone an element. Post the form data into a new create form for user action
      *
-     * @param $id
      * @return \Illuminate\Contracts\View\Factory|JsonResponse|RedirectResponse|\Illuminate\View\View|void
      */
     public function clone($id)
     {
-        if (!$this->user->can('create', $this->model)) {
+        if (! $this->user->can('create', $this->model)) {
             return $this->permissionDenied();
         }
 
@@ -274,6 +276,7 @@ trait ModularControllerTrait
      * List
      *
      * @return JsonResponse
+     *
      * @throws \Exception
      */
     public function listJson()
@@ -295,11 +298,12 @@ trait ModularControllerTrait
      * Show and render report
      *
      * @return bool|\Illuminate\Contracts\View\Factory|JsonResponse|\Illuminate\Support\Collection|\Illuminate\View\View|mixed
+     *
      * @throws \Exception
      */
     public function report()
     {
-        if (!$this->user->can('view-report', $this->model)) {
+        if (! $this->user->can('view-report', $this->model)) {
             return $this->permissionDenied();
         }
 
@@ -311,11 +315,12 @@ trait ModularControllerTrait
      * A route is automatically created for all modules to access this controller function
      *
      * @return JsonResponse
-     * @var \Yajra\DataTables\DataTables $dt
+     *
+     * @var \Yajra\DataTables\DataTables
      */
     public function datatableJson()
     {
-        return ($this->datatable())->json();
+        return $this->datatable()->json();
     }
 
     /**
@@ -323,6 +328,7 @@ trait ModularControllerTrait
      *
      * @param  null  $id
      * @return JsonResponse
+     *
      * @throws \Exception
      */
     public function uploads($id)
@@ -340,8 +346,10 @@ trait ModularControllerTrait
      *
      * @param  null  $id
      * @return ModularController
+     *
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
+     *
      * @noinspection PhpUnused
      */
     public function attachUpload($id)
@@ -357,18 +365,18 @@ trait ModularControllerTrait
     /**
      * Show all the changes/change logs of an item
      *
-     * @param $id
      * @return \Illuminate\Contracts\View\Factory|JsonResponse|\Illuminate\View\View|void
+     *
      * @throws \Exception
      */
     public function changes($id)
     {
 
-        if (!$this->element = $this->model->find($id)) {
+        if (! $this->element = $this->model->find($id)) {
             return $this->notFound();
         }
 
-        if (!$this->user->can('view', $this->element)) {
+        if (! $this->user->can('view', $this->element)) {
             return $this->permissionDenied();
         }
 
@@ -389,6 +397,7 @@ trait ModularControllerTrait
      *
      * @param  null  $id
      * @return JsonResponse
+     *
      * @throws \Exception
      */
     public function comments($id)

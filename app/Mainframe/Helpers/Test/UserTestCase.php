@@ -25,8 +25,7 @@ class UserTestCase extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->user = User::remember(timer('long'))->find(env('API_USER_ID'));
+        $this->user = User::remember(timer('long'))->find(env('TEST_API_USER_ID'));
         $this->be($this->user); // Impersonate as the currently created admin user
     }
-
 }

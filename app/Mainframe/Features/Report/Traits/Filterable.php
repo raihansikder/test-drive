@@ -2,11 +2,11 @@
 
 namespace App\Mainframe\Features\Report\Traits;
 
-use Carbon\Carbon;
-use Illuminate\Support\Str;
 use App\Mainframe\Helpers\Convert;
 use App\Mainframe\Helpers\Sanitize;
+use Carbon\Carbon;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Str;
 
 /** @mixin \App\Mainframe\Features\Report\ReportBuilder $this */
 trait Filterable
@@ -15,7 +15,7 @@ trait Filterable
      * Transform request
      * Include additional fields in the request or mutate some requests values
      */
-    public function transformRequest() { }
+    public function transformRequest() {}
 
     /**
      * Apply default filter logic based on request parameters on top of the base query builder.
@@ -59,7 +59,6 @@ trait Filterable
     /**
      * Filter to exclude deleted rows.
      *
-     * @param $query
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|Builder|mixed
      */
     public function excludeDeleted($query)
@@ -91,9 +90,7 @@ trait Filterable
     /**
      * Custom query for escaped filter fields.
      *
-     * @param $query Builder
-     * @param $field
-     * @param $val
+     * @param  $query  Builder
      * @return mixed
      */
     public function customFilterOnEscapedFields($query, $field, $val)
@@ -107,7 +104,6 @@ trait Filterable
     /**
      * Additional custom filter on the full query
      *
-     * @param $query
      * @return mixed
      */
     public function customFilter($query)
@@ -120,7 +116,6 @@ trait Filterable
      * Specific fields might have to be discarded from default query builder based on some
      * pattern.
      *
-     * @param $field
      * @return bool
      */
     public function isEscapedField($field)
@@ -135,7 +130,6 @@ trait Filterable
     /**
      * Field name with table prefix i.e., user.name.
      *
-     * @param $field
      * @return string
      */
     public function dotField($field)
@@ -153,9 +147,7 @@ trait Filterable
     /**
      * Default query builder from input.
      *
-     * @param $query Builder
-     * @param $field
-     * @param $val
+     * @param  $query  Builder
      * @return mixed
      */
     public function defaultFilter($query, $field, $val)
@@ -189,9 +181,7 @@ trait Filterable
     /**
      * Query for fields that exists in the data-source
      *
-     * @param $query Builder
-     * @param $field
-     * @param $val
+     * @param  $query  Builder
      * @return mixed
      */
     public function queryForExitingFields($query, $field, $val)
@@ -211,6 +201,7 @@ trait Filterable
         // Step 3. Handle string array representation: param=[1,2,3]
         if (\Str::startsWith($val, '[') && \Str::endsWith($val, ']')) {
             $val = array_map(null, explode(',', trim($val, '[],')));
+
             return $this->queryForArrayParam($query, $field, $val);
         }
 
@@ -225,9 +216,7 @@ trait Filterable
     /**
      * Default query builder from input.
      *
-     * @param $query Builder
-     * @param $field
-     * @param $val
+     * @param  $query  Builder
      * @return \Illuminate\Database\Query\Builder
      */
     public function queryForArrayParam($query, $field, $val)
@@ -242,9 +231,7 @@ trait Filterable
     /**
      * Default query builder from input.
      *
-     * @param $query Builder
-     * @param $field
-     * @param $val
+     * @param  $query  Builder
      * @return mixed
      */
     public function queryForCsvParam($query, $field, $val)
@@ -255,9 +242,7 @@ trait Filterable
     /**
      * Default query builder from input.
      *
-     * @param $query Builder
-     * @param $field
-     * @param $val
+     * @param  $query  Builder
      * @return mixed
      */
     public function queryForStringParam($query, $field, $val)
@@ -283,17 +268,17 @@ trait Filterable
     {
         $key = request('search_key');
 
-        if (!$key) {
+        if (! $key) {
             return $query;
         }
 
-        # Key based search
+        // Key based search
         $query->where(function ($query) use ($key) {
             foreach ($this->searchFields as $field) {
                 /** @var Builder $query */
                 // $query->where('name', 'LIKE', "{$key}%");
 
-                if (!$this->fieldExists($field)) {
+                if (! $this->fieldExists($field)) {
                     continue;
                 }
                 if ($key == 'null') {
@@ -312,14 +297,12 @@ trait Filterable
     /**
      * Default query builder from input.
      *
-     * @param $query Builder
-     * @param $field
-     * @param $val
+     * @param  $query  Builder
      * @return mixed
      */
     public function queryForFromRange($query, $field, $val)
     {
-        if (!is_string($val)) {
+        if (! is_string($val)) {
             return $query;
         }
 
@@ -327,7 +310,7 @@ trait Filterable
             $dateTime = Carbon::parse($val);
 
             if (strlen($val) <= 10) { // String is date 2021-06-30 not datetime
-                $dateTime->startOfDay();// Consider start of day
+                $dateTime->startOfDay(); // Consider start of day
             }
 
             return $query->where($this->getActualDateField($field), '>=', $dateTime);
@@ -339,14 +322,12 @@ trait Filterable
     /**
      * Default query builder from input.
      *
-     * @param $query Builder
-     * @param $field
-     * @param $val
+     * @param  $query  Builder
      * @return mixed
      */
     public function queryForToRange($query, $field, $val)
     {
-        if (!is_string($val)) {
+        if (! is_string($val)) {
             return $query;
         }
 
@@ -354,7 +335,7 @@ trait Filterable
             $dateTime = Carbon::parse($val);
 
             if (strlen($val) <= 10) { // String is date 2021-06-30 not datetime
-                $dateTime->endOfDay();// Consider end of day
+                $dateTime->endOfDay(); // Consider end of day
             }
 
             return $query->where($this->getActualDateField($field), '<=', $dateTime);
@@ -366,7 +347,6 @@ trait Filterable
     /**
      * Check if a filter parameter has array value
      *
-     * @param $input
      * @return bool|int
      */
     public function paramIsArray($input)
@@ -381,7 +361,6 @@ trait Filterable
     /**
      * Possibly the field contains json data
      *
-     * @param $field
      * @return bool
      */
     public function possibleJsonField($field)
@@ -396,7 +375,6 @@ trait Filterable
     /**
      * Checks if a column exists in data source.
      *
-     * @param $field
      * @return bool
      */
     public function fieldExists($field)
@@ -412,12 +390,11 @@ trait Filterable
     /**
      * Check if param is csv
      *
-     * @param $input
      * @return bool|int
      */
     public function paramIsCsv($input)
     {
-        if (!is_string($input)) {
+        if (! is_string($input)) {
             return false;
         }
 
@@ -431,12 +408,11 @@ trait Filterable
     /**
      * Check if param is string.
      *
-     * @param $input
      * @return string
      */
     public function paramIsString($input)
     {
-        if (!is_string($input)) {
+        if (! is_string($input)) {
             return false;
         }
 
@@ -446,7 +422,6 @@ trait Filterable
     /**
      * Check if a column is for full text search. These will be processed with %LIKE%
      *
-     * @param $column
      * @return bool
      */
     public function columnIsFullText($column)
@@ -473,7 +448,6 @@ trait Filterable
     /**
      * From the name of the input try to assume if it is some data-from field
      *
-     * @param $field
      * @return bool
      */
     public function isFromRange($field)
@@ -488,7 +462,6 @@ trait Filterable
     /**
      * From the name of the input try to assume if it is some data-to field
      *
-     * @param $field
      * @return bool
      */
     public function isToRange($field)
@@ -503,7 +476,6 @@ trait Filterable
     /**
      * Checks if the input field is date format
      *
-     * @param $field
      * @return bool
      */
     public function columnLooksLikeDateField($field)
@@ -518,7 +490,6 @@ trait Filterable
     /**
      * Get the actual date field
      *
-     * @param $field
      * @return string
      */
     public function getActualDateField($field)
@@ -550,5 +521,4 @@ trait Filterable
     {
         return request('additional_conditions');
     }
-
 }

@@ -3,36 +3,16 @@
 namespace App\Mainframe\Helpers\Test;
 
 use App\User;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Tests\TestCase;
 
 abstract class ApiTestCase extends TestCase
 {
-
     protected function setUp(): void
     {
         parent::setUp();
-        $this->setApiToken()->setBearerToken();
-    }
-
-    /**
-     * Get API user
-     *
-     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Query\Builder|mixed
-     */
-    public function apiUser()
-    {
-
-        return User::remember('long')->find(env('API_USER_ID', 2));
-    }
-
-    /**
-     * Get API X-Auth-Token
-     *
-     * @return mixed
-     */
-    public function getXAuthToken()
-    {
-        return $this->apiUser()->api_token;
+        $this->setApiToken();
+        // $this->setBearerToken();
     }
 
     /**
@@ -60,14 +40,48 @@ abstract class ApiTestCase extends TestCase
      * @param  null  $authToken
      * @return $this
      */
-    public function setBearerToken($authToken = null)
+    public function setBearerToken($authToken)
     {
-        $authToken = $authToken ?: $this->getBearerToken();
 
         $this->withHeaders([
             'Authorization' => 'Bearer '.$authToken,
         ]);
 
         return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function setBearer(User|Authenticatable $user)
+    {
+        if ($user->auth_token == null) {
+            abort(403, 'auth_token not found for user:'.$user->id);
+        }
+
+        $this->setBearerToken($user->auth_token);
+
+        return $this;
+    }
+
+    /**
+     * Get API user
+     *
+     * @return object|User|\Illuminate\Contracts\Auth\Authenticatable|null
+     */
+    public function apiUser()
+    {
+
+        return User::find(config('test.api_user_id'));
+    }
+
+    /**
+     * Get API X-Auth-Token
+     *
+     * @return mixed
+     */
+    public function getXAuthToken()
+    {
+        return $this->apiUser()->api_token;
     }
 }

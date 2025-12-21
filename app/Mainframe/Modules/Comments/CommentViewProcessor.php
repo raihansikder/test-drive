@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Modules\Comments;
 
-use App\Project\Features\Modular\BaseModule\BaseModuleViewProcessor;
 use App\Mainframe\Modules\Comments\Traits\CommentViewProcessorTrait;
+use App\Project\Features\Modular\BaseModule\BaseModuleViewProcessor;
 
 class CommentViewProcessor extends BaseModuleViewProcessor
 {

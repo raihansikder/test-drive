@@ -2,7 +2,4 @@
 
 namespace App\Mainframe\Features\Form\Select;
 
-class SelectArray extends Select
-{
-
-}
+class SelectArray extends Select {}

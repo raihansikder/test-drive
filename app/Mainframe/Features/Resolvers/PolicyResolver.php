@@ -1,18 +1,19 @@
 <?php
+
 /** @noinspection ALL */
 
 namespace App\Mainframe\Features\Resolvers;
 
-use Str;
-use App\Module;
 use App\Mainframe\Features\Modular\BaseModule\BaseModulePolicy;
+use App\Module;
+use Str;
 
 class PolicyResolver
 {
     /**
      * This function is used in app/Providers/AuthServiceProvider.php
      *
-     * @param $modelClass  '\App\Mainframe\Modules\Foo\Bar'
+     * @param  $modelClass  '\App\Mainframe\Modules\Foo\Bar'
      * @return string
      */
     public static function resolve($modelClass)

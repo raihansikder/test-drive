@@ -7,6 +7,7 @@ use App\Mainframe\Features\Form\Input;
 class Checkbox extends Input
 {
     public $checkedVal;
+
     public $uncheckedVal;
 
     /**
@@ -35,7 +36,7 @@ class Checkbox extends Input
 
         // Add Id in class
 
-        if (!$this->isEditable) {
+        if (! $this->isEditable) {
             $this->params[] = 'disabled';
         }
     }
@@ -44,7 +45,7 @@ class Checkbox extends Input
     {
         $value = parent::value();
 
-        if (!$value) {
+        if (! $value) {
             return $this->uncheckedVal;
         }
 
@@ -79,5 +80,4 @@ class Checkbox extends Input
         return $params;
 
     }
-
 }

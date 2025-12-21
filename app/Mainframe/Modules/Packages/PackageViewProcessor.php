@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Modules\Packages;
 
-use App\Project\Features\Modular\BaseModule\BaseModuleViewProcessor;
 use App\Mainframe\Modules\Packages\Traits\PackageViewProcessorTrait;
+use App\Project\Features\Modular\BaseModule\BaseModuleViewProcessor;
 
 class PackageViewProcessor extends BaseModuleViewProcessor
 {

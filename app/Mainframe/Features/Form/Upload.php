@@ -12,90 +12,105 @@ class Upload extends Input
      * @var string
      */
     public $containerClass;
+
     /**
      * Module id
      *
      * @var null|mixed
      */
     public $moduleId;
+
     /**
      * Element id
      *
      * @var null|mixed
      */
     public $elementId;
+
     /**
      * Element uuid
      *
      * @var null|mixed
      */
     public $elementUuid;
+
     /**
      * The type of upload defined as ... Upload::TYPE
      *
      * @var null|mixed
      */
     public $type;
+
     /**
      * Limits/Counts of uploaded files to be shown
      *
      * @var int
      */
     public $limit;
+
     /**
      * Tenant id
      *
      * @var null|int
      */
     public $tenantId;
+
     /**
      * Upload box id. Useful for JS targetting.
      *
      * @var string
      */
     public $uploadBoxId;
+
     /**
      * Polymorphic type
      *
      * @var string
      */
     public $uploadableType;
+
     /**
      * Upload POST url
      *
      * @var string
      */
     public $postUrl;
+
     /**
      * Bucket/Directory in storage. For public use 'public'
      *
      * @var string
      */
     public $bucket;
+
     /**
      * Show zip download option
      *
      * @var string
      */
     public $zipDownload = false;
+
     /**
      * Show list
      *
      * @var bool
      */
     public $showList = true;
+
     /**
      * A JS function to call for upload
      *
      * @var mixed|string
      */
     public $uploaderFunction;
+
     /**
      * Badge CSS
      *
      * @var string
      */
     public $badge;
+
     /**
      * Enable/Disable sorting
      *
@@ -123,6 +138,7 @@ class Upload extends Input
      * @var bool|mixed
      */
     public $preview;
+
     /**
      * File card class
      *
@@ -158,7 +174,7 @@ class Upload extends Input
         $this->elementUuid = $this->var['element_uuid'] ?? $this->elementUuid;
         $this->uploadableType = $this->var['uploadable_type'] ?? $this->uploadableType;
         $this->tenantId = $this->var['tenant_id'] ?? $this->tenantId;
-        $this->bucket = $this->var['bucket'] ?? trim(config('mainframe.config.upload_root'), "\\/ ");
+        $this->bucket = $this->var['bucket'] ?? trim(config('mainframe.config.upload_root'), '\\/ ');
         $this->type = $this->var['type'] ?? null;
         $this->limit = $this->var['limit'] ?? 999;
         $this->postUrl = $this->var['url'] ?? route('uploads.store');
@@ -212,10 +228,10 @@ class Upload extends Input
         if (isset($this->var['editable'])) {
             return $this->var['editable'];
         }
-        if (!user()->can('create', \App\Upload::class)) {
+        if (! user()->can('create', \App\Upload::class)) {
             return false;
         }
-        if (!user()->can('update', $this->element)) {
+        if (! user()->can('update', $this->element)) {
             return false;
         }
 

@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Modules\Reports;
 
-use App\Project\Features\Datatable\ModuleDatatable;
 use App\Mainframe\Modules\Reports\Traits\ReportDatatableTrait;
+use App\Project\Features\Datatable\ModuleDatatable;
 
 class ReportDatatable extends ModuleDatatable
 {

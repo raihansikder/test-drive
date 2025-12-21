@@ -6,15 +6,28 @@ use Illuminate\Support\Facades\Http;
 
 class ApiClient
 {
+    /**
+     * @var array
+     */
     public $header;
+
+    /**
+     * @var string
+     */
     public $clientId;
+
+    /**
+     * @var string
+     */
     public $xAuthToken;
+
+    /**
+     * @var string
+     */
     public $baseUrl;
 
     public function __construct()
     {
-        // parent::__construct();
-
         $this->clientId = $this->clientId ?: config('services.systemX.client_id');
         $this->xAuthToken = $this->xAuthToken ?: config('services.systemX.x_auth_token');
         $this->baseUrl = $this->baseUrl ?: config('services.systemX.base_url');
@@ -50,7 +63,7 @@ class ApiClient
     /**
      * Base URL for api calls
      *
-     * @return \Illuminate\Config\Repository|\Illuminate\Contracts\Foundation\Application|mixed
+     * @return string
      */
     public function baseUrl()
     {

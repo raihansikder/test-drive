@@ -1,10 +1,12 @@
-<?php /** @noinspection PhpUnused */
+<?php
+
+/** @noinspection PhpUnused */
 
 namespace App\Mainframe\Features\Modular\BaseModule\Traits;
 
-use Str;
-use Route;
 use App\Mainframe\Features\Core\ViewProcessor;
+use Route;
+use Str;
 
 /** @mixin ViewProcessor $this */
 trait ViewProcessorTrait
@@ -23,7 +25,6 @@ trait ViewProcessorTrait
     /**
      * Add view variables to be shared to the blade.
      *
-     * @param $vars
      * @return $this
      */
     public function addVars($vars)
@@ -46,62 +47,11 @@ trait ViewProcessorTrait
     /**
      * Set view variables to be shared with the blade
      *
-     * @param $vars
      * @return $this
      */
     public function setVars($vars)
     {
         $this->vars = $vars;
-
-        return $this;
-    }
-
-    /**
-     * Set an element and based on that set the module, model and add immutables
-     *
-     * @param  \App\Mainframe\Features\Modular\BaseModule\BaseModule  $element
-     * @return $this
-     */
-    public function setElement($element)
-    {
-        if (!$element) {
-            return $this;
-        }
-
-        $this->element = $element;
-
-        $this->setModule($element->module())
-            ->setModel($element->newInstance());
-
-        if ($this->isEditing()) {
-            $this->addImmutables($element->processor()->getImmutables());
-        }
-
-        return $this;
-    }
-
-    /**
-     * Set module
-     *
-     * @param  \App\Module  $module
-     * @return $this
-     */
-    public function setModule($module)
-    {
-        $this->module = $module;
-
-        return $this;
-    }
-
-    /**
-     * Set model
-     *
-     * @param  \App\Mainframe\Features\Modular\BaseModule\BaseModule  $model
-     * @return $this
-     */
-    public function setModel($model)
-    {
-        $this->model = $model;
 
         return $this;
     }
@@ -120,7 +70,6 @@ trait ViewProcessorTrait
     /**
      * Set editable (model/form editability)
      *
-     * @param  bool  $editable
      * @return $this
      */
     public function setEditable(bool $editable)
@@ -147,80 +96,9 @@ trait ViewProcessorTrait
         return $this->editable;
     }
 
-    /*---------------------------------
-    |  Immutables
-    |---------------------------------*/
-    /**
-     * @param $immutables
-     * @return $this
-     */
-    public function setImmutables($immutables = [])
-    {
-        $this->immutables = $immutables;
-
-        return $this;
-    }
-
-    /**
-     * @param $immutables
-     * @return $this
-     * @deprecated  use setImmutables
-     */
-    public function setImmutable($immutables = [])
-    {
-        return $this->setImmutables($immutables);
-    }
-
-    /**
-     * @param  array  $immutables
-     * @return $this
-     */
-    public function addImmutables($immutables = [])
-    {
-        $this->immutables = array_unique(array_merge($this->immutables, $immutables));
-
-        return $this;
-    }
-
-    /*---------------------------------
-    |  Hidden fields
-    |---------------------------------*/
-    /**
-     * @param $hiddenFields
-     * @return $this
-     */
-    public function setHiddenFields($hiddenFields = [])
-    {
-        $this->hiddenFields = $hiddenFields;
-
-        return $this;
-    }
-
-    /**
-     * @param $hiddenFields
-     * @return $this
-     * @deprecated  use setHiddenFields
-     */
-    public function setHiddenField($hiddenFields = [])
-    {
-        return $this->setHiddenFields($hiddenFields);
-    }
-
-    /**
-     * @param  array  $hiddenFields
-     * @return $this
-     */
-    public function addHiddenFields($hiddenFields = [])
-    {
-        $this->hiddenFields = array_unique(array_merge($this->hiddenFields, $hiddenFields));
-
-        return $this;
-    }
-
     /**
      * Check if a function exists with same signature and return the result
      *
-     * @param $signature
      * @return bool
      */
     public function show($signature)
@@ -277,6 +155,7 @@ trait ViewProcessorTrait
      *
      * @param  string  $state
      * @return string
+     *
      * @noinspection PhpIfWithCommonPartsInspection
      */
     public function formPath($state = 'create')
@@ -376,31 +255,6 @@ trait ViewProcessorTrait
     }
 
     /**
-     * Immutables
-     * Get the array of immutable field names.
-     * Originally the immutables are passed in view processor from module processor.
-     *
-     * @return array
-     * @deprecated user immutables();
-     */
-    public function getImmutables()
-    {
-        return $this->immutables();
-    }
-
-    /**
-     * Immutables
-     * Get the array of immutable field names.
-     * Originally the immutables are passed in view processor from module processor.
-     *
-     * @return array
-     */
-    public function immutables()
-    {
-        return array_unique($this->immutables);
-    }
-
-    /**
      * Hidden fields
      * Get the array of hidden field names.
      * Originally the hidden are passed in view processor from module processor.
@@ -409,7 +263,7 @@ trait ViewProcessorTrait
      */
     public function hiddenFields()
     {
-        return array_unique($this->hiddenFields);
+        return array_unique($this->hidden);
     }
 
     /**
@@ -457,7 +311,7 @@ trait ViewProcessorTrait
      */
     public function createBtnText()
     {
-        return "Create a new ".lcfirst(Str::singular($this->module->title));
+        return 'Create a new '.lcfirst(Str::singular($this->module->title));
     }
 
     /**
@@ -468,7 +322,7 @@ trait ViewProcessorTrait
     public function createBtnUrl()
     {
         // Merge the existing request to URL which allows pre-selection in the form.
-        return route($this->module->name.".create", request()->all());
+        return route($this->module->name.'.create', request()->all());
     }
 
     /**
@@ -478,7 +332,7 @@ trait ViewProcessorTrait
      */
     public function listBtnUrl()
     {
-        return route($this->module->name.".index");
+        return route($this->module->name.'.index');
     }
 
     /**
@@ -489,7 +343,7 @@ trait ViewProcessorTrait
     public function reportBtnUrl()
     {
         // Merge the existing request to URL which allows pre-selection in the form.
-        return route($this->module->name.".report", request()->all());
+        return route($this->module->name.'.report', request()->all());
     }
 
     /**
@@ -505,18 +359,19 @@ trait ViewProcessorTrait
         }
 
         // Form title
-        if (!$this->element) {
+        if (! $this->element) {
             return;
         }
 
         $prefix = '';
         if ($this->isCreating()) {
-            $prefix = "Create New ";
+            $prefix = 'Create New ';
         }
 
         $elementName = $this->formElementTitle();
 
         $text = $prefix.' '.$this->module->singularTitle().'- '.$elementName;
+
         return trim($text, ' -');
     }
 
@@ -530,7 +385,7 @@ trait ViewProcessorTrait
      */
     public function gridTitle()
     {
-        if (!$this->module) {
+        if (! $this->module) {
             return;
         }
 
@@ -539,17 +394,17 @@ trait ViewProcessorTrait
 
     public function createBtnTooltip()
     {
-        return "Create a new ".Str::singular($this->module->title);
+        return 'Create a new '.Str::singular($this->module->title);
     }
 
     public function listBtnTooltip()
     {
-        return "View list of ".Str::singular($this->module->title);
+        return 'View list of '.Str::singular($this->module->title);
     }
 
     public function reportBtnTooltip()
     {
-        return "View advanced report with filters, excel export etc.";
+        return 'View advanced report with filters, excel export etc.';
     }
 
     /*
@@ -611,15 +466,16 @@ trait ViewProcessorTrait
 
     public function showDefaultFormDeleteBtn()
     {
-        if (!$this->element->isCreated()) {
+        if (! $this->element->isCreated()) {
             return false;
         }
+
         return $this->user->can('delete', $this->element);
     }
 
     public function showDefaultFormChangeLogBtn()
     {
-        if (!$this->element->isCreated()) {
+        if (! $this->element->isCreated()) {
             return false;
         }
 
@@ -647,7 +503,7 @@ trait ViewProcessorTrait
             return true;
         }
 
-        if (isset($this->module) && !$this->module->tenantEnabled()) {
+        if (isset($this->module) && ! $this->module->tenantEnabled()) {
             return false;
         }
 
@@ -666,11 +522,11 @@ trait ViewProcessorTrait
      */
     public function showCloneBtn()
     {
-        if (!$this->element->isCloneable()) {
+        if (! $this->element->isCloneable()) {
             return false;
         }
 
-        if (!$this->user->can('clone', $this->element)) {
+        if (! $this->user->can('clone', $this->element)) {
             return false;
         }
 
@@ -691,6 +547,7 @@ trait ViewProcessorTrait
     {
         return $this->element->isCreated() && $this->element->uploads()->exists();
     }
+
     /*
     |--------------------------------------------------------------------------
     | Form wizard steps

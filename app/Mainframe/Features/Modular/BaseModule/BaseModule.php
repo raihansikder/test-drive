@@ -2,18 +2,17 @@
 
 namespace App\Mainframe\Features\Modular\BaseModule;
 
-use Watson\Rememberable\Rememberable;
-use Illuminate\Database\Query\Builder;
-use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Mainframe\Features\Core\Traits\Validable;
 use App\Mainframe\Features\Modular\BaseModule\Traits\ModularTrait;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Query\Builder;
+use OwenIt\Auditing\Contracts\Auditable;
+use Watson\Rememberable\Rememberable;
 
 /**
  * Class BaseModule
  *
- * @package App
  * @property int $id
  * @property string|null $uuid
  * @property int|null $tenant_id
@@ -25,8 +24,10 @@ use App\Mainframe\Features\Modular\BaseModule\Traits\ModularTrait;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $deleted_at
  * @property int|null $deleted_by
+ *
  * @method static bool|null forceDelete()
  * @method static Model|Builder|mixed remember($param)
+ *
  * @property-read \Illuminate\Database\Eloquent\Collection|\OwenIt\Auditing\Models\Audit[] $audits
  * @property-read int|null $audits_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Comment[] $comments
@@ -37,6 +38,7 @@ use App\Mainframe\Features\Modular\BaseModule\Traits\ModularTrait;
  * @property-read \App\User $updater
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Upload[] $uploads
  * @property-read int|null $uploads_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|BaseModule active()
  * @method static \Illuminate\Database\Eloquent\Builder|BaseModule newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|BaseModule newQuery()
@@ -45,27 +47,29 @@ use App\Mainframe\Features\Modular\BaseModule\Traits\ModularTrait;
  * @method static bool|null restore()
  * @method static Builder|BaseModule withTrashed()
  * @method static Builder|BaseModule withoutTrashed()
+ *
  * @mixin \Eloquent
+ *
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Mainframe\Modules\Changes\Change[] $changes
  * @property-read int|null $changes_count
  * @property-read \App\Module $linkedModule
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Spread[] $spreads
  * @property-read int|null $spreads_count
+ *
  * @method \Illuminate\Database\Eloquent\Builder remember(mixed $timer)
  */
-class BaseModule extends Model implements Auditable
+abstract class BaseModule extends Model implements Auditable, MfModuleInterface
 {
     /*
     |--------------------------------------------------------------------------
     | Include Mainframe module traits
     |--------------------------------------------------------------------------
     */
-    use SoftDeletes,                // Laravel default trait to enable soft delete
-        Rememberable,               // Third party plugin to cache query
-        \OwenIt\Auditing\Auditable, // 3rd party audit log
-        ModularTrait,               // Mainframe modular features.
-        Validable                   // Allow validation
-        ;
+    use ModularTrait,                // Laravel default trait to enable soft delete
+        \OwenIt\Auditing\Auditable,               // Third party plugin to cache query
+        Rememberable, // 3rd party audit log
+        SoftDeletes,               // Mainframe modular features.
+        Validable;                   // Allow validation
 
     /*
     |--------------------------------------------------------------------------
@@ -98,7 +102,7 @@ class BaseModule extends Model implements Auditable
      *
      * @var array
      */
-    protected $auditExclude = ['updated_at',];
+    protected $auditExclude = ['updated_at'];
 
     /**
      * Casts

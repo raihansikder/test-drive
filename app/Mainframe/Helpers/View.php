@@ -7,20 +7,21 @@ class View extends \Illuminate\View\View
     /**
      * Renders the left menu of the application and makes the current item active based on breadcrumb
      *
-     * @param        $tree
      * @param  string  $currentModuleName
      * @param  array  $breadcrumbs
      * @return null
      */
     public static function renderMenuTree($tree, $currentModuleName = '', $breadcrumbs = [])
     {
-        if (!is_array($tree)) {
+        if (! is_array($tree)) {
             return null;
         }
+
         foreach ($tree as $leaf) {
+            /** @var \App\Module|\App\ModuleGroup $item */
             $item = $leaf['item'];
             $type = $leaf['type'];
-            $permission = $item->name.'-view-any'; //lorems-view-any
+            $permission = $item->name.'-view-any'; // {module-name}-view-any
 
             $allow = false;
             if ($type == 'module_group' && user()->hasAccess([$item->name])) {
@@ -32,17 +33,20 @@ class View extends \Illuminate\View\View
             }
 
             if ($item->is_visible && $allow) {
-
                 // 1. checks if an item has any children
                 $hasChildren = isset($leaf['children']) && count($leaf['children']);
-                // set tree view if there is children
-                $liClass = $hasChildren ? 'treeview' : '';
+                // set tree view if there are children
+                $liClass = 'left-menu-item '.$item->name;
+                if ($hasChildren) {
+                    $liClass .= ' treeview';
+                }
+
                 if (array_key_exists($item->name, $breadcrumbs)) {
-                    $liClass .= " active";
+                    $liClass .= ' active';
                 }
                 // set url of the item
                 // $url = in_array($leaf['type'], ['module', 'module_group']) ? route($item->route_name.".index") : '#';
-                $url = in_array($leaf['type'], ['module']) ? route($item->route_name.".index") : '#';
+                $url = in_array($leaf['type'], ['module']) ? route($item->route_name.'.index') : '#';
 
                 // matching current breadcrumb of the application set an item as active
 
@@ -50,22 +54,21 @@ class View extends \Illuminate\View\View
 
                 $menuItemName = $item->menuItemName ?? $item->title;
 
-                echo "<a href='$url' title='$menuItemName'>".$item->iconHtml().$menuItemName."</span> ";
+                echo "<a href='$url' title='$menuItemName'>".$item->iconHtml().$menuItemName;
                 if ($hasChildren) {
-                    echo "<span class=\"pull-right-container\"> <i class=\"fa fa-angle-left pull-right\"></i> </span> ";
+                    echo "<span class='pull-right-container'> <i class='fa fa-angle-left pull-right'></i> </span> ";
                 }
-                echo "</a>";
+                echo '</a>';
 
                 // for children recursively draw the tree
                 if ($hasChildren) {
-                    echo "<ul class=\"treeview-menu\">";
+                    echo "<ul class='treeview-menu'>";
                     View::renderMenuTree($leaf['children'], $currentModuleName, $breadcrumbs);
-                    echo "</ul>";
+                    echo '</ul>';
                 }
-                echo "</li>";
+                echo '</li>';
             }
         }
-
     }
 
     /**
@@ -83,8 +86,9 @@ class View extends \Illuminate\View\View
                 $breadcrumbs[$item->name] = [
                     'name' => $item->name,
                     'title' => $item->title,
-                    'route' => "$item->name.index",
-                    'url' => route("$item->name.index"),
+                    // 'route' => $item->default_route, // index is essential to cover both modules and module groups
+                    // 'url' => route($item->default_route),
+                    'url' => '#',
                 ];
             }
         }

@@ -2,15 +2,14 @@
 
 namespace App\Mainframe\Modules\SupportTickets\Traits;
 
-use Str;
-use Arr;
-use App\SupportTicket;
 use App\Project\Modules\SupportTickets\SupportTicketDatatable;
+use App\SupportTicket;
+use Arr;
+use Str;
 
 /** @mixin SupportTicketDatatable */
 trait SupportTicketDatatableTrait
 {
-
     public $moduleName = 'support-tickets';
 
     /*---------------------------------
@@ -22,7 +21,7 @@ trait SupportTicketDatatableTrait
     public function source()
     {
         // return \DB::table($this->table)->leftJoin('users as updater', 'updater.id', $this->table.'.updated_by'); // Old table based implementation
-        return SupportTicket::with(['updater:id,name', 'supportTicketTagIds',]);
+        return SupportTicket::with(['updater:id,name', 'supportTicketTagIds']);
     }
 
     /*---------------------------------
@@ -111,7 +110,7 @@ trait SupportTicketDatatableTrait
             $dt->editColumn('status_name', function ($row) {
                 $cssClass = 'status-'.Str::kebab(strtolower($row->status_name));
 
-                return "<span class='badge block status-font-color $cssClass'>".$row->status_name."</span>";
+                return "<span class='badge block status-font-color $cssClass'>".$row->status_name.'</span>';
             });
         }
 

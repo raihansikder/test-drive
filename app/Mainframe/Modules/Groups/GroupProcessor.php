@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Modules\Groups;
 
-use App\Project\Features\Modular\Validator\ModelProcessor;
 use App\Mainframe\Modules\Groups\Traits\GroupProcessorTrait;
+use App\Project\Features\Modular\Validator\ModelProcessor;
 
 class GroupProcessor extends ModelProcessor
 {

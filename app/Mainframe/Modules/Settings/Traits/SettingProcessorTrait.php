@@ -2,8 +2,8 @@
 
 namespace App\Mainframe\Modules\Settings\Traits;
 
-use Artisan;
 use App\Setting;
+use Artisan;
 
 trait SettingProcessorTrait
 {
@@ -67,7 +67,7 @@ trait SettingProcessorTrait
     */
 
     /**
-     * @param $setting \App\Setting
+     * @param  $setting  \App\Setting
      * @return $this
      */
     public function saving($setting)
@@ -85,7 +85,7 @@ trait SettingProcessorTrait
     // public function created($element) { return $this; }
     // public function updated($element) { return $this; }
     /**
-     * @param $setting \App\Setting
+     * @param  $setting  \App\Setting
      * @return $this
      */
     public function saved($element)
@@ -112,18 +112,17 @@ trait SettingProcessorTrait
     /**
      * Check if type matches with value
      *
-     * @param $setting
      * @return $this
      */
     private function checkValueCompatibilityWithType($setting)
     {
 
-        if (($setting->type == 'boolean') && !in_array($setting->value, ['true', 'false'])) {
+        if (($setting->type == 'boolean') && ! in_array($setting->value, ['true', 'false'])) {
             $this->fieldError('value', "If boolean type is selected, value must be 'true' or 'false'");
         }
 
-        if (($setting->type == 'array') && !json_decode($setting->value)) {
-            $this->fieldError('value', "If array/json type is selected, value must be a valid json string");
+        if (($setting->type == 'array') && ! json_decode($setting->value)) {
+            $this->fieldError('value', 'If array/json type is selected, value must be a valid json string');
         }
 
         // $this->addErrorMessage('Message Added $this->addError');

@@ -2,17 +2,16 @@
 
 namespace App\Mainframe\Modules\Emails\Traits;
 
-use Arr;
-use Mail;
 use App\Email;
-use App\Module;
 use App\Mainframe\Helpers\Convert;
 use App\Mainframe\Jobs\JobSendEmail;
 use App\Mainframe\Mails\DefaultEmail;
+use App\Module;
+use Arr;
+use Mail;
 
 trait EmailTrait
 {
-
     /*
     |--------------------------------------------------------------------------
     | Section: Query scopes + Dynamic scopes
@@ -43,13 +42,19 @@ trait EmailTrait
     |--------------------------------------------------------------------------
     */
 
-    public function relatedModule() { return $this->belongsTo(Module::class, 'module_id'); }
+    public function relatedModule()
+    {
+        return $this->belongsTo(Module::class, 'module_id');
+    }
 
-    public function emailable() { return $this->morphTo(); }
+    public function emailable()
+    {
+        return $this->morphTo();
+    }
 
     /*
     |--------------------------------------------------------------------------
-    | Section: Autofill functions 
+    | Section: Autofill functions
     |--------------------------------------------------------------------------
     */
     // /**
@@ -64,7 +69,8 @@ trait EmailTrait
 
     public function setName()
     {
-        $this->name = $this->name ?? (now()." | ".$this->subject);
+        $this->name = $this->name ?? (now().' | '.$this->subject);
+
         return $this;
     }
 
@@ -74,12 +80,14 @@ trait EmailTrait
     public function setNameExt()
     {
         $this->name_ext = $this->name;
+
         return $this;
     }
 
     public function setStatusName()
     {
         $this->status_name = $this->status_name ?? Email::STATUS_QUEUED;
+
         return $this;
     }
 
@@ -200,5 +208,4 @@ trait EmailTrait
 
         return $this;
     }
-
 }

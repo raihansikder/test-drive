@@ -14,11 +14,11 @@ trait UserPolicyTrait
      */
     public function view($user, $element)
     {
-        if (!parent::view($user, $element)) {
+        if (! parent::view($user, $element)) {
             return false;
         }
         // Todo: Allow access to users based on your project
-        if (!$user->isAdmin()) {
+        if (! $user->isAdmin()) {
             return $user->id == $element->id;
         }
 
@@ -47,7 +47,7 @@ trait UserPolicyTrait
      */
     public function makeApiCall($user)
     {
-        if (!$user->hasPermission('make-api-call')) {
+        if (! $user->hasPermission('make-api-call')) {
             return false;
         }
 
@@ -61,7 +61,7 @@ trait UserPolicyTrait
      */
     public function updateToken($user, $element)
     {
-        if (!$user->isSuperUser() || $user->isA('app-admin')) {
+        if (! $user->isSuperUser() || $user->isA('app-admin')) {
             return true;
         }
 

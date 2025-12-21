@@ -2,22 +2,22 @@
 
 namespace App\Mainframe\Http\Controllers;
 
-use View;
-use App\User;
-use App\Module;
-use Illuminate\Support\MessageBag;
 use App\Http\Controllers\Controller;
-use App\Mainframe\Features\Core\ViewProcessor;
-use App\Mainframe\Features\Core\Traits\Validable;
 use App\Mainframe\Features\Core\Traits\SendResponse;
+use App\Mainframe\Features\Core\Traits\Validable;
+use App\Mainframe\Features\Core\ViewProcessor;
 use App\Mainframe\Features\Modular\BaseModule\BaseModule;
+use App\Module;
+use App\User;
+use Illuminate\Support\MessageBag;
+use View;
 
 /**
  * Class MainframeBaseController
  */
 class BaseController extends Controller
 {
-    use Validable, SendResponse;
+    use SendResponse, Validable;
 
     /** @var \App\User|null */
     protected $user;
@@ -34,7 +34,7 @@ class BaseController extends Controller
     /** @var \Illuminate\Database\Eloquent\Model */
     protected $model;
 
-    /** @var BaseModule */
+    /** @var BaseModule|\Illuminate\Database\Eloquent\Model|mixed|null */
     protected $element;
 
     /** @var \App\Mainframe\Features\Modular\Validator\ModelProcessor */
@@ -49,7 +49,7 @@ class BaseController extends Controller
     public function __construct()
     {
         $this->user = user();
-        $this->view = new ViewProcessor();
+        $this->view = new ViewProcessor;
         $this->tenant = $this->user->tenant; // For multi-tenancy
 
         // Sometimes the wet element is shared back as payload on validation fail on store/update etc.
@@ -65,7 +65,6 @@ class BaseController extends Controller
     }
 
     /**
-     * @param  \App\User|null  $user
      * @return BaseController
      */
     public function setUser(?User $user)
@@ -107,7 +106,7 @@ class BaseController extends Controller
      */
     public function process($element = null)
     {
-        if (!$element && isset($this->element)) {
+        if (! $element && isset($this->element)) {
             $element = $this->element;
         }
 
@@ -125,7 +124,7 @@ class BaseController extends Controller
 
         $this->process($element);
 
-        if (!$this->processor) {
+        if (! $this->processor) {
             return false;
         }
 
@@ -143,6 +142,7 @@ class BaseController extends Controller
     /**
      * @param  null  $element
      * @return BaseModule|bool
+     *
      * @throws \Exception
      */
     public function delete($element = null)
@@ -150,7 +150,7 @@ class BaseController extends Controller
 
         $this->process($element);
 
-        if (!$this->processor) {
+        if (! $this->processor) {
             return false;
         }
 
@@ -171,7 +171,7 @@ class BaseController extends Controller
      */
     public function resetMessageBag()
     {
-        $this->messageBag = new MessageBag();
+        $this->messageBag = new MessageBag;
         $this->response()->messageBag = $this->messageBag;
 
         return $this;

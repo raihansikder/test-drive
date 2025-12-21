@@ -2,14 +2,13 @@
 
 namespace App\Mainframe\Modules\Uploads\Traits;
 
-use Str;
-use Storage;
 use App\Upload;
+use Storage;
+use Str;
 
 /** @mixin \App\Mainframe\Modules\Uploads\UploadController $this */
 trait CanUploadTrait
 {
-
     /** @var null|array|bool|\Illuminate\Http\UploadedFile|\Illuminate\Http\UploadedFile[] */
     public $file;
 
@@ -26,6 +25,7 @@ trait CanUploadTrait
      * Get the uploaded file from request
      *
      * @return null|array|bool|\Illuminate\Http\UploadedFile|\Illuminate\Http\UploadedFile[]
+     *
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
      */
@@ -44,6 +44,7 @@ trait CanUploadTrait
      * Get the input request field name for the file
      *
      * @return string
+     *
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
      */
@@ -56,21 +57,22 @@ trait CanUploadTrait
      * Physically move the file to a location.
      *
      * @return bool|string
+     *
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
      */
     public function attemptUpload()
     {
-        # Check if file object exists
-        if (!$this->file = $this->getFile()) {
+        // Check if file object exists
+        if (! $this->file = $this->getFile()) {
             $this->fail('No file in http request');
+
             return false;
         }
 
-        # Run some validation ?
+        // Run some validation?
 
-
-        # Fill data
+        // Fill data
         // Keep the original file name
         $this->setOriginalFileName();
 
@@ -78,8 +80,9 @@ trait CanUploadTrait
         // return $this->attemptLocalUpload(); // Upload to another public directory i.e. files
         // return $this->attemptAwsUpload();   // Upload in AWS
 
-        if (!$path) {
+        if (! $path) {
             $this->fail('Could not move file to destination directory');
+
             return false;
         }
 
@@ -89,12 +92,14 @@ trait CanUploadTrait
 
     /**
      * Set the original file name in uploads
+     *
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
      */
     public function setOriginalFileName()
     {
         $this->element->name = pathinfo($this->getFile()->getClientOriginalName(), PATHINFO_FILENAME);
+
         return $this;
     }
 
@@ -102,6 +107,7 @@ trait CanUploadTrait
      * Upload in the same local server public directory with direct URL to file
      *
      * @return string
+     *
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
      */
@@ -118,6 +124,7 @@ trait CanUploadTrait
      * Upload in the storage/app directory
      *
      * @return string|bool
+     *
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
      */
@@ -146,7 +153,7 @@ trait CanUploadTrait
      */
     public function rootDirectory()
     {
-        return request('bucket') ?: trim(config('mainframe.config.upload_root'), "\\/ ");
+        return request('bucket') ?: trim(config('mainframe.config.upload_root'), '\\/ ');
     }
 
     /**
@@ -181,6 +188,7 @@ trait CanUploadTrait
      * Relative file path
      *
      * @return string
+     *
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
      */
@@ -195,12 +203,13 @@ trait CanUploadTrait
      * files that has incompatible characters.
      *
      * @return string
+     *
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
      */
     public function uniqueFileName()
     {
-        //$originalNamePart = pathinfo($this->getFile()->getClientOriginalName(), PATHINFO_FILENAME);
+        // $originalNamePart = pathinfo($this->getFile()->getClientOriginalName(), PATHINFO_FILENAME);
         $namePart = Str::random(8).'_'.now()->format('YmdHis');
         $ext = $this->getFile()->getClientOriginalExtension();
 
@@ -227,6 +236,7 @@ trait CanUploadTrait
      * Check if file is image
      *
      * @return bool
+     *
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
      */
@@ -241,5 +251,4 @@ trait CanUploadTrait
         return false;
 
     }
-
 }

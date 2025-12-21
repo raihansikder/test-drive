@@ -9,7 +9,7 @@ trait InAppNotificationTrait
 {
     /*
     |--------------------------------------------------------------------------
-    | Section: Autofill functions 
+    | Section: Autofill functions
     |--------------------------------------------------------------------------
     */
     // /**
@@ -30,7 +30,7 @@ trait InAppNotificationTrait
         $this->is_visible = $this->is_visible ?? 1;
         $this->accepts_response = $this->accepts_response ?? 0;
         $this->body = $this->body ?? $this->subtitle;
-        $this->data = $this->data ?? json_encode(['user_id' => $this->id, 'type' => $this->id,]);
+        $this->data = $this->data ?? json_encode(['user_id' => $this->id, 'type' => $this->id]);
         $this->is_active = $this->is_active ?? 1;
         $this->order = $this->order ?? 9999;
 
@@ -46,7 +46,7 @@ trait InAppNotificationTrait
      */
     public function setRespondedAt()
     {
-        if ($this->response && !$this->responded_at) {
+        if ($this->response && ! $this->responded_at) {
             $this->responded_at = now();
         }
 
@@ -101,13 +101,25 @@ trait InAppNotificationTrait
     |--------------------------------------------------------------------------
     */
 
-    public function getDataJsonAttribute() { return json_decode($this->data); }
+    public function getDataJsonAttribute()
+    {
+        return json_decode($this->data);
+    }
 
-    public function getResponseJsonAttribute() { return json_decode($this->response); }
+    public function getResponseJsonAttribute()
+    {
+        return json_decode($this->response);
+    }
 
-    public function getResponseOptionsJsonAttribute() { return json_decode($this->response_options); }
+    public function getResponseOptionsJsonAttribute()
+    {
+        return json_decode($this->response_options);
+    }
 
-    public function getImagesJsonAttribute() { return json_decode($this->images); }
+    public function getImagesJsonAttribute()
+    {
+        return json_decode($this->images);
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -115,11 +127,16 @@ trait InAppNotificationTrait
     |--------------------------------------------------------------------------
     */
 
-    public function user() { return $this->belongsTo(User::class); }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function notifiable() { return $this->morphTo(); }
-
+    public function notifiable()
+    {
+        return $this->morphTo();
+    }
 }
