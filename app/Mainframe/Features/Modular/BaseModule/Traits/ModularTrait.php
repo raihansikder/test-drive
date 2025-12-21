@@ -1,12 +1,5 @@
 <?php
 
-/** @noinspection PhpPossiblePolymorphicInvocationInspection */
-
-/** @noinspection PhpUndefinedFieldInspection */
-/** @noinspection PhpUndefinedMethodInspection */
-/** @noinspection PhpUnused */
-/** @noinspection UnknownTableOrViewInspection */
-
 namespace App\Mainframe\Features\Modular\BaseModule\Traits;
 
 use App\Change;
@@ -26,7 +19,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Str;
 
-/** @mixin User $this */
+/**
+ * @mixin User $this
+ * @property int $tenant_sl
+ * @property mixed $element_id
+ * @property int $module_id
+ * @property string $element_uuid
+ */
 trait ModularTrait
 {
     /*
@@ -272,21 +271,20 @@ trait ModularTrait
 
     /**
      * Get the latest changes.
-     * http://www.laravel-auditing.com
      *
-     * @return mixed
+     * @link https://laravel-auditing.com/guide/getting-audits.html#getting-the-modified-properties
+     *
+     * @return null|array
      */
     public function latestChanges()
     {
-        return $this->audits()->latest()->first()->getModified();
+        return $this->audits()->latest()->first()?->getModified();
     }
 
     /**
      * Check if the value of a field has changed
-     *
-     * @return bool
      */
-    public function fieldHasChanged($field)
+    public function fieldHasChanged($field): bool
     {
         if (array_key_exists($field, $this->getChanges())) {
             return true; // This only works inside boot::saved()
@@ -303,7 +301,8 @@ trait ModularTrait
      * Get the last updater user of a field
      *
      * @param  string  $field
-     * @return Model|\Illuminate\Database\Query\Builder|mixed|null
+     * @return \App\User|object|null
+     * @noinspection PhpPossiblePolymorphicInvocationInspection
      */
     public function updaterOfField($field)
     {
@@ -313,6 +312,7 @@ trait ModularTrait
 
         foreach ($audits as $audit) {
             $userId = $audit->user_id;
+            /** @var \OwenIt\Auditing\Audit $audit */
             $changes = $audit->getModified();
             if (array_key_exists($field, $changes)) {
                 break;
@@ -484,7 +484,7 @@ trait ModularTrait
             $userIds[] = $this->creator->id;
         }
         // Get the creator
-        // if the creator and updater are same, no need to add the id twice
+        // if the creator and updater are the same, no need to add the id twice
         if (isset($this->updater->id, $this->creator->id) && $this->creator->id !== $this->updater->id) {
             $userIds[] = $this->updater->id;
         } // get the updater
@@ -504,6 +504,7 @@ trait ModularTrait
      * @return bool
      *
      * @internal param $name
+     * @noinspection UnknownTableOrViewInspection
      */
     public function hasTenantContext()
     {
@@ -524,7 +525,7 @@ trait ModularTrait
             return true;
         }
 
-        // If the element (tenant=null) then it is a global element and should be accessible by all the tenants
+        // If the element (tenant=null), then it is a global element and should be accessible by all the tenants
         if ($this->tenant_id == null) {
             return true;
         }
@@ -684,7 +685,7 @@ trait ModularTrait
 
     /**
      * Check if an element is valid for saving.
-     * This runs the full business logic of processor but doesn't save.
+     * This runs the full business logic of the processor but doesn't save.
      *
      * @return bool
      */
@@ -802,7 +803,7 @@ trait ModularTrait
     }
 
     /**
-     * Get spread tags as array
+     * Get spread tags as an array
      *
      * @return array
      */
@@ -819,7 +820,7 @@ trait ModularTrait
         $this->uuid = $this->uuid ?? uuid();
         $this->created_by = $this->created_by ?? user()->id;
         $this->created_at = $this->created_at ?? now();
-        $this->updated_by = user()->id; // Force fill the current user
+        $this->updated_by = user()->id; // Force-fill the current user
         $this->updated_at = $this->updated_at ?? now();
         $this->autoFillTenant();
 
@@ -827,14 +828,14 @@ trait ModularTrait
     }
 
     /**
-     * Fill tenant id once during creation. Later tenant id can not be
+     * Fill tenant id once during creation. Later tenant id cannot be
      * updated.
      */
     public function autoFillTenant()
     {
         if ($this->hasTenantContext()) {
             $this->tenant_id = $this->tenant_id ?: user()->tenant_id;
-            // $this->project_id = $this->project_id ?: $this->tenant->project_id; // Excluded project_id injection because settings table had no project_id
+            // $this->project_id = $this->project_id ?: $this->tenant->project_id; // Excluded project_id injection because the 'settings' table had no project_id
         }
 
         return $this;
@@ -868,6 +869,7 @@ trait ModularTrait
      *
      * @param  string  $fieldPrefix  i.e.uploadable
      * @return $this
+     * @noinspection PhpPossiblePolymorphicInvocationInspection
      */
     public function fillModuleAndElement($fieldPrefix)
     {
@@ -926,6 +928,8 @@ trait ModularTrait
      * Get an instance of the view processor
      *
      * @return \App\Mainframe\Features\Core\ViewProcessor
+     *
+     * @noinspection ClassConstantCanBeUsedInspection
      */
     public function viewProcessor()
     {
@@ -1239,7 +1243,7 @@ trait ModularTrait
     */
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Tenant>
      */
     public function tenant()
     {
@@ -1247,7 +1251,7 @@ trait ModularTrait
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Project>
      */
     public function project()
     {
@@ -1255,7 +1259,7 @@ trait ModularTrait
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<User>
      */
     public function creator()
     {
@@ -1263,7 +1267,7 @@ trait ModularTrait
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<User>
      */
     public function updater()
     {
@@ -1271,7 +1275,8 @@ trait ModularTrait
     }
 
     /**
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Module>
+     * @noinspection PhpUndefinedMethodInspection
      */
     public function linkedModule()
     {
@@ -1279,7 +1284,7 @@ trait ModularTrait
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<Change>
      */
     public function changes()
     {
@@ -1288,7 +1293,7 @@ trait ModularTrait
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<Upload>
      */
     public function uploads()
     {
@@ -1461,7 +1466,7 @@ trait ModularTrait
     /**
      * Find an element by name
      *
-     * @return \App\Mainframe\Features\Modular\BaseModule\BaseModule
+     * @return \Eloquent|null
      */
     public static function byName($name)
     {
@@ -1471,7 +1476,7 @@ trait ModularTrait
     /**
      * Find an element by uuid
      *
-     * @return \App\Mainframe\Features\Modular\BaseModule\BaseModule
+     * @return \Eloquent|null
      */
     public static function byUuid($uuid)
     {
@@ -1530,7 +1535,7 @@ trait ModularTrait
     {
         $class = $this->module()->rootModelClassPath();
 
-        // Soft deletes
+        // Soft-deletes
         $valuesToMarkDeleted = ['deleted_at' => now(), 'deleted_by' => user()->id];
         $this->uploads()->update($valuesToMarkDeleted);
         $this->changes()->update($valuesToMarkDeleted);
@@ -1558,13 +1563,15 @@ trait ModularTrait
      */
     public function cachePrefix($field = 'id')
     {
-        return $this->module()->name."[{$field}={$this->$field}]";
+        return $this->module()->name."[$field=$this->$field]";
     }
 
     /**
      * Get the element's cache key'
      *
      * @return array
+     *
+     * @noinspection PhpUnusedParameterInspection
      */
     public function elementSpecificCacheKeys($field = 'id')
     {
