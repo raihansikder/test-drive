@@ -6,6 +6,9 @@ use App\Tenant;
 
 class CheckCrossTenantDuplication extends ValidationRule
 {
+    /**
+     * @var \App\Mainframe\Features\Modular\BaseModule\MfModuleInterface|\App\Mainframe\Features\Modular\BaseModule\BaseModule
+     */
     public $element;
 
     public function __construct($element = null)

@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection ALL */
 
 use App\User;
 use Illuminate\Contracts\Auth\Authenticatable;

@@ -268,7 +268,7 @@ class MakeModule extends Command
     {
         $modelClass = Str::singular(class_basename($this->namespace));
 
-        $this->model = $modelClass;
+        $this->model = $this->namespace.'\\'.$modelClass;
 
         return $this;
     }

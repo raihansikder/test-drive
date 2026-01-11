@@ -12,7 +12,7 @@ class SuperadminModularTestCase extends UserModularTestCase
     {
         parent::setUp();
 
-        $this->user = User::remember(timer('long'))->find(env('TEST_SUPERADMIN_USER_ID'));
+        $this->user = User::remember(timer('long'))->find(config('test.super_admin_user_id'));
         $this->be($this->user); // Impersonate as the currently created admin user
     }
 }
