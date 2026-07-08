@@ -45,7 +45,7 @@ test('guest can register to default user group', function () {
         'group_ids' => '["'.User::USER_GROUP_ID.'"]',
     ]);
 
-    echo "User #{$user->id} : {$user->email} created";
+    echo "User #$user->id : $user->email created";
 
     $this->followingRedirects()
         ->post('login', [
@@ -67,7 +67,7 @@ test('guest can register to default user group', function () {
 test('guest cannot see resend verification code page', function () {
     $this->withExceptionHandling();
 
-    // Guest is redirected to login
+    // Guest is redirected to login page
     $this->get('email/verify')->assertRedirect('login');
 });
 
@@ -81,6 +81,7 @@ test('verified user can see dashboard upon login', function () {
 });
 
 test('verified user can login and see dashboard', function () {
+    /** @var User $user */
     $user = latest(User::class);
 
     // Get this newly created user from database
@@ -114,3 +115,5 @@ test('user can access data block variable', function () {
 | Helpers
 |--------------------------------------------------------------------------
 */
+
+

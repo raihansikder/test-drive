@@ -1,9 +1,13 @@
 @extends($view->defaultTemplate())
 <?php
+
+use App\Module;
+use App\User;
+
 /**
- * @var \App\Module $module
- * @var \App\User $user
- * @var \App\User $element
+ * @var Module $module
+ * @var User $user
+ * @var User $element
  * @var string $formState create|edit
  * @var array $formConfig
  * @var string $uuid Only available during creation
@@ -18,9 +22,9 @@
 @section('content')
     <div class="col-md-12 no-padding">
 
-        @if($formState == 'create')
+        @if($formState === 'create')
             {{ Form::open($formConfig) }} <input name="uuid" type="hidden" value="{{$element->uuid}}"/>
-        @elseif($formState == 'edit')
+        @elseif($formState === 'edit')
             {{ Form::model($element, $formConfig)}}
         @endif
 

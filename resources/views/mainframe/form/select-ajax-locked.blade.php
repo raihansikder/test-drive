@@ -54,7 +54,7 @@ $input = new \App\Mainframe\Features\Form\Select\SelectAjax($var);
 
                         {{--clear button--}}
                         <div class="col-md-2 no-padding">
-                            <a id="clear_{{$input->name}}" class="btn bg-white form-control selectClearBtn"
+                            <a id="clear_{{$input->name}}" class="btn bg-white form-control select-clear-btn"
                                data-target="{{$input->uid}}"
                                href="#">Clear</a>
                         </div>
@@ -73,7 +73,7 @@ $input = new \App\Mainframe\Features\Form\Select\SelectAjax($var);
 
                 {{--clear button--}}
                 <div class="col-md-1 no-padding">
-                    <a id="clear_{{$input->name}}" class="btn bg-white form-control selectClearBtn"
+                    <a id="clear_{{$input->name}}" class="btn bg-white form-control select-clear-btn"
                        data-target="{{$input->uid}}"
                        href="#">Clear</a>
                 </div>
@@ -106,7 +106,7 @@ $input = new \App\Mainframe\Features\Form\Select\SelectAjax($var);
             initAjaxSelect(divId, url, inputName);
 
             // clear button
-            $("#" + divId + " .selectClearBtn").click(function () {
+            $("#" + divId + " .select-clear-btn").click(function () {
                 divId = $(this).data('target');
                 $("#" + divId + " input.ajax").select2("val", "");
             });

@@ -34,8 +34,8 @@ class VerificationController extends BaseController
      */
     protected $redirectTo = '/'; // Default redirect to home '/'
 
-    /** @var string */
-    protected $view = 'mainframe.auth.verify';
+    // /** @var string */ Commented out due to phpstan error
+    // protected $view = 'mainframe.auth.verify';
 
     /**
      * Create a new controller instance.

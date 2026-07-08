@@ -20,7 +20,7 @@ class FixPolymorphicType extends MakeModule
      *
      * @var string
      */
-    protected $description = 'This command links existing polymorphic model to a root model i.e. App\User instead of App\\Projects\\...\\User';
+    protected $description = 'Links existing polymorphic model to a root model i.e. App\User instead of App\\Projects\\...\\User';
 
     protected $polymorphicTableFields = [
         'audits' => 'auditable_type',

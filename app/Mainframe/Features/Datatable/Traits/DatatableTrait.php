@@ -19,7 +19,7 @@ trait DatatableTrait
     /**
      * Define Query for generating results for grid
      *
-     * @return \Illuminate\Database\Query\Builder
+     * @return \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder|mixed
      */
     public function source()
     {
@@ -40,6 +40,7 @@ trait DatatableTrait
             ['updater.name', 'user_name', 'Updater'],
             [$this->table.'.updated_at', 'updated_at', 'Updated at'],
             [$this->table.'.is_active', 'is_active', 'Active'],
+            [$this->table.'.id', 'actions', '-'],
         ];
     }
 

@@ -43,9 +43,9 @@ class SuperHero extends BaseModule
     | Boot method and model events.
     |--------------------------------------------------------------------------
     */
-    protected static function boot()
+    protected static function booted()
     {
-        parent::boot();
+        parent::booted();
         self::observe(SuperHeroObserver::class);
 
         // static::saving(function (SuperHero $element) { });

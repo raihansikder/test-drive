@@ -1,16 +1,23 @@
 @extends('project.layouts.module.form.template')
 <?php
+
+use App\Module;
+use App\Project\Modules\Settings\SettingViewProcessor;
+use App\Setting;
+use App\Upload;
+use App\User;
+
 /**
- * @var \App\Module $module
- * @var \App\User $user
+ * @var Module $module
+ * @var User $user
  * @var string $formState create|edit
  * @var array $formConfig
  * @var string $uuid Only available during creation
  * @var bool $editable
  * @var array $immutables
- * @var \App\Setting $element
- * @var \App\Setting $setting
- * @var \App\Project\Modules\Settings\SettingViewProcessor $view
+ * @var Setting $element
+ * @var Setting $setting
+ * @var SettingViewProcessor $view
  */
 $setting = $element;
 ?>
@@ -24,9 +31,9 @@ $setting = $element;
     <div class="row">
         <div class="col-md-10 col-lg-9 col-xl-8">
 
-            @if($formState == 'create')
+            @if($formState === 'create')
                 {{ Form::open($formConfig) }} <input name="uuid" type="hidden" value="{{$uuid}}"/>
-            @elseif($formState == 'edit')
+            @elseif($formState === 'edit')
                 {{ Form::model($element, $formConfig)}}
             @endif
 
@@ -61,24 +68,24 @@ $setting = $element;
                 <label>Upload one or more files</label>
                 <?php
                 $var = [
-                    'type' => \App\Upload::TYPE_SETTING_PUBLIC,
+                    'type' => Upload::TYPE_SETTING_PUBLIC,
                     'limit' => 99,
                     'bucket' => 'public/'.$module->name,
                     'uploader_function' => 'initSingleFileUploader',
                 ];
-                ?>
+?>
                 @include('form.uploads',['var'=>$var])
                 <div class="clearfix"></div>
 
                 <h3>File upload</h3>
                 <?php
-                $var = [
-                    'limit' => 99, 'bucket' => $module->name,
-                    'uploader_function' => 'initSingleFileUploader',
-                    'type' => \App\Upload::TYPE_GENERIC,
-                    'card_css' => 'col-md-6'
-                ];
-                ?>
+$var = [
+    'limit' => 99, 'bucket' => $module->name,
+    'uploader_function' => 'initSingleFileUploader',
+    'type' => Upload::TYPE_GENERIC,
+    'card_css' => 'col-md-6',
+];
+?>
                 @include('form.uploads',['var'=>$var])
             </div>
 

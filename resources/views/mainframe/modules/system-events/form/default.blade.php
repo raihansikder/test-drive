@@ -1,17 +1,24 @@
 @extends('project.layouts.module.form.template')
 <?php
+
+use App\Module;
+use App\Project\Modules\SystemEvents\SystemEventViewProcessor;
+use App\SystemEvent;
+use App\Tenant;
+use App\User;
+
 /**
- * @var \App\Module $module
- * @var \App\User $user
+ * @var Module $module
+ * @var User $user
  * @var string $formState create|edit
  * @var array $formConfig
  * @var string $uuid Only available during creation
  * @var bool $editable
  * @var array $immutables
- * @var \App\SystemEvent $element
- * @var \App\SystemEvent $systemEvent
- * @var \App\Tenant $tenant
- * @var \App\Project\Modules\SystemEvents\SystemEventViewProcessor $view
+ * @var SystemEvent $element
+ * @var SystemEvent $systemEvent
+ * @var Tenant $tenant
+ * @var SystemEventViewProcessor $view
  */
 $systemEvent = $element;
 $tags = ($element->tags) ? implode(',', $element->tags) : null;
@@ -20,9 +27,9 @@ $tags = ($element->tags) ? implode(',', $element->tags) : null;
 @section('content')
     <div class="row">
         <div class="col-md-11 col-lg-9 col-xl-8">
-            @if($formState == 'create')
+            @if($formState === 'create')
                 {{ Form::open($formConfig) }} <input name="uuid" type="hidden" value="{{$uuid}}"/>
-            @elseif($formState == 'edit')
+            @elseif($formState === 'edit')
                 {{ Form::model($element, $formConfig)}}
             @endif
 
@@ -56,14 +63,14 @@ $tags = ($element->tags) ? implode(',', $element->tags) : null;
                 <label>Detail</label>
                 <?php
                 $value = $element->details;
-                if (is_object($value)) {
-                    $value = serialize($value);
-                } elseif (isJson($value)) {
-                    $value = json_encode(json_decode($element->details), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-                } elseif (is_array($value)) {
-                    $value = json_encode($element->details, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-                }
-                ?>
+if (is_object($value)) {
+    $value = serialize($value);
+} elseif (isJson($value)) {
+    $value = json_encode(json_decode($element->details), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+} elseif (is_array($value)) {
+    $value = json_encode($element->details, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+}
+?>
                 <pre>{!!  $value  !!}</pre>
             </div>
 

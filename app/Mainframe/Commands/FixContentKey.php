@@ -31,7 +31,7 @@ class FixContentKey extends MakeModule
 
         $this->info('Changing name:content -> key:value...');
 
-        DB::table('contents')->latest()->chunk(10, function ($contents) {
+        Content::query()->latest()->chunk(10, function ($contents) {
 
             /** @var Content $content */
             foreach ($contents as $content) {

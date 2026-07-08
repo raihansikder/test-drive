@@ -28,7 +28,7 @@ $formId = $datatable->filterFormId(); // Define filter form Id
             @include('form.text',['var'=>['name'=>'name','label'=>'Name', 'class'=>'filter-input']])
 
             {{-- Submit and Reset btn --}}
-            @include('mainframe.form.datatable.submit-reset-btn')
+            @include('mainframe.form.datatable.submit-reset-btn',['class'=>'pull-right align-with-input'])
 
         </form>
     @endif

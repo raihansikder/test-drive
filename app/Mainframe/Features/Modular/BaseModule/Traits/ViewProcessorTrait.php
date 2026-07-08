@@ -5,6 +5,9 @@
 namespace App\Mainframe\Features\Modular\BaseModule\Traits;
 
 use App\Mainframe\Features\Core\ViewProcessor;
+use App\Mainframe\Features\Datatable\Datatable;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Http\Request;
 use Route;
 use Str;
 
@@ -12,10 +15,9 @@ use Str;
 trait ViewProcessorTrait
 {
     /**
-     * @param  string  $type
      * @return $this
      */
-    public function setType($type)
+    public function setType(string $type)
     {
         $this->type = $type;
 
@@ -57,10 +59,9 @@ trait ViewProcessorTrait
     }
 
     /**
-     * @param  \App\Mainframe\Features\Datatable\Datatable  $datatable
      * @return $this
      */
-    public function setDatatable($datatable)
+    public function setDatatable(Datatable $datatable)
     {
         $this->datatable = $datatable;
 
@@ -97,7 +98,7 @@ trait ViewProcessorTrait
     }
 
     /**
-     * Check if a function exists with same signature and return the result
+     * Check if a function exists with the same signature and return the result
      *
      * @return bool
      */
@@ -119,7 +120,7 @@ trait ViewProcessorTrait
     */
 
     /**
-     * Blade path for default template
+     * Blade path for the default template
      *
      * @return string
      */
@@ -135,7 +136,7 @@ trait ViewProcessorTrait
     }
 
     /**
-     * Blade path for left menu
+     * Blade path for the left menu
      *
      * @return string
      */
@@ -153,15 +154,14 @@ trait ViewProcessorTrait
     /**
      * Resolve the view blade for the module form
      *
-     * @param  string  $state
      * @return string
      *
      * @noinspection PhpIfWithCommonPartsInspection
      */
-    public function formPath($state = 'create')
+    public function formPath(string $state = 'create')
     {
         $default = $this->module->view_directory.'.form.default';
-        if ($state == 'create') {
+        if ($state === 'create') {
             return $default;
         }
 
@@ -203,7 +203,7 @@ trait ViewProcessorTrait
     |
     */
     /**
-     * Obtain the variables shared in a module create form
+     * Get the variables shared in a module create form
      *
      * @return array
      */
@@ -229,7 +229,7 @@ trait ViewProcessorTrait
     }
 
     /**
-     * Obtain the variables shared in a module edit form
+     * Get the variables shared in a module edit form
      *
      * @return array
      */
@@ -370,7 +370,7 @@ trait ViewProcessorTrait
 
         $elementName = $this->formElementTitle();
 
-        $text = $prefix.' '.$this->module->singularTitle().'- '.$elementName;
+        $text = $prefix.' '.$this->module->singularTitle().' - '.$elementName;
 
         return trim($text, ' -');
     }
@@ -421,7 +421,7 @@ trait ViewProcessorTrait
     |
     */
     /**
-     * Check visibility of create button
+     * Check the visibility of the create-button
      *
      * @return bool
      */
@@ -431,7 +431,7 @@ trait ViewProcessorTrait
     }
 
     /**
-     * Check visibility of list button
+     * Check the visibility of the list button
      *
      * @return bool
      */
@@ -451,7 +451,7 @@ trait ViewProcessorTrait
 
     public function defaultFormSaveBtnClass()
     {
-        return "submit btn btn-success {$this->module->name}-SubmitBtn module-save-btn pull-left";
+        return "btn btn-primary {$this->module->name}-SubmitBtn module-save-btn pull-left";
     }
 
     public function defaultFormSaveBtnText()
@@ -483,7 +483,7 @@ trait ViewProcessorTrait
     }
 
     /**
-     * Check visibility of report button
+     * Check the visibility of the report button
      *
      * @return bool
      */
@@ -493,7 +493,7 @@ trait ViewProcessorTrait
     }
 
     /**
-     * Check if tenant selector should be shown
+     * Check if the tenant selector should be shown
      *
      * @return bool
      */
@@ -516,7 +516,7 @@ trait ViewProcessorTrait
     }
 
     /**
-     * Show clone button in module form
+     * Show the clone button in the module form
      *
      * @return bool
      */
@@ -558,7 +558,7 @@ trait ViewProcessorTrait
     /**
      * Form wizard current step
      *
-     * @return array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Http\Request|string
+     * @return array|Application|Request|string
      */
     public function step()
     {
@@ -576,9 +576,9 @@ trait ViewProcessorTrait
     }
 
     /**
-     * A generic back link
+     * A generic backlink
      *
-     * @return array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Http\Request|string|null
+     * @return array|Application|Request|string|null
      */
     public function backRef()
     {

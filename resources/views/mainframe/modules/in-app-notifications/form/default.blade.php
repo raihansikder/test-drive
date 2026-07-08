@@ -1,16 +1,22 @@
 @extends('project.layouts.module.form.template')
 <?php
+
+use App\Mainframe\Modules\InAppNotifications\InAppNotification;
+use App\Mainframe\Modules\InAppNotifications\InAppNotificationViewProcessor;
+use App\Module;
+use App\User;
+
 /**
- * @var \App\Module $module
- * @var \App\User $user
+ * @var Module $module
+ * @var User $user
  * @var string $formState create|edit
  * @var array $formConfig
  * @var string $uuid Only available during creation
  * @var bool $editable
  * @var array $immutables
- * @var \App\Mainframe\Modules\InAppNotifications\InAppNotification $element
- * @var \App\Mainframe\Modules\InAppNotifications\InAppNotification $inAppNotification
- * @var \App\Mainframe\Modules\InAppNotifications\InAppNotificationViewProcessor $view
+ * @var InAppNotification $element
+ * @var InAppNotification $inAppNotification
+ * @var InAppNotificationViewProcessor $view
  */
 $inAppNotification = $element;
 ?>
@@ -18,9 +24,9 @@ $inAppNotification = $element;
 @section('content')
     <div class="row">
         <div class="col-md-10 col-lg-9 col-xl-8">
-            @if($formState == 'create')
+            @if($formState === 'create')
                 {{ Form::open($formConfig) }} <input name="uuid" type="hidden" value="{{$uuid}}"/>
-            @elseif($formState == 'edit')
+            @elseif($formState === 'edit')
                 {{ Form::model($element, $formConfig)}}
             @endif
 

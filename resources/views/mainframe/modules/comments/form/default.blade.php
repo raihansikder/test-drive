@@ -1,18 +1,25 @@
 @extends('project.layouts.module.form.template')
 
 <?php
+
+use App\Comment;
+use App\Module;
+use App\Project\Modules\Comments\CommentViewProcessor;
+use App\Tenant;
+use App\User;
+
 /**
- * @var \App\Module $module
- * @var \App\User $user
+ * @var Module $module
+ * @var User $user
  * @var string $formState create|edit
  * @var array $formConfig
  * @var string $uuid Only available during creation
  * @var bool $editable
  * @var array $immutables
- * @var \App\Comment $element
- * @var \App\Comment $comment
- * @var \App\Tenant $tenant
- * @var \App\Project\Modules\Comments\CommentViewProcessor $view
+ * @var Comment $element
+ * @var Comment $comment
+ * @var Tenant $tenant
+ * @var CommentViewProcessor $view
  */
 $comment = $element;
 ?>
@@ -20,9 +27,9 @@ $comment = $element;
 @section('content')
     <div class="row">
         <div class="col-md-10 col-lg-9 col-xl-8">
-            @if($formState == 'create')
+            @if($formState === 'create')
                 {{ Form::open($formConfig) }} <input name="uuid" type="hidden" value="{{$uuid}}"/>
-            @elseif($formState == 'edit')
+            @elseif($formState === 'edit')
                 {{ Form::model($element, $formConfig)}}
             @endif
 

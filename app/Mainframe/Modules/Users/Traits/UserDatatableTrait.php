@@ -1,16 +1,20 @@
 <?php
 
+/** @noinspection UnknownColumnInspection */
+
 namespace App\Mainframe\Modules\Users\Traits;
 
 use App\User;
 use Arr;
+use Illuminate\Database\Query\Builder;
+use Yajra\DataTables\DataTableAbstract;
 
 trait UserDatatableTrait
 {
     /**
      * Define Query Source
      *
-     * @return \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder|mixed
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function source()
     {
@@ -34,6 +38,7 @@ trait UserDatatableTrait
             ['updater.name', 'user_name', 'Updater'],
             [$this->table.'.updated_at', 'updated_at', 'Updated at'],
             [$this->table.'.is_active', 'is_active', 'Active'],
+            [$this->table.'.id', 'actions', '-'],
         ];
     }
 
@@ -41,7 +46,7 @@ trait UserDatatableTrait
      * Apply filter on the query.
      *
      * @param  $query  \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder|mixed
-     * @return \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder|mixed
+     * @return Builder|\Illuminate\Database\Eloquent\Builder|mixed
      */
     public function filter($query)
     {
@@ -64,25 +69,22 @@ trait UserDatatableTrait
         }
 
         if ($val = request('created_at_till')) { // From date range picker
-            $query->where($this->table.'created_at', '<=', date_create($val)->format('Y-m-d 23:59:59'));
+            $query->where($this->table.'.created_at', '<=', date_create($val)->format('Y-m-d 23:59:59'));
         }
         /* ---------------------------------------------------------------___----- */
-
         return $query;
     }
 
     /**
      * Modify datatable values
      *
-     * @return \Yajra\DataTables\DataTableAbstract
-     *
-     * @var \Yajra\DataTables\DataTableAbstract
+     * @return DataTableAbstract
      */
     public function modify($dt)
     {
         $dt = parent::modify($dt);
 
-        // Next modify each column content
+        // Next, modify each column content
         if ($this->hasColumn('email')) {
             $dt->editColumn('email', '<a href="{{ route(\''.$this->module->name.'.edit\', $id) }}">{{$email}}</a>');
         }
@@ -90,7 +92,7 @@ trait UserDatatableTrait
         // Show group name
         if ($this->hasColumn('group_ids')) {
             $dt->editColumn('group_ids', function ($row) {
-                /** @var \App\User $row */
+                /** @var User $row */
                 return implode(',', $row->groups->pluck('title')->toArray());
             });
         }

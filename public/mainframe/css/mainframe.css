@@ -11,7 +11,11 @@
 * Define variables
 ************************************************************************/
 :root {
-    --primary-color: #3498db;
+    --color-primary: royalblue;
+    --color-green: #00a65a;
+    --color-smart-red: #fc466b;
+    --color-smart-blue: #3f5efb;
+    --color-dark-gray: #777777;
     --font-size-base: 13px;
 }
 
@@ -192,7 +196,7 @@ a:hover {
 }
 
 .login-box, .register-box {
-    border-radius: 15px;
+    border-radius: 10px;
     margin: 20px auto auto;
     padding-top: 10px;
 
@@ -318,7 +322,7 @@ h2.underlined {
 .main-header {
     background-size: 100%;
     /*background: linear-gradient(90deg, rgba(63, 94, 251, 1) 0%, rgba(252, 70, 107, 1) 100%) no-repeat;*/
-    background: linear-gradient(90deg, rgba(63, 94, 251, 1) 0%, blueviolet 100%) no-repeat;
+    background: linear-gradient(90deg, #3F5EFBFF 0%, blueviolet 100%) no-repeat;
 }
 
 .main-header .navbar-custom-menu, .main-header .navbar-right {
@@ -360,10 +364,9 @@ h2.underlined {
     text-transform: uppercase;
 }
 
-button.submit {
-    border: 2px green solid;
-    background-color: white;
-    color: green;
+.btn-success {
+    border: 2px var(--color-green) solid;
+    background-color: var(--color-green);
 }
 
 .delete-cta {
@@ -391,11 +394,12 @@ button.submit {
     font-weight: 600;
     display: block;
     padding-bottom: 20px;
+    font-size: 18px;
 
 }
 
 .content-header a {
-    color: #fc466b;
+    color: var(--color-primary);
     font-weight: 400;
 }
 
@@ -440,7 +444,7 @@ table.dataTable {
 
 table.dataTable thead > tr > th,
 .table > thead > tr > th {
-    background-color: #f5f5f6;
+    /*background-color: #f5f5f6;*/
     border-bottom: 1px solid #ddd;
     font-weight: 500;
 }
@@ -515,19 +519,29 @@ label.inline {
     padding: 0 0 0 0 !important;
 }
 
-.no-padding-r, .np-r {
+.no-padding-r, .np-r, .npr {
     padding-right: 0;
 }
 
-.no-padding-l, .np-l {
+.no-padding-l, .np-l, .npl {
     padding-left: 0;
 }
 
-.no-padding-t, .np-t {
+.no-padding-t, .np-t, .npt {
     padding-top: 0;
 }
 
-.no-padding-b, .np-b {
+.no-padding-b, .np-b, .npb {
+    padding-bottom: 0;
+}
+
+.no-padding-h, .np-h, .nph {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.no-padding-v, .np-v, .npv {
+    padding-top: 0;
     padding-bottom: 0;
 }
 
@@ -535,19 +549,19 @@ label.inline {
     margin: 0 0 0 0 !important;
 }
 
-.no-margin-r, .nm-r {
+.no-margin-r, .nm-r, .nmr {
     margin-right: 0;
 }
 
-.no-margin-l, .nm-l {
+.no-margin-l, .nm-l, .nml {
     margin-left: 0;
 }
 
-.no-margin-t, .nm-t {
+.no-margin-t, .nm-t, .nmt {
     margin-top: 0;
 }
 
-.no-margin-b, .nm-b {
+.no-margin-b, .nm-b, .nmb {
     margin-bottom: 0;
 }
 
@@ -863,6 +877,7 @@ div.filecard .info-box-icon img {
     font-size: 10px;
     overflow: hidden;
     margin: 3px;
+    border-radius: 5px;
 }
 
 .info-box-icon .download-overlay {
@@ -941,7 +956,7 @@ input:read-only, .form-control[disabled], .form-control[readonly], fieldset[disa
 
 /* Make the background of the right side full white*/
 .skin-blue-light .wrapper {
-    background-color: #ffffff;
+    background-color: white;
 }
 
 .navbar-nav > .user-menu > .dropdown-menu > .user-body {
@@ -977,8 +992,8 @@ input:read-only, .form-control[disabled], .form-control[readonly], fieldset[disa
 }
 
 .select2-container-multi .select2-choices .select2-search-choice {
-    border: 1px dashed lightblue;
-    padding: 4px 24px 4px 10px;
+    border: 2px dotted lightgrey;
+    padding: 3px 24px 3px 10px;
     margin: 3px;
     line-height: 16px;
     background-image: none;
@@ -988,7 +1003,7 @@ input:read-only, .form-control[disabled], .form-control[readonly], fieldset[disa
 }
 
 .select2-container-multi .select2-choices .select2-search-choice:hover {
-    border: 1px solid lightblue;
+    border: 2px solid lightgrey;
 }
 
 .select2-container-multi .select2-search-choice-close {
@@ -1008,6 +1023,7 @@ input:read-only, .form-control[disabled], .form-control[readonly], fieldset[disa
 
 div.select2-result-label:hover {
     background-color: lightgrey;
+
 }
 
 input, textarea {
@@ -1101,10 +1117,12 @@ input, textarea {
     border-bottom-right-radius: 0;
 }
 
-.selectClearBtn {
+.select-clear-btn {
     border-left: 0;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+    height: 33px;
+    padding: 5px;
 }
 
 .main-header {
@@ -1151,7 +1169,7 @@ input, textarea {
 /* form validation error with no border*/
 .formError .formErrorContent {
     border: 0;
-    border-radius: 0;
+    border-radius: 5px;
 }
 
 select, .form-control {
@@ -1265,7 +1283,7 @@ textarea.form-control {
 
 .datatable-container {
     margin-top: 10px;
-    margin-bottom: 20px;
+    /*margin-bottom: 20px;*/
 }
 
 /* Remove border bottom from datatable rows_per_page selector */
@@ -1459,14 +1477,10 @@ a i {
 }
 
 .bordered-smart-red {
-    border: 1px solid #fc466b;
+    border: 1px solid var(--color-smart-red);
     border-radius: 5px;
     padding: 10px;
 
-}
-
-.errorDiv a {
-    color: #3c8dbc;
 }
 
 /* Use this to align input field */
@@ -1481,8 +1495,7 @@ a i {
 }
 
 .select2-container .select2-choice .select2-arrow {
-    background-image: none;
-    background: transparent;
+    background: transparent none;
 }
 
 .ajax-file-upload-statusbar {
@@ -1493,26 +1506,26 @@ a i {
 }
 
 .ajax-upload-dragdrop {
-    border: 1px dashed lightskyblue;
+    border: 2px dashed lightgrey;
     background-color: white;
     width: 100%;
     color: #dadce3;
     text-align: left;
     vertical-align: middle;
-    padding: 10px 10px 10px 10px;
+    padding: 15px;
 }
 
 /* Text and background colours*/
 .text-smart-blue {
-    color: #3f5efb;
+    color: var(--color-smart-blue);
 }
 
 .text-smart-red {
-    color: #fc466b;
+    color: var(--color-smart-red);
 }
 
 .text-dark-gray {
-    color: #777777;
+    color: var(--color-dark-gray);
 }
 
 .text-blueviolet {
@@ -1520,7 +1533,7 @@ a i {
 }
 
 .bg-smart-blue, .bg-smart-blue:hover {
-    background-color: #3f5efb;
+    background-color: var(--color-smart-blue);
     color: white;
 }
 
@@ -1530,8 +1543,8 @@ a i {
 }
 
 button.bg-white:hover {
-    background-color: #3f5efb;
-    border-color: #3f5efb;
+    background-color: var(--color-smart-blue);
+    border-color: var(--color-smart-blue);
     color: white;
 }
 
@@ -1540,7 +1553,7 @@ button.bg-white:hover {
 }
 
 .bg-smart-red, .bg-smart-red:hover {
-    background-color: #fc466b;
+    background-color: var(--color-smart-red);
     color: white;
 }
 
@@ -1550,12 +1563,12 @@ button.bg-white:hover {
 }
 
 .left-bar-smart-red {
-    border-left: #fc466b;
+    border-left: var(--color-smart-red);
     padding-left: 10px;
 }
 
 .login-page .btn.btn-success, .btn.btn-primary {
-    background-color: #3f5efb;
+    background-color: var(--color-primary);
 }
 
 .mark, mark {
@@ -1798,7 +1811,7 @@ label.required::after {
 .boxed-input label {
     color: white;
     font-weight: bold;
-    background-color: #fc466b;
+    background-color: var(--color-smart-red);
     display: block;
     padding: 2px 5px;
     border-radius: 3px 3px 0 0;
@@ -1810,7 +1823,7 @@ label.required::after {
 }
 
 .boxed-input .form-control {
-    border: 2px #fc466b solid;
+    border: 2px var(--color-smart-red) solid;
     border-radius: 0 0 3px 3px;
 }
 */
@@ -1889,7 +1902,7 @@ label.required::after {
 
 .btn-bordered-green {
     border: 1px green solid;
-    background-color: white;
+    background-color: transparent;
     color: green;
 }
 
@@ -1901,7 +1914,7 @@ label.required::after {
 
 .btn-bordered-blueviolet {
     border: 1px blueviolet solid;
-    background-color: white;
+    background-color: transparent;
     color: blueviolet;
 }
 
@@ -1913,7 +1926,7 @@ label.required::after {
 
 .btn-bordered-blue {
     border: 1px royalblue solid;
-    background-color: white;
+    background-color: transparent;
     color: royalblue;
 }
 
@@ -1924,20 +1937,20 @@ label.required::after {
 }
 
 .btn-bordered-smart-red {
-    border: 1px #fc466b solid;
-    background-color: white;
-    color: #fc466b;
+    border: 1px var(--color-smart-red) solid;
+    background-color: transparent;
+    color: var(--color-smart-red);
 }
 
 .btn-bordered-smart-red:hover {
-    background-color: #fc466b;
-    border-color: #fc466b;
+    background-color: var(--color-smart-red);
+    border-color: var(--color-smart-red);
     color: white;
 }
 
 .btn-bordered-red {
     border: 1px red solid;
-    background-color: white;
+    background-color: transparent;
     color: red;
 }
 
@@ -1949,8 +1962,8 @@ label.required::after {
 
 .btn-transparent-red,
 .btn-borderless-red {
-    border: 1px white solid;
-    background-color: white;
+    /*border: 1px white solid;*/
+    background-color: transparent;
     color: red;
 }
 
@@ -1963,8 +1976,8 @@ label.required::after {
 
 .btn-transparent-blue,
 .btn-borderless-blue {
-    border: 1px white solid;
-    background-color: white;
+    border: 1px transparent solid;
+    background-color: transparent;
     color: royalblue;
 }
 
@@ -1975,9 +1988,22 @@ label.required::after {
     color: royalblue;
 }
 
+.btn-bordered-primary {
+    border: 1px var(--color-primary) solid;
+    background-color: transparent;
+    color: var(--color-primary);
+}
+
+.btn-bordered-primary:hover {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: white;
+}
+
+
 .btn-secondary {
     border: 1px royalblue solid;
-    background-color: white;
+    background-color: transparent;
     color: royalblue;
 }
 
@@ -1988,8 +2014,8 @@ label.required::after {
 }
 
 .btn-inline {
-    border: 1px white solid;
-    background-color: white;
+    border: 1px transparent solid;
+    background-color: transparent;
     color: grey;
 }
 
@@ -2000,8 +2026,8 @@ label.required::after {
 }
 
 .btn-delete {
-    border: 1px white solid;
-    background-color: white;
+    border: 1px transparent solid;
+    background-color: transparent;
     color: red;
 }
 
@@ -2229,11 +2255,11 @@ div.filecard .info-box-icon {
 }
 
 .filecard .info-box {
-    border: 1px solid white;
+    border: 2px solid white;
 }
 
 .filecard .info-box:hover {
-    border: 1px solid lightskyblue;
+    border: 2px solid lightgrey;
 }
 
 .filecard .info-box .img-thumb-div {
@@ -2379,7 +2405,6 @@ div.filecard .info-box-icon {
     /*border: 1px grey solid;*/
     background-color: transparent;
 }
-
 
 @media screen and (max-width: 768px) {
     .timestamps {

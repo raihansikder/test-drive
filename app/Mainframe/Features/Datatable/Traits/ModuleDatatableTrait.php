@@ -1,18 +1,29 @@
 <?php
 
+/** @noinspection PhpPossiblePolymorphicInvocationInspection */
+
+/** @noinspection PhpMultipleClassDeclarationsInspection */
+
+/** @noinspection UnknownColumnInspection */
+
 namespace App\Mainframe\Features\Datatable\Traits;
 
+use App\Mainframe\Features\Datatable\ModuleDatatable;
+use App\Mainframe\Features\Modular\BaseModule\BaseModule;
+use App\Mainframe\Features\Modular\BaseModule\MfModuleInterface;
 use App\Module;
+use Illuminate\Database\Query\Builder;
 use URL;
+use Yajra\DataTables\DataTableAbstract;
 
-/** @mixin \App\Mainframe\Features\Datatable\ModuleDatatable */
+/** @mixin ModuleDatatable */
 trait ModuleDatatableTrait
 {
     /*---------------------------------
     | Section : Define query tables/model
     |---------------------------------*/
     /**
-     * @return \App\Mainframe\Features\Modular\BaseModule\BaseModule|\Illuminate\Database\Query\Builder
+     * @return \App\Project\Features\Modular\BaseModule\BaseModule|\Illuminate\Database\Eloquent\Builder
      */
     public function source()
     {
@@ -33,11 +44,12 @@ trait ModuleDatatableTrait
             ['updater.name', 'user_name', 'Updater'],
             [$this->table.'.updated_at', 'updated_at', 'Updated at'],
             [$this->table.'.is_active', 'is_active', 'Active'],
+            [$this->table.'.id', 'actions', '-'],
         ];
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder|mixed|void
+     * @return \Illuminate\Database\Eloquent\Builder|Builder|mixed|void
      */
     public function filter($query)
     {
@@ -68,9 +80,7 @@ trait ModuleDatatableTrait
     /**
      * Modify datatable row values
      *
-     * @return \Yajra\DataTables\DataTableAbstract
-     *
-     * @var \Yajra\DataTables\DataTableAbstract
+     * @return DataTableAbstract
      */
     public function modify($dt)
     {
@@ -100,19 +110,25 @@ trait ModuleDatatableTrait
             });
         }
 
+        if ($this->hasColumn('actions')) {
+            $dt->editColumn('actions', function ($row) {
+                return $this->actionBtnHtml($row);
+            });
+        }
+
         return $dt;
     }
 
     /**
      * Define Query for generating results for grid
      *
-     * @return \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder|mixed
+     * @return Builder|\Illuminate\Database\Eloquent\Builder|mixed
      */
     public function query()
     {
         $query = $this->source()->select($this->selects());
 
-        // Note: If you are not using model based query you need to manually inject tenant context.
+        // Note: If you are not using a model-based query you need to manually inject tenant context.
 
         // if (user()->ofTenant() && $this->module->tenantEnabled()) {
         //     $query->where($this->module->tableName().'.tenant_id', user()->tenant_id);
@@ -145,7 +161,7 @@ trait ModuleDatatableTrait
     }
 
     /**
-     * @param  \App\Module|string  $module
+     * @param  Module|string  $module
      * @return ModuleDatatableTrait|bool
      */
     public function setModule($module)
@@ -182,9 +198,62 @@ trait ModuleDatatableTrait
      */
     public function datetimes()
     {
-        /** @var \App\Mainframe\Features\Modular\BaseModule\BaseModule $this */
+        /** @var BaseModule $this */
         $model = $this->module->modelInstance();
 
         return array_merge($this->datetimes, $model->getDates());
+    }
+
+    /**
+     * Create the HTML for the 'actions' column
+     *
+     * @param  MfModuleInterface|mixed  $row
+     */
+    public function actionBtnHtml(mixed $row): string
+    {
+        $html = "<div class='dt-action-buttons'>";
+        $html .= $this->viewBtnHtml($row);
+        $html .= $this->deleteBtnHtml($row);
+        $html .= '</div>';
+
+        return $html;
+    }
+
+    /**
+     * Create the HTML for the 'view' button
+     *
+     * @param  MfModuleInterface|mixed  $row
+     */
+    public function viewBtnHtml(mixed $row): string
+    {
+        return "<a class='btn btn-xs btn-inline' title='View' href='".$row->editUrl()."'><i class='fi fi-rr-eye'/></i></a>";
+    }
+
+    /**
+     * Create the HTML for the 'delete' button
+     *
+     * @param  MfModuleInterface|mixed  $row
+     */
+    public function deleteBtnHtml(mixed $row): string
+    {
+        $html = '';
+        $html .= view('form.delete-button', [
+            'var' => [
+                'route' => route($this->moduleName.'.destroy', $row->id),
+                'redirect_success' => '#', // Stops redirect after deletion
+                'name' => 'ListItemDeleteBtn-'.$this->moduleName,
+                'class' => 'btn btn-xs pull-right', // btn-borderless-red
+                'value' => '<i class="fa fa-trash"></i>',
+                'params' => [
+                    'title' => 'Delete',
+                    'onclick' => 'showDeleteModalForBtn($(this))',
+                    'data-refresh_datatable_id' => $this->id(),
+                    // Enable datatable refresh on delete. Stop redirection.
+                ],
+            ],
+        ]);
+        $html .= '</div>';
+
+        return $html;
     }
 }

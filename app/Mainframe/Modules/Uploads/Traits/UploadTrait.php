@@ -524,6 +524,10 @@ trait UploadTrait
     | Section: Relations
     |--------------------------------------------------------------------------
     */
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo<\App\Mainframe\Features\Modular\BaseModule\MfModuleInterface>
+     */
     public function uploadable()
     {
         return $this->morphTo();

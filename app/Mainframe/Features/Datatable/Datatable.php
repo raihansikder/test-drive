@@ -4,8 +4,10 @@ namespace App\Mainframe\Features\Datatable;
 
 use App\Mainframe\Features\Datatable\Traits\DatatableTrait;
 use App\Module;
+use App\Project\Features\Modular\BaseModule\BaseModule;
 use Str;
 use URL;
+use Yajra\DataTables\DataTableAbstract;
 
 /**
  * Class Datatable
@@ -24,7 +26,7 @@ use URL;
  * - Customizable DOM structure
  * - Support for modular implementation
  *
- * @property \Yajra\DataTables\DataTableAbstract $dt DataTable instance for server-side processing
+ * @property DataTableAbstract $dt DataTable instance for server-side processing
  */
 class Datatable
 {
@@ -36,9 +38,9 @@ class Datatable
      *
      * @var string
      */
-    public const DOM_WITH_BTN = 'Blftipr';
+    public const string DOM_WITH_BTN = 'Blftipr';
 
-    public const DOM_WITHOUT_BTN = 'lftipr';
+    public const string DOM_WITHOUT_BTN = 'lftipr';
 
     /*
     |--------------------------------------------------------------------------
@@ -80,14 +82,14 @@ class Datatable
     /**
      * For datatable of a module (ModularDatatable), this has to be set
      *
-     * @var \App\Module
+     * @var Module
      */
     public $module;
 
     /**
      * For datatable of a module this has to be set.
      *
-     * @var \App\Project\Features\Modular\BaseModule\BaseModule
+     * @var BaseModule
      */
     public $model;
 
@@ -96,7 +98,7 @@ class Datatable
      *
      * @ref https://yajrabox.com/docs/laravel-datatables/12.0
      *
-     * @var \Yajra\DataTables\DataTableAbstract
+     * @var DataTableAbstract
      */
     public $dt;
 

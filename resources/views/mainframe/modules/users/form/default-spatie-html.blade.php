@@ -1,25 +1,30 @@
 @extends('project.layouts.module.form.template')
 
 <?php
+
+use App\Group;
+use App\Module;
+use App\Project\Modules\Users\UserViewProcessor;
+use App\User;
+
 /**
- * @var \App\User $element
+ * @var User $element
  * @var string $formState create|edit
- * @var string $formState
  * @var array $formConfig
  * @var string $uuid Only available during creation
  * @var bool $editable
- * @var \App\Module $module
- * @var \App\Project\Modules\Users\UserViewProcessor $view
+ * @var Module $module
+ * @var UserViewProcessor $view
  */
 ?>
 
 @section('content')
     <div class="col-md-12 col-lg-10 no-padding">
         {{--@dd($formConfig)--}}
-        @if($formState == 'create')
+        @if($formState === 'create')
             {{ html()->modelForm($element,'POST',$element->storeUrl())->attributes($formConfig)->acceptsFiles()->open() }}
             <input name="uuid" type="hidden" value="{{$uuid}}"/>
-        @elseif($formState == 'edit')
+        @elseif($formState === 'edit')
             {{ html()->modelForm($element,'PATCH',$element->updateUrl())->attributes(array_except($formConfig,'route'))->acceptsFiles()->open() }}
         @endif
 
@@ -42,13 +47,13 @@
         $var = [
             'name' => 'group_ids',
             // 'label' => 'Group',
-            'model' => new \App\Group,
+            'model' => new Group,
             'name_field' => 'title',
             'params' => ['id' => 'groups'],
             'div' => 'col-sm-12',
-            'data_attributes' => ['name']
+            'data_attributes' => ['name'],
         ];
-        ?>
+?>
         @include('form.select-model-multiple', compact('var'))
         <div class="clearfix"></div>
 

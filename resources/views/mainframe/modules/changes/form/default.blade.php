@@ -1,17 +1,24 @@
 @extends('project.layouts.module.form.template')
 <?php
+
+use App\Change;
+use App\Module;
+use App\Project\Modules\Changes\ChangeViewProcessor;
+use App\Tenant;
+use App\User;
+
 /**
- * @var \App\Module $module
- * @var \App\User $user
+ * @var Module $module
+ * @var User $user
  * @var string $formState create|edit
  * @var array $formConfig
  * @var string $uuid Only available during creation
  * @var bool $editable
  * @var array $immutables
- * @var \App\Change $element
- * @var \App\Change $change
- * @var \App\Tenant $tenant
- * @var \App\Project\Modules\Changes\ChangeViewProcessor $view
+ * @var Change $element
+ * @var Change $change
+ * @var Tenant $tenant
+ * @var ChangeViewProcessor $view
  */
 $change = $element;
 ?>
@@ -24,9 +31,9 @@ $change = $element;
 @section('content')
     <div class="row">
         <div class="col-md-10 col-lg-9 col-xl-8">
-            @if($formState == 'create')
+            @if($formState === 'create')
                 {{ Form::open($formConfig) }} <input name="uuid" type="hidden" value="{{$uuid}}"/>
-            @elseif($formState == 'edit')
+            @elseif($formState === 'edit')
                 {{ Form::model($element, $formConfig)}}
             @endif
 

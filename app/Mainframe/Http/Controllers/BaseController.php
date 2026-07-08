@@ -22,7 +22,7 @@ class BaseController extends Controller
     /** @var \App\User|null */
     protected $user;
 
-    /** @var \App\Mainframe\Features\Modular\BaseModule\BaseModuleViewProcessor */
+    /** @var \App\Mainframe\Features\Modular\BaseModule\BaseModuleViewProcessor|\App\Project\Features\Core\ViewProcessor */
     protected $view;
 
     /** @var string */

@@ -1,17 +1,24 @@
 @extends('{project-name}.layouts.module.form.template')
 <?php
+
+use App\Mainframe\Modules\SuperHeroes\SuperHeroViewProcessor;
+use App\Module;
+use App\SuperHero;
+use App\Tenant;
+use App\User;
+
 /**
- * @var \App\Module $module
- * @var \App\User $user
+ * @var Module $module
+ * @var User $user
  * @var string $formState create|edit
  * @var array $formConfig
  * @var string $uuid Only available during creation
  * @var bool $editable
  * @var array $immutables
- * @var \App\SuperHero $element
- * @var \App\SuperHero $superHero
- * @var \App\Tenant $tenant
- * @var \App\Mainframe\Modules\SuperHeroes\SuperHeroViewProcessor $view
+ * @var SuperHero $element
+ * @var SuperHero $superHero
+ * @var Tenant $tenant
+ * @var SuperHeroViewProcessor $view
  */
 $superHero = $element;
 ?>
@@ -19,9 +26,9 @@ $superHero = $element;
 @section('content')
     <div class="row">
         <div class="col-md-10 col-lg-9 col-xl-8">
-            @if($formState == 'create')
+            @if($formState === 'create')
                 {{ Form::open($formConfig) }} <input name="uuid" type="hidden" value="{{$uuid}}"/>
-            @elseif($formState == 'edit')
+            @elseif($formState === 'edit')
                 {{ Form::model($element, $formConfig)}}
             @endif
 

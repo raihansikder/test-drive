@@ -12,16 +12,16 @@ trait HasElement
     /** @var \Illuminate\Database\Eloquent\Builder */
     public $model;
 
-    /** @var \App\Mainframe\Features\Modular\BaseModule\BaseModule */
+    /** @var \App\Mainframe\Features\Modular\BaseModule\BaseModule|\Illuminate\Database\Eloquent\Model|mixed */
     public $element;
 
     /**
      * Set an element and based on that set the module, model and add immutables
      *
-     * @param  \App\Mainframe\Features\Modular\BaseModule\BaseModule  $element
+     * @param  \App\Mainframe\Features\Modular\BaseModule\BaseModule|\Illuminate\Database\Eloquent\Model|mixed  $element
      * @return $this
      */
-    public function setElement($element)
+    public function setElement(mixed $element)
     {
         if (! $element) {
             return $this;

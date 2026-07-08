@@ -1,17 +1,24 @@
 @extends('project.layouts.module.form.template')
 <?php
+
+use App\Module;
+use App\Project\Modules\SupportTicketCategories\SupportTicketCategoryViewProcessor;
+use App\SupportTicketCategory;
+use App\Tenant;
+use App\User;
+
 /**
- * @var \App\Module $module
- * @var \App\User $user
+ * @var Module $module
+ * @var User $user
  * @var string $formState create|edit
  * @var array $formConfig
  * @var string $uuid Only available during creation
  * @var bool $editable
  * @var array $immutables
- * @var \App\SupportTicketCategory $element
- * @var \App\SupportTicketCategory $supportTicketCategory
- * @var \App\Tenant $tenant
- * @var \App\Project\Modules\SupportTicketCategories\SupportTicketCategoryViewProcessor $view
+ * @var SupportTicketCategory $element
+ * @var SupportTicketCategory $supportTicketCategory
+ * @var Tenant $tenant
+ * @var SupportTicketCategoryViewProcessor $view
  */
 $supportTicketCategory = $element;
 ?>
@@ -19,9 +26,9 @@ $supportTicketCategory = $element;
 @section('content')
     <div class="row">
         <div class="col-md-11 col-lg-9 col-xl-8">
-            @if($formState == 'create')
+            @if($formState === 'create')
                 {{ Form::open($formConfig) }} <input name="uuid" type="hidden" value="{{$uuid}}"/>
-            @elseif($formState == 'edit')
+            @elseif($formState === 'edit')
                 {{ Form::model($element, $formConfig)}}
             @endif
 

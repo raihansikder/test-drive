@@ -1,16 +1,23 @@
 @extends('project.layouts.module.form.template')
 
 <?php
+
+use App\Mainframe\Features\Modular\BaseModule\BaseModule;
+use App\Module;
+use App\Project\Modules\Uploads\UploadViewProcessor;
+use App\Upload;
+use App\User;
+
 /**
- * @var \App\Module $module
- * @var \App\User $user
- * @var \App\Upload $element
+ * @var Module $module
+ * @var User $user
+ * @var Upload $element
  * @var string $formState create|edit
  * @var array $formConfig
  * @var string $uuid Only available during creation
  * @var bool $editable
- * @var \App\Mainframe\Features\Modular\BaseModule\BaseModule $uploadable
- * @var \App\Project\Modules\Uploads\UploadViewProcessor $view
+ * @var BaseModule $uploadable
+ * @var UploadViewProcessor $view
  */
 ?>
 
@@ -22,9 +29,9 @@
 @section('content')
     <div class="row">
         <div class="col-md-10 col-lg-9 col-xl-8">
-            @if($formState == 'create')
+            @if($formState === 'create')
                 {{ Form::open($formConfig) }} <input name="uuid" type="hidden" value="{{$uuid}}"/>
-            @elseif($formState == 'edit')
+            @elseif($formState === 'edit')
                 {{ Form::model($element, $formConfig)}}
             @endif
 
@@ -43,12 +50,12 @@
                 <div class="clearfix"></div>
                 <?php
                 $value = 'URL: ';
-                if ($element->isPublic()) {
-                    $value = "<span class='badge badge-danger'>PUBLIC</span> ".$element->url;
-                } else {
-                    $value = $element->downloadUrl();
-                }
-                ?>
+if ($element->isPublic()) {
+    $value = "<span class='badge badge-danger'>PUBLIC</span> ".$element->url;
+} else {
+    $value = $element->downloadUrl();
+}
+?>
                 <div class="form-group col-md-12">
                     <label class="control-label">URL</label>
                     <span class="form-control readonly">{!! $value !!}</span>

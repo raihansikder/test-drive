@@ -19,7 +19,7 @@ class CleanDeletedUploads extends MakeModule
      *
      * @var string
      */
-    protected $description = 'Permanently remove deleted upload entries';
+    protected $description = 'Permanently remove deleted upload entries and the file';
 
     /**
      * Execute the console command.

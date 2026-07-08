@@ -56,9 +56,9 @@ class Audit extends \OwenIt\Auditing\Models\Audit
 {
     // use ModularTrait;
 
-    protected static function boot()
+    protected static function booted()
     {
-        parent::boot();
+        parent::booted();
         static::creating(function (Audit $element) {
             $element->uuid = uuid();
             $element->auditable_type = 'App\\'.class_basename($element->auditable_type); // Fill with root model

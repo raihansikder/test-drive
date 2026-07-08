@@ -2,10 +2,12 @@
 
 namespace App\Mainframe\Features\Modular\BaseModule\Traits;
 
+use Arr;
+
 trait HasHidden
 {
     /**
-     * Array of field names that should be hidden.
+     * Array of items (e.g., field names) that should be hidden.
      * Add this in the parent class.
      *
      * @var array
@@ -17,9 +19,10 @@ trait HasHidden
      *
      * @return $this
      */
-    public function setHidden($fields = [])
+    public function setHidden(array|string $items)
     {
-        $this->hidden = $fields;
+        $items = Arr::wrap($items);
+        $this->hidden = $items;
 
         return $this;
     }
@@ -27,25 +30,27 @@ trait HasHidden
     /**
      * Merge hidden fields
      *
-     * @param  array  $fields
+     * @param  array|string  $items
      * @return $this
      */
-    public function mergeHidden($fields = [])
+    public function mergeHidden(array|string $items)
     {
-        $this->hidden = array_unique(array_merge($this->hidden, $fields));
+        $items = Arr::wrap($items);
+        $this->hidden = array_unique(array_merge($this->hidden, $items));
 
         return $this;
     }
 
     /**
-     * Remove fields from hidden array
+     * Remove fields from the $hidden array
      *
-     * @param  array  $fields
+     * @param  array|string  $items
      * @return $this
      */
-    public function removeHidden($fields = [])
+    public function removeHidden(array|string $items)
     {
-        $this->hidden = array_unique(array_values(array_diff($this->hidden, $fields)));
+        $items = Arr::wrap($items);
+        $this->hidden = array_unique(array_values(array_diff($this->hidden, $items)));
 
         return $this;
     }

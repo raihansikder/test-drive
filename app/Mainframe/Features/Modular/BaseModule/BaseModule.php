@@ -2,12 +2,23 @@
 
 namespace App\Mainframe\Features\Modular\BaseModule;
 
+use App\Comment;
 use App\Mainframe\Features\Core\Traits\Validable;
 use App\Mainframe\Features\Modular\BaseModule\Traits\ModularTrait;
+use App\Mainframe\Modules\Changes\Change;
+use App\Module;
+use App\Project;
+use App\Spread;
+use App\Tenant;
+use App\Upload;
+use App\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Carbon;
 use OwenIt\Auditing\Contracts\Auditable;
+use OwenIt\Auditing\Models\Audit;
 use Watson\Rememberable\Rememberable;
 
 /**
@@ -20,23 +31,23 @@ use Watson\Rememberable\Rememberable;
  * @property bool $is_active
  * @property int|null $created_by
  * @property int|null $updated_by
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @property string|null $deleted_at
  * @property int|null $deleted_by
  *
  * @method static bool|null forceDelete()
  * @method static Model|Builder|mixed remember($param)
  *
- * @property-read \Illuminate\Database\Eloquent\Collection|\OwenIt\Auditing\Models\Audit[] $audits
+ * @property-read Collection|Audit[] $audits
  * @property-read int|null $audits_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Comment[] $comments
+ * @property-read Collection|Comment[] $comments
  * @property-read int|null $comments_count
- * @property-read \App\User $creator
- * @property-read \App\Project $project
- * @property-read \App\Tenant $tenant
- * @property-read \App\User $updater
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Upload[] $uploads
+ * @property-read User $creator
+ * @property-read Project $project
+ * @property-read Tenant $tenant
+ * @property-read User $updater
+ * @property-read Collection|Upload[] $uploads
  * @property-read int|null $uploads_count
  *
  * @method static \Illuminate\Database\Eloquent\Builder|BaseModule active()
@@ -50,10 +61,10 @@ use Watson\Rememberable\Rememberable;
  *
  * @mixin \Eloquent
  *
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Mainframe\Modules\Changes\Change[] $changes
+ * @property-read Collection|Change[] $changes
  * @property-read int|null $changes_count
- * @property-read \App\Module $linkedModule
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Spread[] $spreads
+ * @property-read Module $linkedModule
+ * @property-read Collection|Spread[] $spreads
  * @property-read int|null $spreads_count
  *
  * @method \Illuminate\Database\Eloquent\Builder remember(mixed $timer)

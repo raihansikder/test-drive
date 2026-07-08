@@ -60,7 +60,7 @@ class CreateSuperHeroesTable extends Migration
 
         $module = Module::firstOrNew(['name' => $name]);
 
-        $module->title = str_replace('-', ' ', ucfirst($name));  // Give a human friendly name
+        $module->title = str_replace('-', ' ', ucfirst($name));  // Give a human-friendly name
         $module->module_group_id = 1; // Assign this module under an existing module-group
         $module->order = 99; // Assign an order for this module
         $module->level = 0;  // Assign a level.

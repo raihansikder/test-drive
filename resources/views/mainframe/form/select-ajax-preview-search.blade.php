@@ -57,7 +57,7 @@ $section = 'ajax_search_modal_'.$input->id;
 
             @if($input->isEditable)
                 <div class="col-md-2 no-padding btn-group">
-                    <a id="clear_{{$input->name}}" class="btn selectClearBtn"
+                    <a id="clear_{{$input->name}}" class="btn select-clear-btn"
                        data-target="{{$input->uid}}" href="#">
                         <i class="fa fa-trash"></i>
                     </a>
@@ -99,7 +99,7 @@ $section = 'ajax_search_modal_'.$input->id;
 
                 // Clear selection
                 //-----------------
-                $("#" + divId + " .selectClearBtn").on('click', function () {
+                $("#" + divId + " .select-clear-btn").on('click', function () {
                     $("#" + divId + " input.ajax").select2("val", "");
                     detailsContainer.html("");
                 });

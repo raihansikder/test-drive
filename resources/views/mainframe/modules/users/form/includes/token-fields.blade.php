@@ -8,8 +8,8 @@
         </h5>
     </div>
     <div id="other_info" class="panel-collapse collapse" style="margin:15px 0;">
-        <div class="col-md-12">
-            <div class="col-md-12 no-padding">
+        <div class="row">
+            <div class="col-md-12">
                 {{--auth_token--}}
                 @include('form.text',['var'=>['name'=>'api_token','label'=>'API token', 'div'=>'col-sm-8']])
                 <button id="api_token_generate" name="api_token_generate"
@@ -18,14 +18,15 @@
                     <i class="fi fi-rr-refresh"></i>
                 </button>
                 @include('form.datetime',['var'=>['name'=>'api_token_generated_at','label'=>'Generated at','editable'=>false, 'div'=>'col-md-3 pull-right']])
+                
+                
+                {{--auth_token--}}
+                @include('form.plain-text',['var'=>['name'=>'auth_token','label'=>'Auth token', 'div'=>'col-sm-6']])
+                {{--api_token_generated_at--}}
+                
+                {{--device_name--}}
+                @include('form.plain-text',['var'=>['name'=>'device_token','label'=>'Device token', 'div'=>'col-sm-6']])
             </div>
-
-            {{--auth_token--}}
-            @include('form.plain-text',['var'=>['name'=>'auth_token','label'=>'Auth token', 'div'=>'col-sm-6']])
-            {{--api_token_generated_at--}}
-
-            {{--device_name--}}
-            @include('form.plain-text',['var'=>['name'=>'device_token','label'=>'Device token', 'div'=>'col-sm-6']])
         </div>
         <div class="clearfix"></div>
     </div>

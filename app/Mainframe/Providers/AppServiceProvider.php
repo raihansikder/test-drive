@@ -7,6 +7,10 @@ use App\Mainframe\Macros\QueryBuilderMacros;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Date;
+use Carbon\CarbonImmutable;
+use Illuminate\Support\Facades\DB;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -64,6 +68,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Model::preventLazyLoading(!app()->isProduction());
+        // Model::preventSilentlyDiscardingAttributes(!app()->isProduction());
+        // Model::preventAccessingMissingAttributes(!app()->isProduction());
+        Date::use(CarbonImmutable::class);
+        DB::prohibitDestructiveCommands(!app()->isProduction());
+
         // Builder::macro('searchIn', function ($attributes, $needle) {
         //     return $this->where(function (Builder $query) use ($attributes, $needle) {
         //         foreach (\Arr:wrap($attributes) as $attribute) {
@@ -71,7 +81,6 @@ class AppServiceProvider extends ServiceProvider
         //         }
         //     });
         // });
-
         Builder::mixin(new QueryBuilderMacros);
     }
 

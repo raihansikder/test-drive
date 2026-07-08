@@ -29,7 +29,7 @@ class ClearTable extends Command
     public function handle()
     {
         $table = $this->argument('table');
-        $retain = (int) $this->option('retain');
+        $retain = (int) $this->option('retain'); // Number of days to retain records. Records older than this will be deleted
 
         DB::table($table)
             ->where('updated_at', '<=', now()->subDays($retain))

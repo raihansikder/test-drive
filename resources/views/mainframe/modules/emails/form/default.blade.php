@@ -1,17 +1,24 @@
 @extends('project.layouts.module.form.template')
 <?php
+
+use App\Email;
+use App\Module;
+use App\Project\Modules\Emails\EmailViewProcessor;
+use App\Tenant;
+use App\User;
+
 /**
- * @var \App\Module $module
- * @var \App\User $user
+ * @var Module $module
+ * @var User $user
  * @var string $formState create|edit
  * @var array $formConfig
  * @var string $uuid Only available during creation
  * @var bool $editable
  * @var array $immutables
- * @var \App\Email $element
- * @var \App\Email $email
- * @var \App\Tenant $tenant
- * @var \App\Project\Modules\Emails\EmailViewProcessor $view
+ * @var Email $element
+ * @var Email $email
+ * @var Tenant $tenant
+ * @var EmailViewProcessor $view
  */
 $email = $element;
 ?>
@@ -50,9 +57,9 @@ $email = $element;
 @section('content')
     <div class="row">
         <div class="col-md-10 col-lg-9 col-xl-8">
-            @if($formState == 'create')
+            @if($formState === 'create')
                 {{ Form::open($formConfig) }} <input name="uuid" type="hidden" value="{{$uuid}}"/>
-            @elseif($formState == 'edit')
+            @elseif($formState === 'edit')
                 {{ Form::model($element, $formConfig)}}
             @endif
 
@@ -73,7 +80,7 @@ $email = $element;
 
                     <?php
                     $section = 'linked-module'
-                    ?>
+?>
 
                     <div class="panel-group">
                         <div class="panel panel-default">

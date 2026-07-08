@@ -1,17 +1,24 @@
 @extends('project.layouts.module.form.template')
 <?php
+
+use App\Module;
+use App\Project\Modules\Reports\ReportViewProcessor;
+use App\Report;
+use App\Tenant;
+use App\User;
+
 /**
- * @var \App\Module $module
- * @var \App\User $user
+ * @var Module $module
+ * @var User $user
  * @var string $formState create|edit
  * @var array $formConfig
  * @var string $uuid Only available during creation
  * @var bool $editable
  * @var array $immutables
- * @var \App\Report $element
- * @var \App\Report $report
- * @var \App\Tenant $tenant
- * @var \App\Project\Modules\Reports\ReportViewProcessor $view
+ * @var Report $element
+ * @var Report $report
+ * @var Tenant $tenant
+ * @var ReportViewProcessor $view
  */
 $report = $element;
 ?>
@@ -28,9 +35,9 @@ $report = $element;
     <div class="row">
         <div class="col-md-10 col-lg-9 col-xl-8">
 
-            @if($formState == 'create')
+            @if($formState === 'create')
                 {{ Form::open($formConfig) }} <input name="uuid" type="hidden" value="{{$uuid}}"/>
-            @elseif($formState == 'edit')
+            @elseif($formState === 'edit')
                 {{ Form::model($element, $formConfig)}}
             @endif
 

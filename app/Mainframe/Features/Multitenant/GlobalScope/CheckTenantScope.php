@@ -2,6 +2,7 @@
 
 namespace App\Mainframe\Features\Multitenant\GlobalScope;
 
+use App\Mainframe\Features\Modular\BaseModule\BaseModule;
 use App\Tenant;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -28,7 +29,7 @@ class CheckTenantScope implements Scope
      */
     public function apply(Builder $builder, Model $model)
     {
-        /** @var \App\Mainframe\Features\Modular\BaseModule\BaseModule $model */
+        /** @var BaseModule $model */
         if ($model->hasTenantContext()) {
             $builder->where(function (Builder $q) use ($model) {
 

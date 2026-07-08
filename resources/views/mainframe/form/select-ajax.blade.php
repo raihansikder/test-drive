@@ -53,7 +53,7 @@ $input = new SelectAjax($var);
         {{--clear button--}}
         @if($input->isEditable)
             <div class="col-md-1 no-padding">
-                <a id="clear_{{$input->name}}" class="btn bg-white form-control selectClearBtn"
+                <a id="clear_{{$input->name}}" class="btn bg-white form-control select-clear-btn"
                    data-target="{{$input->uid}}"
                    href="#"><i class="fa fa-trash"></i></a>
             </div>
@@ -80,7 +80,7 @@ $input = new SelectAjax($var);
             initAjaxSelect(divId, url, inputName);
 
             // clear button
-            $("#" + divId + " .selectClearBtn").click(function () {
+            $("#" + divId + " .select-clear-btn").click(function () {
                 divId = $(this).data('target');
                 $("#" + divId + " input.ajax").select2("val", "");
             });

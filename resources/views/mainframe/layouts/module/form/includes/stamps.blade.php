@@ -9,11 +9,11 @@
 <div class="timestamps pull-left">
     <table>
         <tr>
-            <td style="padding-right: 5px;"><span class="label bg-green">CREATE</span></td>
+            <td style="padding-right: 5px;"><span class="label bg-gray">CREATE</span></td>
             <td style="padding-right: 10px;">{{optional($element->creator)->email}}
 
             </td>
-            <td style="padding-right: 5px;"><span class="label bg-orange">UPDATE</span></td>
+            <td style="padding-right: 5px;"><span class="label bg-gray">UPDATE</span></td>
             <td style="padding-top: 0;">{{optional($element->updater)->email}}
 
             </td>

@@ -237,7 +237,7 @@ trait SendResponse
     /**
      * Build a fail response.
      *
-     * @param  null  $message
+     * @param  ?string  $message
      * @param  int  $code
      * @return Response|mixed
      */

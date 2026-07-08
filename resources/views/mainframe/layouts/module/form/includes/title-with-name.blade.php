@@ -8,6 +8,11 @@
  */
 ?>
 
+
+
+{{-- Show title --}}
+<span class="form-title">{{$view->formTitle()}}</span>
+
 {{-- Show create button --}}
 @if($view->showFormCreateBtn() && $element->isUpdating())
     <a href="{!! $view->createBtnUrl() !!}" class="btn btn-xs module-create-btn {{$module->name.'-module-create-btn'}}"
@@ -21,9 +26,6 @@
        data-toggle="tooltip" title="{!! $view->listBtnTooltip() !!}">
         <i class="fa fa-list"></i></a>
 @endif
-
-{{-- Show title --}}
-<span class="form-title">{{$view->formTitle()}}</span>
 
 @if($view->showCloneBtn())
     @include('mainframe.layouts.default.includes.navigation.clone')

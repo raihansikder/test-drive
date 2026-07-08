@@ -33,6 +33,7 @@ trait ContentDatatableTrait
             [$this->table.'.updated_by', 'updated_by', 'Updater'],
             [$this->table.'.updated_at', 'updated_at', 'Updated at'],
             [$this->table.'.is_active', 'is_active', 'Active'],
+            [$this->table.'.id', 'actions', '-'],
         ];
     }
 
