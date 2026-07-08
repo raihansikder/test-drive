@@ -6,6 +6,7 @@ use App\Change;
 use App\Comment;
 use App\Mainframe\Features\Core\ViewProcessor;
 use App\Mainframe\Features\Modular\BaseModule\BaseModule;
+use App\Mainframe\Features\Modular\Validator\ModelProcessor;
 use App\Mainframe\Helpers\Mf;
 use App\Module;
 use App\Project;
@@ -16,13 +17,18 @@ use App\User;
 use DB;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use OwenIt\Auditing\Audit;
 use Str;
 
 /**
  * @mixin User $this
  *
  * @property int $tenant_sl
+ * @property string $tenant_id
  * @property mixed $element_id
  * @property int $module_id
  * @property string $element_uuid
@@ -67,6 +73,16 @@ trait ModularTrait
     public function isTenantEnabled()
     {
         return $this->tenantEnabled ?? false;
+    }
+
+    /**
+     * Get tenant id attribute name
+     *
+     * @return string
+     */
+    public function tenantIdAttr()
+    {
+        return $this->tenantIdAttr ?? 'tenant_id';
     }
 
     /**
@@ -304,7 +320,7 @@ trait ModularTrait
      * Get the last updater user of a field
      *
      * @param  string  $field
-     * @return \App\User|object|null
+     * @return User|object|null
      *
      * @noinspection PhpPossiblePolymorphicInvocationInspection
      */
@@ -316,7 +332,7 @@ trait ModularTrait
 
         foreach ($audits as $audit) {
             $userId = $audit->user_id;
-            /** @var \OwenIt\Auditing\Audit $audit */
+            /** @var Audit $audit */
             $changes = $audit->getModified();
             if (array_key_exists($field, $changes)) {
                 break;
@@ -660,7 +676,7 @@ trait ModularTrait
     /**
      * Get the processor for this element
      *
-     * @return \App\Mainframe\Features\Modular\Validator\ModelProcessor|mixed
+     * @return ModelProcessor|mixed
      */
     public function processor()
     {
@@ -670,7 +686,7 @@ trait ModularTrait
     /**
      * Shorthand function for processor
      *
-     * @return \App\Mainframe\Features\Modular\Validator\ModelProcessor|mixed
+     * @return ModelProcessor|mixed
      */
     public function process()
     {
@@ -933,7 +949,7 @@ trait ModularTrait
     /**
      * Get an instance of the view processor
      *
-     * @return \App\Mainframe\Features\Core\ViewProcessor
+     * @return ViewProcessor
      *
      * @noinspection ClassConstantCanBeUsedInspection
      */
@@ -1249,7 +1265,7 @@ trait ModularTrait
     */
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Tenant>
+     * @return BelongsTo<Tenant>
      */
     public function tenant()
     {
@@ -1257,7 +1273,7 @@ trait ModularTrait
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Project>
+     * @return BelongsTo<Project>
      */
     public function project()
     {
@@ -1265,7 +1281,7 @@ trait ModularTrait
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<User>
+     * @return BelongsTo<User>
      */
     public function creator()
     {
@@ -1273,7 +1289,7 @@ trait ModularTrait
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<User>
+     * @return BelongsTo<User>
      */
     public function updater()
     {
@@ -1281,7 +1297,7 @@ trait ModularTrait
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Module>
+     * @return BelongsTo<Module>
      *
      * @noinspection PhpUndefinedMethodInspection
      */
@@ -1291,7 +1307,7 @@ trait ModularTrait
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<Change>
+     * @return HasMany<Change>
      */
     public function changes()
     {
@@ -1300,7 +1316,7 @@ trait ModularTrait
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<Upload>
+     * @return HasMany<Upload>
      */
     public function uploads()
     {
@@ -1309,7 +1325,7 @@ trait ModularTrait
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     * @return MorphMany
      */
     public function spreads()
     {
@@ -1317,7 +1333,7 @@ trait ModularTrait
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function spreadModels($slug)
     {
@@ -1332,7 +1348,7 @@ trait ModularTrait
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function spreadTags($field)
     {
@@ -1342,7 +1358,7 @@ trait ModularTrait
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     * @return MorphMany
      */
     public function comments()
     {
@@ -1493,7 +1509,7 @@ trait ModularTrait
     /**
      * Find an element by slug
      *
-     * @return \Illuminate\Database\Eloquent\Model|object|null
+     * @return Model|object|null
      */
     public static function bySlug($slug)
     {
@@ -1503,7 +1519,7 @@ trait ModularTrait
     /**
      * Find an element by code
      *
-     * @return \Illuminate\Database\Eloquent\Model|object|null
+     * @return Model|object|null
      */
     public static function byCode($code)
     {
