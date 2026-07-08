@@ -11,9 +11,9 @@
         <div class="row">
             <div class="col-md-12">
                 {{--auth_token--}}
-                @include('form.text',['var'=>['name'=>'api_token','label'=>'API token', 'div'=>'col-sm-8']])
+                @include('form.text',['var'=>['name'=>'api_token','label'=>'API token', 'div'=>'col-sm-8 npr']])
                 <button id="api_token_generate" name="api_token_generate"
-                        class="btn btn-default btn-transparent align-with-input pull-left" data-toggle="tooltip"
+                        class="btn btn-transparent align-with-input pull-left" data-toggle="tooltip"
                         title="Regenerate the token. Save the form after generating the token">
                     <i class="fi fi-rr-refresh"></i>
                 </button>

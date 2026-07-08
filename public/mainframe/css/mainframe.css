@@ -391,9 +391,9 @@ h2.underlined {
 
 .content-header h2 {
     margin: 0;
-    font-weight: 600;
+    font-weight: 400;
     display: block;
-    padding-bottom: 20px;
+    padding-bottom: 5px;
     font-size: 18px;
 
 }
@@ -508,6 +508,13 @@ label.inline {
     padding: 20px 30px 0 30px;
 }
 
+.label {
+    font-weight: 400;
+}
+
+.badge {
+    font-weight: 400;
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -941,8 +948,9 @@ input[type=number] {
 .readonly, div.form-group span.readonly,
 .select2-container-disabled, .select2-container.select2-container-disabled .select2-choice,
 input:read-only, .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
-    background-color: #eeeeee;
-    border: none;
+    background-color: #fafafa;
+    /*border: none;*/
+    color: grey;
 }
 
 .form-control:focus {
@@ -1157,6 +1165,7 @@ input, textarea {
     overflow: hidden;
     text-overflow: ellipsis;
     color: inherit;
+    font-weight: 400;
 
 }
 

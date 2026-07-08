@@ -11,7 +11,7 @@
 <div class="btn-group pull-left ">
 
     {{--  Submit button  --}}
-    <button type="submit" name="submit" class="btn btn-success" value="Run" id="run-report">Run Report</button>
+    <button type="submit" name="submit" class="btn btn-primary" value="Run" id="run-report">Run Report</button>
 
     @if(request('submit'))
 
